@@ -22,7 +22,9 @@
 
 def subsets(S):
     result = []
-    helper(S, 0, [], result[:])
+    if (S == None or len(S) == 0):
+        return result
+    helper(S, 0, [], result)
     return result
 
 

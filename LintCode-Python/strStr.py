@@ -23,7 +23,7 @@ def strStr(source, target):
                 return -1
             if source[i + j] != target[j]:
                 break
-        else:
+        else: # => if i <= len(source) and j = len(target)
             return i
     return -1
 
