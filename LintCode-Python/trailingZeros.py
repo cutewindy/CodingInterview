@@ -11,10 +11,10 @@
 def trailingZeros(n):
     if not n:
         return n
-    sumZeros = 0
+    count = 0
     while n != 0:
-        sumZeros += n / 5
+        count += n / 5
         n /= 5
-    return sumZeros
+    return count
 
 print trailingZeros(11)

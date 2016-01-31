@@ -14,19 +14,19 @@ def checkPowerofTwo(n):
     if not n:
         return False
 # method2:
-    if n & (n - 1) == 0:
-        return True
-    else:
-        return False
-
-# method1:
-    # count = 0
-    # for i in range(n):
-    #     count += n & 1
-    #     n = n >> 1
-    # if count == 1:
+    # if n & (n - 1) == 0:
     #     return True
     # else:
     #     return False
 
-print checkPowerofTwo(4)
+# method1:
+    if n < 0:
+        return False
+    count = 0
+    for i in range(32):
+        count += n & 1
+        n = n >> 1
+    return count == 1
+
+print checkPowerofTwo(-238927)
+print checkPowerofTwo(512)
