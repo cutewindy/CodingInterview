@@ -15,13 +15,13 @@
 # Challenge
 # Do it without recursion.
 
-
+# DFS
 def permutations(nums):
     result = []
     if not nums:  #if nums == None or len(nums) == 0:
         return result
     # nums.sort()
-    helper(sorted(nums), [], result)
+    helper(sorted(nums), [], result)      # add the list, which is begin with "[]", to resutl
     return result
 
 def helper(nums, curr_list, result):
@@ -32,13 +32,8 @@ def helper(nums, curr_list, result):
         if nums[i] in curr_list:
             continue
         curr_list.append(nums[i])
-        helper(nums, curr_list, result)
+        helper(nums, curr_list, result)   # add the list, which is begin with "curr_list", to result
         curr_list.pop()
-
-
-
-
-
 
 
 print permutations([1, 2, 3])
