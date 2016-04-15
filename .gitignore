@@ -5,3 +5,5 @@ LintCode-Java/bin
 .recommenders
 
 *.pyc
+
+*.class
