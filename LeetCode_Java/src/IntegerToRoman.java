@@ -1,10 +1,13 @@
-//Given an integer, convert it to a roman numeral.
-//
-//Input is guaranteed to be within the range from 1 to 3999.
+/**
+ * Given an integer, convert it to a roman numeral.
+ * Input is guaranteed to be within the range from 1 to 3999.
+ * @author wendi
+ *
+ */
 
 public class IntegerToRoman {
 	/**
-	 * 
+	 * find the math function, different value in different field
 	 * @param num The integer
 	 * @return Roman representation
 	 * time: O(1)
