@@ -1,14 +1,10 @@
 LintCode-Java/.classpath
 LintCode-Java/.project
 LintCode-Java/bin
-LeetCode_Java/bin/
 .metadata
 .recommenders
 bin/
+bin
 *.pyc
-
-*.class
-
-*.class
 
 *.class
