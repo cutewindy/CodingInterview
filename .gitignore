@@ -8,3 +8,7 @@ bin
 *.pyc
 
 *.class
+
+.settings/
+.classpath
+.project
