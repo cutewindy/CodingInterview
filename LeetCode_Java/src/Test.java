@@ -9,7 +9,6 @@ public class Test {
 //			System.out.println(array[i]);
 //		}
 		System.out.println(array);
-		System.out.println(123);
 //		System.out.println(str.charAt(str.length()-1));
 	}
 
