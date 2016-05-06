@@ -23,11 +23,23 @@ public class ReverseString {
 //		}		
 		return String.valueOf(result.reverse());
 	}
+	
+	public String reverseStringI(String s) {
+		if (s == null || s.length() == 0) {
+			return s;
+		}
+		String result = new String();
+		for (int i = s.length() - 1; i >= 0; i--) {
+			result += String.valueOf(s.charAt(i));
+		}
+		return result;
+	}
 
  	public static void main(String[] args) {
 		// TODO Auto-generated method stub
  		ReverseString result = new ReverseString();
  		System.out.println(result.reverseString("hello"));
+ 		System.out.println(result.reverseStringI("hello"));
 	}
 
 }
