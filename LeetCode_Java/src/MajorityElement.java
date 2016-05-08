@@ -74,15 +74,15 @@ public class MajorityElement {
 		}
 		HashMap<Integer, Integer> hash = new HashMap();
 		int l = (nums.length % 2 != 0 ? nums.length / 2 : nums.length /2 - 1);
-		for (int i = 0; i < nums.length; i++) {
-			if (hash.containsKey(nums[i])) {
-				hash.put(nums[i], hash.get(nums[i]) + 1);
+		for (int num: nums) {
+			if (hash.containsKey(num)) {
+				hash.put(num, hash.get(num) + 1);
 			}
 			else {
-				hash.put(nums[i], 1);
+				hash.put(num, 1);
 			}
-			if (hash.get(nums[i]) > l) {
-				return nums[i];
+			if (hash.get(num) > l) {
+				return num;
 			}
 		}
 		return -1;
