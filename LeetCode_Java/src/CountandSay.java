@@ -18,33 +18,54 @@ public class CountandSay {
 	 * Time: O(n * 2^n)  2^n:the longest length of subresult
 	 * Space: O(2^n)
 	 */
-	public String countandSay(int n) {
-		if (n == 0) {
-			return "";
-		}
-		String result = "1";
-		while (n > 1) {
-			String oldResult = result;
-			result = "";
-			int i = 0;
-			while (i < oldResult.length()) {
-				int count = 1;
-				while (i + 1 < oldResult.length() && oldResult.charAt(i) == oldResult.charAt(i + 1)) {
-					count++;
-					i++;
-				}
-				result += String.valueOf(count) + String.valueOf(oldResult.charAt(i));
-				i++;
-			}
-			n--;
-		}
-		return result;		
-	}
+    public static String countandSay(int n) {
+        if (n == 0) {
+            return "";
+        }
+        String result = "1";
+        for (int i = 1; i < n; i++) {
+            String curr = result;
+            result = "";
+            int count = 1;
+            for (int j = 0; j < curr.length(); j++) {
+                if (j + 1 < curr.length() && curr.charAt(j) == curr.charAt(j + 1)) {
+                    count++;
+                }
+                else {
+                    result += String.valueOf(count) + String.valueOf(curr.charAt(j));
+                    count = 1;
+                }
+            }
+        }
+        return result;
+    }
+//	public String countandSay(int n) {
+//		if (n == 0) {
+//			return "";
+//		}
+//		String result = "1";
+//		while (n > 1) {
+//			String oldResult = result;
+//			result = "";
+//			int i = 0;
+//			while (i < oldResult.length()) {
+//				int count = 1;
+//				while (i + 1 < oldResult.length() && oldResult.charAt(i) == oldResult.charAt(i + 1)) {
+//					count++;
+//					i++;
+//				}
+//				result += String.valueOf(count) + String.valueOf(oldResult.charAt(i));
+//				i++;
+//			}
+//			n--;
+//		}
+//		return result;		
+//	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CountandSay result = new CountandSay();
-		System.out.println(result.countandSay(20));
+		System.out.println(result.countandSay(4));
 
 	}
 

@@ -25,14 +25,29 @@ public class ReverseString {
 	}
 	
 	public String reverseStringI(String s) {
-		if (s == null || s.length() == 0) {
-			return s;
-		}
-		String result = new String();
-		for (int i = s.length() - 1; i >= 0; i--) {
-			result += String.valueOf(s.charAt(i));
-		}
-		return result;
+//		if (s == null || s.length() == 0) {
+//			return s;
+//		}
+//		String result = new String();
+//		for (int i = s.length() - 1; i >= 0; i--) {
+//			result += String.valueOf(s.charAt(i));
+//		}
+//		return result;
+		
+        if (s == null || s.length() == 0) {
+            return s;
+        }
+        int start = 0;
+        int end = s.length() - 1;;
+        char[] array = s.toCharArray();
+        while (start < end) {
+            char temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+            start++;
+            end--;
+        }
+        return String.valueOf(array);
 	}
 
  	public static void main(String[] args) {
