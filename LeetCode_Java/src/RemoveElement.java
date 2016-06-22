@@ -33,7 +33,7 @@ public class RemoveElement {
 		}
 		int start = 0;
 		int end = nums.length - 1;
-		while (start < end) {
+		while (start <= end) {
 			if (nums[start] == val) {
 				nums[start] = nums[end];
 				end--;
@@ -42,7 +42,7 @@ public class RemoveElement {
 				start++;
 			}
 		}
-		return nums[start] == val ? start : start + 1;
+		return end + 1;
 	}
 	
 	public static void main(String[] args) {
