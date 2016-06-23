@@ -3,21 +3,21 @@ import java.util.Arrays;
 /**
  * Given an array nums, write a function to move all 0's to the end of it while maintaining 
  * the relative order of the non-zero elements.
-
  * For example, given nums = [0, 1, 0, 3, 12], after calling your function, 
  * nums should be [1, 3, 12, 0, 0].
-
  * Note:
  * You must do this in-place without making a copy of the array.
  * Minimize the total number of operations.
+ * 
+ * Tags: Array, Two pointers
  * @author wendi
  *
  */
 public class MoveZeros {
 	
 	/**
-	 * two points: i0 represent zero, i1 represent non-zero.
-	 * first step is to find them, then if i0 < i1, swap them.
+	 * two points: use i as door, before i(not include i), the value is non-zero
+	 * if nums[j] is zore, switch it with nums[i], then i++.
 	 * @param int[] nums
 	 * Time: O(n)
 	 * Space: O(1)
@@ -26,23 +26,16 @@ public class MoveZeros {
 		if (nums == null || nums.length == 0) {
 			return;
 		}
-		int i1 = 1;
-		int i0 = 0;
-		while (i1 < nums.length) {
-			while (i0 < nums.length && nums[i0] != 0) {
-				i0++;
+		int i = 0;
+		for (int j = 0; j < nums.length; j++) {
+			if (nums[j] != 0) {
+				int temp = nums[i];
+				nums[i] = nums[j];
+				nums[j] = temp;
+				i++;
 			}
-			while (i1 < nums.length && nums[i1] == 0) {
-				i1++;
-			}
-			if (i0 < nums.length && i1 < nums.length && i0 < i1) {
-				int temp = nums[i0];
-				nums[i0] = nums[i1];
-				nums[i1] = temp;
-				i0++;
-			}
-			i1++;
 		}
+		return;
 	}
 
 	public static void main(String[] args) {
