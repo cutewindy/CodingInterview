@@ -43,7 +43,7 @@ public class NumberofOneBits {
 			if ((n & 1) == 1) {
 				result++;
 			}
-			n >>= 1;
+			n >>>= 1;
 		}
 		return result;
 	}
