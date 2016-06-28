@@ -24,14 +24,15 @@ public class ExcelSheetColumnNumber {
 		if (s == null || s.length() == 0) {
 			return 0;
 		}
-		int d = (int)'A' - 1;
+//		int d = (int)'A' - 1;
 		int result = 0;
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 			if (c < 'A' || c > 'Z') {
 				return 0;
 			}
-			result = 26 * result + (int)c - d;
+//			result = 26 * result + (int)c - d;
+			result = result * 26 + (int)(c - 'A') + 1;
 		}			
 		return result;
 	}
