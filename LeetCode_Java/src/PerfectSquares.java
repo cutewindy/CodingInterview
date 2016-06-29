@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PerfectSquares {
 
 	/**
-	 * DP: 
+	 * DP: dp[n1] = min(dp[n1-n2*n2] + 1, dp[n1])
 	 * @param int n
 	 * @return int
 	 * Time: O(n^2)
