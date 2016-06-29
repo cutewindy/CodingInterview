@@ -11,14 +11,15 @@ import java.util.List;
 public class ClimbingStairs {
 	
 	/**
-	 * DP: f(n) = f(n - 2) + f(n - 1).
+	 * DP: Only two ways to climb the ith stairs, from stairs i-1 and stairs i-2.
+	 * dp[i] = dp[i-1] + dp[i-2].
 	 * @param int n
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
 	public int climbingStairs(int n) {
-		if (n < 3) {
+		if (n <= 2) {
 			return n;
 		}
 		List<Integer> ways = new ArrayList<Integer>();
@@ -29,24 +30,6 @@ public class ClimbingStairs {
 			ways.add(ways.get(i - 2) + ways.get(i - 1));
 		}
 		return ways.get(n);
-		
-//        if (n == 0) {
-//            return 0;
-//        }
-//        return helper(n);
-//    }
-//    
-//    public int helper(int n) {
-//        int res = 0;
-//        if (n == 0) {
-//            return 1;
-//        }
-//        else if (n < 0) {
-//            return 0;
-//        }
-//        res += helper(n - 1);
-//        res += helper(n - 2);
-//        return res;
 	}
 
 	public static void main(String[] args) {
