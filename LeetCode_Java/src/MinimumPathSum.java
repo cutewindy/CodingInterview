@@ -15,7 +15,7 @@ public class MinimumPathSum {
 	 * That is, grid[i][j] = min(grid[i - 1][j], grid[i][j - 1]) + grid[i][j]
 	 * @param int[][] grid
 	 * @return int
-	 * Time: O(n^2)
+	 * Time: O(m * n)
 	 * Space : O(1)
 	 */
 	public int minimumPathSum(int[][] grid) {
