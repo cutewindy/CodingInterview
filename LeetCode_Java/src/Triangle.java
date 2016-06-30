@@ -24,7 +24,8 @@ import java.util.List;
 public class Triangle {
 	
 	/**
-	 * DP: triangle[i][j] can only come from triangle[i-1][j-1] or triangle[i-1][j], be ware of edge condition.
+	 * DP: use triangle[i][j] to record the minimum path sum to point [i][j].
+	 * triangle[i][j] can only come from triangle[i-1][j-1] or triangle[i-1][j], be ware of edge condition.
 	 * triangle[i][0] = triangle[i-1][0] + triangle[i][0];
 	 * triangle[i][i] = triangle[i-1][i-1] + triangle[i][i];
 	 * triangle[i][j] = min(triangle[i-1][j-1], triangle[i-1][j]) + triangle[i][j];
