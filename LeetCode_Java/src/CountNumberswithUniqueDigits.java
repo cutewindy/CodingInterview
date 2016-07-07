@@ -53,7 +53,7 @@ public class CountNumberswithUniqueDigits {
 		result = 91;
 		// dp update
 		for (int i = 3; i <= n && i <= 10; i++) {
-			dp[i] = dp[i - 1] * (10 - i + 1);
+			dp[i] = dp[i - 1] * (11 - i);
 			result += dp[i];
 		}
 		return result;
