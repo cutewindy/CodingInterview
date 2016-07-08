@@ -48,11 +48,10 @@ public class CountNumberswithUniqueDigits {
 		int[] dp = new int[11];
 		// init
 		dp[0] = 1;
-		dp[1] = 10;
-		dp[2] = 81;
-		result = 91;
+		dp[1] = 9;
+		result = 10;
 		// dp update
-		for (int i = 3; i <= n && i <= 10; i++) {
+		for (int i = 2; i <= n && i <= 10; i++) {
 			dp[i] = dp[i - 1] * (11 - i);
 			result += dp[i];
 		}
