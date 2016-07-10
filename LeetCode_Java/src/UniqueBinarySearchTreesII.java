@@ -25,7 +25,7 @@ public class UniqueBinarySearchTreesII {
 	 * all possible trees for left and right subtrees and combine them in all possible ways with the root.
 	 * @param int n
 	 * @return List<TreeNode>
-	 * Time: O(n * number of tree)
+	 * Time: O(n^n)
 	 * Space: O(n)
 	 */
 	public List<TreeNode> uniqueBinarySearchTreeII(int n) {
