@@ -39,7 +39,7 @@ public class UniqueBinarySearchTreesII {
 	private List<TreeNode> helper(int start, int end) {
 		List<TreeNode> result = new ArrayList();
 		if (start > end) {
-			result.add(null);
+			result.add(null); // be care
 			return result;
 		}
 		if (start == end) {
@@ -49,6 +49,7 @@ public class UniqueBinarySearchTreesII {
 		for (int i = start; i <= end; i++) {
 			List<TreeNode> leftRoots = helper(start, i - 1);
 			List<TreeNode> rightRoots = helper(i + 1, end);
+			// F(i) = G(i-1) * G(n-i)
 			for (TreeNode leftRoot: leftRoots) {
 				for (TreeNode rightRoot: rightRoots) {
 					TreeNode root = new TreeNode(i);
