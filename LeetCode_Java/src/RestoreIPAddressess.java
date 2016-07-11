@@ -6,6 +6,8 @@ import java.util.List;
  * For example:
  * Given "25525511135",
  * return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+ * 
+ * Tags: Backtracking, String
  * @author wendi
  *
  */
@@ -30,10 +32,10 @@ public class RestoreIPAddressess {
 	
 	private void helper(String s, int start, List<String> currIPAddr, List<String> result) {
 		if (currIPAddr.size() == 4) {
-			if (start != s.length()) {
-				return;
+			if (start == s.length()) {
+				result.add(processIPAddr(currIPAddr));
 			}
-			result.add(processIPAddr(currIPAddr));
+			return;
 		}
 		for (int i = start; i < s.length() && i < start + 3; i++) {
 			String temp = s.substring(start, i + 1);

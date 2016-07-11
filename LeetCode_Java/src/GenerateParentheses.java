@@ -5,6 +5,8 @@ import java.util.List;
  * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
  * For example, given n = 3, a solution set is:
  * "((()))", "(()())", "(())()", "()(())", "()()()"
+ * 
+ * Tags: Backtracking, String
  * @author wendi
  *
  */
@@ -12,11 +14,13 @@ import java.util.List;
 public class GenerateParentheses {
 	
 	/**
-	 * Recursion
+	 * Backtracking:  Recursion
 	 * Base case: left==0 && right=00.
 	 * Condition: left>0 -> go helper(left-1); left<right && right>0 -> go helper(right-1).
 	 * @param n
 	 * @return List<String>
+	 * Time: O()
+	 * Space: O()
 	 */
 	public List<String> generateParentheses(int n) {
 		List<String> result = new ArrayList<String>();
