@@ -48,6 +48,7 @@ public class WordSearch {
 	}
 	
 	private boolean helper(String word, char[][] board, boolean[][] visited, int row, int col, int pos) {
+		// basecase
 		if (pos == word.length()) {
 			return true;
 		}
@@ -55,6 +56,7 @@ public class WordSearch {
 				visited[row][col] || board[row][col] != word.charAt(pos)) {
 			return false;
 		}
+		//condition
 		visited[row][col] = true;
 		if (helper(word, board, visited, row - 1, col, pos + 1) || 
 			helper(word, board, visited, row, col + 1, pos + 1) ||
