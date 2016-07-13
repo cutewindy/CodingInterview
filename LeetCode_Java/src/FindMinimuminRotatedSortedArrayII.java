@@ -39,6 +39,7 @@ public class FindMinimuminRotatedSortedArrayII {
 			}
 			else {
 				start = mid;
+				// or start = mid + 1;
 			}
 		}
 		return nums[start] < nums[end] ? nums[start] : nums[end];
