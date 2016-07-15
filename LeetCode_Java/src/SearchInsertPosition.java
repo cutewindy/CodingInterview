@@ -1,5 +1,6 @@
 /**
- * Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+ * Given a sorted array and a target value, return the index if the target is found. If not, 
+ * return the index where it would be if it were inserted in order.
  * You may assume no duplicates in the array.
  * Here are few examples.
  * [1,3,5,6], 5 → 2
@@ -19,6 +20,8 @@ public class SearchInsertPosition {
 	 * Otherwise, the target is in the left of mid.
 	 * @param int[] nums, int target
 	 * @return int
+	 * Time: O(log(n))
+	 * Space: O(1)
 	 */
 	public int searchInsertPosition(int[] nums, int target) {
 		if (nums == null || nums.length == 0) {
