@@ -1,6 +1,5 @@
 /**
  * Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
-
  * According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined 
  * between two nodes v and w as the lowest node in T that has both v and w as descendants 
  * (where we allow a node to be a descendant of itself).”
@@ -27,9 +26,7 @@ public class LowestCommonAncestorofaBinaryTree {
 	 * if left has p and q, return left;
 	 * if right has p and q, return right;
 	 * both doesn't have, return null.  
-	 * @param TreeNode root
-	 * @param TreeNode p
-	 * @param TreeNode q
+	 * @param TreeNode root, TreeNode p, TreeNode q
 	 * @return TreeNode
 	 * Time: O(n)
 	 * Space: O(1)
@@ -47,6 +44,32 @@ public class LowestCommonAncestorofaBinaryTree {
 			return left;
 		}
 		else if (left == null && right != null) {
+			return right;
+		}
+		return null;
+	}
+	
+	// Version 2(Same method)
+	public TreeNode LowestCommonAncestorofaBinaryTree(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null) {
+			return root;
+		}
+		return helper(root, p, q);
+	}
+	
+	private TreeNode helper(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null || root == p || root == q) {
+			return root;
+		}
+		TreeNode left = helper(root.left, p, q);
+		TreeNode right = helper(root.right, p, q);
+		if (left != null && right != null) {
+			return root;
+		}
+		else if (left != null && right == null) {
+			return left;
+		}
+		else if (left == null && right != null){
 			return right;
 		}
 		return null;
