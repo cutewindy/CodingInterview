@@ -20,7 +20,7 @@ public class TrappingRainWater {
 	 * @param int[] height
 	 * @return int
 	 * Time: O(n)
-	 * Space:
+	 * Space: O(1)
 	 */
 	public int trappingRainWater(int[] height) {
 		if (height == null || height.length < 3) {
