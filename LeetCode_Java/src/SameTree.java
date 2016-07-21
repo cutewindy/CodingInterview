@@ -10,7 +10,8 @@ import java.util.Stack;
 public class SameTree {
 	
 	/**
-	 * Method2: (Iteration) check curr nodes val, and then check curr right and left
+	 * Method2: (Iteration)Two stacks: check curr nodes val, and then check curr right and left nodes.
+	 * Don't forget to check the size of two stack before return.
 	 * @param TreeNode p, TreeNode q
 	 * @return boolean
 	 * Time: O(n)
