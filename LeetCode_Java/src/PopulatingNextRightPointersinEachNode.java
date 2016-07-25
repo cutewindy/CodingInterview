@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 /**
  * Given a binary tree
@@ -122,9 +121,8 @@ public class PopulatingNextRightPointersinEachNode {
 		}
 		if (root.left != null) {
 			root.left.next = root.right;
-			if (root.next != null) {
-				root.right.next = root.next.left;
-			}
+			root.right.next = root.next != null ? root.next.left : null;
+
 		}
 		helper(root.left);
 		helper(root.right);
