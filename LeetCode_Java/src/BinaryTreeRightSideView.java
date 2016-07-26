@@ -22,7 +22,7 @@ import java.util.Queue;
 public class BinaryTreeRightSideView {
 	
 	/**
-	 * DFS: the size of result equals to the depth of tree. Traverse tree in right-left order, in each depth, the first node is the 
+	 * Method2: DFS: the size of result equals to the depth of tree. Traverse tree in right-left order, in each depth, the first node is the 
 	 * right side view node.
 	 * @param TreeNode root
 	 * @return List<Integer>
@@ -51,7 +51,7 @@ public class BinaryTreeRightSideView {
 	}
 	
 	/**
-	 * BFS. Traverse tree in BFS order. Then in each level, the last node of queue is the right side view node.
+	 * Method1:BFS. Traverse tree in BFS order. Then in each level, the last node of queue is the right side view node.
 	 * @param TreeNode root
 	 * @return List<Integer>
 	 * Time: O(n)
