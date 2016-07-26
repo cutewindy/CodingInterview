@@ -109,13 +109,13 @@ public class SumRoottoLeafNumbers {
 		if (root.left == null && root.right == null) {
 			return 10 * sum + root.val; // leaf node, return result
 		}
+		// condition
 		if (root.left == null) {
 			return helper(root.right, sum * 10 + root.val);
 		}
 		if (root.right == null) {
 			return helper(root.left, sum * 10 + root.val);
-		}
-		// condition
+		}	
 		return helper(root.left, sum * 10 + root.val) + helper(root.right, sum * 10 + root.val);
 
 	}
