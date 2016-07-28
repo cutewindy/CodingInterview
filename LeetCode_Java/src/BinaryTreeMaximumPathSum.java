@@ -39,8 +39,8 @@ public class BinaryTreeMaximumPathSum {
 		if (root == null) {
 			return 0;
 		}
-		int leftPath = helper(root.left);
-		int rightPath = helper(root.right);
+		int leftPath = Math.max(helper(root.left), 0);   // be care about the negative result
+		int rightPath = Math.max(helper(root.right), 0);
 		maxPath = Math.max(leftPath + root.val + rightPath, maxPath);
 		return Math.max(leftPath, rightPath) + root.val;
 	}
@@ -48,7 +48,8 @@ public class BinaryTreeMaximumPathSum {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BinaryTreeMaximumPathSum result = new BinaryTreeMaximumPathSum();
-		TreeNode root = TreeNode.generateCBT(new int[] {1, -2, 3, -4, -5, 6});
+//		TreeNode root = TreeNode.generateCBT(new int[] {1, -2, 3, -4, -5, 6});
+		TreeNode root = TreeNode.generateCBT(new int[] {2, -1});
 		TreeNode.printCBT(root);
 		System.out.println(result.binaryTreeMaximumPathSum(root));
 	}
