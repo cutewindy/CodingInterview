@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Given an integer array with all positive numbers and no duplicates, find the number of possible 
  * combinations that add up to a positive integer target.
@@ -26,17 +28,30 @@
 public class CombinationSumIV {
 
 	/**
-	 * DP:
+	 * Method2: DP: Look target as index from [0, target]. dp[i] means the num of possible 
+	 * combination when target is i. Then iterate nums, find which num can add up to i.
+	 * 1. If num > i, means cannot add up to i.
+	 * 2. If num = i, means can add up to i by 0+num, dp[i]+=dp[0]+1
+	 * 3. If num < i, means can add up to i by (i-num)+num, dp[i]+=dp[i-num]
 	 * @param int[] nums, int target
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(target * n)
+	 * Space: O(target)
 	 */
 	public int combinationSumIVI(int[] nums, int target) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
-		return 0;
+		Arrays.sort(nums);
+		int[] dp = new int[target + 1];
+		for (int i = 1; i <= target; i++) {
+			for (int num: nums) {
+				if (num > i) break;
+				else if (num == i) dp[i] += 1;  // target can be 0
+				else dp[i] += dp[i - num];
+			}
+		}
+		return dp[target];
 	}
 	
 	/**
