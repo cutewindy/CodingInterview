@@ -24,7 +24,9 @@ import java.util.List;
 public class Subsets {
 
 	/**
-	 * Method3: Bit Manipulation
+	 * Method3: Bit Manipulation: give all the possible subsets, we just need to exhaust all the 
+	 * possible combinations of the numbers. And each number has only two possibilities: either in 
+	 * or not in a subset. And this can be represented using a bit.
 	 * @param int[] nums
 	 * @return List<List<Integer>>
 	 * Time: O(2^n)
@@ -34,6 +36,16 @@ public class Subsets {
 		List<List<Integer>> result = new ArrayList<>();
 		if (nums == null || nums.length == 0) {
 			return result;
+		}
+		double n = Math.pow(2, nums.length);
+		for (int i = 0; i < n; i++) {
+			List<Integer> combo = new ArrayList<>();
+			for (int j = 0; j < nums.length; j++) {
+				if (((i >> j) & 1) == 1) {  // means has nums[j]
+					combo.add(nums[j]);
+				}
+			}
+			result.add(combo);
 		}
 		return result;
 	}
