@@ -20,6 +20,9 @@ import java.util.Stack;
  */
 public class BinaryTreePostorderTraversal {
 
+
+	
+	
 	/**
 	 * Method2: DFS(Iteration: postorder)(Template)
 	 * @param TreeNode root
@@ -49,7 +52,7 @@ public class BinaryTreePostorderTraversal {
 	
 	
 	/**
-	 * Method1: DFS(Recursion) add val in root-right-left order, then reverse result.
+	 * Method1: DFS(Recursion) add val in left-right-root order.
 	 * @param TreeNode root
 	 * @return List<Integer>
 	 * Time: O(n)
@@ -68,15 +71,16 @@ public class BinaryTreePostorderTraversal {
 		if (root == null) {
 			return;
 		}
-		result.add(0, root.val);
-		helper(root.right, result);
 		helper(root.left, result);
+		helper(root.right, result);
+		result.add(root.val);
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BinaryTreePostorderTraversal result = new BinaryTreePostorderTraversal();
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
+		TreeNode.printCBT(root);
 		System.out.println(result.binaryTreePostorderTraversal(root));
 	}
 
