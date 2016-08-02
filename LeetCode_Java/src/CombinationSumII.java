@@ -42,18 +42,14 @@ public class CombinationSumII {
 	}
 	
 	private void helper(int[] candidates, int pos, int sum, List<Integer> combo, List<List<Integer>> result) {
-		if (sum < 0) {
-			return;
-		}
 		if (sum == 0) {
 			result.add(new ArrayList<>(combo));
 		}
-		for (int i = pos; i < candidates.length; i++) {
-			if (i == pos || candidates[i] != candidates[i - 1]){  // skip duplicates
-				combo.add(candidates[i]);
-				helper(candidates, i + 1, sum - candidates[i], combo, result);
-				combo.remove(combo.size() - 1);
-			}
+		for (int i = pos; i < candidates.length; i++) { 
+			if (candidates[i] > sum || i != pos && candidates[i] == candidates[i - 1]) continue; // skip duplicates
+			combo.add(candidates[i]);
+			helper(candidates, i + 1, sum - candidates[i], combo, result);
+			combo.remove(combo.size() - 1);
 		}
 	}
 	

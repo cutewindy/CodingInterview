@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,19 +34,18 @@ public class CombinationSum {
 		if (candidates == null || candidates.length == 0) {
 			return result;
 		}
+		Arrays.sort(candidates);
 		helper(candidates, 0, target, new ArrayList<Integer>(), result);
 		return result;
 	}
 	
 	private void helper(int[] candidates, int pos, int sum, List<Integer> combo, List<List<Integer>> result) {
-		if (sum < 0) {
-			return;
-		}
 		if (sum == 0) {
 			result.add(new ArrayList<>(combo));
 			return;
 		}
 		for (int i = pos; i < candidates.length; i++) {
+			if (candidates[i] > sum) continue;
 			combo.add(candidates[i]);
 			helper(candidates, i, sum - candidates[i], combo, result); // not i + 1 because we can reuse same elements
 			combo.remove(combo.size() - 1);
