@@ -23,10 +23,10 @@ import java.util.Queue;
 public class SurroundedRegions {
 
 	/**
-	 * BFS: 
+	 * BFS/ Union find
 	 * @param char[][] board
 	 * Time: O(n^2)
-	 * Space: O(1)
+	 * Space: O(n)
 	 */
 	public void surroundedRegions(char[][] board) {
 		if (board == null || board.length == 0 || board[0].length == 0) {
@@ -35,7 +35,7 @@ public class SurroundedRegions {
 		int m = board.length;
 		int n = board[0].length;
 		Queue<int[]> queue = new LinkedList<>();
-		// do the init
+		// do the init, where board[i][j] = 'O' at edge
 		for (int col = 0; col < n; col++) {
 			if (board[0][col] == 'O') {               // 1 top line
 				queue.offer(new int[] {0, col});
