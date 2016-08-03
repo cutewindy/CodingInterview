@@ -19,6 +19,7 @@ public class NQueensII {
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(n)
+	 * Stack space: O(n)
 	 */
 	public int nQueensIII(int n) {
 		if (n == 0) {
@@ -60,6 +61,7 @@ public class NQueensII {
 	 * @return int 
 	 * Time: O(n^2)
 	 * Space: O(n)
+	 * Stack space: O(n)
 	 */
 	private int count = 0;
 	public int nQueensII(int n) {
