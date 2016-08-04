@@ -21,6 +21,33 @@ import java.util.Queue;
  */
 public class ImplementStackusingQueues {
 
+	/**
+	 * Method2: Just edit push method, move the last in into the first
+	 */
+	private Queue<Integer> queueI = new LinkedList<>();
+	public void pushI(int x) {
+		int size = queueI.size();
+		queueI.offer(x);
+		for (int i = 0; i < size; i++) {
+			queueI.offer(queueI.poll());
+		}
+	}
+	
+	public void popI() {
+		queueI.poll();
+	}
+	
+	public int topI() {
+		return queueI.peek();
+	}
+ 	
+	public boolean emptyI() {
+		return queueI.isEmpty();
+	}
+	
+	/**
+	 * Method1: Using one queue, and edit it when pop and top
+	 */
 	private Queue<Integer> queue = new LinkedList<>();
 	/**
 	 * Just add into queue
@@ -72,19 +99,35 @@ public class ImplementStackusingQueues {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ImplementStackusingQueues stack = new ImplementStackusingQueues();
-		stack.push(1);
-		stack.push(2);
-		stack.push(3);
-		System.out.println(stack.queue);
-		stack.pop();
-		System.out.println(stack.queue);
-		stack.push(4);
-		System.out.println(stack.queue);
-		System.out.println(stack.top());
-		System.out.println(stack.queue);
-		System.out.println(stack.top());
-		System.out.println(stack.queue);
-		System.out.println(stack.empty());
+//		stack.push(1);
+//		stack.push(2);
+//		stack.push(3);
+//		System.out.println(stack.queue);
+//		stack.pop();
+//		System.out.println(stack.queue);
+//		stack.push(4);
+//		System.out.println(stack.queue);
+//		System.out.println(stack.top());
+//		System.out.println(stack.queue);
+//		System.out.println(stack.top());
+//		System.out.println(stack.queue);
+//		System.out.println(stack.empty());
+		
+		System.out.println("------");
+		
+		stack.pushI(1);
+		stack.pushI(2);
+		stack.pushI(3);
+		System.out.println(stack.queueI);
+		stack.popI();
+		System.out.println(stack.queueI);
+		stack.pushI(4);
+		System.out.println(stack.queueI);
+		System.out.println(stack.topI());
+		System.out.println(stack.queueI);
+		System.out.println(stack.topI());
+		System.out.println(stack.queueI);
+		System.out.println(stack.emptyI());
 	}
 
 }
