@@ -25,13 +25,11 @@ import java.util.List;
  */
 public class PeekingIterator implements Iterator<Integer>{
     private Iterator<Integer> it;
-    private Integer peek = null;
+    private Integer peek;
 	public PeekingIterator(Iterator<Integer> iterator) {
 	    // initialize any member here.
 	    this.it = iterator;
-	    if (it.hasNext()) {
-	        peek = it.next();
-	    }
+	    this.peek = it.hasNext() ? it.next() : null;
 	}
 
     // Returns the next element in the iteration without advancing the iterator.
