@@ -62,7 +62,7 @@ public class PeekingIterator implements Iterator<Integer>{
 		list.add(1);
 		list.add(2);
 		list.add(3);
-		Iterator it = list.iterator();
+		Iterator<Integer> it = list.iterator();
 		PeekingIterator pit = new PeekingIterator(it);
 		System.out.println(pit.peek());
 		if (pit.hasNext()) {
