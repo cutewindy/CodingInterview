@@ -9,30 +9,31 @@ public class LinkedListCycleII {
 	
 	
 	/**
-	 * 
+	 * Two pointers: 
 	 * @param ListNode head
 	 * @return ListNode
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
 	public ListNode linkedListCycleII(ListNode head) {
-		if (head == null) {
+		if (head == null || head.next == null) {
 			return null;
 		}
 		ListNode slow = head;
 		ListNode fast = head;
-		while (fast != null && fast.next != null && fast != slow) {
+		while (fast.next != null && fast.next.next != null) {
 			slow = slow.next;
 			fast = fast.next.next;
+			if (slow == fast) break;
 		}
-		if (fast != null && fast.next != null) {
-			while (head != slow) {
-				head = head.next;
-				slow = slow.next;
-			}
-			return head;
+		if (fast.next == null || fast.next.next == null) { // no cycle
+			return null;
 		}
-		return null;
+		while (head != slow) {
+			head = head.next;
+			slow = slow.next;
+		}
+		return head;
 	}
 
 	public static void main(String[] args) {
