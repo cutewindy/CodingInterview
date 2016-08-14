@@ -47,7 +47,9 @@ public class LongestValidParentheses {
 	}
 	
 	/**
-	 * Method1: Stack:
+	 * Method1: Stack: Using stack to save all invalid index of '(' or ')', then the left bound is 
+	 * stack.peek().
+	 * If s[i]==')' && s[stack.peek()]=='(', currLength = i - stack.peek().
 	 * @param String s
 	 * @return int
 	 * Time:O(n)
@@ -58,24 +60,18 @@ public class LongestValidParentheses {
 			return 0;
 		}
 		int result = 0;
-		int curr = 0;
 		char[] S = s.toCharArray();
-		boolean content = true;
 		Stack<Integer> stack = new Stack<>();
+		stack.push(-1);
 		for (int i = 0; i < s.length(); i++) {
-			if (S[i] == '(') {
-				stack.push(i);
-				content = true;
-			}
-			else if (S[i] == ')' && !stack.isEmpty()) {
-				if (content) curr += i - stack.pop() + 1;
-				else curr = i - stack.pop() + 1;
+			if (S[i] == ')' && stack.size() > 1 && S[stack.peek()] == '(') {
+				stack.pop();
+				if (i - stack.peek() > result) result = i - stack.peek();
+//				result = Math.max(i - stack.peek(), result);  // time limit exception
 			}
 			else {
-				content = false;
-				curr = 0;
+				stack.push(i);
 			}
-			if (curr > result) result = curr;
 		}
 		return result;
 	}
@@ -87,9 +83,9 @@ public class LongestValidParentheses {
 		System.out.println(result.longestValidParentheses("())"));
 		System.out.println(result.longestValidParentheses("()(()"));
 		System.out.println(result.longestValidParentheses("()()"));
-		System.out.println(result.longestValidParenthesesI(")()((()())"));
-		System.out.println(result.longestValidParenthesesI("())"));
-		System.out.println(result.longestValidParenthesesI("()(()"));
+//		System.out.println(result.longestValidParenthesesI(")()((()())"));
+//		System.out.println(result.longestValidParenthesesI("())"));
+//		System.out.println(result.longestValidParenthesesI("()(()"));
 	}
 
 }
