@@ -2,7 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Given a string, find the length of the longest substring T that contains at most 2 distinct characters.
+ * Given a string, find the length of the longest substring T that contains at most 2 distinct 
+ * characters.
  * For example, given s = "eceba",
  * T is "ece" which its length is  3.
  * 
@@ -12,7 +13,13 @@ import java.util.Map;
  */
 public class LongestSubstringWithAtMostTwoDistinctCharacters {
 	/**
-	 * Two pointers: Slide window
+	 * Two pointers and slide window: Slide window
+	 * The main idea is to maintain a sliding window with 2 unique characters. The key is to store 
+	 * the last occurrence of each character as the value in the hashmap. This way, whenever the 
+	 * size of the hashmap exceeds 2, we can traverse through the s from start to remove the it in 
+	 * hashmap, if it's frequency is 0, then we remove it from hashmap that can get the longest
+	 * substring from start to i. And remove this character from our map. Since the range of 
+	 * characters is constrained, we should be able to find the left most index in constant time.
 	 * @param String s
 	 * @return int
 	 * Time: O(n)
@@ -22,25 +29,25 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters {
 		if (s == null || s.length() == 0) {
 			return 0;
 		}
-		int result = Integer.MIN_VALUE;
-		int head = 0;
-		Map<Character, Integer> hash = new HashMap();		
+		int result = 0;
+		int start = 0;
+		Map<Character, Integer> hash = new HashMap<>();	
+		char[] S = s.toCharArray();
 		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-			if (hash.containsKey(c)) {
-				hash.put(c, hash.get(c) + 1);
+			if (hash.containsKey(S[i])) {
+				hash.put(S[i], hash.get(S[i]) + 1);
 			}
 			else {
-				hash.put(c, 1);
+				hash.put(S[i], 1);
 			}
 			while (hash.size() > 2) {
-				hash.put(s.charAt(head), hash.get(s.charAt(head)) - 1);
-				if (hash.get(s.charAt(head)) == 0) {
-					hash.remove(s.charAt(head));
+				hash.put(S[start], hash.get(S[start]) - 1);
+				if (hash.get(S[start]) == 0) {
+					hash.remove(S[start]);
 				}
-				head++;
+				start++;
 			}
-			result = Math.max(i - head + 1, result);
+			result = Math.max(i - start + 1, result);
 		}
 		return result;
 	}
