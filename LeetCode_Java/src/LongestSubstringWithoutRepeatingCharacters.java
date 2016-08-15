@@ -25,20 +25,20 @@ public class LongestSubstringWithoutRepeatingCharacters {
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public int longestSubstringWithoutRepeatingCharacters(String s) {
-		int result = Integer.MIN_VALUE;
+	public int longestSubstringWithoutRepeatingCharacters(String s) {	
 		if (s == null || s.length() == 0) {
 			return 0;
 		}
-		Map<Character, Integer> hash = new HashMap();
-		int head = 0;
+		int result = 0;
+		int start = 0;
+		Map<Character, Integer> hash = new HashMap<>();
+		char[] S = s.toCharArray();
 		for (int i =0; i < s.length(); i++) {
-			char c = s.charAt(i);
-			if (hash.containsKey(c) && head <= hash.get(c)) {
-				head = hash.get(c) + 1;	
+			if (hash.containsKey(S[i]) && start <= hash.get(S[i])) {
+				start = hash.get(S[i]) + 1;	
 			}
-			result = Math.max(i - head + 1, result);
-			hash.put(c, i);
+			hash.put(S[i], i);
+			result = Math.max(i - start + 1, result);
 		}
 		return result;
 	}

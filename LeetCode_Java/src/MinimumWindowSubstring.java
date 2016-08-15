@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Given a string S and a string T, find the minimum window in S which will contain all the characters 
@@ -36,7 +35,7 @@ public class MinimumWindowSubstring {
 		if (s == null || t == null || s.length() < t.length() || t.length() == 0) {
 			return result;
 		}
-		Map<Character, Integer> counter = new HashMap(); // record the occurrence of Character in t
+		Map<Character, Integer> counter = new HashMap<>(); // record the occurrence of Character in t
 		for (int i = 0; i < t.length(); i++) {
 			char c = t.charAt(i);
 			if (counter.containsKey(c)) {
@@ -46,8 +45,8 @@ public class MinimumWindowSubstring {
 				counter.put(c, 1);
 			}
 		}
-		List<Integer> window = new ArrayList();
-		Map<Character, List<Integer>> hash = new HashMap(); // integer is the index of character, list length is determine by counter           th
+		List<Integer> window = new ArrayList<>();
+		Map<Character, List<Integer>> hash = new HashMap<>(); // integer is the index of character, list length is determine by counter           th
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 			if (counter.containsKey(c)) {  // filter				
@@ -55,7 +54,7 @@ public class MinimumWindowSubstring {
 					hash.get(c).add(i);
 				}
 				else {
-					List<Integer> list = new ArrayList(Arrays.asList(i));
+					List<Integer> list = new ArrayList<>(Arrays.asList(i));
 					hash.put(c, list);
 				}
 				window.add(i);             // update window
