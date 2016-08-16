@@ -21,38 +21,28 @@ public class SwapNodesinPairs {
 	 * Space: O(1)
 	 */
 	public ListNode swapNodesinPairs(ListNode head) {
-		if (head == null || head.next == null) {
-			return head;
-		}
-		ListNode dummy = new ListNode(0);
-		dummy.next = head;
-		ListNode prev = dummy;
-		ListNode a = head;
-		ListNode b = head.next;
-		ListNode next = b.next;
-		while (a != null &&b != null) {
-			prev.next = b;
-			b.next = a;
-			a.next = next;
-			prev = a;
-			if (next != null && next.next != null) {
-				a = next;
-				b = next.next;
-				next = b.next;
-			}
-			else {
-				break;
-			}
-		}	
-		return dummy.next;
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        while (pre.next != null && pre.next.next != null) {
+            ListNode odd = pre.next;
+            ListNode even = pre.next.next;
+            odd.next = even.next;
+            even.next = pre.next;
+            pre.next = even;
+            pre = odd;
+        }
+        return dummy.next;
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SwapNodesinPairs result = new SwapNodesinPairs();
-		int[] array = {1, 2, 3, 4, 5};
-		ListNode head = ListNode.generateLinkedList(array);
-		ListNode.printLinkedList(result.swapNodesinPairs(head));
+		ListNode head1 = ListNode.generateLinkedList(new int[] {1, 2, 3, 4});
+		ListNode.printLinkedList(result.swapNodesinPairs(head1));
+		ListNode head2 = ListNode.generateLinkedList(new int[] {1, 2, 3, 4, 5});
+		ListNode.printLinkedList(result.swapNodesinPairs(head2));		
 	}
 
 }
