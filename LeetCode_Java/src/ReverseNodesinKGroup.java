@@ -38,7 +38,7 @@ public class ReverseNodesinKGroup {
 			}
 			if (post == null) break;
 			ListNode first = pre.next;
-			for (int i = 0; i < k - 1; i++) {
+			for (int i = 0; i < k - 1; i++) {  // be care about swapping k - 1 times instead of k
 				ListNode second = first.next;
 				first.next = second.next;
 				second.next = pre.next;
