@@ -83,9 +83,7 @@ public class IntersectionofTwoLinkedLists {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		IntersectionofTwoLinkedLists result = new IntersectionofTwoLinkedLists();
-		
+		// TODO Auto-generated method stub		
 	}
 
 }
