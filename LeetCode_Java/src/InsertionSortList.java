@@ -11,7 +11,7 @@ public class InsertionSortList {
 	 * Using pivot to find where the curr node inserts.
 	 * @param ListNode head
 	 * @return ListNode
-	 * Time: O(n)
+	 * Time: O(n^2)
 	 * Space: O(1)
 	 */
 	public ListNode insertionSortList(ListNode head) {
@@ -29,7 +29,7 @@ public class InsertionSortList {
 			// 2.1 insert curr node and move to next step
 			if (pivot.next != curr) {
 				prev.next = curr.next;
-				curr.next = curr.next = pivot.next;
+				curr.next = pivot.next;
 				pivot.next = curr;
 				curr = prev.next;
 			}
