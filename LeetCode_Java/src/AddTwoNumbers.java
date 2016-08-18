@@ -55,8 +55,8 @@ public class AddTwoNumbers {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		AddTwoNumbers result = new AddTwoNumbers();
-		ListNode l1 = ListNode.generateLinkedList(new int[] {5, 1, 6});
-		ListNode l2 = ListNode.generateLinkedList(new int[] {5, 6, 4});
+		ListNode l1 = ListNode.generateLinkedList(new int[] {5, 4, 6});
+		ListNode l2 = ListNode.generateLinkedList(new int[] {5, 2, 4, 9});
 		ListNode.printLinkedList(l1);
 		ListNode.printLinkedList(l2);
 		ListNode.printLinkedList(result.addTwoNumbers(l1, l2));

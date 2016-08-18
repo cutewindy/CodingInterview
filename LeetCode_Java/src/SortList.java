@@ -12,7 +12,7 @@ public class SortList {
 	 * Using helper function to find the mid node of list, then merging sort head list and mid list.
 	 * @param ListNode head
 	 * @return ListNode
-	 * Time: O(n)
+	 * Time: O(nlog(n))
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
@@ -58,7 +58,7 @@ public class SortList {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SortList result = new SortList();
-		ListNode head = ListNode.generateLinkedList(new int[] {6, 2, 5, 3, 1, 4, 7});
+		ListNode head = ListNode.generateLinkedList(new int[] {6, 2, 3, 4, 5, 1, 7});
 		ListNode.printLinkedList(head);
 		ListNode.printLinkedList(result.sortList(head));
 	}
