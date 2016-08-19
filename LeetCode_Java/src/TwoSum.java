@@ -26,7 +26,7 @@ public class TwoSum {
 	 */
 	public int[] twoSum(int[] nums, int target) {
 		int[] result = {-1, -1};
-		if (nums == null || nums.length == 0) return result;
+		if (nums == null || nums.length < 2) return result;
 		Map<Integer, Integer> hash = new HashMap<>();
 		for (int i = 0; i < nums.length; i++) {
 			if (hash.containsKey(target - nums[i])) {
