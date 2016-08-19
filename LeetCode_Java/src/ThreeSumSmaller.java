@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class ThreeSumSmaller {
 
 	/**
-	 * Two pointers: Like 3 sum
+	 * Two pointers: 
 	 * @param int[] nums, int target
 	 * @return int
 	 * Time: O(n^2)
@@ -28,11 +28,11 @@ public class ThreeSumSmaller {
 		Arrays.sort(nums);
 		int result = 0;
 		for (int i = 0; i <= nums.length - 3; i++) {
+			if (nums[i] + nums[i + 1] + nums[i + 1 + 1] >= target) break;  // cutting
 			int start = i + 1;
 			int end = nums.length - 1;
 			while (start < end) {
-				int sum = nums[i] + nums[start] + nums[end];
-				if (sum < target) {
+				if (nums[i] + nums[start] + nums[end] < target) {
 					result += end - start;
 					start++;
 				}
@@ -47,7 +47,7 @@ public class ThreeSumSmaller {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ThreeSumSmaller result = new ThreeSumSmaller();
-		System.out.println(result.threeSumSmaller(new int[] {-2, 0, 1, 3}, 2));
+		System.out.println(result.threeSumSmaller(new int[] {-2, 0, 1, 3, 4}, 2));
 	}
 
 }
