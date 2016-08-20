@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,19 +18,27 @@ import java.util.Map;
  */
 public class TwoSumIII_DataStructureDesign {
 
+	private List<Integer> list = new ArrayList<>();   // speed up
 	private Map<Integer, Integer> hash = new HashMap<>();
 	
     // Add the number to an internal data structure.
 	public void add(int number) {
-	    hash.put(number, hash.containsKey(number) ? 2 : 1); // two is enough
+	    if (hash.containsKey(number)) hash.put(number, 2); // two is enough
+	    else {
+	    	hash.put(number, 1);
+	    	list.add(number);
+	    }
 	}
 
     // Find if there exists any pair of numbers which sum is equal to the value.
 	public boolean find(int value) {
-	    for (int num: hash.keySet()) {
-	    	if (value - num != num && hash.containsKey(value - num)) return true;
-	    	if (value - num == num && hash.get(num) > 1) return true;	
-	    }
+		for (int i = 0; i < list.size(); i++) {
+			int num1 = list.get(i);
+			int num2 = value - num1;
+			if (num2 != num1 && hash.containsKey(num2) || num2 == num1 && hash.get(num2) > 1) {
+				return true;
+			}
+		}
 	    return false;
 	}	
 	
