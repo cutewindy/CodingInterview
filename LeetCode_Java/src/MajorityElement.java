@@ -21,25 +21,30 @@ public class MajorityElement {
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
-	public int majorityElementI(int[] nums) {	
+	public int majorityElementII(int[] nums) {	
 		if (nums == null || nums.length == 0) {
 			return -1;
 		}
-		int result = -1;
+		int cand = -1;
 		int count = 0;
 		for (int i = 0; i < nums.length; i++) {
 			if (count == 0) {
-				result = nums[i];
+				cand = nums[i];
 				count = 1;
 			}
-			else if (nums[i] == result) {
+			else if (nums[i] == cand) {
 				count++;
 			}
 			else {
 				count--;
 			}
 		}
-		return result;
+		// if the majority element doesn't always exist in the array
+		count = 0;    
+		for (int num: nums) {
+			if (num == cand) count++;
+		}
+		return count > nums.length / 2 ? cand : -1;
 	}
 	
 	
@@ -50,7 +55,7 @@ public class MajorityElement {
 	 * Time: O(nlog(n))
 	 * Space: O(1)
 	 */
-	public int majorityElement(int[] nums) {	
+	public int majorityElementI(int[] nums) {	
 		if (nums == null || nums.length == 0) {
 			return -1;
 		}
@@ -68,12 +73,12 @@ public class MajorityElement {
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public int majorityElementII(int[] nums) {
+	public int majorityElement(int[] nums) {
 		if (nums == null || nums.length == 0) {
 			return -1;
 		}
 		HashMap<Integer, Integer> hash = new HashMap<>();
-		int l = (nums.length % 2 != 0 ? nums.length / 2 : nums.length /2 - 1);
+		int half = nums.length / 2;
 		for (int num: nums) {
 			if (hash.containsKey(num)) {
 				hash.put(num, hash.get(num) + 1);
@@ -81,7 +86,7 @@ public class MajorityElement {
 			else {
 				hash.put(num, 1);
 			}
-			if (hash.get(num) > l) {
+			if (hash.get(num) > half) {
 				return num;
 			}
 		}
@@ -93,8 +98,8 @@ public class MajorityElement {
 		MajorityElement result = new MajorityElement();
 //		int[] nums = {1, 2, 4, 3, 2, 2, 1, 2};
 		int[] nums = {6, 5, 5};
-//		System.out.println(result.majorityElement(nums));
-//		System.out.println(result.majorityElementI(nums));
+		System.out.println(result.majorityElement(nums));
+		System.out.println(result.majorityElementI(nums));
 		System.out.println(result.majorityElementII(nums));
 
 
