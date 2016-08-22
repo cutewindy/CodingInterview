@@ -26,11 +26,11 @@ public class SubstringwithConcatenationofAllWords {
 	 * Space: O(n)
 	 */
 	public List<Integer> substringwithConcatenationofAllWords(String s, String[] words) {
-		List<Integer> result = new ArrayList();
+		List<Integer> result = new ArrayList<>();
 		if (s == null || s.length() == 0 || words == null || words.length == 0) {
 			return result;
 		}
-		Map<String, Integer> counter = new HashMap();  // use counter to save the words needed to be find
+		Map<String, Integer> counter = new HashMap<>();  // use counter to save the words needed to be find
 		for (int i = 0; i < words.length; i++) {
 			if (counter.containsKey(words[i])) {
 				counter.put(words[i], counter.get(words[i]) + 1);
@@ -43,7 +43,7 @@ public class SubstringwithConcatenationofAllWords {
 		for (int i = 0; i < x; i++) {
 			int head = i;
 			int count = 0;  // use count to record how many words are found 
-			Map<String, Integer> hash = new HashMap(); // use hash to record the occurrence of each word that be find
+			Map<String, Integer> hash = new HashMap<>(); // use hash to record the occurrence of each word that be find
 			for (int j = i; j < s.length() - x + 1;) {
 				String str = s.substring(j, j + x);  // str is word in s that might be the words in word 
 				if (counter.containsKey(str)) { // if str is the word in words, save it in window(hash, count) and check occurrence, otherwise move window

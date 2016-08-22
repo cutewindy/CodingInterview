@@ -6,48 +6,44 @@
  *
  */
 public class ReverseString {
-	/**
-	 * use the reverse() function of StringBuilder()
-	 * @param s
-	 * @return
-	 * Time: O(n)
-	 * Space: O(1)
-	 */
-	public String reverseString(String s) {
-		if (s == null || s.length() == 0) {
-			return "";
-		}
-		StringBuilder result = new StringBuilder(s);
-//		for (int i = s.length() - 1; i >=0; i--) {
-//			result.append(s.charAt(i));
-//		}		
-		return String.valueOf(result.reverse());
-	}
 	
+	/** 
+	 * Method2: Two Pointers: transform string to char array, and then do it in-place
+	 * @param String s
+	 * @return String
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
 	public String reverseStringI(String s) {
-//		if (s == null || s.length() == 0) {
-//			return s;
-//		}
-//		String result = new String();
-//		for (int i = s.length() - 1; i >= 0; i--) {
-//			result += String.valueOf(s.charAt(i));
-//		}
-//		return result;
-		
         if (s == null || s.length() == 0) {
             return s;
         }
         int start = 0;
         int end = s.length() - 1;;
-        char[] array = s.toCharArray();
+        char[] S = s.toCharArray();
         while (start < end) {
-            char temp = array[start];
-            array[start] = array[end];
-            array[end] = temp;
+            char temp = S[start];
+            S[start] = S[end];
+            S[end] = temp;
             start++;
             end--;
         }
-        return String.valueOf(array);
+        return String.valueOf(S);
+	}
+	
+	/**
+	 * Method1: use the reverse() function of StringBuilder()
+	 * @param String s
+	 * @return String
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public String reverseString(String s) {
+		if (s == null || s.length() == 0) {
+			return s;
+		}
+		StringBuilder result = new StringBuilder(s);
+		return String.valueOf(result.reverse());
 	}
 
  	public static void main(String[] args) {

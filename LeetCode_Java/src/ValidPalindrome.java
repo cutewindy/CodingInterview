@@ -6,6 +6,8 @@
  * Note:
  * Have you consider that the string might be empty? This is a good question to ask during an interview.
  * For the purpose of this problem, we define empty string as valid palindrome.
+ * 
+ * Tags: Two Pointers, String
  * @author wendi
  *
  */
@@ -13,8 +15,8 @@ public class ValidPalindrome {
 	
 	/**
 	 * Two pointers: check char one by one, if not equal, return false
-	 * @param s
-	 * @return
+	 * @param String s
+	 * @return boolean
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
@@ -22,18 +24,17 @@ public class ValidPalindrome {
 		if (s == null || s.length() == 0) {
 			return true;
 		}
+		char[] S = s.toCharArray();
 		int start = 0;
 		int end = s.length() - 1;
 		while (start < end) {
-			while (start < end && !Character.isLetterOrDigit(s.charAt(start))) {
+			while (start < end && !Character.isLetterOrDigit(S[start])) {
 				start++;
 			}
-			while (start < end && !Character.isLetterOrDigit(s.charAt(end))) {
+			while (start < end && !Character.isLetterOrDigit(S[end])) {
 				end--;
 			}
-			char a = Character.toLowerCase(s.charAt(start));
-			char b = Character.toLowerCase(s.charAt(end));
-			if (a != b) {
+			if (Character.toLowerCase(S[start]) != Character.toLowerCase(S[end])) {
 				return false;
 			}
 			start++;

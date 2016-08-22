@@ -4,7 +4,6 @@ import java.util.HashMap;
 /**
  * Given an array of size n, find the majority element. 
  * The majority element is the element that appears more than ⌊ n/2 ⌋ times.
-
  * You may assume that the array is non-empty and the majority element always exist in the array.
  * 
  * Tag: Array, Divide & Conquer, Bit manipulation 
@@ -14,23 +13,7 @@ import java.util.HashMap;
 public class MajorityElement {
 
 	/**
-	 * Method1: Sorted Array: sort the nums first, then return nums[l/2]. (l=s.length).
-	 * @param array nums
-	 * @return int
-	 * Time: O(nlog(n))
-	 * Space: O(1)
-	 */
-	public int majorityElement(int[] nums) {	
-		if (nums == null || nums.length == 0) {
-			return -1;
-		}
-		Arrays.sort(nums);
-		return nums[nums.length / 2];
-	}
-	
-	
-	/**
-	 * Method2: Moore's majority vote method: 
+	 * Method3: Moore's majority vote method: 
 	 * use a count to record the curr majority occurrence, 
 	 * if it's equal to nums[i], count++, otherwise count--.
 	 * @param int[] nums
@@ -59,8 +42,25 @@ public class MajorityElement {
 		return result;
 	}
 	
+	
 	/**
-	 * Method3: HashMap: using a HashMap to save the occurrence of num, 
+	 * Method2: Sorted Array: sort the nums first, then return nums[l/2]. (l=s.length).
+	 * @param array nums
+	 * @return int
+	 * Time: O(nlog(n))
+	 * Space: O(1)
+	 */
+	public int majorityElement(int[] nums) {	
+		if (nums == null || nums.length == 0) {
+			return -1;
+		}
+		Arrays.sort(nums);
+		return nums[nums.length / 2];
+	}
+	
+	
+	/**
+	 * Method1: HashMap: using a HashMap to save the occurrence of num, 
 	 * if the occurrence of num > nums.length/2( or nums.lengt/2-1),
 	 *  then return that num
 	 * @param int[] nums
@@ -72,7 +72,7 @@ public class MajorityElement {
 		if (nums == null || nums.length == 0) {
 			return -1;
 		}
-		HashMap<Integer, Integer> hash = new HashMap();
+		HashMap<Integer, Integer> hash = new HashMap<>();
 		int l = (nums.length % 2 != 0 ? nums.length / 2 : nums.length /2 - 1);
 		for (int num: nums) {
 			if (hash.containsKey(num)) {
