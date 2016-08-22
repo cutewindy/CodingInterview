@@ -12,9 +12,10 @@ import java.util.HashSet;
  *
  */
 public class ContainsDuplicate {
+	
 	/**
-	 * Method1: HashSet: iteratively save distinct value in set, if duplicate, return true
-	 * @param array nums
+	 * Method2: HashSet: iteratively save distinct value in set, if duplicate, return true
+	 * @param int[] nums
 	 * @return boolean
 	 * Time: O(n)
 	 * Space: O(n)
@@ -23,23 +24,24 @@ public class ContainsDuplicate {
 		if (nums == null || nums.length == 0) {
 			return false;
 		}
-		HashSet<Integer> set = new HashSet();
-		for (int i = 0; i < nums.length; i++) {
-			if (set.contains(nums[i])) {
+		HashSet<Integer> set = new HashSet<>();
+		for (int num: nums) {
+			if (set.contains(num)) {
 				return true;
 			}
 			else {
-				set.add(nums[i]);
+				set.add(num);
 			}
 		}
 		return false;
 	}
 	
+	
 	/**
-	 * Method2: Sorted array: sort array first, then iterate array, if nums[i]==nums[i+1], 
+	 * Method1: Sorted array: sort array first, then iterate array, if nums[i]==nums[i+1], 
 	 * duplicated, return true
 	 * @param nums
-	 * @return
+	 * @return boolean
 	 * Time: O(nlog(n))
 	 * Space: O(1)
 	 */
@@ -49,7 +51,7 @@ public class ContainsDuplicate {
 		}
 		Arrays.sort(nums);
 		for (int i = 0; i < nums.length; i++) {
-			if (i + 1 < nums.length && nums[i] == nums[i + 1]) {
+			if (i != 0 && nums[i] == nums[i - 1]) {
 				return true;
 			}
 		}
@@ -60,7 +62,7 @@ public class ContainsDuplicate {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ContainsDuplicate result = new ContainsDuplicate();
-		int[] nums = {1, 3, 5, 2, 9};
+		int[] nums = {1, 9, 5, 2, 9};
 		System.out.println(result.containsDuplicate(nums));
 		System.out.println(result.containsDuplicateI(nums));
 
