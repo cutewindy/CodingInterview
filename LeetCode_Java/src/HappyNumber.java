@@ -21,20 +21,54 @@ import java.util.HashSet;
  */
 public class HappyNumber {
 
+	
 	/**
-	 * HashSet: using HashSet to save the once occurrence sum, if it occur twice, return false, 
+	 * Method2: Two pointers: fast and slow to determine whether there is a cycle.
+	 * @param int n
+	 * @return boolean
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public boolean happyNumberI(int n) {
+		if (n <= 0) {
+			return false;
+		}
+		int slow = n;
+		int fast = n;
+		do {
+			slow = digitSquareSum(slow);
+			fast = digitSquareSum(digitSquareSum(fast));	
+			if (fast == 1) {
+				return true;
+			}
+		} while (slow != fast);
+		return false;
+	}
+		
+	private int digitSquareSum(int n) {
+		int sum = 0;
+		while (n != 0) {
+			sum += Math.pow(n % 10, 2);
+			n /= 10;
+		}
+		return sum;
+	}
+	
+	
+	/**
+	 * Method1: HashSet: using HashSet to save the once occurrence sum, if it occur twice, return false, 
 	 * otherwise it can be calculated to equal to 1.
 	 * @param int n
 	 * @return boolean
-	 * Time: O(1)
-	 * Space: O(1)
+	 * Time: O(n)
+	 * Space: O(n)
 	 */
 	public boolean happyNumber(int n) {
 		if (n <= 0) {
 			return false;
 		}
 		int sum = 0;
-		HashSet<Integer> set = new HashSet();
+		HashSet<Integer> set = new HashSet<>();
 		while (sum != 1) {
 			sum = 0;
 			while (n != 0) {
@@ -56,6 +90,8 @@ public class HappyNumber {
 		// TODO Auto-generated method stub
 		HappyNumber result = new HappyNumber();
 		System.out.println(result.happyNumber(19));
+		System.out.println(result.happyNumberI(19));
+		System.out.println(result.happyNumberI(10));
 	}
 
 }

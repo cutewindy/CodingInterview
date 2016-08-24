@@ -2,14 +2,16 @@
  * Given an integer, write a function to determine if it is a power of three.
  * Follow up:
  * Could you do it without using any loop / recursion?
+ * 
+ * Tags: Math
  * @author wendi
  *
  */
 public class PowerofThree {
 	
 	/**
-	 * Math.pow(3, 19) % n == 0
-	 * @param n
+	 * Math: Math.pow(3, 19) % n == 0
+	 * @param int n
 	 * @return boolean
 	 * Time: O(1)
 	 * Space: O(1)
@@ -18,11 +20,7 @@ public class PowerofThree {
 		if (n <= 0) {
 			return false;
 		}
-		boolean result = true;
-		if (Math.pow(3, 19) % n == 0) {
-			result = false;
-		}	
-		return result;
+		return Math.pow(3, 19) % n == 0;
 	}
 
 	public static void main(String[] args) {
