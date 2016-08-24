@@ -69,6 +69,7 @@ public class HappyNumber {
 		}
 		int sum = 0;
 		HashSet<Integer> set = new HashSet<>();
+		set.add(n);
 		while (sum != 1) {
 			sum = 0;
 			while (n != 0) {
