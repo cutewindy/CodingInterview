@@ -26,8 +26,9 @@ public class StrobogrammaticNumberII {
 	 * Space: O(n)
 	 */
 	public List<String> strobogrammaticNumberII(int n) {
-		if (n == 0) return new ArrayList<>();;
-		List<String> result = n % 2 == 0 ? Arrays.asList("") : Arrays.asList("0", "1", "8");  // be care not have 6 and 9
+		List<String> result = new ArrayList<>();
+		if (n <= 0) return result;
+		result.addAll(n % 2 == 0 ? Arrays.asList("") : Arrays.asList("0", "1", "8"));  // be care not have 6 and 9
 		for (int i = 1; i <= n / 2; i++) {
 			List<String> newRes = new ArrayList<>();
 			for (String str: result) {
