@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Write a program to find the n-th ugly number.
@@ -33,25 +31,24 @@ public class UglyNumberII {
 		if (n <= 0) {
 			return 0;
 		}
-		List<Integer> ugly = new ArrayList<>();
-		ugly.add(1);
+		int[] ugly = new int[n];
+		ugly[0] = 1;
 		int i2 = 0;
 		int i3 = 0;
 		int i5 = 0;
-		for (int i = 2; i <= n; i++) {
-			while (ugly.get(i2) * 2 <= ugly.get(ugly.size() - 1)) {
+		for (int i = 1; i < n; i++) {
+			while (ugly[i2] * 2 <= ugly[i - 1]) {
 				i2++;
 			}
-			while (ugly.get(i3) * 3 <= ugly.get(ugly.size() - 1)) {
+			while (ugly[i3] * 3 <= ugly[i - 1]) {
 				i3++;
 			}
-			while (ugly.get(i5) * 5 <= ugly.get(ugly.size() - 1)) {
+			while (ugly[i5] * 5 <= ugly[i - 1]) {
 				i5++;
 			}
-			int next = Math.min(Math.min(ugly.get(i2) * 2, ugly.get(i3) * 3), ugly.get(i5) * 5);
-			ugly.add(next);
+			ugly[i] = Math.min(Math.min(ugly[i2] * 2, ugly[i3] * 3), ugly[i5] * 5);
 		}
-		return ugly.get(ugly.size() - 1);
+		return ugly[n - 1];
 	}
 	
 	public static void main(String[] args) {
