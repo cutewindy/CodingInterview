@@ -22,7 +22,7 @@ public class AddBinary {
 		else if (b == null || b.length() == 0) {
 			return a;
 		}
-		String result = new String();
+		StringBuilder result = new StringBuilder();
 		int iA = a.length() - 1;
 		int iB = b.length() - 1;
 		int carry = 0;
@@ -30,12 +30,12 @@ public class AddBinary {
 			int numA = iA >= 0 ? a.charAt(iA--) - '0' : 0;
 			int numB = iB >= 0 ? b.charAt(iB--) - '0' : 0;
 			int sum = numA + numB + carry;
-			result = String.valueOf(sum & 1) + result;
+			result.append(sum & 1);
 			carry = sum >> 1;	
 //			iA--;
 //			iB--;
 		}		
-		return result;
+		return result.reverse().toString();
 	}
 
 	public static void main(String[] args) {
