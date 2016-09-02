@@ -39,17 +39,33 @@ public class LineReflection {
 		}
 		float x = ((float)max + (float)min) / 2;
 //		System.out.println(min);
-//		System.out.println(x);
-		for (int i = 0; i < points.length; i++) {
-		    if (points[i][0] == x) continue;  // [1][0]
-			boolean find = false;
-			for (int j = 0; j < points.length; j++) {
-				if (j == i) continue;
-				if (points[j][1] == points[i][1] && Math.abs(points[j][0] - x) == Math.abs(points[i][0] - x)) {
-					find = true;
+		System.out.println(x);
+		Map<int[], Integer> hash = new HashMap<>();
+		for (int[] p: points) {
+			if (p[0] == x) {
+				continue;
+			}
+			else if (p[0] > x) {
+				if (hash.containsKey(p)) {
+					hash.put(p, hash.get(p) + 1);
+				}
+				else {
+					hash.put(p, 1);
 				}
 			}
-			if (!find) {
+			else {
+				int[] op = {(int)(2 * x - p[0]), p[1]};
+				if (hash.containsKey(op)) {
+					hash.put(op, hash.get(op) - 1);
+				}
+				else {
+					hash.put(op, -1);
+				}
+			}
+		}
+//		Iterator it = hash.iterator();
+		for (int[] p: hash.keySet()) {
+			if (hash.get(p) != 0) {
 				return false;
 			}
 		}
@@ -59,7 +75,7 @@ public class LineReflection {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LineReflection result = new LineReflection();
-		System.out.println(result.lineReflection(new int[][] {{0, 0}, {1, 0}}));
+//		System.out.println(result.lineReflection(new int[][] {{0, 0}, {1, 0}}));
 		System.out.println(result.lineReflection(new int[][] {{0, 1}, {2, 1}, {-1, 0}, {3, 0}}));
 	}
 

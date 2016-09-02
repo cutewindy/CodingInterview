@@ -22,8 +22,8 @@ public class ReverseInteger {
 
 	/**
 	 * get the last digit of x as the first digit of res using res=res*10+x%10.
-	 * @param x
-	 * @return
+	 * @param int x
+	 * @return int
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
@@ -34,10 +34,10 @@ public class ReverseInteger {
 		long result = 0;
 		while (x != 0) {
 			result = result * 10 + x % 10;
+			x /= 10;
 			if (result < Integer.MIN_VALUE || result > Integer.MAX_VALUE) {
 				return 0;
 			}
-			x /= 10;
 		}
 		return (int)result;
 	}
@@ -46,6 +46,7 @@ public class ReverseInteger {
 		// TODO Auto-generated method stub
 		ReverseInteger result = new ReverseInteger();
 		System.out.println(result.reverseInteger(-123));
+		System.out.println(-23 % 10);
 	}
 
 }
