@@ -10,8 +10,7 @@
 public class AddBinary {
 	/**
 	 * From end to start add char one by one, use carry to record the carry bit
-	 * @param String a
-	 * @param String b
+	 * @param String a, String b
 	 * @return String
 	 * Time: O(n)  n is the longest length of a and b
 	 * Space: O(1)
@@ -28,11 +27,11 @@ public class AddBinary {
 		int iB = b.length() - 1;
 		int carry = 0;
 		while (carry != 0 || iA >= 0 || iB >= 0) {
-			int numA = iA >= 0 ? Integer.valueOf(a.charAt(iA--) - '0') : 0;
-			int numB = iB >= 0 ? Integer.valueOf(b.charAt(iB--) - '0') : 0;
-			int sum = (numA + numB + carry) & 1;
-			carry = (numA + numB + carry) >> 1;
-			result = String.valueOf(sum) + result;
+			int numA = iA >= 0 ? a.charAt(iA--) - '0' : 0;
+			int numB = iB >= 0 ? b.charAt(iB--) - '0' : 0;
+			int sum = numA + numB + carry;
+			result = String.valueOf(sum & 1) + result;
+			carry = sum >> 1;	
 //			iA--;
 //			iB--;
 		}		
