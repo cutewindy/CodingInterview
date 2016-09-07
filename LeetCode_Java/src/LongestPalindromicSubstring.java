@@ -9,6 +9,7 @@
 public class LongestPalindromicSubstring {
 	
 	/**
+	 * Method2: 
 	 * 1. char i has two case (i,i) and (i,i+1) as center that has palindrome. 
 	 * 2. work in the function (i, j). i move to left, j move to right.
 	 *    find and return the longest palindrome, which use (i,i) or (i,i+1) as center.
@@ -18,7 +19,7 @@ public class LongestPalindromicSubstring {
 	 * Time: O(n^2)
 	 * Space: O(1)
 	 */
-	public String longestPalindromicSubstring(String s) {
+	public String longestPalindromicSubstringI(String s) {
 		if (s == null || s.length() == 0) {
 			return "";
 		}
@@ -53,51 +54,50 @@ public class LongestPalindromicSubstring {
 	
 	
 	/**
-	 * Method1: brute force
-	 * @param start
-	 * @param end
-	 * @param s
-	 * @return Boolean
+	 * Method1: Brute force(Time Limit Exceeded)
+	 * @param String s
+	 * @return String
 	 * Time: O(n^3)
-	 * Space: O(n)
-	 */
-//	public Boolean isPalindrome(int start, int end, String s) {
-//		if (start == end) {
-//			return true;
-//		}
-//		while (start < end) {
-//			if (s.charAt(start) != s.charAt(end)) {
-//				return false;
-//			}
-//			start++;
-//			end--;
-//		}
-//		return true;
-//	}
-//	
-//	public String longestPalindromicSubstring(String s) {
-//		if (s == null || s.length() == 0) {
-//			return "";
-//		}
-//		String result = new String();
-//		int length = 0;
-//		for (int i = 0; i < s.length(); i++) {
-//			for (int j = i; j < s.length(); j++) {
-//				if (isPalindrome(i, j, s)) {
-//					if (length < j - i + 1) {
-//						length = j - i + 1;
-//						result = s.substring(i, j + 1);
-//					}
-//				}
-//			}
-//		}
-//		return result;
-//	}
+	 * Space: O(1)
+	 */	
+	public String longestPalindromicSubstring(String s) {
+		if (s == null || s.length() == 0) {
+			return "";
+		}
+		String result = new String();
+		int length = 0;
+		for (int i = 0; i < s.length(); i++) {
+			for (int j = i; j < s.length(); j++) {
+				if (isPalindrome(i, j, s)) {
+					if (length < j - i + 1) {
+						length = j - i + 1;
+						result = s.substring(i, j + 1);
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	public boolean isPalindrome(int start, int end, String s) {
+		if (start == end) {
+			return true;
+		}
+		while (start < end) {
+			if (s.charAt(start) != s.charAt(end)) {
+				return false;
+			}
+			start++;
+			end--;
+		}
+		return true;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LongestPalindromicSubstring result = new LongestPalindromicSubstring();
 		System.out.println(result.longestPalindromicSubstring("character"));
+		System.out.println(result.longestPalindromicSubstringI("character"));
 	}
 
 }

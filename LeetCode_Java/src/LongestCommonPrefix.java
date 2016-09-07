@@ -6,11 +6,34 @@
 public class LongestCommonPrefix {
 	
 	/**
-	 * start from the first char, compare it with all string, and then the second char
-	 * find min length in strs, make sure that the index < minLength
+	 * Method2: start from the first one, compare prefix with next string and update prefix, until end;
+	 * @param String strs
+	 * @return String
+	 * Time: O(nk) k is the min length of string in array
+	 * Space: O(1)
+	 */
+	public String longestCommonPrefixI(String[] strs) {
+		if (strs == null || strs.length == 0) {
+			return "";
+		}
+		String prefix = strs[0];
+		for (int i = 1; i < strs.length; i++) {
+			int j = 0;
+			while (j < strs[i].length() && j < prefix.length() && strs[i].charAt(j) == prefix.charAt(j)) {
+				j++;
+			}
+			prefix = prefix.substring(0, j);
+		}
+		return prefix;
+	}
+	
+	
+	/**
+	 * Method1: start from the first char, compare it with all string, and then the second char.
+	 * Find min length in strs, make sure that the index < minLength.
 	 * @param array of string
 	 * @return String 
-	 * Time: O(n * Min.length in list)
+	 * Time: O(nk) k is the min length of string in array
 	 * Space: O(1)
 	 */
 	public String longestCommonPrefix(String[] strs) {
@@ -18,16 +41,14 @@ public class LongestCommonPrefix {
 			return "";
 		}
 		String result = new String();
-		int n = strs.length;
 		int minLength = Integer.MAX_VALUE;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < strs.length; i++) {
 			minLength = Math.min(strs[i].length(), minLength);
 		}
-		int index = 0;
-		while (index < minLength) {
+		for (int index = 0; index < minLength; index++) {
 			boolean equal = true;
 			char c = strs[0].charAt(index);
-			for (int i = 1; i < n; i++) {
+			for (int i = 1; i < strs.length; i++) {
 				if (strs[i].charAt(index) != c) {
 					equal = false;
 					break;
@@ -39,7 +60,6 @@ public class LongestCommonPrefix {
 			else {
 				break;
 			}
-			index++;
 		}	
 		return result;
 	}
@@ -47,10 +67,10 @@ public class LongestCommonPrefix {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LongestCommonPrefix result = new LongestCommonPrefix();
-		String[] strs = {"ABCDE", "ABEFGEE", "ACEFEGS"};
-//		String[] strs = {""};
-		System.out.println(result.longestCommonPrefix(strs));
-
+		System.out.println(result.longestCommonPrefix(new String[] {"ABCD", "ABED", "ABCF"}));
+		System.out.println(result.longestCommonPrefix(new String[] {""}));
+		System.out.println(result.longestCommonPrefixI(new String[] {"ABCD", "ABED", "ABCF"}));
+		System.out.println(result.longestCommonPrefixI(new String[] {""}));
 	}
 
 }
