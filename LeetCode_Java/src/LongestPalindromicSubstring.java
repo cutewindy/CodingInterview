@@ -26,20 +26,18 @@ public class LongestPalindromicSubstring {
 		String result = new String();
 		int start = 0;
 		int end = 0;
-		int len1 = 0;
-		int len2 = 0;
-		int maxLeng = 0;
-		result = Character.toString(s.charAt(0));
+		int maxLeng = 1;
+//		result = Character.toString(s.charAt(0));
 		for (int i = 0; i < s.length(); i++) {
-			len1 = findLongestPalindromicSubstring(s, i, i);
-			len2 = findLongestPalindromicSubstring(s, i, i + 1);
+			int len1 = findLongestPalindromicSubstring(s, i, i);
+			int len2 = findLongestPalindromicSubstring(s, i, i + 1);
 			maxLeng = Math.max(len1, len2);
 			if (maxLeng > end - start + 1) {
 				start = i - (maxLeng - 1) / 2;
-				end = i + maxLeng / 2;
-				result = s.substring(start, end + 1);
+				end = i + maxLeng / 2;			
 			}			
 		}
+		result = s.substring(start, end + 1);
 		return result;
 	}
 	
@@ -96,8 +94,8 @@ public class LongestPalindromicSubstring {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LongestPalindromicSubstring result = new LongestPalindromicSubstring();
-		System.out.println(result.longestPalindromicSubstring("character"));
-		System.out.println(result.longestPalindromicSubstringI("character"));
+		System.out.println(result.longestPalindromicSubstring("characcar"));
+		System.out.println(result.longestPalindromicSubstringI("characcar"));
 	}
 
 }
