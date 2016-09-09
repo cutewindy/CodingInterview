@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -15,18 +14,6 @@ import java.util.List;
  * @author wendi
  *
  */
-//class Interval {
-//	int start;
-//	int end;
-//	Interval() {
-//		start = 0;
-//		end = 0;
-//	}
-//	Interval(int s, int e) {
-//		start = s;
-//		end = e;
-//	}
-//}
 
 public class InsertInterval {
 	class Interval {
@@ -51,10 +38,11 @@ public class InsertInterval {
 	}
 	
 	/**
-	 * 
-	 * @param intervals
-	 * @param newInterval
-	 * @return
+	 * Brute Force
+	 * @param List<Interval> intervals, Interval newInterval
+	 * @return List<Interval>
+	 * Time: O(n)
+	 * Space: O(1)
 	 */
 	public List<Interval> insertInterval(List<Interval> intervals, Interval newInterval) {
         List<Interval> result = new ArrayList<>();
