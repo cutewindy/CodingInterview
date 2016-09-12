@@ -8,20 +8,24 @@ import java.util.Map;
  * @author wendi
  *
  */
-class Point {
-	int x;
-	int y;
-	public Point() {
-		this.x = 0;
-		this.y = 0;
-	}
-	public Point(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-}
 
 public class MaxPointsonaLine {
+	class Point {
+		int x;
+		int y;
+		public Point() {
+			this.x = 0;
+			this.y = 0;
+		}
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+	
+	Point initPoint(int x, int y) {
+		return new Point(x, y);
+	}
 	
 	/**
 	 * HashTable:
@@ -60,7 +64,7 @@ public class MaxPointsonaLine {
 				}
 				else {
 					double slop = (double)(points[j].y - points[i].y) / (points[j].x - points[i].x);
-					if (slop == -0.0) {
+					if (slop == -0.0) {    // be care about 0.0 != -0.0
 						slop = 0.0;
 					}
 					if (hash.containsKey(slop)) {
@@ -84,7 +88,7 @@ public class MaxPointsonaLine {
 //		Point[] points = {new Point(0, 0), new Point(2, 2), new Point(-1, 0), new Point(-1, 2), 
 //						  new Point(1, 1), new Point(3, 3), new Point(0, 1), new Point(0, 0),
 //						  new Point(0, 2), new Point(0, 0)};
-		Point[] points = {new Point(2, 3), new Point(3, 3), new Point(-5, 3)};
+		Point[] points = {result.initPoint(2, 3), result.initPoint(3, 3), result.initPoint(-5, 3)};
 		System.out.println(result.maxPointsonaLine(points));
 	}
 

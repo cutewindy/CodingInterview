@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Given a string s and a string t, check if s is subsequence of t.
  * You may assume that there is only lower case English letters in both s and t. t is potentially a 
@@ -26,12 +29,13 @@ public class IsSubsequence {
 	 * @param String s, String t
 	 * @return boolean
 	 * Time: O(klog(n))
-	 * Space: O(n)
+	 * Space: O(n^2)
 	 */
 	public boolean isSubsequenceI(String s, String t) {
 		if (s == null || s.length() < t.length()) {
 			return false;
 		}
+//		List<Integer>[] array = new List<Integer>[26];
 		return false;
 	}
 	
@@ -60,13 +64,13 @@ public class IsSubsequence {
 //		return is == s.length();
 		
 		// or (faster:2ms)
-		int curr = 0;
+		int index = 0;
 		for (int i = 0; i < s.length(); i++) {
-			curr = t.indexOf(s.charAt(i), curr);
-			if (curr == -1) {
+			index = t.indexOf(s.charAt(i), index);
+			if (index == -1) {
 				return false;
 			}
-			curr++;
+			index++;
 		}
 		return true;
 	}
