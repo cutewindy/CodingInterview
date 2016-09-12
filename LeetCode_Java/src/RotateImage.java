@@ -13,6 +13,7 @@ import java.util.Arrays;
 public class RotateImage {
 
 	/**
+	 * Math
 	 * @param int[][] matrix
 	 * Time: O(n^2)
 	 * Space: O(1)

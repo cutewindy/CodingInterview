@@ -38,7 +38,12 @@ public class InsertInterval {
 	}
 	
 	/**
-	 * Brute Force
+	 * Brute Force: Using a value pos to record the position where to insert the newInterval.
+	 * Check whether curr Interval can merge into newInterval:
+	 * 1. if i.s > n.e, res.add(i) and pos++;
+	 * 2. else if n.e < i.s, res.add(i);
+	 * 3. else merge i and n.
+	 * Then, add newInterval into res according to pos.
 	 * @param List<Interval> intervals, Interval newInterval
 	 * @return List<Interval>
 	 * Time: O(n)

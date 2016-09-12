@@ -20,30 +20,62 @@
  *
  */
 public class IsSubsequence {
-	
+
 	/**
-	 * 
+	 * Method2: Binary Search 
 	 * @param String s, String t
 	 * @return boolean
-	 * Time: O(n)
-	 * Space: O(1)
+	 * Time: O(klog(n))
+	 * Space: O(n)
 	 */
-	public boolean isSubsequence(String s, String t) {
+	public boolean isSubsequenceI(String s, String t) {
 		if (s == null || s.length() < t.length()) {
 			return false;
 		}
-		int is = 0;
-		int it = 0;
-		while (is < s.length() && it < t.length()) {
-			
-		}
 		return false;
+	}
+	
+	
+	/**
+	 * Method1: Brute Force
+	 * @param String s, String t
+	 * @return boolean
+	 * Time: O(kn)  k is the times to call isSubsequence()
+	 * Space: O(1)
+	 */
+	public boolean isSubsequence(String s, String t) {
+		if (s == null || s.length() > t.length()) {
+			return false;
+		}
+//		int is = 0;
+//		int it = 0;
+//		char[] S = s.toCharArray();
+//		char[] T = t.toCharArray();
+//		while (is < s.length() && it < t.length()) {
+//			if (S[is] == T[it]) {
+//				is++;
+//			}
+//			it++;
+//		}
+//		return is == s.length();
+		
+		// or (faster:2ms)
+		int curr = 0;
+		for (int i = 0; i < s.length(); i++) {
+			curr = t.indexOf(s.charAt(i), curr);
+			if (curr == -1) {
+				return false;
+			}
+			curr++;
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		IsSubsequence result = new IsSubsequence();
-		System.out.println(result.isSubsequence("abcde", "ace"));
+		System.out.println(result.isSubsequence("ace", "abcde"));
+		System.out.println(result.isSubsequenceI("ace", "abcde"));
 	}
 
 }

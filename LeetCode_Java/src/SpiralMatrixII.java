@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class SpiralMatrixII {
 	
 	/**
-	 * Same like "SpiralMatrix"
+	 * Same like "SpiralMatrix": using a count to record whether our of range
 	 * @param int n
 	 * @return int[][] 
 	 * Time: O(n^2)
