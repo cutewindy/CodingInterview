@@ -32,7 +32,7 @@ public class SimplifyPath {
 		}
 		// 1 push valid path in stack, if "..", pop from stack.
 		String[] paths = path.split("/");
-//		System.out.println(Arrays.toString(paths));
+		System.out.println(Arrays.toString(paths));
 		Stack<String> stack = new Stack<>();
 		for (String p: paths) {
 			if (p.equals("") || p.equals(".") || p.equals("..") && stack.isEmpty()) continue;
@@ -55,7 +55,7 @@ public class SimplifyPath {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SimplifyPath result = new SimplifyPath();
-		System.out.println(result.simplifyPath("/../a/./b//c/../../d/"));
+		System.out.println(result.simplifyPath("//../a/./b//c/../../d//"));
 		System.out.println(result.simplifyPath("/"));
 	}
 

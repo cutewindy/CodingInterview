@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,7 +36,9 @@ public class IsSubsequence {
 		if (s == null || s.length() < t.length()) {
 			return false;
 		}
-//		List<Integer>[] array = new List<Integer>[26];
+		@SuppressWarnings("unchecked")
+		List<Integer>[] array = new ArrayList[26];
+//		int index = Collections.binarySearch(list, key)
 		return false;
 	}
 	
