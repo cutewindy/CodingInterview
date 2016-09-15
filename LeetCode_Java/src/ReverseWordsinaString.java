@@ -1,8 +1,10 @@
 /**
- *Given an input string, reverse the string word by word.
- *For example,
- *Given s = "the sky is blue",
- *return "blue is sky the".
+ * Given an input string, reverse the string word by word.
+ * For example,
+ * Given s = "the sky is blue",
+ * return "blue is sky the".
+ * 
+ * Tags: String
  * @author wendi
  * 
  */
@@ -18,20 +20,17 @@ public class ReverseWordsinaString {
 	 */
 	public String reverseWordsinaString(String s) {
 		if (s == null || s.length() == 0) {
-			return "";
+			return s;
 		}
-		String result = new String();
+		StringBuilder result = new StringBuilder();
 		String[] array = s.split(" ");
 		for (int i = array.length - 1; i >= 0; i--) {
 			if (array[i].length() != 0) {
-				result = result + array[i] + " ";  
+				result.append(array[i]).append(" ");  
 			}
 		}
-		// remove the last " "
-		if (result.length() != 0) {
-			result = result.substring(0, result.length() - 1);
-		}
-		return result + "***";
+		// remove the last " " and care about case "      "
+		return result.length() == 0 ? "" : result.toString().substring(0, result.length() - 1);
 	}
 	
 	
@@ -68,8 +67,10 @@ public class ReverseWordsinaString {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ReverseWordsinaString result = new ReverseWordsinaString();
-		System.out.println(result.reverseWordsinaString(" the  sky   is blue   "));
-		System.out.println(result.reverseWordsinaString("a"));
+		String str = "  the sky  is blue   ";
+		System.out.println(str.replace(' ', '_'));
+		System.out.println(result.reverseWordsinaString("  the sky  is blue   ").replace(' ', '_') + "*");
+		System.out.println(result.reverseWordsinaString("    ") + "*");
 
 	}
 

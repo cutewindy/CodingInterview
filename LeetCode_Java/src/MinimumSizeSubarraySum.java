@@ -28,24 +28,24 @@ public class MinimumSizeSubarraySum {
 			return 0;
 		}
 		int result = Integer.MAX_VALUE;
-		int head = 0;
+		int start = 0;
 		int sum = 0;
 		for (int i = 0; i < nums.length; i++) {
 			sum += nums[i];
 			while (sum >= s) {
-				result = Math.min(i - head + 1, result);
-				sum -= nums[head];
-				head++;
+				result = Math.min(i - start + 1, result);
+				sum -= nums[start];
+				start++;
 			}
 		}
-		return result <= nums.length ? result : 0;
+		return result <= nums.length ? result : 0;   // be care
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MinimumSizeSubarraySum result = new MinimumSizeSubarraySum();
-		int[] array = {2,3,1,2,4,3};
-		System.out.println(result.minimumSizeSubarraySum(7, array));
+		System.out.println(result.minimumSizeSubarraySum(7, new int[] {2, 3, 1, 2, 4, 3}));
+		System.out.println(result.minimumSizeSubarraySum(3, new int[] {1, 1}));
 	}
 
 }

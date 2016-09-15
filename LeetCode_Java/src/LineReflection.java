@@ -2,7 +2,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Given n points on a 2D plane, find if there is such a line parallel to y-axis that reflect the given points.
+ * Given n points on a 2D plane, find if there is such a line parallel to y-axis that reflect the 
+ * given points.
  * Example 1:
  * Given points = [[1,1],[-1,1]], return true.
  * Example 2:
