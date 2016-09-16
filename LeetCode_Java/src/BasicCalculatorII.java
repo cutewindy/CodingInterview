@@ -18,7 +18,60 @@ import java.util.Stack;
 public class BasicCalculatorII {
 	
 	/**
-	 * Method2: Use pre to record the num before op, and curr to record the num after op.
+	 * Method3: Do last operation when get operator. (Can't not do opeartion when get num, ' 1 01' case )
+	 * Use multi to record the last num, if op is * or /, call back.
+	 * If op = '+', res += num, multi = num.
+	 * If op = '-', res -= num, multi = -num.
+	 * If op = '*', res = res - multi + multi * num.
+	 * If op = '/', res = res - multi + multi / num.
+	 * @param String s
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int basicCalculatorIIII(String s) {
+		if (s == null || s.length() == 0) {
+			return 0;
+		}		
+		int result = 0;
+		char op = '+';
+		int num = 0;
+		int multi = 0;
+		char[] S = s.toCharArray();
+		for (int i = 0; i <= S.length; i++) {
+			char c = i == S.length ? ']' : S[i];
+			if (c == ' ') continue;
+			if (Character.isDigit(c)) {
+				num = num * 10 + c - '0';
+			}
+			else {
+				if (op == '+') {
+					result += num;
+					multi = num;
+				}
+				else if (op == '-') {
+					result -= num;
+					multi = - num;
+				}
+				else if (op == '*') {
+					result = result - multi + multi * num;
+					multi *= num;
+				}
+				else if (op == '/') {
+					result = result - multi + multi / num;
+					multi /= num;
+				}
+				op = c;
+				num = 0;
+			}
+		}
+		return result;
+	}
+
+	
+	/**
+	 * Method2: Do last last operation when get operator.
+	 * Use pre to record the num before op, and curr to record the num after op.
 	 * If op = '+', res += pre, pre = curr.
 	 * If op = '-', res += pre, pre = -curr.
 	 * If op = '*', pre *= curr; (not calculate res directly, update pre first, find next curr)
@@ -65,7 +118,7 @@ public class BasicCalculatorII {
 	
 	
 	/**
-	 * Method1: Stack
+	 * Method1: Stack: do last operation when get operator.
 	 * use stack to save num, op is prev operation, not current c.
 	 * If op is '+', push num into stack.
 	 * If op is '-', push -num into stack.
@@ -119,6 +172,8 @@ public class BasicCalculatorII {
 		System.out.println(result.basicCalculatorII("  3 + 2 - 1 + 2 * 2 - 1   "));
 		System.out.println(result.basicCalculatorIII("  12 - 3 * 3 + 0  1 0   "));
 		System.out.println(result.basicCalculatorIII("  3 + 2 - 1 + 2 * 2 - 1   "));
+		System.out.println(result.basicCalculatorIIII("  12 - 3 * 3 + 0  1 0   "));
+		System.out.println(result.basicCalculatorIIII("  3 + 2 - 1 + 2 * 2 - 1   "));
 	}
 
 }
