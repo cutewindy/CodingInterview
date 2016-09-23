@@ -32,10 +32,9 @@ public class ClosestBinarySearchTreeValueII {
  	 * 1. Do a log(n) traversal to initialize them until reach the null node. 
  	 * 2. Use the getPredecessor and getSuccessor method to pop k closest nodes and update the stacks.
 Time complexity is O(klogn), since k BST traversals are needed and each is bounded by O(logn) time. Note that it is not O(logn + k) which is the time complexity for k closest numbers in a linear array.
-Space complexity is O(klogn), since each traversal brings O(logn) new nodes to the stack.
 	 * @param TreeNode root, double target, int k
 	 * @return List<Integer>
-	 * Time: O(log(n))
+	 * Time: O(n)
 	 * Space: O(n)
 	 */
 	public List<Integer> closestBinarySearchTreeValueIII(TreeNode root, double target, int k) {
