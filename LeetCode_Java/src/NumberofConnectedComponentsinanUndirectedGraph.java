@@ -58,6 +58,11 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 	
 	/**
 	 * Union find: for each edge, if we need to do union, then the single node--.
+	 * 1. n points = n islands = n trees = n roots.
+	 * 2. with each edge added, check which island is e[0] or e[1] belonging to.
+	 * 3. If e[0] and e[1] are in same islands, do nothing.
+	 * 4. Otherwise, union two islands, and reduce islands count by 1.
+	 * 5. Bonus: path compression can reduce time by 50%.
 	 * @param int n, int[][] edges
 	 * @return int
 	 * Time: O(n^2)
