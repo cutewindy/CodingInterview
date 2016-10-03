@@ -20,7 +20,30 @@
  *
  */
 public class NumberofConnectedComponentsinanUndirectedGraph {
+	
+	class UnionFind {
+		int[] parent;
+		public UnionFind(int[][] edges) {
+			
+		}
+		public int find(int val) {
+			return val;
+		}
+		
+		public boolean union(int node1, int node2) {
+			int p1 = find(node1);
+			int p2 = find(node2);
+			if (p1 == p2) {
+				return false;
+			}
+			else {
+				parent[node1] = node2;
+			}
+			return true;
+		}
+	}
 
+	
 	/**
 	 * Union find: 
 	 * @param int n, int[][] edges
@@ -32,7 +55,13 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 		if (edges == null || edges.length == 0) {
 			return 0;
 		}
-		int result = 0;
+		int result = n;
+		UnionFind uf = new UnionFind(edges);
+		for (int[] edge: edges) {
+			if (uf.union(edge[0], edge[1])) {
+				result--;
+			}
+		}
 		return result;
 	}
 	
