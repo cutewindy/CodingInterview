@@ -22,12 +22,24 @@
 public class NumberofConnectedComponentsinanUndirectedGraph {
 	
 	class UnionFind {
-		int[] parent;
-		public UnionFind(int[][] edges) {
-			
+		int[] parents;
+		public UnionFind(int n) {
+			parents = new int[n];
+			for (int i = 0; i < n; i++) {
+				parents[i] = i;
+			}
 		}
-		public int find(int val) {
-			return val;
+		public int find(int node) {
+			int parent = node;
+			while (parents[parent] != parent) {
+				parent = parents[parent];
+			}
+			while (parents[node] != parent) {  // pass compression
+				int temp = parents[node];
+				parents[node] = parent;
+				node = temp;
+			}
+			return parent;
 		}
 		
 		public boolean union(int node1, int node2) {
@@ -37,7 +49,7 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 				return false;
 			}
 			else {
-				parent[node1] = node2;
+				parents[p2] = p1;
 			}
 			return true;
 		}
@@ -45,18 +57,18 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 
 	
 	/**
-	 * Union find: 
+	 * Union find: for each edge, if we need to do union, then the single node--.
 	 * @param int n, int[][] edges
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n^2)
+	 * Space: O(n)
 	 */
 	public int numberofConnectedComponentsinanUndirectedGraph(int n, int[][] edges) {
-		if (edges == null || edges.length == 0) {
-			return 0;
+		if (edges == null || edges.length == 0 || n <= 1) {
+			return n;
 		}
 		int result = n;
-		UnionFind uf = new UnionFind(edges);
+		UnionFind uf = new UnionFind(n);
 		for (int[] edge: edges) {
 			if (uf.union(edge[0], edge[1])) {
 				result--;
@@ -68,7 +80,8 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NumberofConnectedComponentsinanUndirectedGraph result = new NumberofConnectedComponentsinanUndirectedGraph();
-		System.out.println(result.numberofConnectedComponentsinanUndirectedGraph(5, new int[][] {{0, 1}, {1, 2}, {3, 4}}));
+		System.out.println(result.numberofConnectedComponentsinanUndirectedGraph(5, new int[][]
+				{{0,1},{2, 1},{2,0},{2,4}}));
 	}
 
 }
