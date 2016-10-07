@@ -45,7 +45,9 @@ public class DesignSnakeGame {
 	public DesignSnakeGame(int width, int height, int[][] food) {
 		this.width = width;
 		this.height = height;
-		food = new int[food.length][food[0].length];
+		int m = food.length;
+		int n = food[0].length;
+		food = new int[m][n];
 		for (int i = 0; i < food.length; i++) {
 			this.food[i] = food[i];
 		}
@@ -54,7 +56,6 @@ public class DesignSnakeGame {
 	
 	
 	public int move(String direction) {
-		this.width = 0;
 		return 0;
 	}
 
