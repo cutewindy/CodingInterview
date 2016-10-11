@@ -1,3 +1,7 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  * Given an m x n matrix of positive integers representing the height of each unit cell in a 2D 
  * elevation map, compute the volume of water it is able to trap after raining.
@@ -21,12 +25,72 @@
  *
  */
 public class TrappingRainWaterII {
+	class Node {
+		int x;
+		int y;
+		int h;
+		public Node(int x, int y, int h) {
+			this.x = x;
+			this.y = y;
+			this.h = h;
+		}
+	}
 	
+	/**
+	 * Heap: from the borders, pick the shortest cell visited and check its neighbors:
+     * If the neighbor is shorter, collect the water it can trap and update its height as its height 
+     * plus the water trapped.
+     * Add all its neighbors to the queue.
+	 * @param int[][] heightMap
+	 * @return int
+	 * Time: O(m * n + 2log(k)) k is number of node in heap
+	 * Space: O(m * n + k)
+	 */
 	public int trappingRainWaterII(int[][] heightMap) {
 		if (heightMap == null || heightMap.length == 0 || heightMap[0].length == 0) {
 			return 0;
 		}
+		int m = heightMap.length;
+		int n = heightMap[0].length;
 		int result = 0;
+		Queue<Node> heap = new PriorityQueue<>(10, new Comparator<Node>() {
+			@Override
+			public int compare(Node a, Node b) {
+				return a.h - b.h;
+			}
+		});
+		boolean[][] visited = new boolean[m][n];
+		// init, add all the Nodes which are on borders to the queue.
+		for (int j = 0; j < n; j++) {   
+			heap.add(new Node(0, j, heightMap[0][j])); // top
+			visited[0][j] = true;
+			heap.add(new Node(m - 1, j, heightMap[m - 1][j])); // bottom
+			visited[m - 1][j] = true;
+		}
+		for (int i = 0; i < m; i++) {  
+			heap.add(new Node(i, 0, heightMap[i][0]));  // left
+			visited[i][0] = true;
+			heap.add(new Node(i, n - 1, heightMap[i][n - 1]));  // right
+			visited[i][n - 1] = true;
+		}
+		// update heap and result
+		int[][] dire = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+		while (!heap.isEmpty()) {
+			Node curr = heap.poll();
+			for (int i = 0; i < dire.length; i++) {
+				int row = curr.x + dire[i][0];
+				int col = curr.y + dire[i][1];
+				if (row < 0 || row >= m || col < 0 || col >= n || visited[row][col]) {
+					continue;   // check whether out of bound or is visited
+				}
+				if (heightMap[row][col] < curr.h) {
+					result += curr.h - heightMap[row][col];
+					heightMap[row][col] = curr.h;
+				}
+				heap.add(new Node(row, col, heightMap[row][col]));
+				visited[row][col] = true;
+			}
+		}
 		return result;	
 	}
 
