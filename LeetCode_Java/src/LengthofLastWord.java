@@ -12,8 +12,8 @@
 public class LengthofLastWord {
 	
 	/**
-	 * From the end to start. Find ' ' first: skip, find ' ' last: break.
-	 * @param s
+	 * From the end to start. Using trim to remove ' ' behind last word.
+	 * @param String s
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(1)
@@ -23,18 +23,9 @@ public class LengthofLastWord {
 			return 0;
 		}
 		int result = 0;
-		int i = s.length() - 1;
-		while (i >= 0) {
-			if (result == 0 && s.charAt(i) == ' ') {
-				i--;
-			}
-			else if (result != 0 && s.charAt(i) == ' ') {
-				break;
-			}
-			else {
-				result++;
-				i--;
-			}
+		char[] S = s.trim().toCharArray();
+		for (int i = S.length - 1; i >= 0 && S[i] != ' '; i--) {
+			result++;
 		}		
 		return result;
 	}
