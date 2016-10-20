@@ -8,6 +8,18 @@
  *
  */
 public class AddDigits {
+	
+	/**
+	 * Method2: Math:
+	 * @param int num
+	 * @return int
+	 * Time: O(1)
+	 * Space: O(1)
+	 */
+	public int addDigitsI(int num) {
+		return 0;
+	}
+	
 	/**
 	 * Method1: loop: based on the definition.
 	 * @param int num
@@ -16,29 +28,25 @@ public class AddDigits {
 	 * Space: O(1)
 	 */
 	public int addDigits(int num) {
-		int result = num;
-		while (result >= 10) {
-			num = result;
-			result = 0;
-			while (num >= 10) {
-				result += num % 10;
+		if (num <= 0) {
+			return 0;
+		}
+		while (num >= 10) {
+			int n = 0;
+			while (num > 0) {
+				n += num % 10;
 				num /= 10;
 			}
-			result += num;
+			num = n;
 		}
-		return result;
+		return num;
 	}
-	
-//	public int addDigitsI(int num) {
-//		
-//	}
-	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		AddDigits result = new AddDigits();
 		System.out.println(result.addDigits(38));
-//		System.out.println(result.addDigitsI(38));
+		System.out.println(result.addDigitsI(38));
 	}
 
 }

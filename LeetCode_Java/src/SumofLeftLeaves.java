@@ -16,6 +16,40 @@ import java.util.Stack;
  */
 public class SumofLeftLeaves {
 	
+	/**
+	 * Method2: Recursion: For given node, check whether its left child is a leaf. 
+	 * If it is the case, return its value as answer.
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
+	 */
+	public int sumofLeftLeavesI(TreeNode root) {
+		if (root == null) {
+			return 0;
+		}	
+		return helper(root.left, true) + helper(root.right, false);
+	}
+	
+	private int helper(TreeNode root, boolean isLeft) {
+		if (root == null) {
+			return 0;
+		}
+		if (root.left == null && root.right == null && isLeft) {
+			return root.val;
+		}
+		return helper(root.left, true) + helper(root.right, false);
+	}
+	
+	/**
+	 * Method1: Iteration: Inorder traversal: for each node check whether its left child is a leaf. 
+	 * If it is true, we add its value to answer, otherwise add left child to the stack to process it late.
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(log(n))
+	 */
 	public int sumofLeftLeaves(TreeNode root) {
 		if (root == null) {
 			return 0;
@@ -26,16 +60,13 @@ public class SumofLeftLeaves {
 			while (root != null) {
 				stack.push(root);
 				root = root.left;
+				if (root != null && root.left == null && root.right == null) {
+					result += root.val;
+				}
 			}
 			root = stack.pop();
-			if (root.right == null) {
-				result += root.val;
-			}
-			else {
-				root = root.right;
-			}
+			root = root.right;
 		}
-			
 		return result;
 	}
 
@@ -45,6 +76,7 @@ public class SumofLeftLeaves {
 		TreeNode root = TreeNode.generateCBT(new int[] {3, 9 ,20, 15, 7, 9});
 		TreeNode.printCBT(root);
 		System.out.println(result.sumofLeftLeaves(root));
+		System.out.println(result.sumofLeftLeavesI(root));
 	}
 
 }
