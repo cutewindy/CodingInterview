@@ -12,9 +12,13 @@ import java.util.Map;
  * Each element in the result should appear as many times as it shows in both arrays.
  * The result can be in any order.
  * Follow up:
- * What if the given array is already sorted? How would you optimize your algorithm?
- * What if nums1's size is small compared to nums2's size? Which algorithm is better?
- * What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+ * 1. What if the given array is already sorted? How would you optimize your algorithm? 
+ *    (Two pointers)
+ * 2. What if nums1's size is small compared to nums2's size? Which algorithm is better? 
+ * 	  (If nums2 is sorted, using Binary Search, otherwise, using HashMap(nums1) + list)
+ * 3. What if elements of nums2 are stored on disk, and the memory is limited such that you cannot 
+ *    load all elements into the memory at once?
+ *    (Memory records nums1 using HashMap and iterates num2 partly every time from disk)
  * 
  * Tags: BinarySearch, HashTable, Two Pointers, Sort
  * @author wendi

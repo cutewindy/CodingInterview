@@ -1,6 +1,8 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Given a string s and a string t, check if s is subsequence of t.
@@ -26,20 +28,64 @@ import java.util.List;
 public class IsSubsequence {
 
 	/**
-	 * Method2: Binary Search 
+	 * Method2: Binary Search (follow up)
+	 * Using hash<Character, List<Integer>> to record the index of T, and then find possible index.
 	 * @param String s, String t
 	 * @return boolean
-	 * Time: O(klog(n))
-	 * Space: O(n^2)
+	 * Time: O(kmlog(n))
+	 * Space: O(n)
 	 */
 	public boolean isSubsequenceI(String s, String t) {
-		if (s == null || s.length() < t.length()) {
+		if (s == null || s.length() > t.length()) {
 			return false;
 		}
-		@SuppressWarnings("unchecked")
-		List<Integer>[] array = new ArrayList[26];
-//		int index = Collections.binarySearch(list, key)
-		return false;
+		Map<Character, List<Integer>> hash = new HashMap<>();
+		char[] T = t.toCharArray();
+		char[] S = s.toCharArray();
+		for (int i = 0; i < T.length; i++) {
+			if (hash.containsKey(T[i])) {
+				hash.get(T[i]).add(i);
+			}
+			else {
+				hash.put(T[i], new ArrayList<>(Arrays.asList(i)));
+			}
+		}
+//		for (Character c: hash.keySet()) {
+//			System.out.println(c + ": " + hash.get(c));
+//		}
+		int index = -1;
+		for (int i = 0; i < S.length; i++) {
+			if (!hash.containsKey(S[i])) {
+				return false;
+			}
+			index = binarySearchFirstEqualOrLarger(hash, S[i], index) + 1;
+			if (index == -1) return false;
+		}
+		return true;
+	}
+	
+	
+	// Binary Search to find the possible minimum index in T, otherwise return -2
+	private int binarySearchFirstEqualOrLarger(Map<Character, List<Integer>> hash, char c, int index) {
+		if (!hash.containsKey(c)) return -2;
+		Integer[] array = hash.get(c).toArray(new Integer[hash.get(c).size()]);
+		int start = 0;
+		int end = array.length - 1;
+		while (start + 1 < end) {
+			int mid = start + (end - start) / 2;
+			if (array[mid] == index) {
+				return array[mid];
+			}
+			else if (array[mid] < index) {
+				start = mid;
+			}
+			else {
+				end = mid;
+			}
+		}
+		if (array[start] >= index) return array[start];
+		if (array[end] >= index) return array[end];
+		return -2;
 	}
 	
 	
@@ -47,7 +93,7 @@ public class IsSubsequence {
 	 * Method1: Brute Force
 	 * @param String s, String t
 	 * @return boolean
-	 * Time: O(kn)  k is the times to call isSubsequence()
+	 * Time: O(k(m + n))  k is the times to call isSubsequence(), m is the length of s, n is the length of t
 	 * Space: O(1)
 	 */
 	public boolean isSubsequence(String s, String t) {
@@ -65,8 +111,8 @@ public class IsSubsequence {
 //			it++;
 //		}
 //		return is == s.length();
-		
-		// or (faster:2ms)
+//		
+//		// or (faster:2ms)
 		int index = 0;
 		for (int i = 0; i < s.length(); i++) {
 			index = t.indexOf(s.charAt(i), index);
@@ -76,13 +122,14 @@ public class IsSubsequence {
 			index++;
 		}
 		return true;
+		
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		IsSubsequence result = new IsSubsequence();
 		System.out.println(result.isSubsequence("ace", "abcde"));
-		System.out.println(result.isSubsequenceI("ace", "abcde"));
+		System.out.println(result.isSubsequenceI("aec", "abcde"));
 	}
 
 }
