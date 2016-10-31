@@ -67,7 +67,7 @@ public class KthSmallestElementinaBST {
 			return -1;
 		}
 		TreeNode node = root;
-		Stack<TreeNode> stack = new Stack();
+		Stack<TreeNode> stack = new Stack<>();
 		stack.push(root);
 		while (node != null || !stack.isEmpty()) {
 			if (node != null) {     // when the 

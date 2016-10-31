@@ -32,7 +32,6 @@ public class KthSmallestElementinaSortedMatrix {
 		}
 	}
 	
-	
 	/**
 	 * Heap: pull min element from minHeap, and offer matrix[i][j+1] into heap. If j = 0, offer 
 	 * matrix[i+1][j] into heap as well
@@ -55,11 +54,13 @@ public class KthSmallestElementinaSortedMatrix {
 		Pair result = new Pair(-1, -1, -1);
 		while (!heap.isEmpty() && k-- > 0) {
 			result = heap.poll();
-			if (result.j + 1 < matrix[0].length) {
-				heap.offer(new Pair(result.i, result.j + 1, matrix[result.i][result.j + 1]));
+			int row = result.i;
+			int col = result.j;
+			if (col + 1 < matrix[0].length) {
+				heap.offer(new Pair(row, col + 1, matrix[row][col + 1]));
 			}
-			if (result.j == 0 && result.i + 1 < matrix.length) {
-				heap.offer(new Pair(result.i + 1, result.j, matrix[result.i + 1][result.j]));
+			if (col == 0 && row + 1 < matrix.length) {
+				heap.offer(new Pair(row + 1, result.j, matrix[row + 1][col]));
 			}
 		}
 		return result.val;

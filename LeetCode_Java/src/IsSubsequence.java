@@ -50,9 +50,9 @@ public class IsSubsequence {
 				hash.put(T[i], new ArrayList<>(Arrays.asList(i)));
 			}
 		}
-//		for (Character c: hash.keySet()) {
-//			System.out.println(c + ": " + hash.get(c));
-//		}
+		for (Character c: hash.keySet()) {
+			System.out.println(c + ": " + hash.get(c));
+		}
 		int index = -1;
 		for (int i = 0; i < S.length; i++) {
 			if (!hash.containsKey(S[i])) {
@@ -129,7 +129,7 @@ public class IsSubsequence {
 		// TODO Auto-generated method stub
 		IsSubsequence result = new IsSubsequence();
 		System.out.println(result.isSubsequence("ace", "abcde"));
-		System.out.println(result.isSubsequenceI("aec", "abcde"));
+		System.out.println(result.isSubsequenceI("acd", "ccbbcacadbadc"));
 	}
 
 }
