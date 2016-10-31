@@ -24,20 +24,17 @@ public class TwoSumII_InputArrayIsSorted {
 	 * Space: O(1)
 	 */
 	public int[] twoSum_InputArrayIsSorted(int[] numbers, int target) {
-		int[] result = {-1, -1};
-		if (numbers == null || numbers.length < 2) return result;
+		if (numbers == null || numbers.length < 2) return new int[] {-1, -1};
 		int start = 0;
 		int end = numbers.length - 1;
 		while (start < end) {
 			if (numbers[start] + numbers[end] == target) {
-				result[0] = start + 1;  // result not zero based
-				result[1] = end + 1;
-				return result;
+				return new int[] {start + 1, end + 1};  // result not zero based
 			}
 			else if (numbers[start] + numbers[end] < target) start++;
 			else end--;
 		}
-		return result;
+		return null;
 	}
 	
 	public static void main(String[] args) {

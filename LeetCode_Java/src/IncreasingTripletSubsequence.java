@@ -17,8 +17,8 @@
 public class IncreasingTripletSubsequence {
 
 	/**
-	 * start with two largest values, as soon as we find a number bigger than both, while both have 
-	 * been updated, return true.
+	 * Greedy: start with two largest values, as soon as we find a number bigger than both, 
+	 * while both have been updated, return true.
 	 * @param int[] nums
 	 * @return boolean
 	 * Time: O(n)
@@ -28,11 +28,12 @@ public class IncreasingTripletSubsequence {
 		if (nums == null || nums.length == 0) { 
 			return false;
 		}
-		int firstMin = Integer.MAX_VALUE;
-		int secondMin = Integer.MAX_VALUE;
+		int min1 = Integer.MAX_VALUE;
+		int min2 = Integer.MAX_VALUE;
 		for (int num: nums) {
-			if (num <= firstMin) firstMin = num;  // update small if n is smaller than both
-			else if (num <= secondMin) secondMin = num; // update big only if greater than small but smaller than big
+			if (num == min1 || num == min2) continue;
+			if (num < min1) min1 = num;  // update small if n is smaller than both
+			else if (num < min2) min2 = num; // update big only if greater than small but smaller than big
 			else return true; // return if you find a number bigger than both
 		}
 		return false;
@@ -41,8 +42,8 @@ public class IncreasingTripletSubsequence {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		IncreasingTripletSubsequence result = new IncreasingTripletSubsequence();
-		System.out.println(result.increasingTripletSubsequence(new int[] {2, 5, 3, 4, 1, 6}));
-		System.out.println(result.increasingTripletSubsequence(new int[] {2, 5, 1, 4, 4}));
+		System.out.println(result.increasingTripletSubsequence(new int[] {2, 5, 2, 3, 1, 6}));
+		System.out.println(result.increasingTripletSubsequence(new int[] {2, 5, 2, 3, 1, 3}));
 	}
 
 }

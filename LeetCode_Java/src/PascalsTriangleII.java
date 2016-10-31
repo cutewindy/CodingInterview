@@ -42,7 +42,7 @@ public class PascalsTriangleII {
 	 * @param int rowIndex
 	 * @return List<Integer>
 	 * Time: O(k*k)
-	 * Space: O(k)
+	 * Space: O(1)
 	 */
 	public List<Integer> pascalsTriangleII(int rowIndex) {
 		if (rowIndex == 0) {

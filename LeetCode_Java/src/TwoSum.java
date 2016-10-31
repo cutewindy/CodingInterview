@@ -25,20 +25,17 @@ public class TwoSum {
 	 * Space: O(n)
 	 */
 	public int[] twoSum(int[] nums, int target) {
-		int[] result = {-1, -1};
-		if (nums == null || nums.length < 2) return result;
+		if (nums == null || nums.length < 2) return new int[] {-1, -1};
 		Map<Integer, Integer> hash = new HashMap<>();
 		for (int i = 0; i < nums.length; i++) {
 			if (hash.containsKey(target - nums[i])) {
-				result[0] = hash.get(target - nums[i]);
-				result[1] = i;
-				return result;
+				return new int[] {hash.get(target - nums[i]), i};
 			}
 			else {
 				hash.put(nums[i], i);
 			}
 		}
-		return result;
+		return null;
 	}
 
 	public static void main(String[] args) {
