@@ -21,11 +21,11 @@ import java.util.PriorityQueue;
  *
  */
 public class KthSmallestElementinaSortedMatrix {
-	class Pair {
+	class Node {
 		int i;
 		int j;
 		int val;
-		public Pair(int i, int j, int val) {
+		public Node(int i, int j, int val) {
 			this.i = i;
 			this.j = j;
 			this.val = val;
@@ -44,23 +44,23 @@ public class KthSmallestElementinaSortedMatrix {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
 			return -1;
 		}
-		PriorityQueue<Pair> heap = new PriorityQueue<>(k, new Comparator<Pair>(){
+		PriorityQueue<Node> heap = new PriorityQueue<>(k, new Comparator<Node>(){
 			@Override 
-			public int compare(Pair a, Pair b) {
+			public int compare(Node a, Node b) {
 				return a.val - b.val;
 			}
 		});
-		heap.offer(new Pair(0, 0, matrix[0][0]));
-		Pair result = new Pair(-1, -1, -1);
+		heap.offer(new Node(0, 0, matrix[0][0]));
+		Node result = new Node(-1, -1, -1);
 		while (!heap.isEmpty() && k-- > 0) {
 			result = heap.poll();
 			int row = result.i;
 			int col = result.j;
 			if (col + 1 < matrix[0].length) {
-				heap.offer(new Pair(row, col + 1, matrix[row][col + 1]));
+				heap.offer(new Node(row, col + 1, matrix[row][col + 1]));
 			}
 			if (col == 0 && row + 1 < matrix.length) {
-				heap.offer(new Pair(row + 1, result.j, matrix[row + 1][col]));
+				heap.offer(new Node(row + 1, result.j, matrix[row + 1][col]));
 			}
 		}
 		return result.val;
