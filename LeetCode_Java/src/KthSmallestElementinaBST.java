@@ -26,7 +26,7 @@ public class KthSmallestElementinaBST {
 	 * If left nodes number > k-1, then the kth node in the left. Otherwise, the kth node in the right.
 	 * @param TreeNode root, int k
 	 * @return int
-	 * Time: O(??)
+	 * Time: O(log(n) * log(n))
 	 * Space: O(1)
 	 * Time space: O(log(n))
 	 */

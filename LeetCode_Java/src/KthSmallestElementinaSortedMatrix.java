@@ -37,7 +37,7 @@ public class KthSmallestElementinaSortedMatrix {
 	 * matrix[i+1][j] into heap as well
 	 * @param int[] matrix, int k
 	 * @return int
-	 * Time: O(klog(k))
+	 * Time: O(klog(2k-1))
 	 * Space: O(k)
 	 */
 	public int kthSmallestElementinaSortedMatrix(int[][] matrix, int k) {
