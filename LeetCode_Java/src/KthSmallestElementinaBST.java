@@ -8,7 +8,8 @@ import java.util.Stack;
  * Follow up:
  * What if the BST is modified (insert/delete operations) often and you need to find the kth 
  * smallest frequently? How would you optimize the kthSmallest routine?
-
+ * ()
+ * 
  * Hint:
  * 1 Try to utilize the property of a BST.
  * 2 What if you could modify the BST node's structure?
@@ -22,11 +23,12 @@ public class KthSmallestElementinaBST {
 
 	/**
 	 * Method2: BinarySearch DFS recursion: If left nodes number = k-1, then root is the kth node.
-	 * If left nodes number > k-1, then the kth node on the left. Otherwise, the kth node on the right.
+	 * If left nodes number > k-1, then the kth node in the left. Otherwise, the kth node in the right.
 	 * @param TreeNode root, int k
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(??)
+	 * Space: O(1)
+	 * Time space: O(log(n))
 	 */
 	public int kthSmallestElementinaBSTI(TreeNode root, int k) {
 		if (root == null) {
@@ -55,12 +57,14 @@ public class KthSmallestElementinaBST {
 		return countNodes(root.left) + countNodes(root.right) + 1;
 	}
 	
+	
 	/**
-	 * Method1: DFS in-order iterative: use a stack to find the kth smallest node by the ascending order of number.
+	 * Method1: DFS in-order iterative: use a stack to find the kth smallest node by the ascending 
+	 * order of number.
 	 * @param TreeNode root, int k
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n)
+	 * Space: O(log(n))
 	 */
 	public int kthSmallestElementinaBST(TreeNode root, int k) {
 		if (root == null) {
@@ -68,22 +72,18 @@ public class KthSmallestElementinaBST {
 		}
 		TreeNode node = root;
 		Stack<TreeNode> stack = new Stack<>();
-		stack.push(root);
-		while (node != null || !stack.isEmpty()) {
-			if (node != null) {     // when the 
+		while (!stack.isEmpty() || node != null) {
+			while (node != null) {
 				stack.push(node);
 				node = node.left;
 			}
-			else {
-				node = stack.pop();
-				k--;
-				if (k == 0) {
-					return node.val;
-				}
-				node = node.right;
+			node = stack.pop();
+			if (--k == 0) {
+				return node.val;
 			}
+			node = node.right;
 		}
-		return 0;
+		return -1;
 	}
 	
 	public static void main(String[] args) {
@@ -91,7 +91,7 @@ public class KthSmallestElementinaBST {
 		KthSmallestElementinaBST result = new KthSmallestElementinaBST();
 		TreeNode root = TreeNode.generateCBT(new int[] {11, 7, 15, 5, 8, 12, 16 , 2, 6});
 		TreeNode.printCBT(root);
-//		System.out.println(result.kthSmallestElementinaBST(root, 5));
+		System.out.println(result.kthSmallestElementinaBST(root, 5));
 		System.out.println(result.kthSmallestElementinaBSTI(root, 5));
 	}
 
