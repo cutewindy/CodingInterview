@@ -48,10 +48,7 @@ public class Searcha2DMatrix {
 				end = mid - 1;
 			}
 		}
-		if (matrix[start / n][start % n] == target || matrix[end / n][end % n] == target) {
-			return true;
-		}
-		return false;
+		return matrix[start / n][start % n] == target || matrix[end / n][end % n] == target;
 	}
 	
 	public static void main(String[] args) {
