@@ -1,7 +1,7 @@
 /**
  * Follow up for "Find Minimum in Rotated Sorted Array":
  * What if duplicates are allowed?
- * Would this affect the run-time complexity? How and why?
+ * Would this affect the run-time complexity? How and why? (Yes, O(log(n)) -> O(n))
  * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
  * (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
  * Find the minimum element.
@@ -32,7 +32,7 @@ public class FindMinimuminRotatedSortedArrayII {
 		while (start + 1 < end) {
 			int mid = start + (end - start) / 2;
 			if (nums[mid] == nums[end]) {
-				end--;
+				end--;    // take care for the case {3, 3, 1, 3}
 			}
 			else if (nums[mid] < nums[end]) {
 				end = mid;
@@ -49,6 +49,7 @@ public class FindMinimuminRotatedSortedArrayII {
 		// TODO Auto-generated method stub
 		FindMinimuminRotatedSortedArrayII result = new FindMinimuminRotatedSortedArrayII();
 		System.out.println(result.findMinimuminRotatedSortedArrayII(new int[] {4, 4, 5, 6, 6, 7, 0, 1, 2}));
+		System.out.println(result.findMinimuminRotatedSortedArrayII(new int[] {3, 3, 1, 3}));
 	}
 
 }
