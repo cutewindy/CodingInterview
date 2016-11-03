@@ -15,7 +15,7 @@
 public class ValidPerfectSquare {
 
 	/**
-	 * Method1: BinarySearch: (Template). If mid*mid=num, then we find the square and return true.
+	 * Method: BinarySearch: (Template). If mid*mid=num, then we find the square and return true.
 	 * If num/mid<=mid, it means that mid*mid<num, the possible result on the right of mid.
 	 * Otherwise, mid*mid>num, the possible result on the left of mid.
 	 * @param int num
@@ -47,20 +47,11 @@ public class ValidPerfectSquare {
 		return false;
 	}
 	
-//	public boolean validPerfectSquareI(int num) {
-//		if (num == 0) {
-//			return true;
-//		}
-//		while (num)
-//		return false;
-//	}
-	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ValidPerfectSquare result = new ValidPerfectSquare();
 		System.out.println(result.validPerfectSquare(81));		
 		System.out.println(result.validPerfectSquare(2147483647));
-//		System.out.println(result.validPerfectSquareI(81));
 	}
 
 }
