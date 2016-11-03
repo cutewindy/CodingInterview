@@ -15,7 +15,7 @@ public class ClosestBinarySearchTreeValue {
 	 * BST
 	 * @param TreeNode root, double target
 	 * @return int
-	 * Time: O(n)
+	 * Time: O(log(n))
 	 * Space: O(1)
 	 */
 	public int closestBinarySearchTreeValue(TreeNode root, double target) {
