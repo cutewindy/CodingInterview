@@ -11,8 +11,8 @@
 public class SearchinRotatedSortedArray {
 
 	/**
-	 * BinarySearch: (Template) First is to find which part(left or right) of mid is sorted array, than find target 
-	 * in which part by using sorted array.
+	 * BinarySearch: (Template) First is to find which part(left or right) of mid is sorted array, 
+	 * than find target in which part by using sorted array.
 	 * @param int[] nums, int target
 	 * @return int
 	 * Time: O(log(n))

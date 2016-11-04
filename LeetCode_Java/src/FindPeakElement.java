@@ -16,7 +16,7 @@
 public class FindPeakElement {
 	
 	/**
-	 * BianrySearch
+	 * BianrySearch, since num[-1] = num[n] = -∞
 	 * @param int[] nums
 	 * @return int
 	 * Time: O(log(n))
@@ -26,21 +26,21 @@ public class FindPeakElement {
 		if (nums == null || nums.length == 0 || nums.length == 1) {
 			return 0;
 		}
-		int left = 0;
-		int right = nums.length - 1;
-		while (left + 1 < right) {
-			int mid = left + (right - left) / 2;
+		int start = 0;
+		int end = nums.length - 1;
+		while (start + 1 < end) {
+			int mid = start + (end - start) / 2;
 			if (nums[mid - 1] < nums[mid] && nums[mid] > nums[mid + 1]) {
 				return mid;
 			}
 			else if (nums[mid - 1] < nums[mid] && nums[mid] < nums[mid + 1]) {
-				left = mid;
+				start = mid;
 			}
 			else {
-				right = mid;
+				end = mid;
 			}
 		}
-		return nums[left] > nums[right] ? left : right;
+		return nums[start] > nums[end] ? start : end;
 	}
 
 	public static void main(String[] args) {

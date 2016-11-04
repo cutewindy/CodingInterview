@@ -1,20 +1,22 @@
 /**
  * Follow up for "Search in Rotated Sorted Array":
  * What if duplicates are allowed? 
- * Would this affect the run-time complexity? How and why?
+ * Would this affect the run-time complexity? How and why? 
+ * (Yes, the worse case will be O(n), without duplicate, it's O(long(n)))
  * Write a function to determine if a given target is in the array.
  * 
- * Tags: 
+ * Tags: Array, Binary Search
  * @author wendi
  *
  */
 public class SearchinRotatedSortedArrayII {
 
 	/**
-	 * BinarySearch: (Template) need to deal with duplicated number. The same like "findMinimuminRotatedSortedArrayII"
+	 * BinarySearch: (Template) need to deal with duplicated number. 
+	 * The same like "findMinimuminRotatedSortedArrayII"
 	 * @param int[] nums, int target
 	 * @return boolean
-	 * Time: O(n) worst case
+	 * Time: O(log(n)) worst case
 	 * Space: O(1)
 	 */
 	public boolean searchinRotatedSortedArrayII(int[] nums, int target) {
