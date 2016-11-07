@@ -20,7 +20,7 @@ public class SearchforaRange {
 	 * For right: if n[mid]<=target, right edge on the right side of mid, includes mid.
 	 * @param int[] nums, int target
 	 * @return int[]
-	 * Time: O(log(n))
+	 * Time: O(2log(n))
 	 * Space: O(1)
 	 */
 	public int[] searchforaRange(int[] nums, int target) {
