@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * We are playing the Guess Game. The game is as follows:
  * I pick a number from 1 to n. You have to guess which number I picked.
@@ -29,27 +31,49 @@
 public class GuessNumberHigherorLowerII {
 
 	/**
-	 * DP + MinMax
+	 * DP + MinMax:
+	 * Definition of dp[i][j]: minimum number of money to guarantee win for subproblem [i, j].
+	 * Target: dp[1][n].
+	 * Corner case: dp[i][i] = 0 (because the only element must be correct).
+	 * Equation: we can choose k (i<=k<=j) as our guess, and pay price k. After our guess, the 
+	 * problem is divided into two subproblems. Notice we do not need to pay the money for both 
+	 * subproblems. We only need to pay the worst case (because the system will tell us which side 
+	 * we should go) to guarantee win. So dp[i][j] = min(i<=k<=j){k + max(dp[i][k-1], dp[k+1][j])}.
 	 * @param int n
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n^3)
+	 * Space: O(n^2)
 	 */
 	public int guessNumberHigherorLowerII(int n) {
 		if (n <= 0) {
 			return 0;
 		}
-		int[][] cost = new int[n + 1][n + 1];
-		return cost[1][n];
-	}
-	
-	public void helper(int n, int[][] cost) {
-		
+		int[][] costs = new int[n + 1][n + 1];
+		for (int l = 2; l <= n; l++) {
+			for (int i = 1; i + l - 1 <= n; i++) {
+				int j = i + l - 1;
+				costs[i][j] = Integer.MAX_VALUE;
+				for (int k = i; k <= j; k++) {
+					costs[i][j] = Math.min(k + Math.max(k - 1 < 0 ? 0 : costs[i][k - 1],
+														k + 1 > j ? 0 : costs[k + 1][j]), 
+							 			   costs[i][j]);
+					if (i == 2 && j == 6 && l == 5)
+					System.out.println(k + Math.max(k - 1 < 0 ? 0 : costs[i][k - 1],
+							k + 1 > j ? 0 : costs[k + 1][j]));
+				}
+				for (int z = 0; z < n + 1; z++) {
+					System.out.println(Arrays.toString(costs[z]));
+				}
+				System.out.println("==============");
+			}
+		}
+		return costs[1][n];
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		GuessNumberHigherorLowerII result = new GuessNumberHigherorLowerII();
+		System.out.println(result.guessNumberHigherorLowerII(7));
 	}
 
 }
