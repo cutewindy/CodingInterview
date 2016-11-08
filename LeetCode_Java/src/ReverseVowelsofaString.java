@@ -30,6 +30,7 @@ public class ReverseVowelsofaString {
 		while (start < end) {
 		    while (start < end && !set.contains(S[start])) start++;
 		    while (start < end && !set.contains(S[end])) end--;
+		    if (start >= end) break;  // take care
 		    char temp = S[start];
 		    S[start] = S[end];
 		    S[end] = temp;
