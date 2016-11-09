@@ -33,7 +33,7 @@ public class RemoveElement {
 		}
 		int start = 0;
 		int end = nums.length - 1;
-		while (start <= end) {
+		while (start <= end) {   // take care of ==, eg: [1]
 			if (nums[start] == val) {
 				nums[start] = nums[end];
 				end--;

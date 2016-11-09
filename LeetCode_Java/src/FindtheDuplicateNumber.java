@@ -16,7 +16,7 @@ public class FindtheDuplicateNumber {
 	
 	
 	/**
-	 * Method2: Modify the array
+	 * Method2: Modify the array using index is sorted array.
 	 * @param int[] nums
 	 * @return int
 	 * Time: O(n)
