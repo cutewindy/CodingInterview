@@ -65,6 +65,7 @@ public class KthSmallestElementinaBST {
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(log(n))
+	 * Time space: O(log(n))
 	 */
 	public int kthSmallestElementinaBST(TreeNode root, int k) {
 		if (root == null) {
