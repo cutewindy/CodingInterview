@@ -9,7 +9,7 @@ public class LinkedListCycleII {
 	
 	
 	/**
-	 * Two pointers: 
+	 * Two pointers: slow and fast + math
 	 * @param ListNode head
 	 * @return ListNode
 	 * Time: O(n)
