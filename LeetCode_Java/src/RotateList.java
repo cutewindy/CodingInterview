@@ -11,7 +11,7 @@
 public class RotateList {
 
 	/**
-	 * Two pointers: be care about if k > length of list
+	 * Two pointers:fast and slow, take care about if k > length of list
 	 * @param ListNode head, int k
 	 * @return ListNode
 	 * Time: O(n)
@@ -23,29 +23,29 @@ public class RotateList {
 		dummy.next = head;
 		// 1 calculate the length of list, set k = k%length
 		int length = 0;
-		while (head != null) {
+		ListNode node = head;
+		while (node != null) {
 			length++;
-			head = head.next;
+			node = node.next;
 		}
 		k %= length;
 		if (k == 0) return dummy.next;
 		// 2 head go to k steps first
-		head = dummy.next;
-		for (int i = 0; i < k; i++) {
-			head = head.next;
-			
+		ListNode fast = head;
+		ListNode slow = head;
+		while (k-- > 0) {
+			fast = fast.next;
 		}
-		// 3 head and pre go to same step until head.next=null, in order to find the rotated node,
-		// which is pre.next = rotated node
-		ListNode pre = dummy.next;
-		while (head.next != null) {
-			head = head.next;
-			pre = pre.next;
+		// 3 fast and slow go to same step until fast.next=null, in order to find the rotated node,
+		// which is slow.next = rotated node
+		while (fast.next != null) {
+			slow = slow.next;
+			fast = fast.next;
 		}
 		// 4 rotate
-		head.next = dummy.next;
-		dummy.next = pre.next;
-		pre.next = null;
+		fast.next = dummy.next;
+		dummy.next = slow.next;
+		slow.next = null;
 		return dummy.next;
 	}
 	

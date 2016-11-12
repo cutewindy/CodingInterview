@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class HIndex {
 	
 	/**
-	 * Bucket sort:
+	 * Method2: Bucket sort:
 	 * 1.assume n is the total number of papers, if we have n+1 buckets, number from 0 to n, then 
 	 * for any paper with reference corresponding to the index of the bucket, we increment the count 
 	 * for that bucket. The only exception is that for any paper with larger number of reference 
@@ -57,6 +57,7 @@ public class HIndex {
 		}
 		return 0;
 	}
+	
 	
 	/**
 	 * Method1: Brute Force: Sort + Using index

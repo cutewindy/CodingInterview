@@ -56,24 +56,24 @@ public class PartitionList {
 		if (head == null || head.next == null) return head;
 		ListNode dummy = new ListNode(0);
 		dummy.next = head;
-		ListNode p = dummy;
-		ListNode pre = dummy;
+		ListNode pivot = dummy;
+		ListNode prev = dummy;
 		ListNode curr = head;
 		while (curr != null) {
-			if (curr.val < x && p == pre) {
-				p = p.next;
-				pre = pre.next;
+			if (curr.val < x && pivot == prev) {
+				pivot = pivot.next;
+				prev = prev.next;
 				curr = curr.next;
 			}
-			else if (curr.val < x && p != pre) {
-				pre.next = curr.next;
-				curr.next = p.next;
-				p.next = curr;
-				p = p.next;
-				curr = pre.next;
+			else if (curr.val < x && pivot != prev) {
+				prev.next = curr.next;
+				curr.next = pivot.next;
+				pivot.next = curr;
+				pivot = pivot.next;
+				curr = prev.next;
 			}
 			else {
-				pre = pre.next;
+				prev = prev.next;
 				curr = curr.next;
 			}
 		}
