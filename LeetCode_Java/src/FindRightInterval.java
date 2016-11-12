@@ -108,7 +108,7 @@ public class FindRightInterval {
 		// TODO Auto-generated method stub
 		FindRightInterval result = new FindRightInterval();
 		System.out.println(Arrays.toString(result.findRightInterval(new Interval[] 
-				{new Interval(1, 4), new Interval(2, 3), new Interval(3, 4)})));
+				{new Interval(1, 4), new Interval(3, 4), new Interval(2, 3)})));
 	}
 
 }

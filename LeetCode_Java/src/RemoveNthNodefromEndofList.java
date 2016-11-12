@@ -30,7 +30,7 @@ public class RemoveNthNodefromEndofList {
 		ListNode slow = dummy;
 		ListNode fast = dummy;
 		// 1 fast go to n steps
-		for (int i = 0; i < n; i++) {
+		while (n-- > 0) {
 			fast = fast.next;
 		}
 		// 2 fast and slow go to same steps

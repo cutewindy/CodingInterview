@@ -59,7 +59,10 @@ public class ArrangingCoins {
 		int end = n;
 		while (start + 1 < end) {
 			int mid = start + (end - start) / 2;
-			if ((1 + (long)mid) * mid * 0.5 <= n) {   // take care of the range
+			if ((1 + (long) mid) * mid * 0.5 == n) {
+				return mid;
+			}
+			else if ((1 + (long)mid) * mid * 0.5 < n) {   // take care of the range
 				start = mid;
 			}
 			else {

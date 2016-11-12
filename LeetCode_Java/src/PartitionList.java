@@ -39,7 +39,7 @@ public class PartitionList {
 			head = head.next;
 		}
 		// 2 combine smaller list and larger list
-		larg.next = null;  // be care, must cut down the tail
+		larg.next = null;  // take care, must cut down the tail
 		smal.next = largHead.next;
 		return smalHead.next;
 	}
