@@ -34,6 +34,7 @@ public class ValidPalindrome {
 			while (start < end && !Character.isLetterOrDigit(S[end])) {
 				end--;
 			}
+			if (start >= end) break;
 			if (Character.toLowerCase(S[start]) != Character.toLowerCase(S[end])) {
 				return false;
 			}

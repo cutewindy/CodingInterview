@@ -26,12 +26,12 @@ public class SortTransformedArray {
 	 */
 	public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
 		if (nums == null || nums.length == 0) return new int[0];
-		int[] result = new int[nums.length];
+		int n = nums.length;
+		int[] result = new int[n];
+		int start = 0;
+		int end = n - 1;
 		if (a > 0) {  // open up, two ends are bigger than center
-			int i = nums.length - 1;
-			int start = 0;
-			int end = nums.length - 1;
-			while (start <= end) {
+			for (int i = n - 1; i >= 0; i--) {
 				int startNum = quadratic(nums[start], a, b, c);
 				int endNum = quadratic(nums[end], a, b, c);
 				if (startNum > endNum) {
@@ -42,14 +42,10 @@ public class SortTransformedArray {
 					result[i] = endNum;
 					end--;					
 				}
-				i--;
 			}
 		}
 		else {       // open down, center is bigger than two ends
-			int i = 0;
-			int start = 0;
-			int end = nums.length - 1;
-			while (start <= end) {
+			for (int i = 0; i < n; i++) {
 				int startNum = quadratic(nums[start], a, b, c);
 				int endNum = quadratic(nums[end], a, b, c);
 				if (startNum < endNum) {
@@ -60,7 +56,6 @@ public class SortTransformedArray {
 					result[i] = endNum;
 					end--;					
 				}
-				i++;
 			}			
 		}
 		return result;

@@ -21,7 +21,7 @@ import java.util.List;
 public class FourSum {
 
 	/**
-	 * Three sum to four sum
+	 * Three sum to four sum. Same like "3sum"
 	 * @param int[] nums, int target
 	 * @return List<List<Integer>>
 	 * Time: O(n^3)

@@ -15,10 +15,10 @@ import java.util.Stack;
 public class TrappingRainWater {
 
 	/**
-	 * Method2: Two pointers: Find the highest number in the height, then this number is the right edge of
-	 * left part and the left edge of right part. On the left part, try to find the left edge of current
-	 * height[i](excludes i). If left edge > height[i], means in this bar can trap rain water.
-	 * The same on the right part.
+	 * Method2: Two pointers: Find the highest number in the height, then this number is the right 
+	 * edge of left part and the left edge of right part. On the left part, try to find the left 
+	 * edge of current height[i](excludes i). If left edge > height[i], means in this bar can trap 
+	 * rain water. The same on the right part.
 	 * @param int[] height
 	 * @return int
 	 * Time: O(n)
@@ -29,33 +29,37 @@ public class TrappingRainWater {
 			return 0;
 		}
 		int result = 0;
+		int n = height.length;
 		// find the highest bar, the highest is index
 		int highest = 0;
-		for (int i = 1; i < height.length; i++) {
-			highest = height[i] > height[highest] ? i : highest;
+		for (int i = 1; i < n; i++) {
+			if (height[highest] < height[i]) {
+				highest = i;
+			}
 		}
 		// calculate the left trapping rain water
-		int left = 0;
-		for (int i = 1; i < highest; i++) {
-			if (height[left] - height[i] > 0) {
-				result += height[left] - height[i];
+		int leftMax = 0;
+		for (int i = 0; i < highest; i++) {
+			if (leftMax > height[i]) {
+				result += leftMax - height[i];
 			}
 			else {
-				left = i;
+				leftMax = height[i];
 			}
 		}
 		// calculate the right trapping rain water
-		int right = height.length - 1;
-		for (int i = height.length - 2; i > highest; i--) {
-			if (height[right] - height[i] > 0) {
-				result += height[right] - height[i];
+		int rightMax = 0;
+		for (int i = n - 1; i > highest; i--) {
+			if (rightMax > height[i]) {
+				result += rightMax - height[i];
 			}
 			else {
-				right = i;
+				rightMax = height[i];
 			}
 		}
 		return result;
 	}
+	
 	
 	/**
 	 * Method1: Stack: Using stack to save the left bound. when h[i]>stack.peek(), find the right bound.

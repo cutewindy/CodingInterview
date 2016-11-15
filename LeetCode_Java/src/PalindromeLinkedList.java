@@ -10,7 +10,8 @@
 public class PalindromeLinkedList {
 
 	/**
-	 * Method2: Reverse left half of list, and reverse it back when comparing.
+	 * Method2: Two pointers(fast and slow) + reverse linked list.
+	 * Reverse left half of list, and reverse it back when comparing.
 	 * @param ListNode head
 	 * @return boolean
 	 * Time: O(n)
@@ -57,7 +58,8 @@ public class PalindromeLinkedList {
 	}
 	
 	/**
-	 * Method1: Reverse right half of list, and compare it with the left half list.
+	 * Method1: Two pointers(fast and slow) + reverse linked list.
+	 * Reverse right half of list, and compare it with the left half list.
 	 * @param ListNode head
 	 * @return boolean
 	 * Time: O(n)
@@ -67,7 +69,7 @@ public class PalindromeLinkedList {
 		if (head == null || head.next == null) {
 			return true;
 		}
-		// 1 find mid of list
+		// 1 find mid of list using two pointers(fast and slow)
 		ListNode slow = head;
 		ListNode fast = head;
 		while (fast.next != null && fast.next.next != null) {
@@ -99,6 +101,7 @@ public class PalindromeLinkedList {
 			dummy.next = curr;
 			curr = head.next;
 		}
+		head.next = null;
 		return dummy.next;
 	}
 	
