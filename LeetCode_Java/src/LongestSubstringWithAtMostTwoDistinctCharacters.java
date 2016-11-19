@@ -12,8 +12,10 @@ import java.util.Map;
  *
  */
 public class LongestSubstringWithAtMostTwoDistinctCharacters {
+	
+	
 	/**
-	 * Two pointers and slide window: Slide window
+	 * Two pointers and slide window: Slide window + hash table
 	 * The main idea is to maintain a sliding window with 2 unique characters. The key is to store 
 	 * the last occurrence of each character as the value in the hashmap. This way, whenever the 
 	 * size of the hashmap exceeds 2, we can traverse through the s from start to remove the it in 

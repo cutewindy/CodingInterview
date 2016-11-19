@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 
@@ -18,14 +20,16 @@ import java.util.Map;
  *
  */
 public class LongestSubstringWithoutRepeatingCharacters {
+	
+	
 	/**
-	 * Two pointers: slide window: 
+	 * Method2(60ms): Two pointers: slide window + hash table 
 	 * @param String s
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public int longestSubstringWithoutRepeatingCharacters(String s) {	
+	public int longestSubstringWithoutRepeatingCharactersI(String s) {	
 		if (s == null || s.length() == 0) {
 			return 0;
 		}
@@ -33,7 +37,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
 		int start = 0;
 		Map<Character, Integer> hash = new HashMap<>();
 		char[] S = s.toCharArray();
-		for (int i =0; i < s.length(); i++) {
+		for (int i = 0; i < s.length(); i++) {
 			if (hash.containsKey(S[i]) && start <= hash.get(S[i])) {
 				start = hash.get(S[i]) + 1;	
 			}
@@ -42,11 +46,40 @@ public class LongestSubstringWithoutRepeatingCharacters {
 		}
 		return result;
 	}
+	
+	
+	/**
+	 * Method1(74ms): Two pointers: slide window + set
+	 * @param String s
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public int longestSubstringWithoutRepeatingCharacters(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        char[] S = s.toCharArray();
+        int n = S.length;
+        int start = 0;
+        int result = 0;
+        Set<Character> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            while (set.contains(S[i])) {
+                set.remove(S[start]);
+                start++;
+            }
+            set.add(S[i]);
+            result = Math.max(i - start + 1, result);
+        }
+        return result;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LongestSubstringWithoutRepeatingCharacters result = new LongestSubstringWithoutRepeatingCharacters();
 		System.out.println(result.longestSubstringWithoutRepeatingCharacters("pwwkew"));
+		System.out.println(result.longestSubstringWithoutRepeatingCharactersI("pwwkew"));
 	}
 
 }
