@@ -49,6 +49,23 @@ public class ImplementStrStr {
 			}
 		}	
 		return iN == needle.length() ? iH : -1;
+		
+		// same as two times for loop
+		
+//        if (haystack == null || needle == null || needle.length() > haystack.length()) return -1;
+//        if (needle.length() == 0) return 0;
+//        int result = -1;
+//        char[] H = haystack.toCharArray();
+//        char[] N = needle.toCharArray();
+//        for (int i = 0; i < H.length - N.length + 1; i++) {
+//            if (H[i] == N[0]) {
+//                for (int j = 0; j < N.length; j++) {
+//                    if (H[i + j] != N[j]) break;
+//                    if (j == N.length - 1) return i;
+//                }
+//            }
+//        }
+//        return result;
 	}
 	
 	public static void main(String[] args) {
