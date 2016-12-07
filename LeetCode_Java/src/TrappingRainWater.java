@@ -30,14 +30,14 @@ public class TrappingRainWater {
 		}
 		int result = 0;
 		int n = height.length;
-		// find the highest bar, the highest is index
+		// 1. find the highest bar, the highest is index
 		int highest = 0;
 		for (int i = 1; i < n; i++) {
 			if (height[highest] < height[i]) {
 				highest = i;
 			}
 		}
-		// calculate the left trapping rain water
+		// 2. calculate the left trapping rain water
 		int leftMax = 0;
 		for (int i = 0; i < highest; i++) {
 			if (leftMax > height[i]) {
@@ -47,7 +47,7 @@ public class TrappingRainWater {
 				leftMax = height[i];
 			}
 		}
-		// calculate the right trapping rain water
+		// 3. calculate the right trapping rain water
 		int rightMax = 0;
 		for (int i = n - 1; i > highest; i--) {
 			if (rightMax > height[i]) {
@@ -92,7 +92,7 @@ public class TrappingRainWater {
 				int width = i - stack.peek() - 1;
 				result += (top - bottom) * width;
 			}
-			else i++; // when height[i] = height[stack.peek()]  pruning
+			else i++; // skip height[i] = height[stack.peek()]
 		}
 		return result;
 	}
