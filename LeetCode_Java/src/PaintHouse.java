@@ -21,7 +21,7 @@ public class PaintHouse {
 	 * @return int
 	 * Time: O(n * 3)
 	 * Space: O(n * 3) can use costs or just three int r, b, and g(only need row of i-1) 
-	 * instead of dp to save space
+	 * instead of int[][] to save space
 	 */
 	public int paintHouse(int[][] costs) {
 		if (costs == null || costs.length == 0 || costs[0].length == 0) {
