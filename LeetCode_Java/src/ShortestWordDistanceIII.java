@@ -33,7 +33,7 @@ public class ShortestWordDistanceIII {
 		int result = Integer.MAX_VALUE;
 		for (int i = 0; i < words.length; i++) {
 			if (words[i].equals(word1) && word1.equals(word2)) {
-				if (index1 == -1 || (index2 != -1 && index1 < index2)) {
+				if (index1 < index2) {
 					index1 = i;
 				}
 				else {
