@@ -27,6 +27,9 @@ public class StrongPasswordChecker {
 		if (s == null) {
 			return 0;
 		}
+		if (s.length() == 0) {
+			return 6;
+		}
 		int result = 0;
 		System.out.println("length: " + s.length());
 		// 1. check number of characters
@@ -64,16 +67,13 @@ public class StrongPasswordChecker {
 				count = 1;
 			}
 		}
+		int change = (hasLowChar ? 0 : 1) + (hasUppChar ? 0 : 1) + (hasDigit ? 0 : 1);
 		repeat += count / 3;
-		int change = 0;
-		if (!hasLowChar) change++;
-		if (!hasUppChar) change++;
-		if (!hasDigit) change++;
 		System.out.println("change: " + change);
 		System.out.println("repeat: "+ repeat);
 		// 4. calculate the minimum changes
 		if (m > 20) {
-			result = Math.max(delete, repeat) + change;
+			result = Math.max(change, repeat) + delete;
 		}
 		else {
 			result = Math.max(Math.max(add, change), repeat);
@@ -84,8 +84,8 @@ public class StrongPasswordChecker {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		StrongPasswordChecker result = new StrongPasswordChecker();
-//		System.out.println(result.strongPasswordChecker("aaaaabbb"));
-		System.out.println(result.strongPasswordChecker("1234567890123456Baaaaa"));
+//		System.out.println(result.strongPasswordChecker("aaaaa3"));
+		System.out.println(result.strongPasswordChecker("aaaaaaaaaaaaaaaaaaaaa"));
 	}
 
 }
