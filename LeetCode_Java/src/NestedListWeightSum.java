@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class NestedListWeightSum {
 	class NestedInteger {
-		
-		
+		List<>
+		int temp = 0;
 		public boolean isInteger() {
 			if (this.isInteger()) {
 				return true;
@@ -26,7 +26,7 @@ public class NestedListWeightSum {
 		}
 		
 		public Integer getInteger() {
-			
+			return temp;
 		}
 		
 		public List<NestedInteger> getList() {
