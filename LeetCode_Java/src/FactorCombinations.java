@@ -21,13 +21,14 @@ import java.util.List;
  * input: 32
  * output: [[2, 16],  [2, 2, 8],  [2, 2, 2, 4],  [2, 2, 2, 2, 2],  [2, 4, 4],  [4, 8]]
  * 
+ * Tags: Backtracking
  * @author wendi
  *
  */
 public class FactorCombinations {
 
 	/**
-	 * DFS: find the factor of product in the range of [start, n]. 
+	 * DFS: find the factor of n in the range of [start, n]. 
 	 * Save the satisfied fact in the currFact until n==1 and currFactor.size()>1.
 	 * @param int n
 	 * @return List<List<Integer>>
