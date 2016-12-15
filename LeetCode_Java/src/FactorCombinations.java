@@ -27,42 +27,39 @@ import java.util.List;
 public class FactorCombinations {
 
 	/**
-	 * DFS: find the factor of product in the range of [start, product]. 
-	 * Save the satisfied fact in the currFact until product==1 and the factor is not n.
+	 * DFS: find the factor of product in the range of [start, n]. 
+	 * Save the satisfied fact in the currFact until n==1 and currFactor.size()>1.
 	 * @param int n
 	 * @return List<List<Integer>>
 	 * Time :O()
 	 * Space: O()
+	 * Stack space: O()
 	 */
 	public List<List<Integer>> factorCombinations(int n) {
-		List<List<Integer>> result = new ArrayList();
-		if (n <= 1) {
-			return result;
-		}
-		List<Integer> currFactor = new ArrayList();
-		helper(2, n, n, currFactor, result);
-		return result;
-	}
-	
-	private void helper(int start, int product, int n, List<Integer> currFactor, List<List<Integer>> result) {
-		if (product == 1 && start != n) {   // start != n means the last factor is not n.
-			result.add(new ArrayList<Integer>(currFactor));
-			return;
-		}
-		for (int i = start; i <= product; i++) {
-			if (product % i == 0) {  // guarantees the current i is a factor
-				currFactor.add(i);
-				helper(i, product / i, n, currFactor, result);
-				currFactor.remove(currFactor.size() - 1);
-			}
-		}
-		return;
+        List<List<Integer>> result = new ArrayList<>();
+        if (n <= 1) return result;
+        helper(n, 2, new ArrayList<Integer>(), result);
+        return result;
+    }
+    
+    public void helper(int n, int start, List<Integer> currfactor, List<List<Integer>> result) {
+        if (n == 1 && currfactor.size() > 1) {   // using curr.size() > 1 to skip curr=[n]
+            result.add(new ArrayList<Integer>(currfactor));
+            return;
+        }
+        for (int i = start; i <= n; i++) {
+            if (n % i == 0) {   // guarantees the current i is a factor
+                currfactor.add(i);
+                helper(n / i, i, currfactor, result);
+                currfactor.remove(currfactor.size() - 1);
+            }
+        }
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		FactorCombinations result = new FactorCombinations();
-		System.out.println(result.factorCombinations(32));
+		System.out.println(result.factorCombinations(12));
 	}
 
 }
