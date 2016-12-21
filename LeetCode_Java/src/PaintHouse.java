@@ -19,8 +19,8 @@ public class PaintHouse {
 	 * dp[i][j] = cost[i][j] + min(dp[i-1][(j+1)%3], dp[i-1][(j+2)%3])
 	 * @param int[][] cost
 	 * @return int
-	 * Time: O(n * 3)
-	 * Space: O(n * 3) can use costs or just three int r, b, and g(only need row of i-1) 
+	 * Time: O(3n)
+	 * Space: O(3n) can use costs or just three int r, b, and g(only need row of i-1) 
 	 * instead of int[][] to save space
 	 */
 	public int paintHouse(int[][] costs) {

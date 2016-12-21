@@ -43,16 +43,16 @@ public class FactorCombinations {
         return result;
     }
     
-    public void helper(int n, int start, List<Integer> currfactor, List<List<Integer>> result) {
-        if (n == 1 && currfactor.size() > 1) {   // using curr.size() > 1 to skip curr=[n]
-            result.add(new ArrayList<Integer>(currfactor));
+    public void helper(int n, int start, List<Integer> currFactors, List<List<Integer>> result) {
+        if (n == 1 && currFactors.size() > 1) {   // using curr.size() > 1 to skip curr=[n]
+            result.add(new ArrayList<Integer>(currFactors));
             return;
         }
         for (int i = start; i <= n; i++) {
             if (n % i == 0) {   // guarantees the current i is a factor
-                currfactor.add(i);
-                helper(n / i, i, currfactor, result);
-                currfactor.remove(currfactor.size() - 1);
+                currFactors.add(i);
+                helper(n / i, i, currFactors, result);
+                currFactors.remove(currFactors.size() - 1);
             }
         }
 	}
