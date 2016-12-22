@@ -41,7 +41,7 @@ public class NestedListWeightSum {
 	 * @param List<NestedInteger> nestedList
 	 * @return int
 	 * Time: O(n)
-	 * Space: O()
+	 * Space: O(1)
 	 * Stack Space: O(n)
 	 */
 	public int nestedListWeightSum(List<NestedInteger> nestedList) {

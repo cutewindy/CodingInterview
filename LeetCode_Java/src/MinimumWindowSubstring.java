@@ -24,7 +24,7 @@ public class MinimumWindowSubstring {
 	
 	
 	/**
-	 * Two Pointers: slide window + hash table + list:
+	 * slide window + hash table + list:
 	 * Using a window to save the valid index of character and a hash to save the list of character's 
 	 * index, which is in the window, update window and hash, and check list size using counter 
 	 * when doing the iteration.
@@ -74,6 +74,9 @@ public class MinimumWindowSubstring {
 				&& (result.length() == 0 || window.get(window.size() - 1) - window.get(0) + 1 < result.length())) {
 					result = s.substring(window.get(0), window.get(window.size() - 1) + 1);
 				}
+				if (window.size() == t.length()) {
+					System.out.println(s.substring(window.get(0), window.get(window.size() - 1) + 1));
+				}
 			}
 		}
 		return result;
@@ -82,8 +85,8 @@ public class MinimumWindowSubstring {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MinimumWindowSubstring result = new MinimumWindowSubstring();
-//		System.out.println(result.minimumWindowSubstring("ADOBECODEBANC", "ABC"));
-		System.out.println(result.minimumWindowSubstring("bdab", "ab"));
+		System.out.println(result.minimumWindowSubstring("ADOBECODEBANC", "ABC"));
+//		System.out.println(result.minimumWindowSubstring("bdab", "ab"));
 
 	}
 

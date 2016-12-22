@@ -29,7 +29,6 @@ public class NestedListWeightSumII {
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(n)
-	 * Stack Space: O(n)
 	 */
 	public int nestedListWeightSumII(List<NestedInteger> nestedList) {
 		if (nestedList == null || nestedList.size() == 0) {
