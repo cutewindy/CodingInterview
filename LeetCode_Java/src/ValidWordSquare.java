@@ -60,7 +60,7 @@ import java.util.List;
 public class ValidWordSquare {
 	
 	/**
-	 * Just compare char one by one
+	 * Brute force: Just compare char one by one
 	 * @param List<String> words
 	 * @return boolea
 	 * Time: O(mn)
