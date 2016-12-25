@@ -34,7 +34,8 @@ public class CountNumberswithUniqueDigits {
 	 * result += dp[i]
 	 * @param int n
 	 * @return int
-	 * Time: O(1) There are only 11 different ans. You can create a lookup table for it. This problem is O(1) in essence
+	 * Time: O(1) There are only 11 different ans. You can create a lookup table for it. 
+	 * This problem is O(1) in essence
 	 * Space: O(1)
 	 */
 	public int countNumberswithUniqueDigits(int n) {

@@ -14,13 +14,13 @@
 public class IntegerBreak {
 
 	/**
-	 * Math: 
+	 * Method2: Math: 
 	 * @param int n
 	 * @return n
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
-	public int integerBreak(int n) {
+	public int integerBreakI(int n) {
 		if (n <= 3) {
 			return n - 1;
 		}
@@ -33,10 +33,34 @@ public class IntegerBreak {
 		return result;
 	}
 	
+	
+	/**
+	 * Method1: DP
+	 * dp[i]: max product of integer i.
+	 * dp[i] = max(j, dp[j]) * max(i - j, dp[i - j])
+	 * @param int n
+	 * @return int
+	 * Time: O(n^2)
+	 * Space: O(n)
+	 */
+	public int integerBreak(int n) {
+		if (n < 3) return 1;
+		int[] dp = new int[n + 1];
+		dp[1] = 1;
+		dp[2] = 1;
+		for (int i = 3; i <= n; i++) {
+			for (int j = 1; j < i; j++) {
+				dp[i] = Math.max(Math.max(j, dp[j]) * Math.max(i - j, dp[i - j]), dp[i]);
+			}
+		}
+		return dp[n];
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		IntegerBreak result = new IntegerBreak();
 		System.out.println(result.integerBreak(9));
+		System.out.println(result.integerBreakI(9));
 	}
 
 }

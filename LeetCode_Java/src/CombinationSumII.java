@@ -3,7 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+ * Given a collection of candidate numbers (C) and a target number (T), find all unique combinations 
+ * in C where the candidate numbers sums to T.
  * Each number in C may only be used once in the combination.
  * Note:
  * All numbers (including target) will be positive integers.
@@ -27,7 +28,7 @@ public class CombinationSumII {
 	 * Backtracking: 
 	 * @param int[] candidates, int target
 	 * @return List<List<Integer>>
-	 * Time: O(n!)
+	 * Time: O(n^2)
 	 * Space: O(n)
 	 * Stack space: O(n)
 	 */
@@ -41,14 +42,15 @@ public class CombinationSumII {
 		return result;
 	}
 	
-	private void helper(int[] candidates, int pos, int sum, List<Integer> combo, List<List<Integer>> result) {
-		if (sum == 0) {
+	private void helper(int[] candidates, int pos, int target, List<Integer> combo, List<List<Integer>> result) {
+		if (target == 0) {
 			result.add(new ArrayList<>(combo));
 		}
 		for (int i = pos; i < candidates.length; i++) { 
-			if (candidates[i] > sum || i != pos && candidates[i] == candidates[i - 1]) continue; // skip duplicates
+			if (candidates[i] > target) break; 
+			if (i != pos && candidates[i] == candidates[i - 1]) continue; // skip duplicates
 			combo.add(candidates[i]);
-			helper(candidates, i + 1, sum - candidates[i], combo, result);
+			helper(candidates, i + 1, target - candidates[i], combo, result);  // cannot reuse the same elements
 			combo.remove(combo.size() - 1);
 		}
 	}

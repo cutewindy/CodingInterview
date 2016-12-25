@@ -38,7 +38,7 @@ public class CombinationSumIV {
 	 * Time: O(target * n)
 	 * Space: O(target)
 	 */
-	public int combinationSumIVI(int[] nums, int target) {
+	public int combinationSumV(int[] nums, int target) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
@@ -58,29 +58,28 @@ public class CombinationSumIV {
 	 * Method1: Backtracking: Time limited
 	 * @param int[] nums, int target
 	 * @return int
-	 * Time: O()
-	 * Space: O()
-	 * Stack space: O()
+	 * Time: O(unknow)
+	 * Space: O(1)
+	 * Stack space: O(unknow)
 	 */
-	private int result = 0;
 	public int combinationSumIV(int[] nums, int target) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
-		helper(nums, target);
-		return result;
+		Arrays.sort(nums);
+		return helper(nums, target);
 	}
 	
-	private void helper(int[] nums, int target) {
-		if (target < 0) {
-			return;
-		}
+	private int helper(int[] nums, int target) {
 		if (target == 0) {
-			result++;
+			return 1;
 		}
+		int result = 0;
 		for (int i = 0; i < nums.length; i++) {
-			helper(nums, target - nums[i]);
+			if (nums[i] > target) break;
+			result += helper(nums, target - nums[i]);
 		}
+		return result;
 	}
 	
 	public static void main(String[] args) {
@@ -88,7 +87,7 @@ public class CombinationSumIV {
 		CombinationSumIV result = new CombinationSumIV();
 		System.out.println(result.combinationSumIV(new int[] {1, 2, 3}, 4));
 //		System.out.println(result.combinationSumIV(new int[] {1, 2, 3}, 32));
-		System.out.println(result.combinationSumIVI(new int[] {1, 2, 3}, 4));
+		System.out.println(result.combinationSumV(new int[] {1, 2, 3}, 4));
 	}
 
 }

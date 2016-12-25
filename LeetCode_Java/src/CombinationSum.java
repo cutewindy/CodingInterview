@@ -3,7 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+ * Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C 
+ * where the candidate numbers sums to T.
  * The same repeated number may be chosen from C unlimited number of times.
  * Note:
  * All numbers (including target) will be positive integers.
@@ -25,9 +26,9 @@ public class CombinationSum {
 	 * Backtracking
 	 * @param int[] candidates, int target
 	 * @return List<List<Integer>>
-	 * Time: O()
-	 * Space: O()
-	 * Stack space: O()
+	 * Time: O(unknow)
+	 * Space: O(1)
+	 * Stack space: O(unknow)
 	 */
 	public List<List<Integer>> combinationSum(int[] candidates, int target) {
 		List<List<Integer>> result = new ArrayList<>();
@@ -39,15 +40,15 @@ public class CombinationSum {
 		return result;
 	}
 	
-	private void helper(int[] candidates, int pos, int sum, List<Integer> combo, List<List<Integer>> result) {
-		if (sum == 0) {
+	private void helper(int[] candidates, int pos, int target, List<Integer> combo, List<List<Integer>> result) {
+		if (target == 0) {
 			result.add(new ArrayList<>(combo));
 			return;
 		}
 		for (int i = pos; i < candidates.length; i++) {
-			if (candidates[i] > sum) continue;
+			if (candidates[i] > target) break;
 			combo.add(candidates[i]);
-			helper(candidates, i, sum - candidates[i], combo, result); // not i + 1 because we can reuse same elements
+			helper(candidates, i, target - candidates[i], combo, result); // not i + 1 because we can reuse same elements
 			combo.remove(combo.size() - 1);
 		}
 	}

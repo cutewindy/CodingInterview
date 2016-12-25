@@ -23,9 +23,9 @@ public class CombinationSumIII {
 	 * Backtracking: 
 	 * @param int k, int n
 	 * @return List<List<Integer>>
-	 * Time: O()
-	 * Space: O()
-	 * Stack space: O()
+	 * Time: O(9k)
+	 * Space: O(k)
+	 * Stack space: O(k)
 	 */
 	public List<List<Integer>> combinationSumIII(int k, int n) {
 		List<List<Integer>> result = new ArrayList<>();
@@ -37,17 +37,18 @@ public class CombinationSumIII {
 		return result;
 	}
 	
-	private void helper(int k, int sum, int pos, List<Integer> combo, List<List<Integer>> result) {
-		if (sum < 0 || k < 0) {
+	private void helper(int k, int n, int pos, List<Integer> combo, List<List<Integer>> result) {
+		if (k < 0) {
 			return;
 		}
-		if (sum == 0 && k == 0) {
+		if (n == 0 && k == 0) {
 			result.add(new ArrayList<>(combo));
 			return;
 		}
 		for (int i = pos; i <= 9; i++) {
+			if (i > n) break;
 			combo.add(i);
-			helper(k - 1, sum - i, i + 1, combo, result);
+			helper(k - 1, n - i, i + 1, combo, result);
 			combo.remove(combo.size() - 1);
 		}
 	}
