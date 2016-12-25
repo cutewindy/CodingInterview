@@ -42,9 +42,9 @@ public class BurstBalloons {
 				int end = len + start - 1;
 				System.out.println("start: " + start + ", end: " + end);
 				for (int i = start; i <= end; i++) {
-					int curr = (start - 1 < 0 ? 1 : nums[start - 1]) * nums[i] * (end + 1 >= n ? 1 : nums[end + 1]);
-					curr += i == start ? 0 : dp[start][i - 1];
-					curr += i == end ? 0 : dp[i + 1][end];
+					int curr = (start - 1 < 0 ? 1 : nums[start - 1]) * nums[i] * (end + 1 >= n ? 1 : nums[end + 1]); // Deal with num[-1] and num[num.length]
+					curr += i == start ? 0 : dp[start][i - 1]; // If not start, we can add subRes from start to i-1.
+					curr += i == end ? 0 : dp[i + 1][end];  // If not end, we can add subRes from i+1 to end.
 					System.out.println("i: " + i + ", curr: " + curr);
 					dp[start][end] = Math.max(curr, dp[start][end]);
 				}
