@@ -25,11 +25,12 @@ public class UniqueBinarySearchTreesII {
 	 * all possible trees for left and right subtrees and combine them in all possible ways with the root.
 	 * @param int n
 	 * @return List<TreeNode>
-	 * Time: O(n^n)
-	 * Space: O(n)
+	 * Time: O(n^3)
+	 * Space: O(solution space)
+	 * Stack space: O(n)
 	 */
 	public List<TreeNode> uniqueBinarySearchTreeII(int n) {
-		List<TreeNode> result = new ArrayList();
+		List<TreeNode> result = new ArrayList<>();
 		if (n == 0) {
 			return result;
 		}
@@ -37,7 +38,7 @@ public class UniqueBinarySearchTreesII {
 	}
 	
 	private List<TreeNode> helper(int start, int end) {
-		List<TreeNode> result = new ArrayList();
+		List<TreeNode> result = new ArrayList<>();
 		if (start > end) {
 			result.add(null); // be care
 			return result;
