@@ -54,7 +54,7 @@ public class UniquePathsII {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		UniquePathsII result = new UniquePathsII();
-		System.out.println(result.uniquePathsII(new int[][] {{0,0,0}, {0,1,0}, {0,0,0}}));
+		System.out.println(result.uniquePathsII(new int[][] {{0,0,0,0}, {0,1,0,0}, {1,0,0,0},{0,0,0,0}}));
 	}
 
 }
