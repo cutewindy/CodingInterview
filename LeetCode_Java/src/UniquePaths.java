@@ -17,7 +17,7 @@ public class UniquePaths {
 	 * Thus, dp[i][j] = dp[i-1][j] + dp[i][j-1]. Can save space by using dp[j] = dp[j-1] + dp[j].
 	 * @param int m, int n
 	 * @return int
-	 * Time: O(n^2)
+	 * Time: O(m * n)
 	 * Space: O(n)
 	 */
 	public int uniquePaths(int m, int n) {
