@@ -18,17 +18,42 @@
 public class BombEnemy {
 	
 	/**
-	 * 
-	 * @param int[][] grid
+	 * DP: Count number of 'E' first from the row and col until 'W'. 
+	 * When go after 'W', need to count new row or col, otherwise, the rowHits and colHits will not 
+	 * change.
+ 	 * @param int[][] grid
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(m * n)
+	 * Space: O(m + n) can optimize space to O(n) by using int rowHits rather than int[] rowHits.
 	 */
 	public int bombEnemy(char[][] grid) {
 		if (grid == null || grid.length == 0 || grid[0].length == 0) {
 			return 0;
 		}
+		int m = grid.length;
+		int n = grid[0].length;
 		int result = 0;
+		int[] rowHits = new int[m];
+		int[] colHits = new int[n];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (j == 0 || grid[i][j - 1] == 'W') {  //in row, after 'W', count new rowHits
+					rowHits[i] = 0;
+					for (int k = j; k < n && grid[i][k] != 'W'; k++) {
+						rowHits[i] += grid[i][k] == 'E' ? 1 : 0;
+					}
+				}
+				if (i == 0 || grid[i - 1][j] == 'W') {  //in col, after 'W', count new colHits
+					colHits[j] = 0;
+					for (int k = i; k < m && grid[k][j] != 'W'; k++) {
+						colHits[j] += grid[k][j] == 'E' ? 1 : 0;
+					}
+				}
+				if (grid[i][j] == '0') {  //count totalHits at each '0'
+					result = Math.max(rowHits[i] + colHits[j], result);
+				}
+			}
+		}
 		return result;
 	}
 
@@ -38,6 +63,7 @@ public class BombEnemy {
 		System.out.println(result.bombEnemy(new char[][] 
 				{{'0', 'E', '0', '0'}, 
 				 {'E', '0', 'W', 'E'}, 
+				 {'0', 'E', '0', '0'},
 				 {'0', 'E', '0', '0'}}));
 	}
 
