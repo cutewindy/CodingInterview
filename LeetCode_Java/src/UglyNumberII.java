@@ -21,7 +21,7 @@ public class UglyNumberII {
 	/**
 	 * DP: use the definition of ugly number, the new ugly number always minimum of the old ugly 
 	 * number *2, *3 and *5.
-	 * Use a list to save the old ugly number, and i2, i3 and i5 as pointers to record the position.
+	 * Use int[] to save the old ugly number, and i2, i3 and i5 as pointers to record the position.
 	 * @param int n
 	 * @return int
 	 * Time: O(n)

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -71,28 +72,27 @@ public class SuperUglyNumber {
 	
 	
 	/**
-	 * Method1: DP: like "Ugly Number II", using array index to instead pointers i2, i3 and i5.
+	 * Method1: DP: like "Ugly Number II", using array index to represent pointers i2, i3 and i5.
 	 * @param int n, int[] primes
 	 * @return int
-	 * Time: O(kn) k is length of primes
-	 * Space: O(n)
+	 * Time: O(nk) k is length of primes
+	 * Space: O(n + k)
 	 */
 	public int superUglyNumber(int n, int[] primes) {
 		if (n <= 0 || primes == null || primes.length == 0) {
 			return -1;
 		}
 		int[] superUgly = new int[n];
+		Arrays.fill(superUgly, Integer.MAX_VALUE);
 		superUgly[0] = 1;
 		int[] index = new int[primes.length];
 		for (int i = 1; i < n; i++) {
-			int curr = Integer.MAX_VALUE;
 			for (int j = 0; j < primes.length; j++) {
 				while (primes[j] * superUgly[index[j]] <= superUgly[i - 1]) {
 					index[j]++;
 				}
-				curr = Math.min(primes[j] * superUgly[index[j]], curr);
+				superUgly[i] = Math.min(primes[j] * superUgly[index[j]], superUgly[i]);
 			}
-			superUgly[i] = curr;
 		}
 		return superUgly[n - 1];
 	}

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * You are climbing a stair case. It takes n steps to reach to the top.
@@ -16,20 +14,19 @@ public class ClimbingStairs {
 	 * @param int n
 	 * @return int
 	 * Time: O(n)
-	 * Space: O(n)
+	 * Space: O(n) can improve to O(1) by using two int
 	 */
 	public int climbingStairs(int n) {
-		if (n <= 2) {
-			return n;
+		if (n <= 0) {
+			return 0;
 		}
-		List<Integer> ways = new ArrayList<Integer>();
-		ways.add(0);
-		ways.add(1);
-		ways.add(2);
-		for (int i = 3; i <= n; i++) {
-			ways.add(ways.get(i - 2) + ways.get(i - 1));
+		int[] dp = new int[n + 1];
+		dp[0] = 1;
+		dp[1] = 1;;
+		for (int i = 2; i <= n; i++) {
+			dp[i] = dp[i - 1] + dp[i - 2];
 		}
-		return ways.get(n);
+		return dp[n];
 	}
 
 	public static void main(String[] args) {

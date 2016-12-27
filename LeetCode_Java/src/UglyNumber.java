@@ -11,7 +11,7 @@
 public class UglyNumber {
 	
 	/**
-	 * Brute Force
+	 * Brute Force + Math
 	 * @param int num
 	 * @return boolean
 	 * Time: O(1) 
