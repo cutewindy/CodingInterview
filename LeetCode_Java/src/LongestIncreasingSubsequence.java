@@ -17,10 +17,54 @@ import java.util.Arrays;
 public class LongestIncreasingSubsequence {
 
 	/**
+	 * Binary Search: 
+	 * Tails is an array storing the smallest tail of all increasing subsequences with length i+1 in 
+	 * tails[i].
+	 * @param int[] nums
+	 * @return int
+	 * Time: O(nlog(n))
+	 * Space: O(n)
+	 */
+	public int longestIncreasingSubsequenceI(int[] nums) {
+		if (nums == null || nums.length == 0) {
+			return 0;
+		}
+		int n = nums.length;
+		int[] tails = new int[n];
+		tails[0] = nums[0];
+		int start = 0;
+		int end = 0;
+		int size = 1;
+		for (int num: nums) {
+			start = 0;
+			end = size - 1;
+			while (start + 1 < end) {
+				int mid = start + (end - start) / 2;
+				if (tails[mid] < num) {
+					start = mid;
+				}
+				else {
+					end = mid;
+				}
+			}
+			if (num <= tails[start]) {
+				tails[start] = num;
+			}
+			else if (num <= tails[end]) {
+				tails[end] = num;
+			}
+			else {
+				tails[end + 1] = num;
+				size++;
+			}
+		}
+		return size;
+ 	}
+	
+	/**
 	 * DP: LIS[i] means the LIS of the elements before nums[i] including nums[i]. 
 	 * Need to find the satisfied max(LIS[j]+1), where 0<j<i.
 	 * Then return the max(LIS[i]), where 0<i<nums.length.
-	 * and then return 
 	 * @param int[] nums
 	 * @return int
 	 * Time: O(n ^ 2)
@@ -43,29 +87,13 @@ public class LongestIncreasingSubsequence {
 			result = Math.max(dp[i], result);
 		}
 		return result;
-		
-//	    int[] tails = new int[nums.length];
-//	    int size = 0;
-//	    for (int x : nums) {
-//	        int i = 0, j = size;
-//	        while (i != j) {
-//	            int m = (i + j) / 2;
-//	            if (tails[m] < x)
-//	                i = m + 1;
-//	            else
-//	                j = m;
-//	        }
-//	        System.out.println(Arrays.toString(tails));
-//	        tails[i] = x;
-//	        if (i == size) ++size;
-//	    }
-//	    return size;
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LongestIncreasingSubsequence result = new LongestIncreasingSubsequence();
 		System.out.println(result.longestIncreasingSubsequence((new int[]{10, 9, 2, 5, 3, 7, 101, 18})));
+		System.out.println(result.longestIncreasingSubsequenceI((new int[]{10, 9, 2, 5, 3, 7, 101, 18})));
 	}
 
 }
