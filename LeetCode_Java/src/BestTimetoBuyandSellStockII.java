@@ -18,11 +18,12 @@ public class BestTimetoBuyandSellStockII {
 	 * Space: O(1)
 	 */
 	public int bestTimetoBuyandSellStockII(int[] prices) {
-		if (prices == null || prices.length == 0) {
+		if (prices == null || prices.length <= 1) {
 			return 0;
 		}
 		int result = 0;
-		for (int i = 1; i < prices.length; i++) {
+		int n = prices.length;
+		for (int i = 1; i < n; i++) {
 			if (prices[i] - prices[i - 1] > 0) {
 				result += prices[i] - prices[i - 1];
 			}
