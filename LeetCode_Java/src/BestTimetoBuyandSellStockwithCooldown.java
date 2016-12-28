@@ -15,15 +15,50 @@
  */
 public class BestTimetoBuyandSellStockwithCooldown {
 
+	
 	/**
-	 * DP: 4 different states, (has0Buy, has0Cool, has1Sell, has1Cool)
+	 * Method2: DP
+	 * buy[i]: Max profit till index i. The series of transaction is ending with a buy.
+	 * To make a decision whether to buy at i, we either take a rest, by just using the old 
+	 * decision at i - 1, or sell at/before i - 2, then buy at i, We cannot sell at i - 1, then buy 
+	 * at i, because of cooldown.
+	 * sell[i]: Max profit till index i. The series of transaction is ending with a sell.
+	 * To make a decision whether to sell at i, we either take a rest, by just using the 
+	 * old decision at i - 1, or buy at/before i - 1, then sell at i.
+	 * @param int[] prices
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n) can be optimize to O(1)
+	 */
+	public int bestTimetoBuyandSellStockwithCooldownI(int[] prices) {
+		if (prices == null || prices.length <= 1) {
+			return 0;
+		}
+		int n = prices.length;
+		int[] buy = new int[n];
+		int[] sell = new int[n];
+		// init
+		buy[0] = -prices[0];
+		buy[1] = Math.max(-prices[1], -prices[0]);
+		sell[1] = Math.max(buy[0] + prices[1], 0);
+		// update
+		for (int i = 2; i < n; i++) {
+			buy[i] = Math.max(sell[i - 2] - prices[i], buy[i - 1]);
+			sell[i] = Math.max(buy[i - 1] + prices[i], sell[i - 1]);
+		}
+		return sell[n - 1];
+	}
+	
+	/**
+	 * Method1: DP
+	 * 4 different states, (has0Buy, has0Cool, has1Sell, has1Cool)
 	 *   i-1					i
 	 * has0Cool				has0Buy   (state of has0Buy at i only can come from state of has0Cool at i-1 (make sure cooldown));
 	 * has0Cool/ has1Sell	has0Cool  (state of has0Cool at i can come from state of has0Cool and has1Sell at i-1);
 	 * has0Buy/ has1Cool	has1Sell  (state of has1Sell at i can come from state of has0Buy and has1Cool at i-1);
 	 * has0Buy/ has1Cool	has1Cool  (state of has1Cool at i can come from state of has0Buy and has1Cool at i-1);
 	 * result = max(has0Buy, has0Cool, has1Sell, has1Cool) at i=prices.length.
-	 * @param prices
+	 * @param int[] prices
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(1)
@@ -57,6 +92,8 @@ public class BestTimetoBuyandSellStockwithCooldown {
 		// TODO Auto-generated method stub
 		BestTimetoBuyandSellStockwithCooldown result = new BestTimetoBuyandSellStockwithCooldown();
 		System.out.println(result.bestTimetoBuyandSellStockwithCooldown(new int[] {1, 2, 3, 0, 2}));
+		System.out.println(result.bestTimetoBuyandSellStockwithCooldownI(new int[] {1, 2, 3, 0, 2}));
+
 	}
 
 }
