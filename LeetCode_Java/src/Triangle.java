@@ -31,11 +31,10 @@ public class Triangle {
 	 * triangle[i][j] = min(triangle[i-1][j-1], triangle[i-1][j]) + triangle[i][j];
 	 * @param List<List<Integer>> triangle
 	 * @return int
-	 * Time: O(n^2)
+	 * Time: O(m*n)
 	 * Space: O(1)
 	 */
 	public int triangle(List<List<Integer>> triangle) {
-		
         if (triangle == null || triangle.size() == 0 || triangle.get(0).size() == 0) {
             return 0;
         }
@@ -64,7 +63,7 @@ public class Triangle {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Triangle result = new Triangle();
-		List<List<Integer>> triangle = new ArrayList();
+		List<List<Integer>> triangle = new ArrayList<>();
 		triangle.add(Arrays.asList(2));
 		triangle.add(Arrays.asList(3, 4));
 		triangle.add(Arrays.asList(6, 5, 7));
