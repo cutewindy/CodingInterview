@@ -34,15 +34,15 @@ public class PalindromePartitioning {
 		return result;
 	}
 	
-	private void helper(String s, int pos, List<String> combo, List<List<String>> result) {
-		if (pos == s.length()) {
+	private void helper(String s, int start, List<String> combo, List<List<String>> result) {
+		if (start == s.length()) {
 			result.add(new ArrayList<>(combo));
 			return;
 		}
-		for (int i = pos; i < s.length(); i++) {
-			if (isPalindrome(s, pos, i)) {
-				combo.add(s.substring(pos, i + 1));
-				helper(s, i + 1, combo, result);
+		for (int end = start; end < s.length(); end++) {
+			if (isPalindrome(s, start, end)) {
+				combo.add(s.substring(start, end + 1));
+				helper(s, end + 1, combo, result);
 				combo.remove(combo.size() - 1);
 			}
 		}
