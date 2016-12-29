@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,18 +32,17 @@ public class PascalsTriangle {
 		if (numRows == 0) {
 			return result;
 		}
-		result.add(Arrays.asList(1));
-		for (int i = 1; i < numRows; i++) {
-			List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < numRows; i++) {
+			List<Integer> curr = new ArrayList<>();
 			for (int j = 0; j <= i; j++) {
 				if (j == 0 || j == i) {
-					list.add(1);
+					curr.add(1);
 				}
 				else {
-					list.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));
+					curr.add(result.get(i - 1).get(j - 1) + result.get(i - 1).get(j));
 				}
 			}
-			result.add(list);
+			result.add(curr);
 		}		
 		return result;
 	}
