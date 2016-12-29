@@ -13,23 +13,23 @@ import java.util.Arrays;
 public class PerfectSquares {
 
 	/**
-	 * DP: dp[n1] = min(dp[n1-n2*n2] + 1, dp[n1])
+	 * DP: dp[i]: the min number of perfect squares of i 
+	 * dp[n1] = min(dp[n1-n2*n2] + 1, dp[n1])
 	 * @param int n
 	 * @return int
-	 * Time: O(n^2)
+	 * Time: O(n*sqrt(n))
 	 * Space: O(n)
 	 */
 	public int perfectSquares(int n) {
 		if (n == 0) {
 			return 0;
 		}
-		int result = n;
 		int[] dp = new int[n + 1];
 		Arrays.fill(dp, Integer.MAX_VALUE);
 		dp[0] = 0;
-		for (int n1 = 1; n1 <= n; n1++) {
-			for (int n2 = 1; n2 * n2 <= n1; n2++) {
-				dp[n1] = Math.min(dp[n1 - n2 * n2] + 1, dp[n1]);
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j * j <= i; j++) {
+				dp[i] = Math.min(dp[i - j * j] + 1, dp[i]);
 			}
 		}
 		return dp[n];
@@ -38,7 +38,7 @@ public class PerfectSquares {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PerfectSquares result = new PerfectSquares();
-		System.out.println(result.perfectSquares(9));
+		System.out.println(result.perfectSquares(12));
 	}
 
 }
