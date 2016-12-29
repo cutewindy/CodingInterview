@@ -48,7 +48,7 @@ public class MaximumProductSubarray {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MaximumProductSubarray result = new MaximumProductSubarray();
-		System.out.println(result.maximumProductSubarray(new int[] {2, 3, -2, 4}));
+		System.out.println(result.maximumProductSubarray(new int[] {2, -5, -2, 4, 3}));
 	}
 
 }
