@@ -29,30 +29,31 @@ public class LargestDivisibleSubset {
 	 * Space: O(n)
 	 */
 	public List<Integer> largestDivisibleSubset(int[] nums) {
-		List<Integer> result = new ArrayList();
+		List<Integer> result = new ArrayList<>();
 		if (nums == null || nums.length == 0) {
 			return result;
 		}
 		Arrays.sort(nums);
-		int[] dp = new int[nums.length];
-		int[] index = new int[nums.length];
+		int n = nums.length;
+		int[] dp = new int[n];
+		int[] index = new int[n];
 		int maxLength = 1;
 		int lastIndex = 0;
-		Arrays.fill(index, -1);
 		// init
 		dp[0] = 1;
+		Arrays.fill(index, -1);
 		// update
-		for (int i = 1; i < nums.length; i++) {
+		for (int i = 1; i < n; i++) {
 			for (int j = 0; j < i; j++) {
 				if (nums[i] % nums[j] == 0 && dp[i] < dp[j] + 1) {
 					dp[i] = dp[j] + 1;
-					index[i] = j;
-					// save the beginning index of LDS
-					if (dp[i] > maxLength) {
-						maxLength = dp[i];
-						lastIndex = i;
-					}
+					index[i] = j;	
 				}
+			}
+			// save the beginning index of LDS
+			if (dp[i] > maxLength) {
+				maxLength = dp[i];
+				lastIndex = i;
 			}
 		}
 		while (lastIndex != -1) {
@@ -65,7 +66,8 @@ public class LargestDivisibleSubset {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LargestDivisibleSubset result = new LargestDivisibleSubset();
-		System.out.println(result.largestDivisibleSubset(new int[] {1, 2, 3}));
+		System.out.println(result.largestDivisibleSubset(new int[] {1, 2, 3, 4, 5, 6, 8, 9, 72}));
+
 	}
 
 }
