@@ -15,6 +15,7 @@ public class InterleavingString {
 	
 	/**
 	 * DP
+	 * dp[i][j]: whether s3[0..i+j-1] is interleave by s1[0..i-1] and s2[0..j-1]
 	 * @param String s1, String s2, String s3
 	 * @return Boolean
 	 * Time: O(m*n)
@@ -24,30 +25,25 @@ public class InterleavingString {
 		if (s1.length() + s2.length() != s3.length()) {
 			return false;
 		}
-		int m = s1.length() + 1;
-		int n = s2.length() + 1;
-		boolean[][] interleaving = new boolean[m][n];
+		int m = s1.length();
+		int n = s2.length();
+		boolean[][] interleaving = new boolean[m + 1][n + 1];
 		// init
 		interleaving[0][0] = true;
-		for (int i = 1; i < m; i++) {
+		for (int i = 1; i <= m; i++) {
 			interleaving[i][0] = (s3.charAt(i - 1) == s1.charAt(i - 1) && interleaving[i - 1][0]);
 		}
-		for (int j = 1; j < n; j++) {
+		for (int j = 1; j <= n; j++) {
 			interleaving[0][j] = (s3.charAt(j - 1) == s2.charAt(j - 1) && interleaving[0][j - 1]);
 		}
-		// function
-		for (int i = 1; i < m; i++) {
-			for (int j = 1; j < n; j++) {
-				if ((s3.charAt(i + j - 1) == s1.charAt(i - 1) && interleaving[i - 1][j] == true) ||
-						(s3.charAt(i + j - 1) == s2.charAt(j - 1) && interleaving[i][j - 1] == true)) {
+		// update
+		for (int i = 1; i <= m; i++) {
+			for (int j = 1; j <= n; j++) {
+				if ((s3.charAt(i + j - 1) == s1.charAt(i - 1) && interleaving[i - 1][j]) 
+				|| (s3.charAt(i + j - 1) == s2.charAt(j - 1) && interleaving[i][j - 1])) {
 					interleaving[i][j] = true;
 				}
-				else {
-					interleaving[i][j] = false;
-				}
-				System.out.print(interleaving[i][j] + ", ");
 			}
-			System.out.println();
 		}
 		return interleaving[m - 1][n - 1];
 	}
