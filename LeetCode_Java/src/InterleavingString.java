@@ -45,7 +45,7 @@ public class InterleavingString {
 				}
 			}
 		}
-		return interleaving[m - 1][n - 1];
+		return interleaving[m][n];
 	}
 
 	public static void main(String[] args) {
