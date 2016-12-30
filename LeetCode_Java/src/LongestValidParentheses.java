@@ -16,7 +16,8 @@ public class LongestValidParentheses {
 	/**
 	 * Method2: DP: Using dp[] to save the longest length of valid parentheses which is end at i.
 	 * If s[i]='(', have an open parentheses.
-	 * If s[i]=')', can close a parentheses, dp[i]=dp[i-1]+2; and need to add dp[i-dp[i]].
+	 * If s[i]=')' and open > 0, can close a parentheses, dp[i]=dp[i-1]+2; and need to add dp[i-dp[i]].
+	 * If s[i]=')' and open = 0, skip it.
 	 * @param String s
 	 * @return int
 	 * Time: O(n)
@@ -28,9 +29,10 @@ public class LongestValidParentheses {
 		}
 		int result = 0;
 		int open = 0;
+		int n = s.length();
 		char[] S = s.toCharArray();
 		int[] dp = new int[s.length()];
-		for (int i = 0; i < s.length(); i++) {
+		for (int i = 0; i < n; i++) {
 //			char c = s.charAt(i);    // time limited expected 
 			if (S[i] == '(') open++;
 			if (S[i] == ')' && open > 0) {

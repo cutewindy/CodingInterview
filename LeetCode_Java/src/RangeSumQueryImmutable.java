@@ -6,8 +6,8 @@
  * sumRange(2, 5) -> -1
  * sumRange(0, 5) -> -3
  * Note:
- * You may assume that the array does not change.
- * There are many calls to sumRange function.
+ * 1. You may assume that the array does not change.
+ * 2. There are many calls to sumRange function.
  * 
  * Tags: DP
  * @author wendi

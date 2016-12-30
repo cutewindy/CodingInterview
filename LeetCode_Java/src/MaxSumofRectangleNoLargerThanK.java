@@ -21,16 +21,57 @@ import java.util.TreeSet;
  *
  */
 public class MaxSumofRectangleNoLargerThanK {
+	
+	
+	/**
+	 * Method2: DP: use a TreeSet to save the 
+	 * @param int[][] matrix, int k
+	 * @return int 
+	 * Time: O(n^3*log(n))
+	 * Space: 
+	 */
+	public int maxSumofRectangleNoLargerThanKI(int[][] matrix, int k) {
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+			return 0;
+		}
+		int result = Integer.MIN_VALUE;
+		int m = matrix.length;
+		int n = matrix[0].length;
+		// use an int[][] to save the sum of matrix from point [0, 0] to [i, j]
+		int[][] sum = new int[m][n];
+		sum[0][0] = matrix[0][0];
+		for (int i = 1; i < m; i++) {
+			sum[i][0] = sum[i - 1][0] + matrix[i][0];
+		}
+		for (int j = 1; j < n; j++) {
+			sum[0][j] = sum[0][j - 1] + matrix[0][j];
+		}
+		for (int i = 1; i < m; i++) {
+			for (int j = 1; j < n; j++) {
+				sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + matrix[i][j];
+			}
+		}
+		// use a TreeSet to save
+		for (int row1 = 0; row1 < m; row1++) {
+			for (int row2 = row1; row2 < m; row2++) {
+				TreeSet<Integer> ts = new TreeSet<>();
+				
+			}
+		}
+		
+		return result;
+	}
+	
 
 	/**
 	 * Method1: Brute Force:(Like the algorithm "Range sum query 2D Immutable") 
 	 * First, Use an int[][] sum to save the sum of matrix from point [0, 0] to point [i, j]
-	 * Then, find the max sum of rectangle at the point of [row1, col1] and [row2, col2],
-	 *  which satisfied area <= k.
+	 * Then, find the max sum of rectangle at the point of [row1, col1] and [row2, col2], 
+	 * which satisfied area <= k.
 	 * @param int[][] matrix, int k
 	 * @return int
-	 * Time: O(n^4)
-	 * Space: O(n^2)
+	 * Time: O(m*n*m*n)
+	 * Space: O(m*n)
 	 */
 	public int maxSumofRectangleNoLargerThanK(int[][] matrix, int k) {
 		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
@@ -85,44 +126,7 @@ public class MaxSumofRectangleNoLargerThanK {
 		return result;
 	}
 	
-	/**
-	 * Method2: DP: use a TreeSet to save the 
-	 * @param int[][] matrix, int k
-	 * @return int 
-	 * Time: O(n^3*log(n))
-	 * Space: 
-	 */
-	public int maxSumofRectangleNoLargerThanKI(int[][] matrix, int k) {
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-			return 0;
-		}
-		int result = Integer.MIN_VALUE;
-		int m = matrix.length;
-		int n = matrix[0].length;
-		// use an int[][] to save the sum of matrix from point [0, 0] to [i, j]
-		int[][] sum = new int[m][n];
-		sum[0][0] = matrix[0][0];
-		for (int i = 1; i < m; i++) {
-			sum[i][0] = sum[i - 1][0] + matrix[i][0];
-		}
-		for (int j = 1; j < n; j++) {
-			sum[0][j] = sum[0][j - 1] + matrix[0][j];
-		}
-		for (int i = 1; i < m; i++) {
-			for (int j = 1; j < n; j++) {
-				sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + matrix[i][j];
-			}
-		}
-		// use a TreeSet to save
-		for (int row1 = 0; row1 < m; row1++) {
-			for (int row2 = row1; row2 < m; row2++) {
-				TreeSet<Integer> ts = new TreeSet<>();
-				
-			}
-		}
-		
-		return result;
-	}
+
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

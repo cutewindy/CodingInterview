@@ -13,14 +13,14 @@
 public class JumpGame {
 	
 	/**
-	 * Method1: Greedy: maxIndex = i + nums[i], where 0<=i<nums.length.
+	 * Method2: DP --> Greedy: maxIndex = i + nums[i], where 0<=i<nums.length.
 	 * If there is a false in the process, the result will be false.
 	 * @param int[] nums
 	 * @return boolean
 	 * Time: O(n)
-	 * Space: O(1)
+	 * Space: O(1) optimize dpO(n) to O(1)
 	 */
-	public boolean jumpGame(int[] nums) {
+	public boolean jumpGameI(int[] nums) {
 		if (nums == null || nums.length == 0) {
             return true;
         }
@@ -37,35 +37,36 @@ public class JumpGame {
 	
 	
 	/**
-	 * Method2: DP(brute force)
+	 * Method1: DP(brute force)
 	 * @param int[] nums
 	 * @return boolean
 	 * Time: O(n^2)
 	 * Space: O(1)
 	 */
-//	public boolean jumpGame(int[] nums) {
-//		if (nums == null || nums.length == 0) {
-//            return true;
-//        }
-//        boolean[] canJump = new boolean[nums.length];
-//        canJump[0] = true;
-//        for (int i = 1; i < nums.length; i++) {
-//        	for (int j = 0; j < i; j++) {
-//        		if (canJump[j] && j + nums[j] >= i) {
-//        			canJump[i] = true;
-//        			break;
-//        		}
-//        	}
-//        }
-//        return canJump[nums.length - 1];
-//	}
+	public boolean jumpGame(int[] nums) {
+		if (nums == null || nums.length == 0) {
+            return true;
+        }
+        boolean[] canJump = new boolean[nums.length];
+        canJump[0] = true;
+        for (int i = 1; i < nums.length; i++) {
+        	for (int j = 0; j < i; j++) {
+        		if (canJump[j] && j + nums[j] >= i) {
+        			canJump[i] = true;
+        			break;
+        		}
+        	}
+        }
+        return canJump[nums.length - 1];
+	}
 		
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		JumpGame result = new JumpGame();
 		System.out.println(result.jumpGame(new int[] {2,3,1,1,4}));
-		System.out.println(result.jumpGame(new int[] {3,2,1,0,4}));
+//		System.out.println(result.jumpGame(new int[] {3,2,1,0,4}));
+		System.out.println(result.jumpGameI(new int[] {2,3,1,1,4}));
 	}
 
 }
