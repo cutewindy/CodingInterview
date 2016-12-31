@@ -32,7 +32,7 @@ import java.util.Arrays;
 public class WiggleSubsequence {
 	
 	/**
-	 * Greedy: 
+	 * Method2: Greedy: 
 	 * d: the length of the longest subsequence so far that the last number large than previous one.
 	 * f: the length of the longest subsequence so far that the last number small than previous one.
 	 * @param int[] nums
