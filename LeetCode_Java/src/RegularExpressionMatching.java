@@ -27,11 +27,12 @@ public class RegularExpressionMatching {
 	 * DP: 
 	 * dp[i][j]: whether s[0..i-1] is matching p[0..j-1]. 
 	 * 1 If p[j-1] == s[i-1]: dp[i][j] = dp[i-1][j-1];
-	 * 2 If p[j-1] == '.': dp[i][j] = dp[i-1][j-1];
-	 * 3 If p[j-1] == '*', here are two sub conditions:
+	 * 2 Else if p[j-1] == '.': dp[i][j] = dp[i-1][j-1];
+	 * 3 Else if p[j-1] == '*', here are two sub conditions:
 	 *    3.1 dp[i][j] = dp[i][j-2]  //in this case, X* only counts as empty;
 	 *    3.2 if p[j-2] == s[i-1] or p[j-2] == '.': 
-	 *        dp[i][j] = dp[i-1][j]   // in this case, X* counts as single or multiple X.
+	 *        dp[i][j] = dp[i-1][j]   // in this case, X* counts as single or multiple X;
+	 * 4 Else p[j-1] != s[i-1]: dp[i][j] = false.
 	 * @param String s, String p
 	 * @return boolean
 	 * Time: O(m * n)
