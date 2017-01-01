@@ -9,6 +9,28 @@
  */
 public class ReverseLinkedList {
 	
+	
+	/**
+	 * Method3: (Iterative) reverse d->2->1->3->4->5->null to d->3->2->1->4->5->null
+	 * @param ListNode head
+	 * @return ListNode
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public ListNode reverseLinkedListII(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = head.next;
+        while (curr != null) {
+            head.next = curr.next;
+            curr.next = dummy.next;
+            dummy.next = curr;
+            curr = head.next;
+        }
+        return dummy.next;
+	}
+	
 	/**
 	 * Method2:(Recursively) Like iteratively method
 	 * @param ListNode head
