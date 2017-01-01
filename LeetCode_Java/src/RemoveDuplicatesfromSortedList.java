@@ -10,7 +10,7 @@
 public class RemoveDuplicatesfromSortedList {
 
 	/**
-	 * Burst
+	 * Brute force
 	 * @param ListNode head
 	 * @return ListNode head
 	 * Time: O(n)
