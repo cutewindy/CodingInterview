@@ -14,8 +14,48 @@
  */
 
 public class ReverseNodesinKGroup {
+	
+	/**
+	 * Method2: Reverse method same like method1.
+	 * Calculate the length of list n, then do n/k times for loop.
+	 * Swap k nodes using reverse nodes method.
+	 * @param ListNode head, int k
+	 * @return ListNode
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public ListNode reverseNodesinKGroupI(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0 || k == 1) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        head = dummy;
+        ListNode tail = head.next;
+        ListNode curr = tail.next;
+        ListNode node = dummy.next;
+        int n = 0;
+        while (node != null) {
+            n++;
+            node = node.next;
+        }
+        n /= k;
+        while (n > 0) {
+            for (int i = 0; i < k - 1; i++) {
+                tail.next = curr.next;
+                curr.next = head.next;
+                head.next = curr;
+                curr = tail.next;
+            }
+            head = tail;
+            tail = head.next;
+            curr = tail == null ? null : tail.next;
+            n--;
+        }
+        return dummy.next;	
+	}
+	
 
 	/**
+	 * Method1: 
 	 * Using post pointer to find whether the number of left nodes is large than k.
 	 * If true, swap k nodes using reverse nodes method.
 	 * @param ListNode head, int k
@@ -54,8 +94,10 @@ public class ReverseNodesinKGroup {
 		// TODO Auto-generated method stub
 		ReverseNodesinKGroup result = new ReverseNodesinKGroup();
 		ListNode head = ListNode.generateLinkedList(new int[] {1, 2, 3, 4, 5});
-		ListNode.printLinkedList(result.reverseNodesinKGroup(head, 2));
+		ListNode.printLinkedList(head);
+//		ListNode.printLinkedList(result.reverseNodesinKGroup(head, 2));
 //		ListNode.printLinkedList(result.reverseNodesinKGroup(head, 3));
+		ListNode.printLinkedList(result.reverseNodesinKGroupI(head, 2));
 	}
 
 }
