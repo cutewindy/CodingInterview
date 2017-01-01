@@ -14,7 +14,7 @@
 public class SwapNodesinPairs {
 
 	/**
-	 * Burst
+	 * Brute force
 	 * @param ListNode head
 	 * @return ListNode
 	 * Time: O(n)
@@ -24,14 +24,14 @@ public class SwapNodesinPairs {
         if (head == null || head.next == null) return head;
         ListNode dummy = new ListNode(0);
         dummy.next = head;
-        ListNode pre = dummy;
-        while (pre.next != null && pre.next.next != null) {
-            ListNode odd = pre.next;
-            ListNode even = pre.next.next;
+        ListNode prev = dummy;
+        while (prev.next != null && prev.next.next != null) {
+            ListNode odd = prev.next;
+            ListNode even = prev.next.next;
             odd.next = even.next;
-            even.next = pre.next;
-            pre.next = even;
-            pre = odd;
+            even.next = prev.next;
+            prev.next = even;
+            prev = odd;
         }
         return dummy.next;
 	}
