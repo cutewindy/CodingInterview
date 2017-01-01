@@ -86,6 +86,7 @@ public class ReverseLinkedList {
 		ListNode.printLinkedList(head);
 		ListNode.printLinkedList(result.reverseLinkedList(head));
 		ListNode.printLinkedList(result.reverseLinkedListI(head));
+		ListNode.printLinkedList(result.reverseLinkedListII(head));
 	}
 
 }

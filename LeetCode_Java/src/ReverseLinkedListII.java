@@ -19,16 +19,16 @@ public class ReverseLinkedListII {
 	 * 3 Return dummy.next.
 	 * @param ListNode head
 	 * @return ListNode
-	 * Time: O(m - n)
+	 * Time: O(n - m)
 	 * Space: O(1)
 	 */
 	public ListNode reverseLinkedListII(ListNode head, int m, int n) {
 		if (head == null || head.next == null || m >= n) {
 			return head;
 		}
-		ListNode dummyHead = new ListNode(0);
-		dummyHead.next = head;
-		ListNode prev = dummyHead;
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+		ListNode prev = dummy;
 		for (int i = 0; i < m - 1; i++) {
 			prev = prev.next;
 		}
@@ -40,7 +40,7 @@ public class ReverseLinkedListII {
 			prev.next = curr;
 			curr = tail.next;
 		}
-		return dummyHead.next;
+		return dummy.next;
 	}
 	
 	public static void main(String[] args) {
