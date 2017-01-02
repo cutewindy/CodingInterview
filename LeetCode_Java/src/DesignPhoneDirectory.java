@@ -34,7 +34,7 @@ import java.util.Set;
  */
 public class DesignPhoneDirectory {
 	
-	private Set<Integer> set = new HashSet<>();  // use to save the number that has been used
+	private Set<Integer> set = new HashSet<>();  // use to save the number that has been used (or can be use)
 	private Queue<Integer> queue = new LinkedList<>(); // use to save the number that can be use
     
 	/** Initialize your data structure here
@@ -49,7 +49,7 @@ public class DesignPhoneDirectory {
     @return - Return an available number. Return -1 if none is available. */
 	// Time: O(1)
 	public int get() {
-	    if (queue.isEmpty()) return -1;
+	    if (queue.isEmpty()) return -1;  // take care
 	    int number = queue.poll();
 	    set.add(number);
 		return number;
@@ -65,7 +65,7 @@ public class DesignPhoneDirectory {
 	// Time: O(1)
 	public void release(int number) {
 //	    if (queue.contains(number)) return; // time limited exception 
-		if (!set.contains(number)) return;
+		if (!set.contains(number)) return;  // take care
 	    queue.offer(number);
 	    set.remove(number);
 	}

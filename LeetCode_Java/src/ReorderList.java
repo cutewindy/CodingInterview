@@ -13,8 +13,8 @@ public class ReorderList {
 
 	/**
 	 * 1 Using fast and slow method to find the mid node of list, mid = slow.
-	 * 2 Using reverse list method to reverse mid.next.
-	 * 3 Cutting down slow.next, l1 = head, l2 = slow.next.
+	 * 2 Cutting down slow.next, l1 = head, l2 = slow.next.
+	 * 3 Using reverse list method to reverse l2.
 	 * 4 Using merge method to merge l1 and l2.
 	 * @param ListNode head
 	 * Time: O(n)
@@ -31,27 +31,31 @@ public class ReorderList {
 			slow = slow.next;
 			fast = fast.next.next;
 		}
-		// 2 reverse mid.next
-		reverseList(slow);
 //		ListNode.printLinkedList(slow.next);
-		// 3 cut down slow.next
+		// 2 cut down slow.next
 		ListNode l1 = head;
 		ListNode l2 = slow.next;
 		slow.next = null;
+		// 3 reverse mid.next
+		l2 = reverseList(l2);
 		// 4 merge two lists
 		mergeTwoList(l1, l2);
+		return;
 	}
 	
-	private void reverseList(ListNode dummy) {
-		if (dummy.next == null) return;
-		ListNode tail = dummy.next;
-		ListNode curr = dummy.next.next;
+	private ListNode reverseList(ListNode head) {
+		if (head == null || head.next == null) return head;
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+		ListNode tail = head;
+		ListNode curr = head.next;
 		while (curr != null) {
 			tail.next = curr.next;
 			curr.next = dummy.next;
 			dummy.next = curr;
 			curr = tail.next;
 		}
+		return dummy.next;
 	}
 	
 	private void mergeTwoList(ListNode l1, ListNode l2) {

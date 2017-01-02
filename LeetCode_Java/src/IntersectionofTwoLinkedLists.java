@@ -20,7 +20,9 @@
 public class IntersectionofTwoLinkedLists {
 	
 	/**
-	 * Method2: add list A to the end of B, and add B to the end of A, then if they have intersection, 
+	 * Method2: For A: lengthA + lengthB, for B: lengthB + lengthA, the last node will be the 
+	 * intersection or null.
+	 * Add list A to the end of B, and add B to the end of A, then if they have intersection, 
 	 * the intersection would located at the end of the combined node. Otherwise, the combined node
 	 * is null.
 	 * @param ListNode headA, ListNode headB
@@ -83,7 +85,8 @@ public class IntersectionofTwoLinkedLists {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub	
+		
 	}
 
 }
