@@ -62,7 +62,7 @@ public class SameTree {
 		else if (p == null || q == null) {
 			return false;
 		}	
-		return (p.val == q.val && sameTree(p.left, q.left) && sameTree(p.right, q.right));
+		return p.val == q.val && sameTree(p.left, q.left) && sameTree(p.right, q.right);
 	}
 
 	public static void main(String[] args) {

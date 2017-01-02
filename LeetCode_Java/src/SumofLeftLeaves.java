@@ -17,7 +17,7 @@ import java.util.Stack;
 public class SumofLeftLeaves {
 	
 	/**
-	 * Method2: Recursion: For given node, check whether its left child is a leaf. 
+	 * Method2:Backtracking: for given node, check whether its left child is a leaf. 
 	 * If it is the case, return its value as answer.
 	 * @param TreeNode root
 	 * @return int

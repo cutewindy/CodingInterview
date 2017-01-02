@@ -23,7 +23,8 @@ import java.util.Stack;
 public class InvertBinaryTree {
 	
 	/**
-	 * Method4:(DFS: Iteration). Pop node from stack, and swap it's left and right.Then push it's right and left into stack.
+	 * Method4:(DFS: Iteration). Pop node from stack, and swap it's left and right.
+	 * Then push it's right and left into stack.
 	 * (Do the swapping inorder)
 	 * @param TreeNode root
 	 * @return TreeNode
@@ -50,7 +51,8 @@ public class InvertBinaryTree {
 	}
 	
 	/**
-	 * Method3:(DFS: Recursion) swap curr node's left and right. Then going down let left and right do the same thing.
+	 * Method3:(DFS: Recursion) swap curr node's left and right. 
+	 * Then going down let left and right do the same thing.
 	 * @param TreeNode root
 	 * @return TreeNode
 	 * Time: O(n)
@@ -99,7 +101,8 @@ public class InvertBinaryTree {
 	}
 	
 	/**
-	 * Method1(Backtracking): if root is not null, let left and right separately as root go into recursion do swapping.
+	 * Method1(Backtracking): if root is not null, let left and right separately as root go into 
+	 * recursion do swapping.
 	 * and then swap left and right, 
 	 * @param TreeNode root
 	 * @return TreeNode
