@@ -52,7 +52,7 @@ public class MergekSortedLists {
 	 * Method2: MergeSort + Divide and Conquer
 	 * @param ListNode lists
 	 * @return ListNode
-	 * Time: O(knlog(k))
+	 * Time: O(nklog(k))
 	 * Space: O(1)
 	 */
 	public ListNode mergekSortedListsI(ListNode[] lists) {
@@ -74,7 +74,7 @@ public class MergekSortedLists {
 	 * Method1(Time Limit Exceeded): merge two by two by using mergeTwoSortedLists function.
 	 * @param ListNode[] lists
 	 * @return ListNode
-	 * Time: O(n^2) ??
+	 * Time: O(nk^2) k = list.length, n = ave length of each linked list.
 	 * Space: O(1)
 	 */
 	public ListNode mergekSortedLists(ListNode[] lists) {

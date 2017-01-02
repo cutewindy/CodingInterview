@@ -9,10 +9,10 @@
 public class ConvertSortedListtoBinarySearchTree {
 	
 	/**
-	 * Two pointers: 
+	 * Two pointers: using fast and slow to find the mid as root 
 	 * @param ListNode head
 	 * @return TreeNode
-	 * Time: O(n^2) n is the number of nodes
+	 * Time: O(nlog(n)) n is the number of nodes
 	 * Space: O(1)
 	 */
 	public TreeNode convertSortedListtoBinarySearchTreeI(ListNode head) {
@@ -37,7 +37,7 @@ public class ConvertSortedListtoBinarySearchTree {
 		}
 		TreeNode root = new TreeNode(slow.next.val);
 		root.right = helperI(slow.next.next);
-		slow.next = null; // cut down the left child
+		slow.next = null; // take care: cut down the left child
 		root.left = helperI(head);
 		return root;
 		
