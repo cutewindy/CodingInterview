@@ -21,8 +21,9 @@ import java.util.Stack;
 public class PathSum {
 
 	/**
-	 * Method2: DFS(Iteration) Two stacks: nodes to save the nodes that can pop in preorder, totals to save the cooccurrence path
-	 * sum, not include curr.val. Check whether curr is leaf, if it's, check total-curr.val ?= 0. Otherwise, push curr left or right. 
+	 * Method2: DFS(Iteration) Two stacks: nodes to save the nodes that can pop in preorder, totals 
+	 * to save the cooccurrence path sum, not include curr.val. Check whether curr is leaf, if it's, 
+	 * check total-curr.val ?= 0. Otherwise, push curr left or right. 
 	 * @param TreeNode root, int sum
 	 * @return boolean
 	 * Time: O(n)
@@ -32,8 +33,8 @@ public class PathSum {
 		if (root == null) {
 			return false;
 		}
-		Stack<TreeNode> nodes = new Stack();
-		Stack<Integer> totals = new Stack();
+		Stack<TreeNode> nodes = new Stack<>();
+		Stack<Integer> totals = new Stack<>();
 		nodes.push(root);
 		totals.push(sum);
 		while (!nodes.isEmpty()) {

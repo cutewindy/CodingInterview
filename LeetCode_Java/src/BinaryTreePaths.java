@@ -110,15 +110,15 @@ public class BinaryTreePaths {
 	}
 	
 	private void helper(TreeNode root, StringBuilder combo, List<String> result) {
-		// basecase
+		// Basecase
 		if (root.left == null && root.right == null) {
 			result.add(combo.append(root.val).toString());
 			return;
 		}
-		// condition
+		// Condition
 		combo.append(root.val).append("->");
 		if (root.left != null) {
-			helper(root.left, new StringBuilder(combo), result); // be care about new StringBuidler()
+			helper(root.left, new StringBuilder(combo), result); // take care of new StringBuidler()
 		}
 		if (root.right != null) {
 			helper(root.right, new StringBuilder(combo), result);
