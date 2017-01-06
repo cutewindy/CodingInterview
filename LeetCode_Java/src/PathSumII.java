@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+ * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given 
+ * sum.
  * For example:
  * Given the below binary tree and sum = 22,
 		              5
@@ -25,7 +26,8 @@ import java.util.List;
 public class PathSumII {
 	
 	/**
-	 * DFS: save currPath and left sum(not include curr.val). If currNode is a leaf, check if the sum is curr.val.
+	 * DFS: save currPath and left sum(not include curr.val). If currNode is a leaf, check if the 
+	 * sum is curr.val.
 	 * If currNode has left, go to left with sum-curr.val.
 	 * If currNode has right, go to right with sum-curr.val.
 	 * Since we use List<Integer> to save currPath, add sth need to remove sth finaly. 
