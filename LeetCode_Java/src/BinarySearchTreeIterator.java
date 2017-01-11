@@ -14,10 +14,11 @@ import java.util.Stack;
 public class BinarySearchTreeIterator {
 
 	/**
-	 * By using stack with O(n) memory and O(1) time both for hasNext and next.
+	 * By using stack with O(h) memory and O(1) time both for hasNext and next.
 	 */
-	Stack<TreeNode> stack = new Stack<>();
+	Stack<TreeNode> stack;
 	public BinarySearchTreeIterator(TreeNode root) {
+		stack = new Stack<>();
 		findLeft(root);
 	}
 	
