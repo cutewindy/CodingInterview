@@ -39,7 +39,7 @@ public class BinaryTreeMaximumPathSum {
 		if (root == null) {
 			return 0;
 		}
-		int leftPath = Math.max(helper(root.left), 0);   // be care about the negative result
+		int leftPath = Math.max(helper(root.left), 0);   // take care about the negative result
 		int rightPath = Math.max(helper(root.right), 0);
 		maxPath = Math.max(leftPath + root.val + rightPath, maxPath);
 		return Math.max(leftPath, rightPath) + root.val;
