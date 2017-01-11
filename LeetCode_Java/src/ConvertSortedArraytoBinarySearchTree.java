@@ -9,11 +9,13 @@
 public class ConvertSortedArraytoBinarySearchTree {
 
 	/**
-	 * Divide and Conquer: find root first, then recursively build each left and right subtree
+	 * Backtracking + Divide and Conquer: 
+	 * find root first, then recursively build each left and right subtree
 	 * @param int[] nums
 	 * @return TreeNode
 	 * Time: O(n) n is the number of nodes
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public TreeNode convertSortedArraytoBInarySearchTree(int[] nums) {
 		if (nums == null || nums.length == 0) {
