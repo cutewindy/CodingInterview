@@ -48,8 +48,8 @@ public class BinaryTreeMaximumPathSum {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BinaryTreeMaximumPathSum result = new BinaryTreeMaximumPathSum();
-//		TreeNode root = TreeNode.generateCBT(new int[] {1, -2, 3, -4, -5, 6});
-		TreeNode root = TreeNode.generateCBT(new int[] {2, -1});
+		TreeNode root = TreeNode.generateCBT(new int[] {1, -2, 3, -4, -5, 6, 5});
+//		TreeNode root = TreeNode.generateCBT(new int[] {2, -1});
 		TreeNode.printCBT(root);
 		System.out.println(result.binaryTreeMaximumPathSum(root));
 	}
