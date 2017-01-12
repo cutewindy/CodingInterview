@@ -28,7 +28,11 @@
 public class BinaryTreeLongestConsecutiveSequence {
 	
 	/**
-	 * Method2: Backtracking: compare curr result, left and right, choose the largest one
+	 * Method2: Backtracking + DP: 
+	 * Using helper func to return longest consecutive sequence ending,
+	 * which is ending at root. Then curr = max(left, right) + 1 if both root.left and root.right 
+	 * are consecutive sequence with root. 
+	 * Using int[] result to update max longest consecutive sequence of whole tree
 	 * @param TreeNode root
 	 * @return int
 	 * Time: O(n)
@@ -36,21 +40,27 @@ public class BinaryTreeLongestConsecutiveSequence {
 	 * Stack space: O(log(n))
 	 */
 	public int binaryTreeLongestConsecutiveSequenceI(TreeNode root) {
-		if (root == null) {
-			return 0;
-		}
-		return helperI(root, 0, root.val - 1);
+		if (root == null) return 0;
+		int[] result = new int[1];
+		helperI(root, result);
+		return result[0];
 	}
 	
-	public int helperI(TreeNode root, int count, int parent) {
-		if (root == null) {
-			return count;
+	public int helperI(TreeNode root, int[] result) {
+		if (root == null) return 0;
+		int left = helperI(root.left, result);
+		int right = helperI(root.right, result);
+		int curr = 1;
+		if (root.left != null && root.val + 1 == root.left.val) {
+			curr = Math.max(left + 1, curr);
 		}
-		count = root.val == parent + 1 ? count + 1 : 1;
-		int left = helperI(root.left, count, root.val);
-		int right = helperI(root.right, count, root.val);
-		return Math.max(Math.max(left, right), count);
+		if (root.right != null && root.val + 1 == root.right.val) {
+			curr = Math.max(right + 1, curr);
+		}
+		result[0] = Math.max(curr, result[0]);
+		return curr;
 	}
+	
 	
 	/**
 	 * Method1: DFS.
@@ -61,30 +71,24 @@ public class BinaryTreeLongestConsecutiveSequence {
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
-	private int result;
 	public int binaryTreeLongestConsecutiveSequence(TreeNode root) {
-		if (root == null) {
-			return 0;
-		}
-		result = 0;
-		helper(root, root.val - 1, 0);
-		return result;
+		if (root == null) return 0;
+		int[] result = new int[1];
+		helper(root, root.val - 1, 0, result);
+		return result[0];
 	}
 	
-	private void helper(TreeNode root, int parent, int count) {
-		if (root == null) {
-			result = Math.max(count, result);
-			return;
-		}
+	private void helper(TreeNode root, int parent, int count, int[] result) {
+		if (root == null) return;
 		if (root.val == parent + 1) {
 			count++;
 		}
 		else {
-			result = Math.max(count, result);
 			count = 1;
 		}
-		helper(root.left, root.val, count);
-		helper(root.right, root.val, count);
+		result[0] = Math.max(count, result[0]);
+		helper(root.left, root.val, count, result);
+		helper(root.right, root.val, count, result);
 	}
 
 	public static void main(String[] args) {
@@ -93,7 +97,7 @@ public class BinaryTreeLongestConsecutiveSequence {
 		TreeNode root = TreeNode.generateCBT(new int[] {2, 4, 1, 5, 7, 3, 2, 6});
 		TreeNode.printCBT(root);
 		System.out.println(result.binaryTreeLongestConsecutiveSequence(root));
-		System.out.println(result.binaryTreeLongestConsecutiveSequenceI(root));
+//		System.out.println(result.binaryTreeLongestConsecutiveSequenceI(root));
 	}
 
 }
