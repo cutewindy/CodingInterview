@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Given a binary tree, count the number of uni-value subtrees.
@@ -27,28 +25,29 @@ public class CountUnivalueSubtrees {
      * (right null || right.val==root.val)
 	 * @param TreeNode root
 	 * @return int
-	 * Time: O()
+	 * Time: O(n)
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public int countUnivalueSubtrees(TreeNode root) {
 		if (root == null) {
 			return 0;
 		}
-		List<Integer> count = new ArrayList();
-		count.add(0);
-		helper(root, count);
-		return count.get(0);
+		int[] result = new int[1];
+		helper(root, result);
+		return result[0];
 	}
 	
-	private boolean helper(TreeNode root, List<Integer> count) {
+	private boolean helper(TreeNode root, int[] result) {
 		if (root == null) {
 			return true;
 		}
-		boolean left = helper(root.left, count); // left = true means left is univalue subtrees
-		boolean right = helper(root.right, count); // right = true means right is univalue subtrees
-		if (left && right && (root.left == null || root.val == root.left.val) && 
-				(root.right == null || root.val == root.right.val)) {
-			count.set(0, count.get(0) + 1);
+		boolean left = helper(root.left, result); // left = true means left is univalue subtrees
+		boolean right = helper(root.right, result); // right = true means right is univalue subtrees
+		if (left && right 
+		 && (root.left == null || root.val == root.left.val) 
+		 && (root.right == null || root.val == root.right.val)) {
+			result[0]++;
 			return true;
 		}
 		return false;
