@@ -10,6 +10,8 @@
            / \   \
           5   5   5
  * return 4.
+ * 
+ * Tags: Tree
  * @author wendi
  *
  */
