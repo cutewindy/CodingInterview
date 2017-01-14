@@ -21,9 +21,10 @@ import java.util.Stack;
 public class PathSum {
 
 	/**
-	 * Method2: DFS(Iteration) Two stacks: nodes to save the nodes that can pop in preorder, totals 
-	 * to save the cooccurrence path sum, not include curr.val. Check whether curr is leaf, if it's, 
-	 * check total-curr.val ?= 0. Otherwise, push curr left or right. 
+	 * Method2: DFS(Iteration) (Preorder template)
+	 * Two stacks: nodes to save the nodes that can pop in preorder, sums to save the cooccurrence 
+	 * path sum, not include curr.val. Check whether curr is leaf, if it's, 
+	 * check currSum==curr.val. Otherwise, push curr left or right to stacks. 
 	 * @param TreeNode root, int sum
 	 * @return boolean
 	 * Time: O(n)
@@ -34,22 +35,22 @@ public class PathSum {
 			return false;
 		}
 		Stack<TreeNode> nodes = new Stack<>();
-		Stack<Integer> totals = new Stack<>();
+		Stack<Integer> sums = new Stack<>();
 		nodes.push(root);
-		totals.push(sum);
+		sums.push(sum);
 		while (!nodes.isEmpty()) {
 			TreeNode currNode = nodes.pop();
-			int total = totals.pop();
-			if (currNode.left == null && currNode.right == null && total - currNode.val == 0) {  // if it's leaf and sum-val=0
+			int currSum = sums.pop();
+			if (currNode.left == null && currNode.right == null && currSum == currNode.val) {  // if it's leaf and sum-val=0
 				return true;
 			}
 			if (currNode.right != null) {
 				nodes.push(currNode.right);
-				totals.push(total - currNode.val);
+				sums.push(currSum - currNode.val);
 			}
 			if (currNode.left != null) {
 				nodes.push(currNode.left);
-				totals.push(total - currNode.val);
+				sums.push(currSum - currNode.val);
 			}
 		}
 		return false;
@@ -61,6 +62,7 @@ public class PathSum {
 	 * @return boolean
 	 * Time: O(n) n is the number of nodes
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public boolean pathSum(TreeNode root, int sum) {
 		if (root == null) {

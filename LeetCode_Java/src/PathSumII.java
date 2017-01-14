@@ -34,15 +34,15 @@ public class PathSumII {
 	 * @param TreeNode root, int sum
 	 * @return List<List<Integer>>
 	 * Time: O(n)
-	 * Space: O(h)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public List<List<Integer>> pathSumII(TreeNode root, int sum) {
 		List<List<Integer>> result = new ArrayList<>();
 		if (root == null) {
 			return result;
 		}
-		List<Integer> currPath = new ArrayList<>();
-		helper(root, sum, currPath, result);
+		helper(root, sum, new ArrayList<Integer>(), result);
 		return result;
 	}
 	
@@ -56,11 +56,12 @@ public class PathSumII {
 			return;
 		}
 		currPath.add(root.val);
+		sum -= root.val;
 		if (root.left != null) {
-			helper(root.left, sum - root.val, currPath, result);
+			helper(root.left, sum, currPath, result);
 		}
 		if (root.right != null) {
-			helper(root.right, sum - root.val, currPath, result);
+			helper(root.right, sum, currPath, result);
 		}
 		currPath.remove(currPath.size() - 1);
 	}
