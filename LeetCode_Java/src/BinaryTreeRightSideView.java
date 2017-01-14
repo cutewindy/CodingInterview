@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * Given a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from
+ * Given a binary tree, imagine yourself standing on the right side of it, return the values of the 
+ * nodes you can see ordered from
  *  top to bottom.
  * For example:
  * Given the following binary tree,
@@ -22,8 +23,8 @@ import java.util.Queue;
 public class BinaryTreeRightSideView {
 	
 	/**
-	 * Method2: DFS: the size of result equals to the depth of tree. Traverse tree in right-left order, in each depth, the first node is the 
-	 * right side view node.
+	 * Method2: DFS: the size of result equals to the depth of tree. Traverse tree in right-left 
+	 * order, in each depth, the first node is the right side view node.
 	 * @param TreeNode root
 	 * @return List<Integer>
 	 * Time: O(n)
@@ -50,14 +51,16 @@ public class BinaryTreeRightSideView {
 		helper(root.left, currDepth + 1, result);
 	}
 	
+	
 	/**
-	 * Method1:BFS. Traverse tree in BFS order. Then in each level, the last node of queue is the right side view node.
+	 * Method1:BFS. Traverse tree in BFS order. Then in each level, the last node of queue is the 
+	 * right side view node.
 	 * @param TreeNode root
 	 * @return List<Integer>
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public List<Integer> BinaryTreeRightSideView(TreeNode root) {
+	public List<Integer> binaryTreeRightSideView(TreeNode root) {
 		List<Integer> result = new ArrayList<>();
 		if (root == null) {
 			return result;

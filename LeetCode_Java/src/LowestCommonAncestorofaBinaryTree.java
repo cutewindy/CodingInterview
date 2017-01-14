@@ -50,7 +50,7 @@ public class LowestCommonAncestorofaBinaryTree {
 	}
 	
 	// Version 2(Same method)
-	public TreeNode LowestCommonAncestorofaBinaryTree(TreeNode root, TreeNode p, TreeNode q) {
+	public TreeNode lowestCommonAncestorofaBinaryTree(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null) {
 			return root;
 		}

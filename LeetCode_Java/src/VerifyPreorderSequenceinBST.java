@@ -11,7 +11,7 @@ import java.util.Stack;
  * @author wendi
  *
  */
-public class VerifyPreorderBST {
+public class VerifyPreorderSequenceinBST {
 
 	/**
 	 * Method3: like method2, using preorder as stack.
@@ -72,42 +72,37 @@ public class VerifyPreorderBST {
 	
 	
 	/**
-	 * Method1: Divide and Conquer: A BST's left child is always < root, right child is always > root.
+	 * Method1: DFS + Divide and Conquer: 
+	 * A BST's left child is always < root, right child is always > root.
 	 * @param int[] preorder
 	 * @return boolean
 	 * Time: O(nlog(n)), worse case: O(n^2)
 	 * Space: O(1)
-	 * Stack space: O(log(n))
+	 * Stack space: O(log(n)), worse case: O(n)
 	 */
 	public boolean verifyPreorderSequenceinBST(int[] preorder) {
-		if (preorder == null || preorder.length <= 1) {
-			return true;
-		}
+		if (preorder == null || preorder.length <= 1) return true;
 		return helper(preorder, 0, preorder.length - 1);
 	}
 	
 	private boolean helper(int[] preorder, int start, int end) {
-		if (start >= end) {
-			return true;
+		if (start >= end) return true;
+		int index = start + 1;
+		while (index <= end) {
+			if (preorder[index] > preorder[start]) break;
+			index++;
 		}
-		int bigger = -1;
-		for (int i = start + 1; i <= end; i++) {
-			if (bigger == -1 && preorder[i] > preorder[start]) {
-				bigger = i;
-			}
-			if (bigger != -1 && preorder[i] < preorder[start]) {
-				return false;
-			}
-		}
-		if (bigger == -1) {
-			return helper(preorder, start + 1, end);
+		int bigger = index;
+		while (index <= end) {
+			if (preorder[index] < preorder[start]) return false;
+			index++;
 		}
 		return helper(preorder, start + 1, bigger - 1) && helper(preorder, bigger, end);
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		VerifyPreorderBST result = new VerifyPreorderBST();
+		VerifyPreorderSequenceinBST result = new VerifyPreorderSequenceinBST();
 		System.out.println(result.verifyPreorderSequenceinBST(new int[] {30, 20, 10, 15, 25, 23, 22, 27, 28, 40, 35, 26}));
 		System.out.println(result.verifyPreorderSequenceinBST(new int[] {4, 2, 3, 1}));
 		System.out.println(result.verifyPreorderSequenceinBSTI(new int[] {30, 20, 10, 15, 25, 23, 22, 27, 28, 40, 35}));
