@@ -56,7 +56,8 @@ public class SymmetricTree {
 	}
 	
 	/**
-	 * Method1: DFS:(Recursion)Like the "Same Tree", in each level of recursion, compare the val, p.left q.right and p.right q.left.
+	 * Method1: DFS:(Recursion)Like the "Same Tree", in each level of recursion, compare the val, 
+	 * p.left q.right and p.right q.left.
 	 * @param TreeNode root
 	 * @return boolean 
 	 * Time: O(n) n is the number of nodes
