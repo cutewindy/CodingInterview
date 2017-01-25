@@ -10,7 +10,8 @@ import java.util.Stack;
 public class SameTree {
 	
 	/**
-	 * Method2: (Iteration)Two stacks: check curr nodes val, and then check curr right and left nodes.
+	 * Method2: DFS (Iteration)(Preorder traversal template) using two stacks: 
+	 * Check curr nodes val, and then check curr right and left nodes.
 	 * Don't forget to check the size of two stack before return.
 	 * @param TreeNode p, TreeNode q
 	 * @return boolean
@@ -47,7 +48,7 @@ public class SameTree {
 	
 	
 	/**
-	 * Method1: Recursion: in each level of recursion, compare the val, left and right.
+	 * Method1: DFS: Recursion: in each level of recursion, compare the val, left and right.
 	 * @param TreeNode root p
 	 * @param TreeNode root q
 	 * @return boolean

@@ -24,7 +24,7 @@ import java.util.Stack;
 public class SymmetricTree {
 
 	/**
-	 * Method2:DFS(Iteration) Two stacks: like the "Same Tree". 
+	 * Method2:DFS(Iteration) (Preorder traversal template) Two stacks: like the "Same Tree". 
 	 * @param TreeNode root
 	 * @return boolean
 	 * Time: O(n)
@@ -68,7 +68,7 @@ public class SymmetricTree {
 		if (root == null) {
 			return true;
 		}
-		return helper(root, root);
+		return helper(root.left, root.right);
 	}
 	
 	private boolean helper(TreeNode p, TreeNode q) {

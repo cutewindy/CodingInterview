@@ -22,11 +22,13 @@
 public class LowestCommonAncestorofaBinarySearchTree {
 	
 	/**
-	 * Using BST: if root.val>q.val&&root.val<p.val (q.val<p.val), then root will be the LCA.
+	 * DFS (Recursion) (using BST)
+	 * If root.val>q.val&&root.val<p.val (q.val<p.val), then root will be the LCA.
 	 * @param TreeNode root, TreeNode p, TreeNode q
 	 * @return TreeNode LCA
-	 * Time: O(n)
+	 * Time: O(log(n))
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public TreeNode LCAofaBST(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null) {

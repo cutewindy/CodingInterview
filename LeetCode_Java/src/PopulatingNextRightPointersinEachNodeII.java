@@ -25,7 +25,8 @@ public class PopulatingNextRightPointersinEachNodeII {
 
 	/**
 	 * BFS: (Use two pointers): DummyHead of next level and preNode.
-	 * DummyHead is the dummy head of next level, need to set dummyHead.next = null after populate next level.
+	 * DummyHead is the dummy head of next level, need to set dummyHead.next = null after populate 
+	 * next level.
 	 * preNode is the parent of the currNode, that is, preNode.next = currNode
 	 * @param TreeLinkNode root
 	 * Time: O(n)

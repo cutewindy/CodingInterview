@@ -96,6 +96,7 @@ public class SumRoottoLeafNumbers {
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public int sumRoottoLeafNumbers(TreeNode root) {
 		if (root == null) {
@@ -113,7 +114,7 @@ public class SumRoottoLeafNumbers {
 		if (root.left == null) {
 			return helper(root.right, sum * 10 + root.val);
 		}
-		if (root.right == null) {
+		else if (root.right == null) {
 			return helper(root.left, sum * 10 + root.val);
 		}	
 		return helper(root.left, sum * 10 + root.val) + helper(root.right, sum * 10 + root.val);

@@ -21,7 +21,7 @@
 public class LowestCommonAncestorofaBinaryTree {
 	
 	/**
-	 * Recursion: if root==q||root==q, then root is LCA. otherwise, 
+	 * Backtracking: if root==q||root==q, then root is LCA. otherwise, 
 	 * if left has p||q, right has p||q, return root;
 	 * if left has p and q, return left;
 	 * if right has p and q, return right;
@@ -30,6 +30,7 @@ public class LowestCommonAncestorofaBinaryTree {
 	 * @return TreeNode
 	 * Time: O(n)
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public TreeNode LCAofaBT(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null || root == p || root == q) {
@@ -48,6 +49,7 @@ public class LowestCommonAncestorofaBinaryTree {
 		}
 		return null;
 	}
+	
 	
 	// Version 2(Same method)
 	public TreeNode lowestCommonAncestorofaBinaryTree(TreeNode root, TreeNode p, TreeNode q) {
