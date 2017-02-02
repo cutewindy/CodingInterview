@@ -36,30 +36,33 @@ public class PopulatingNextRightPointersinEachNodeII {
 		if (root == null) {
 			return;
 		}
-		TreeLinkNode dummyHead = new TreeLinkNode(0);
-		TreeLinkNode preNode = dummyHead;
+		TreeLinkNode dummy = new TreeLinkNode(0);
+		TreeLinkNode prev = dummy;
 		while (root != null) {
 			while (root != null) {
 				if (root.left != null) {
-					preNode.next = root.left;
-					preNode = preNode.next;
+					prev.next = root.left;
+					prev = prev.next;
 				}
 				if (root.right != null) {
-					preNode.next = root.right;
-					preNode = preNode.next;
+					prev.next = root.right;
+					prev = prev.next;
 				}
 				root = root.next;  // move to next node
 			}
 			// move to next level
-			preNode = dummyHead;
-			root = dummyHead.next;
-			dummyHead.next = null;
+			root = dummy.next;
+			dummy.next = null;
+			prev = dummy;
 		}
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		PopulatingNextRightPointersinEachNodeII result = new PopulatingNextRightPointersinEachNodeII();
+		TreeLinkNode root = TreeLinkNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
+		TreeLinkNode.printCBT(root);	
+		result.populatingNextRightPointersinEachNodeII(root);
 	}
 
 }

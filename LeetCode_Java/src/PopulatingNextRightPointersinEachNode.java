@@ -34,7 +34,7 @@
 public class PopulatingNextRightPointersinEachNode {
 
 	/**
-	 * Method2: DFS(Recursion: Inorder): Since it's a perfect binary tree, 
+	 * Method2: DFS(Recursion: Preorder): Since it's a perfect binary tree, 
 	 * root.left.next = root.right, root.right.next = root.next.left.
 	 * @param TreeLinkNode root
 	 * Time: O(n)

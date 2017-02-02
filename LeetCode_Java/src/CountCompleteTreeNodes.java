@@ -64,7 +64,7 @@ public class CountCompleteTreeNodes {
 		if (leftDepth != rightDepth) {	
 			return countCompleteTreeNodesI(root.left) + countCompleteTreeNodesI(root.right) + 1;
 		}
-		return (1 << leftDepth) - 1;
+		return (int) Math.pow(2, leftDepth) - 1;
 	}
 	
 	private int leftDepth(TreeNode root) {
@@ -90,8 +90,9 @@ public class CountCompleteTreeNodes {
 	 * Method1: DFS (Time Limit Exceeded)
 	 * @param TreeNode root
 	 * @return int 
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public int countCompleteTreeNodes(TreeNode root) {
 		if (root == null) {
@@ -113,8 +114,8 @@ public class CountCompleteTreeNodes {
 		CountCompleteTreeNodes result = new CountCompleteTreeNodes();
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 		TreeNode.printCBT(root);
-//		System.out.println(result.countCompleteTreeNodes(root));
-//		System.out.println(result.countCompleteTreeNodesI(root));
+		System.out.println(result.countCompleteTreeNodes(root));
+		System.out.println(result.countCompleteTreeNodesI(root));
 		System.out.println(result.countCompleteTreeNodesII(root));
 	}
 
