@@ -12,7 +12,7 @@
 public class CountCompleteTreeNodes {
 
 	/**
-	 * Method3: (Iteration) BinarySearch: find which part is final complete tree.
+	 * Method3: BinarySearch: find which part is final complete tree.
 	 * If(height(root.right)==h-1), left part is a final complete tree with heigth h-1, move to right.
 	 * Otherwise, right part is a final complete tree with height h-2, move to left find next one.
 	 * @param TreeNode root
@@ -47,13 +47,16 @@ public class CountCompleteTreeNodes {
 		return height(root.left) + 1;
 	}
 	
+	
 	/**
-	 * Method2: (Iteration + DFS) When leftDepth==rightDepth, it's a final compete tree, 
+	 * Method2: DFS(Recursion) : Using complete tree feature.
+	 * When leftDepth==rightDepth, it's a final compete tree, 
 	 * the nodes number is 2^h - 1. Otherwise, count left complete tree + right complete tree + 1.
 	 * @param TreeNode root
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n(log(n)))
+	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public int countCompleteTreeNodesI(TreeNode root) {
 		if (root == null) {
@@ -64,7 +67,8 @@ public class CountCompleteTreeNodes {
 		if (leftDepth != rightDepth) {	
 			return countCompleteTreeNodesI(root.left) + countCompleteTreeNodesI(root.right) + 1;
 		}
-		return (int) Math.pow(2, leftDepth) - 1;
+//		return (int) Math.pow(2, leftDepth) - 1;  # (Time limited Exceeded)
+		return (1 << leftDepth) - 1;
 	}
 	
 	private int leftDepth(TreeNode root) {
@@ -87,7 +91,7 @@ public class CountCompleteTreeNodes {
 	
 	
 	/**
-	 * Method1: DFS (Time Limit Exceeded)
+	 * Method1: DFS(Recursion) (Time Limit Exceeded): count node one by one like binary tree
 	 * @param TreeNode root
 	 * @return int 
 	 * Time: O(n)
