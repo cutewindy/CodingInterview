@@ -12,12 +12,12 @@
 public class CountCompleteTreeNodes {
 
 	/**
-	 * Method3: BinarySearch: find which part is final complete tree.
+	 * Method3: BinarySearch: find which part is perfect tree.
 	 * If(height(root.right)==h-1), left part is a final complete tree with heigth h-1, move to right.
 	 * Otherwise, right part is a final complete tree with height h-2, move to left find next one.
 	 * @param TreeNode root
 	 * @return int
-	 * Time: O()
+	 * Time: O(log(n)^2)
 	 * Space: O(1)
 	 */
 	public int countCompleteTreeNodesII(TreeNode root) {
@@ -50,7 +50,7 @@ public class CountCompleteTreeNodes {
 	
 	/**
 	 * Method2: DFS(Recursion) : Using complete tree feature.
-	 * When leftDepth==rightDepth, it's a final compete tree, 
+	 * When leftDepth==rightDepth, it's a perfect tree, 
 	 * the nodes number is 2^h - 1. Otherwise, count left complete tree + right complete tree + 1.
 	 * @param TreeNode root
 	 * @return int
