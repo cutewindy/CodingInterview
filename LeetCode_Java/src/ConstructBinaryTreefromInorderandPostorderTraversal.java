@@ -18,9 +18,10 @@ public class ConstructBinaryTreefromInorderandPostorderTraversal {
 	 * @return TreeNode
 	 * Time: O(n^2)
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public TreeNode constructBinaryTreefromInorderandPostorderTraversal(int[] inorder, int[] postorder) {
-		if (inorder == null || inorder.length == 0|| postorder == null || postorder.length == 0 ||
+		if (inorder == null || inorder.length == 0 || postorder == null || postorder.length == 0 ||
 				inorder.length != postorder.length) {
 			return null;
 		}

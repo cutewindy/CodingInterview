@@ -20,6 +20,7 @@ public class ConstructBinaryTreefromPreorderandInorderTraversal {
 	 * @return TreeNode
 	 * Time: O(n^2)
 	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public TreeNode constructBinaryTreefromPreorderandInorderTraversal(int[] preorder, int[] inorder) {
 		if (preorder == null || preorder.length == 0 || inorder == null || inorder.length == 0 ||
