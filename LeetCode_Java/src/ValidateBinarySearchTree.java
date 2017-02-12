@@ -24,7 +24,8 @@ import java.util.Stack;
 public class ValidateBinarySearchTree {
 
 	/**
-	 * DFS: (Iterative):(Template Inorder): Traverse tree in inorder, if it's a BST, pre.val<curr.val 
+	 * Method2: DFS: (Iterative):(Template Inorder): 
+	 * Traverse tree in inorder, if it's a BST, pre.val<curr.val 
 	 * @param TreeNode: root
 	 * @return boolean
 	 * Time: O(n)
@@ -54,7 +55,8 @@ public class ValidateBinarySearchTree {
 	
 	
 	/**
-	 * Method1: DFS(Recursion): Parents give children tree nodes, currNode root, maxNode with the max val and minNode with the min val.
+	 * Method1: DFS(Recursion): Parents give children tree nodes, currNode root, maxNode with the 
+	 * max val and minNode with the min val.
 	 * If minNode.val < currNode.val < maxNode.val, it's satisfied as BST, otherwise return false.
 	 * Then check currNode.left and currNode.right. 
 	 * To left, currNode is maxNode, but to right, currNode is minNode .
@@ -75,7 +77,7 @@ public class ValidateBinarySearchTree {
 		if (root == null) {
 			return true;
 		}
-		if ((minNode != null && root.val <= minNode.val) || (maxNode != null && root.val >= maxNode.val)) {
+		if (minNode != null && root.val <= minNode.val || maxNode != null && root.val >= maxNode.val) {
 			return false;
 		}
 		return helper(root.left, root, minNode) && helper(root.right, maxNode, root);
