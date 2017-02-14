@@ -73,14 +73,14 @@ public class ValidateBinarySearchTree {
 		return helper(root, null, null);
 	}
 	
-	private boolean helper(TreeNode root, TreeNode maxNode, TreeNode minNode) {
+	private boolean helper(TreeNode root, TreeNode minNode, TreeNode maxNode) {
 		if (root == null) {
 			return true;
 		}
 		if (minNode != null && root.val <= minNode.val || maxNode != null && root.val >= maxNode.val) {
 			return false;
 		}
-		return helper(root.left, root, minNode) && helper(root.right, maxNode, root);
+		return helper(root.left, minNode, root) && helper(root.right, root, maxNode);
 	}
 	
 	public static void main(String[] args) {

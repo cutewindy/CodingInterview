@@ -32,9 +32,12 @@ public class SerializeandDeserializeBinaryTree {
 	/**
 	 * Method2: BFS: Use a queue to iterate tree and save the result into string by using queue.
 	 * When deserialize, 
-	 * @param root
-	 * @return
+	 * @param TreeNode root
+	 * @return String
+	 * Time: O(n)
+	 * Space: O(n)
 	 */
+	// Encodes a tree to a single string.
 	public String serializeI(TreeNode root) {
 		if (root == null) {
 			return "";
@@ -56,6 +59,14 @@ public class SerializeandDeserializeBinaryTree {
 		return data.toString().substring(0, data.length() - 1);
 	}
 	
+	// Decodes your encoded data to tree.
+	/**
+	 * Method2: 
+	 * @param String data
+	 * @return TreeNode
+	 * Time: O()
+	 * Space: O()
+	 */
 	public TreeNode deserializeI(String data) {
 		if (data == null || data.length() == 0) {
 			return null;
@@ -89,14 +100,14 @@ public class SerializeandDeserializeBinaryTree {
 	
 	
 	/**
-	 * Method1: Preorder(Recursion) print the tree in pre-order traversal and use "X" to denote null 
-	 * node and split node with ",". We can use a StringBuilder for building the string on the fly. 
-	 * For deserializing, we use a Queue to store the pre-order traversal and since we have "X" as 
-	 * null node, we know exactly how to where to end building subtress.
-	 * @param root
-	 * @return
+	 * Method1: DFS(Recursion) (preorder traversal template) Use "#" to denote null node.
+	 * @param TreeNode root
+	 * @return String
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
-	// serialize
+	// Encodes a tree to a single string.
 	public String serialize(TreeNode root) {
 		if (root == null) {
 			return "";
@@ -105,6 +116,7 @@ public class SerializeandDeserializeBinaryTree {
 		helperS(root, data);
 		return data.toString().substring(0, data.length() - 1);
 	}
+	
 	private void helperS(TreeNode root, StringBuilder data) {
 		if (root == null) {
 			data.append("#").append(",");
@@ -115,24 +127,34 @@ public class SerializeandDeserializeBinaryTree {
 		helperS(root.right, data);
 	}
 	
-	// deserialize
+	// Decodes your encoded data to tree.
+	/**
+	 * Method1: Use a list to store the pre-order traversal and since we have "#" as null node, we 
+	 * know exactly how to where to end building subtress.
+	 * @param String data
+	 * @return TreeNode
+	 * Time: O(n)
+	 * Space: O(n)
+	 * Stack space: O(log(n))
+	 */
 	public TreeNode deserialize(String data) {
-		TreeNode root = null;
 		if (data == null || data.length() == 0) {
-			return root;
+			return null;
 		}
 		List<String> newData = new ArrayList<>(Arrays.asList(data.split(",")));
 		return helperD(newData);
 	}
+	
 	private TreeNode helperD(List<String> data) {
+		if (data == null || data.size() == 0) return null;
 		String curr = data.remove(0);
 		if (curr.equals("#")) {
 			return null;
 		}
-		TreeNode node = new TreeNode(Integer.valueOf(curr));
-		node.left = helperD(data);
-		node.right = helperD(data);
-		return node;
+		TreeNode root = new TreeNode(Integer.valueOf(curr));
+		root.left = helperD(data);
+		root.right = helperD(data);
+		return root;
 	}
 	
 	
@@ -141,15 +163,13 @@ public class SerializeandDeserializeBinaryTree {
 		SerializeandDeserializeBinaryTree result = new SerializeandDeserializeBinaryTree();
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
 		TreeNode.printCBT(root);
-//		String data = result.serialize(root);
-//		System.out.println(data);
-//		TreeNode newRoot = result.deserialize(data);
-//		TreeNode.printCBT(newRoot);
+		String data = result.serialize(root);
+		System.out.println(data);
+		TreeNode.printCBT(result.deserialize(data));
 		
-		String dataI = result.serializeI(root);
-		System.out.println(dataI);
-		TreeNode newRootI = result.deserializeI(dataI);
-		TreeNode.printCBT(newRootI);
+//		String dataI = result.serializeI(root);
+//		System.out.println(dataI);
+//		TreeNode.printCBT(result.deserializeI(dataI));
 	}
 
 }
