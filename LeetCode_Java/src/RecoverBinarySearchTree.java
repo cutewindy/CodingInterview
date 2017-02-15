@@ -25,26 +25,24 @@ public class RecoverBinarySearchTree {
 		}
 		TreeNode f1 = null;
 		TreeNode f2 = null;
-		TreeNode pre = new TreeNode(Integer.MIN_VALUE);
+		TreeNode pre = null;
 		Stack<TreeNode> stack = new Stack<>();
-		TreeNode curr = root;
-		while (curr != null || !stack.isEmpty()) {
-			while (curr != null) {
-				stack.push(curr);
-				curr = curr.left;
+		while (root != null || !stack.isEmpty()) {
+			while (root != null) {
+				stack.push(root);
+				root = root.left;
 			}
-			curr = stack.pop();
-			if (pre.val != Integer.MIN_VALUE) {  // curr is not the first node
-				if (f1 == null && pre.val > curr.val) { // find first wrong node
+			root = stack.pop();
+			if (pre != null) {  // curr is not the first node
+				if (f1 == null && pre.val >= root.val) { // find first wrong node
 					f1 = pre;
 				}
-				if (f1 != null && pre.val > curr.val) { // find second wrong node
-					f2 = curr;
+				if (f1 != null && pre.val >= root.val) { // find second wrong node
+					f2 = root;
 				}
-				pre = curr;
 			}
-			pre = curr;
-			curr = curr.right;
+			pre = root;
+			root = root.right;
 		}
 		int temp = f1.val; // swap two wrong nodes
 		f1.val = f2.val;

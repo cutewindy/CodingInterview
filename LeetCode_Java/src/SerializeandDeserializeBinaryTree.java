@@ -30,8 +30,7 @@ import java.util.Queue;
 public class SerializeandDeserializeBinaryTree {
 
 	/**
-	 * Method2: BFS: Use a queue to iterate tree and save the result into string by using queue.
-	 * When deserialize, 
+	 * Method2: BFS(BFS traversal template). Using '#' to denote null node
 	 * @param TreeNode root
 	 * @return String
 	 * Time: O(n)
@@ -61,35 +60,36 @@ public class SerializeandDeserializeBinaryTree {
 	
 	// Decodes your encoded data to tree.
 	/**
-	 * Method2: 
+	 * Method2: Using two arrays to record the tree info, then build tree.
+	 * For a perfect tree, nodes[i].left = nodes[2 * i + 1], nodes[i].right = nodes[2 * i + 2].
 	 * @param String data
 	 * @return TreeNode
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n)
+	 * Space: O(n)
 	 */
 	public TreeNode deserializeI(String data) {
 		if (data == null || data.length() == 0) {
 			return null;
 		}
-		int[] count = new int[data.length()];// how many "#" appear before i
+		int[] count = new int[data.length()];// how many "#" appear before i(included)
 		TreeNode[] node = new TreeNode[data.length()]; // new node that need to be build
-		List<String> newData = new ArrayList<>(Arrays.asList(data.split(",")));
+		String[] newData = data.split(",");
 		// init
 		count[0] = 0;
-		node[0] = new TreeNode(Integer.valueOf(newData.get(0)));
+		node[0] = new TreeNode(Integer.parseInt(newData[0]));
 		// create tree node
-		for (int i = 1; i < newData.size(); i++) {
-			if (newData.get(i).equals("#")) {
+		for (int i = 1; i < newData.length; i++) {
+			if (newData[i].equals("#")) {
 				count[i] = count[i - 1] + 1;
 				node[i] = null;
 			}	
 			else {
 				count[i] = count[i - 1];
-				node[i] = new TreeNode(Integer.valueOf(newData.get(i)));
+				node[i] = new TreeNode(Integer.valueOf(newData[i]));
 			}
 		}
 		// build tree
-		for (int i = 0; i < newData.size(); i++) {
+		for (int i = 0; i < newData.length; i++) {
 			if (node[i] != null) {
 				node[i].left = node[2 * (i - count[i]) + 1];
 				node[i].right = node[2 * (i - count[i]) + 2];
@@ -167,9 +167,10 @@ public class SerializeandDeserializeBinaryTree {
 		System.out.println(data);
 		TreeNode.printCBT(result.deserialize(data));
 		
-//		String dataI = result.serializeI(root);
-//		System.out.println(dataI);
-//		TreeNode.printCBT(result.deserializeI(dataI));
+		TreeNode root1 = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
+		String dataI = result.serializeI(root1);
+		System.out.println(dataI);
+		TreeNode.printCBT(result.deserializeI(dataI));
 	}
 
 }

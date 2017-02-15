@@ -37,7 +37,7 @@ public class SerializeandDeserializeBST {
 			if (curr.right != null) stack.push(curr.right);
 			if (curr.left != null) stack.push(curr.left);
 		} 
-		return result.toString();
+		return result.toString().substring(0, result.length() - 1);
 	}
 
 	/**
