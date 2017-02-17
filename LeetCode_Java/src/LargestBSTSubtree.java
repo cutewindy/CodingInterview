@@ -68,7 +68,7 @@ public class LargestBSTSubtree {
 	}
 	
 	/**
-	 * Method1: Brute force(Top down): find which part is BST, then count the the number of node, 
+	 * Method1: DFS(Brute force)(Top down): find which part is BST, then count the the number of node, 
 	 * return the largest one.
 	 * @param TreeNode root
 	 * @return int
