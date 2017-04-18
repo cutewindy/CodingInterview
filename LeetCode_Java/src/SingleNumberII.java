@@ -7,26 +7,9 @@
  * @author wendi
  *
  */
-public class SingleNumberII {
-	
+public class SingleNumberII {	
 	/**
-	 * Method2: 
-	 * @param int[] nums
-	 * @return int
-	 * Time: O(32n)
-	 * Space: O(32)
-	 */
-	public int singleNumberIII(int[] nums) {
-		if (nums == null|| nums.length == 0) {
-			return -1;
-		}
-		int result = 0;
-		return result;
-	}
-	
-	
-	/**
-	 * Method1: Bit Manipulation: the number in 32 bits and just count how many 1s are there in each 
+	 * Method: Bit Manipulation: the number in 32 bits and just count how many 1s are there in each 
 	 * bit, and sum %= 3 will clear it once it reaches 3. After running for all the numbers for each 
 	 * bit, if we have a 1, then that 1 belongs to the single number, we can simply move it back to 
 	 * its spot by doing ans |= sum << i;
