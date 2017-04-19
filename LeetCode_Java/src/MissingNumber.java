@@ -35,7 +35,7 @@ public class MissingNumber {
 		for (int i = 0; i < nums.length; i++) {
 			xor = xor ^ i ^ nums[i];
 		}
-		xor ^= nums.length;  // be care
+		xor ^= nums.length;  // take care
 		return xor; 
 	}	
 	

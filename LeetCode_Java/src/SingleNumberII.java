@@ -7,9 +7,9 @@
  * @author wendi
  *
  */
-public class SingleNumberII {
-	
+public class SingleNumberII {	
 	/**
+<<<<<<< HEAD
 	 * Method2: Bit Manipulation using ^
 	 * 
 	 * @param int[] nums
@@ -28,6 +28,9 @@ public class SingleNumberII {
 	
 	/**
 	 * Method1: Bit Manipulation: the number in 32 bits and just count how many 1s are there in each 
+=======
+	 * Method: Bit Manipulation: the number in 32 bits and just count how many 1s are there in each 
+>>>>>>> origin/master
 	 * bit, and sum %= 3 will clear it once it reaches 3. After running for all the numbers for each 
 	 * bit, if we have a 1, then that 1 belongs to the single number, we can simply move it back to 
 	 * its spot by doing ans |= sum << i;
