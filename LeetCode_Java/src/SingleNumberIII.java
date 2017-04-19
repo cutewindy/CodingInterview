@@ -34,12 +34,11 @@ public class SingleNumberIII {
 		for (int num: nums) {
 			xor ^= num;
 		}
-		// 2. Get its last set bit.
-//		int bit = xor ^ (xor & (xor - 1));
-		int bit = xor & ~(xor - 1);
+		// 2. Get its last set bit, which is 1.
+		int bit = xor & ~(xor - 1);  // bit = xor & -xor
 		// 3. Put num in two groups, and find single number in each group.
 		for (int num: nums) {
-			if ((num & bit) == 0) {
+			if ((num & bit) == 0) {  // take care of the ()
 				result[0] ^= num;
 			}
 			else {

@@ -10,7 +10,8 @@
 public class SingleNumberII {
 	
 	/**
-	 * Method2: 
+	 * Method2: Bit Manipulation using ^
+	 * 
 	 * @param int[] nums
 	 * @return int
 	 * Time: O(32n)

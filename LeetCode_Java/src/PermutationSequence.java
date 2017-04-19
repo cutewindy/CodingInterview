@@ -18,7 +18,13 @@
  */
 public class PermutationSequence {
 
-
+	/**
+	 * 
+	 * @param int n, int k
+	 * @return String
+	 * Time: O()
+	 * Space: O()
+	 */
 	public String permutationSequence(int n, int k) {
 		String result = new String();
 		if (n == 0) {
