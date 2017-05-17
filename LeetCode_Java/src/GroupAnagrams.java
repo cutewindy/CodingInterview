@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Given an array of strings, group anagrams together.
@@ -24,30 +23,26 @@ public class GroupAnagrams {
 	
 	/**
 	 * Using HashMap<String, List<String>>, key is the sorted string, value is the original string
-	 * @param strs
+	 * @param String strs
+	 * @return List<List<String>>
 	 * Time: O(n*klog(k)+nlog(n)), k is the average length of string in strs
 	 * Space: O(n) 
-	 * @return
 	 */
 	public List<List<String>> groupAnagrams(String[] strs) {
-		List<List<String>> result = new ArrayList();
+		List<List<String>> result = new ArrayList<>();
 		if (strs == null || strs.length == 0) {
 			return result;
 		}
-		Map<String, List<String>> hash = new HashMap();
+		Map<String, List<String>> hash = new HashMap<>();
 		for (String s: strs) {
 			String sortedStr = sorted(s);
-			if (hash.containsKey(sortedStr)) {
-				hash.get(sortedStr).add(s);
+			if (!hash.containsKey(sortedStr)) {
+				hash.put(sortedStr, new ArrayList<String>());
 			}
-			else {
-				List<String> list = new ArrayList();
-				list.add(s);
-				hash.put(sortedStr, list);
-			}
+			hash.get(sortedStr).add(s);
 		}
 		for (List<String> list: hash.values()) {
-			Collections.sort(list);
+			Collections.sort(list);  // can ignore
 			result.add(list);
 		}
 		return result;
