@@ -49,15 +49,11 @@ public class ValidAnagram {
 	 * @param String s, String t
 	 * @return boolean
 	 * Time: O(n)
-	 * Space: O(1)
+	 * Space: O(n)
 	 */
 	public boolean validAnagram(String s, String t) {
-		if (s.length() != t.length()) {
-			return false;
-		}
-		if (s == null || t == null) {
-			return true;
-		}
+		if (s == null && t == null) return true;
+		if (s == null || t == null || s.length() != t.length()) return false;
 		Map<Character, Integer> hash = new HashMap<>();
 		for (char c: s.toCharArray()) {
 			if (hash.containsKey(c)) {
