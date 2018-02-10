@@ -17,7 +17,7 @@ public class TreeNode {
 			return null;
 		}
 		TreeNode root = new TreeNode(array[0]);
-		List<TreeNode> q = new ArrayList();
+		List<TreeNode> q = new ArrayList<>();
 		q.add(root);
 		for (int i = 1; i < array.length; i++) {
 			TreeNode node = q.remove(0);

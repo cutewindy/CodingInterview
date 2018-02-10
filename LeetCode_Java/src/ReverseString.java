@@ -28,7 +28,8 @@ public class ReverseString {
             start++;
             end--;
         }
-        return String.valueOf(S);
+//        return String.valueOf(S);
+        return new String(S);
 	}
 	
 	/**

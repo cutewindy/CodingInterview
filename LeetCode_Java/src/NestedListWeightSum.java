@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,28 +15,7 @@ import java.util.List;
  * @author wendi
  *
  */
-public class NestedListWeightSum {
-	class NestedInteger {
-		List<>
-		int temp = 0;
-		public boolean isInteger() {
-			if (this.isInteger()) {
-				return true;
-			}
-			return false;
-		}
-		
-		public Integer getInteger() {
-			return temp;
-		}
-		
-		public List<NestedInteger> getList() {
-			
-		}
-		
-	}
-	
-	
+public class NestedListWeightSum {	
 	/**
 	 * DFS
 	 * @param List<NestedInteger> nestedList
@@ -73,7 +53,18 @@ public class NestedListWeightSum {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NestedListWeightSum result = new NestedListWeightSum();
-		System.out.println(result.nestedListWeightSum(nestedList));
+		NestedInteger list1 = new NestedInteger();
+		list1.add(new NestedInteger(1));
+		list1.add(new NestedInteger(1));
+		NestedInteger list2 = new NestedInteger();
+		list2.add(new NestedInteger(1));
+		list2.add(new NestedInteger(1));
+		List<NestedInteger> nestedInteger = new ArrayList<>();
+		nestedInteger.add(list1);
+		nestedInteger.add(new NestedInteger(2));
+		nestedInteger.add(list2);		
+		
+		System.out.println(result.nestedListWeightSum(nestedInteger));
 	}
 
 }
