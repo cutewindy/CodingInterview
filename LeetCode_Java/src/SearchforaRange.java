@@ -13,7 +13,36 @@ import java.util.Arrays;
  *
  */
 public class SearchforaRange {
+	
+	/**
+	 * Method2: One time binary search
+	 * @param int[] nums, int target
+	 * @return int[]
+	 * Time: O(log(n))
+	 * Space: O(1)
+	 */
+	public int[] searchforaRange(int[] nums, int target) {
+        int[] result = {-1, -1};
+        if (nums == null || nums.length == 0) return result;
+        int start = 0; 
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            if (nums[start] == target && nums[end] == target) return new int[] {start, end};
+            int mid = start + (end - start) / 2;
+            if (nums[mid] < target) start = mid;
+            else if (nums[mid] > target) end = mid;
+            else {
+                if (nums[start] == target) end--;
+                else start++;
+            }
+        }
+        if (nums[start] == target && nums[end] == target) return new int[] {start, end};
+        if (nums[start] == target) return new int[] {start, start};
+        if (nums[end] == target) return new int[] {end, end};
+        return result;
+	}
 
+	
 	/**
 	 * BinarySearch(Template): Two times of binary search. One for looking for left, one for looking for right.
 	 * For left: if n[mid]<target, left edge on the right side of mid, excludes mid.
@@ -23,49 +52,49 @@ public class SearchforaRange {
 	 * Time: O(2log(n))
 	 * Space: O(1)
 	 */
-	public int[] searchforaRange(int[] nums, int target) {
-		int[] result = {-1, -1};
-		if (nums == null || nums.length == 0) {
-			return result;
-		}
-		// look for left edge
-		int start = 0; 
-		int end = nums.length - 1;
-		while (start + 1 < end) {
-			int mid = start + (end - start) / 2;
-			if (nums[mid] < target) {
-				start = mid + 1; // or start = mid;
-			}
-			else {
-				end = mid;
-			}
-		}
-		if (nums[start] == target) {
-			result[0] = start;
-		}
-		else if (nums[end] == target) {
-			result[0] = end;
-		}
-		// look for right edge
-		start = 0;
-		end = nums.length - 1;
-		while (start + 1 < end) {
-			int mid = start + (end - start) / 2;
-			if (nums[mid] <= target) {
-				start = mid;
-			}
-			else {
-				end = mid - 1; // or end = mid;
-			}
-		}
-		if (nums[end] == target) {
-			result[1] = end;
-		}
-		else if (nums[start] == target) {
-			result[1] = start;
-		}
-		return result;
-	}
+//	public int[] searchforaRange(int[] nums, int target) {
+//		int[] result = {-1, -1};
+//		if (nums == null || nums.length == 0) {
+//			return result;
+//		}
+//		// look for left edge
+//		int start = 0; 
+//		int end = nums.length - 1;
+//		while (start + 1 < end) {
+//			int mid = start + (end - start) / 2;
+//			if (nums[mid] < target) {
+//				start = mid + 1; // or start = mid;
+//			}
+//			else {
+//				end = mid;
+//			}
+//		}
+//		if (nums[start] == target) {
+//			result[0] = start;
+//		}
+//		else if (nums[end] == target) {
+//			result[0] = end;
+//		}
+//		// look for right edge
+//		start = 0;
+//		end = nums.length - 1;
+//		while (start + 1 < end) {
+//			int mid = start + (end - start) / 2;
+//			if (nums[mid] <= target) {
+//				start = mid;
+//			}
+//			else {
+//				end = mid - 1; // or end = mid;
+//			}
+//		}
+//		if (nums[end] == target) {
+//			result[1] = end;
+//		}
+//		else if (nums[start] == target) {
+//			result[1] = start;
+//		}
+//		return result;
+//	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

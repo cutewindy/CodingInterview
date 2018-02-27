@@ -18,7 +18,7 @@ import java.util.Map;
 public class TwoSum {
 	
 	/**
-	 * Method: hashMap
+	 * Method: one pass hashMap
 	 * @param int[] nums, int target
 	 * @return int[]
 	 * Time: O(n)
