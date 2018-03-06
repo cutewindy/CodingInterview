@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+ * Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if 
+ * necessary).
  * You may assume that the intervals were initially sorted according to their start times.
  * Example 1:
  * Given intervals [1,3],[6,9], insert and merge [2,5] in as [1,5],[6,9].
@@ -16,28 +17,9 @@ import java.util.List;
  */
 
 public class InsertInterval {
-	class Interval {
-		int start;
-		int end;
-		Interval() {
-			start = 0;
-			end = 0;
-		}
-		Interval(int s, int e) {
-			start = s;
-			end = e;
-		}
-	}
-	
-	Interval initInterval() {
-		return new Interval();
-	}
-
-	Interval initInterval(int s, int e) {
-		return new Interval(s, e);
-	}
 	
 	/**
+	 * Two pass, can be optimized to one pass, or using binary search as the follow up of "merge interval"
 	 * Brute Force: Using a value pos to record the position where to insert the newInterval.
 	 * Check whether curr Interval can merge into newInterval:
 	 * 1. if i.s > n.e, res.add(i) and pos++;
@@ -72,10 +54,8 @@ public class InsertInterval {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		InsertInterval result = new InsertInterval();
-		List<Interval> intervals = new ArrayList<>();
-		intervals.add(result.initInterval(1, 5));
-		Interval newInterval = result.initInterval(6, 8);
-		System.out.println(result.insertInterval(intervals, newInterval).get(1).end);
+		List<Interval> intervals = Interval.arrayListtoIntervalList(new int[][] {{1, 3}, {6, 9}});
+		Interval newInterval = new Interval(2, 5);
+		Interval.printIntervalList(result.insertInterval(intervals, newInterval));
 	}
-
 }

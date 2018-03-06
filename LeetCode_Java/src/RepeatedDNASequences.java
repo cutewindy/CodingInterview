@@ -24,7 +24,8 @@ import java.util.Set;
 public class RepeatedDNASequences {
 
 	/**
-	 * Method3: BitManipulate + HashMap: like method1 except the key in hash is int instead of substring
+	 * Method3: Rolling hash
+	 * BitManipulate + HashMap: like method1 except the key in hash is int instead of substring
 	 * 20 bits < 32 bits, not out of range of Integer.
 	 * @param String s
 	 * @return List<String>

@@ -32,9 +32,9 @@ public class FactorCombinations {
 	 * Save the satisfied fact in the currFact until n==1 and currFactor.size()>1.
 	 * @param int n
 	 * @return List<List<Integer>>
-	 * Time :O()
-	 * Space: O()
-	 * Stack space: O()
+	 * Time :O(n!)
+	 * Space: O(n)
+	 * Stack space: O(n^(1/2))
 	 */
 	public List<List<Integer>> factorCombinations(int n) {
         List<List<Integer>> result = new ArrayList<>();

@@ -43,7 +43,7 @@ public class BinaryTreeLevelOrderTraversal {
 		while (!queue.isEmpty()) {
 			int size = queue.size();
 			List<Integer> level = new ArrayList<>();
-			for (int i = 0; i < size; i++) {
+			while(size-- > 0) {
 				TreeNode curr = queue.poll();
 				level.add(curr.val);
 				if (curr.left != null) {

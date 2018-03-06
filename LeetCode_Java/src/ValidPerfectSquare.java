@@ -15,7 +15,24 @@
 public class ValidPerfectSquare {
 
 	/**
-	 * Method: BinarySearch: (Template). If mid*mid=num, then we find the square and return true.
+	 * Method2: Math: A square number is 1+3+5+7+...
+	 * @param int num
+	 * @return int
+	 * Time: O(sqrt(n))
+	 * Space:O(1)
+	 */
+	public boolean validPerfectSquareI(int num) {
+		int i = 1;
+		while (num > 0) {
+			num -= i;
+			i += 2;
+		}
+		return num == 0;
+	}
+	
+	
+	/**
+	 * Method1: BinarySearch: (Template). If mid*mid=num, then we find the square and return true.
 	 * If num/mid<=mid, it means that mid*mid<num, the possible result on the right of mid.
 	 * Otherwise, mid*mid>num, the possible result on the left of mid.
 	 * @param int num
@@ -52,6 +69,8 @@ public class ValidPerfectSquare {
 		ValidPerfectSquare result = new ValidPerfectSquare();
 		System.out.println(result.validPerfectSquare(81));		
 		System.out.println(result.validPerfectSquare(2147483647));
+		System.out.println(result.validPerfectSquareI(81));		
+		System.out.println(result.validPerfectSquareI(2147483647));
 	}
 
 }

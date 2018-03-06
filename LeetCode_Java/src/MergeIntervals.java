@@ -37,9 +37,7 @@ public class MergeIntervals {
 		});
 		for (Interval interval: intervals) {
 			if (!result.isEmpty() && result.get(result.size() - 1).end >= interval.start) {
-				Interval last = result.remove(result.size() - 1);
-				int end = Math.max(last.end, interval.end);
-				result.add(new Interval(last.start, end));
+				result.get(result.size() - 1).end = Math.max(result.get(result.size() - 1).end, interval.end);
 			}
 			else {
 				result.add(interval);

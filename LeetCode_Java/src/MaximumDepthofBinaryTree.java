@@ -41,9 +41,10 @@ public class MaximumDepthofBinaryTree {
 		}
 		return result;
 	}
- 	
+ 
+	
 	/**
-	 * Method1: DFS(Recursion)
+	 * Method1: DFS(Recursion)(bottom up)
 	 * @param TreeNode root
 	 * @return int
 	 * Time: O(n)

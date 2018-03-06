@@ -18,7 +18,8 @@
 public class FindtheCelebrity {
 
 	/**
-	 * Method2: Two Pointers: The first pass is to pick out the candidate. If candidate knows i, 
+	 * Method2: elimination
+	 * Two Pointers: The first pass is to pick out the candidate. If candidate knows i, 
 	 * then switch candidate. The second pass is to check whether the candidate is real.
 	 * @param int n
 	 * @return int

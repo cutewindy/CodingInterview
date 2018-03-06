@@ -17,6 +17,10 @@ public class ValidNumber {
 	
 	/**
 	 * Method2: Regex
+	 * int: [0-9]+[.]?
+	 * float: [0-9]*[.][0-9]+
+	 * scientific: [e][+-]?[0-9]+
+	 * a valid number should be an int or float, with or without scientific
 	 * @param String s
 	 * @return boolean
 	 * Time: O(1)
@@ -26,8 +30,7 @@ public class ValidNumber {
 		if (s == null || s.length() == 0) {
 			return false;
 		}
-		s = s.trim();
-		String pattern = "[+-]?(([0-9]+[.]?)|([0-9]*[.][0-9]+))([e][+-]?[0-9]+)?";
+		String pattern = "^\\s*[+-]?(([0-9]+[.]?)|([0-9]*[.][0-9]+))([e][+-]?[0-9]+)?\\s*$";
 		return s.matches(pattern);
 	}
 

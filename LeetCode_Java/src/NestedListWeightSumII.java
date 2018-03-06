@@ -3,7 +3,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import NestedListWeightSum.NestedInteger;
 
 /**
  * Given a nested list of integers, return the sum of all integers in the list weighted by their depth.
@@ -24,7 +23,7 @@ import NestedListWeightSum.NestedInteger;
 public class NestedListWeightSumII {
 	
 	/**
-	 * BFS
+	 * BFS: add each level node's value by level times
 	 * @param List<NestedInteger> nestedList
 	 * @return int
 	 * Time: O(n)
@@ -35,7 +34,7 @@ public class NestedListWeightSumII {
 			return 0;
 		}
 		int result = 0;
-		int temp = 0;
+		int sum = 0;
 		Queue<List<NestedInteger>> queue = new LinkedList<>();
 		queue.offer(nestedList);
 		while (!queue.isEmpty()) {
@@ -44,21 +43,32 @@ public class NestedListWeightSumII {
 				List<NestedInteger> curr = queue.poll();
 				for (NestedInteger currNum: curr) {
 					if (currNum.isInteger()) {
-						temp += currNum.getInteger();
+						sum += currNum.getInteger();
 					}
 					else {
 						queue.offer(currNum.getList());
 					}
 				}
 			}
-			result += temp;
+			result += sum;
 		}
 		return result;
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		NestedListWeightSumII result = new NestedListWeightSumII();
+		NestedInteger list1 = new NestedInteger();
+		list1.add(new NestedInteger(1));
+		list1.add(new NestedInteger(1));
+		NestedInteger list2 = new NestedInteger();
+		list2.add(new NestedInteger(1));
+		list2.add(new NestedInteger(1));
+		List<NestedInteger> nestedList = new ArrayList<>();
+		nestedList.add(list1);
+		nestedList.add(new NestedInteger(2));
+		nestedList.add(list2);	
+		System.out.println(result.nestedListWeightSumII(nestedList));
 	}
 
 }

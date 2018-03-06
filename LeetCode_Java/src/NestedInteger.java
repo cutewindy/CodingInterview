@@ -49,28 +49,35 @@ public class NestedInteger {
 		else {
 			return this.list;
 		}
-	}	 
+	}	
 	
-	public String printNestedList(NestedInteger nestedInteger, StringBuilder sb) {
-		if (nestedInteger.isInteger()) {
-			sb.append(nestedInteger);
-		}
-		sb.append("[");
-		for (NestedInteger ni: nestedInteger.list) {
-			if (ni.isInteger()) {
-				sb.append(ni.getInteger()).append(",");
+	
+	public static String printNL(List<NestedInteger> nestedInteger) {
+		StringBuilder sb = new StringBuilder();
+		for (NestedInteger n: nestedInteger) {
+			sb.append("[");
+			if (n.isInteger()) {
+				sb.append(n.getInteger()).append(",");
 			}
-			else {
-				printNestedList(ni, sb);
-			}
+			else printNL(n.getList());
+			sb.append("]");
 		}
-		sb.append("]");
 		return sb.toString();
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		NestedInteger list1 = new NestedInteger();
+		list1.add(new NestedInteger(1));
+		list1.add(new NestedInteger(1));
+		NestedInteger list2 = new NestedInteger();
+		list2.add(new NestedInteger(1));
+		list2.add(new NestedInteger(1));
+		List<NestedInteger> nestedInteger = new ArrayList<>();
+		nestedInteger.add(list1);
+		nestedInteger.add(new NestedInteger(2));
+		nestedInteger.add(list2);
+		System.out.println(NestedInteger.printNL(nestedInteger));
 	}
 
 }

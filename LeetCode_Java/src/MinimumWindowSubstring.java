@@ -22,9 +22,25 @@ import java.util.Map;
  */
 public class MinimumWindowSubstring {
 	
+	/**
+	 * Method2: slide window, using one int[256] array instead of hash and list
+	 * @param String s, String t
+	 * @return String
+	 * Time: O()
+	 * Space: O()
+	 */
+	public String minimumWindowSubstring(String s, String t) {
+		String result = new String();
+		if (s == null || t == null || s.length() < t.length() || t.length() == 0) {
+			return result;
+		}
+		
+		
+		return result;
+	}
 	
 	/**
-	 * slide window + hash table + list:
+	 * Method1: slide window + hash table + list:
 	 * Using a window to save the valid index of character and a hash to save the list of character's 
 	 * index, which is in the window, update window and hash, and check list size using counter 
 	 * when doing the iteration.
@@ -33,54 +49,54 @@ public class MinimumWindowSubstring {
 	 * Time: O(n + m), n is the length of s, m is the length of t, in fact, n > m
 	 * Space: O(n + m), n is the length of s, m is the length of t
 	 */
-	public String minimumWindowSubstring(String s, String t) {
-		String result = new String();
-		if (s == null || t == null || s.length() < t.length() || t.length() == 0) {
-			return result;
-		}
-		Map<Character, Integer> counter = new HashMap<>(); // record the occurrence of Character in t
-		for (int i = 0; i < t.length(); i++) {
-			char c = t.charAt(i);
-			if (counter.containsKey(c)) {
-				counter.put(c, counter.get(c) + 1);
-			}
-			else {
-				counter.put(c, 1);
-			}
-		}
-		List<Integer> window = new ArrayList<>();
-		Map<Character, List<Integer>> hash = new HashMap<>(); // integer is the index of character, list length is determine by counter           th
-		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
-			if (counter.containsKey(c)) {  // filter	
-				// 1. update character's list in hash
-				if (hash.containsKey(c)) { 
-					hash.get(c).add(i);
-				}
-				else {
-					List<Integer> list = new ArrayList<>(Arrays.asList(i));
-					hash.put(c, list);
-				}
-				// 2. update window
-				window.add(i);             
-				// 3. check list's size of each character is not large than counter, otherwise 
-				//    remove from both list of hash and window
-				if (hash.get(c).size() > counter.get(c)) {
-					window.remove(Integer.valueOf(hash.get(c).get(0))); // window remove the value hash.get(c).get(0)
-					hash.get(c).remove(0); // hash remove the first value in the list
-				}
-				// 4. update result
-				if (window.size() == t.length()
-				&& (result.length() == 0 || window.get(window.size() - 1) - window.get(0) + 1 < result.length())) {
-					result = s.substring(window.get(0), window.get(window.size() - 1) + 1);
-				}
-				if (window.size() == t.length()) {
-					System.out.println(s.substring(window.get(0), window.get(window.size() - 1) + 1));
-				}
-			}
-		}
-		return result;
-	}
+//	public String minimumWindowSubstring(String s, String t) {
+//		String result = new String();
+//		if (s == null || t == null || s.length() < t.length() || t.length() == 0) {
+//			return result;
+//		}
+//		Map<Character, Integer> counter = new HashMap<>(); // record the occurrence of Character in t
+//		for (int i = 0; i < t.length(); i++) {
+//			char c = t.charAt(i);
+//			if (counter.containsKey(c)) {
+//				counter.put(c, counter.get(c) + 1);
+//			}
+//			else {
+//				counter.put(c, 1);
+//			}
+//		}
+//		List<Integer> window = new ArrayList<>();
+//		Map<Character, List<Integer>> hash = new HashMap<>(); // integer is the index of character, list length is determine by counter           th
+//		for (int i = 0; i < s.length(); i++) {
+//			char c = s.charAt(i);
+//			if (counter.containsKey(c)) {  // filter	
+//				// 1. update character's list in hash
+//				if (hash.containsKey(c)) { 
+//					hash.get(c).add(i);
+//				}
+//				else {
+//					List<Integer> list = new ArrayList<>(Arrays.asList(i));
+//					hash.put(c, list);
+//				}
+//				// 2. update window
+//				window.add(i);             
+//				// 3. check list's size of each character is not large than counter, otherwise 
+//				//    remove from both list of hash and window
+//				if (hash.get(c).size() > counter.get(c)) {
+//					window.remove(Integer.valueOf(hash.get(c).get(0))); // window remove the value hash.get(c).get(0)
+//					hash.get(c).remove(0); // hash remove the first value in the list
+//				}
+//				// 4. update result
+//				if (window.size() == t.length()
+//				&& (result.length() == 0 || window.get(window.size() - 1) - window.get(0) + 1 < result.length())) {
+//					result = s.substring(window.get(0), window.get(window.size() - 1) + 1);
+//				}
+//				if (window.size() == t.length()) {
+//					System.out.println(s.substring(window.get(0), window.get(window.size() - 1) + 1));
+//				}
+//			}
+//		}
+//		return result;
+//	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

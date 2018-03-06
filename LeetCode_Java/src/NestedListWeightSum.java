@@ -59,12 +59,12 @@ public class NestedListWeightSum {
 		NestedInteger list2 = new NestedInteger();
 		list2.add(new NestedInteger(1));
 		list2.add(new NestedInteger(1));
-		List<NestedInteger> nestedInteger = new ArrayList<>();
-		nestedInteger.add(list1);
-		nestedInteger.add(new NestedInteger(2));
-		nestedInteger.add(list2);		
-		
-		System.out.println(result.nestedListWeightSum(nestedInteger));
+		List<NestedInteger> nestedList = new ArrayList<>();
+		nestedList.add(list1);
+		nestedList.add(new NestedInteger(2));
+		nestedList.add(list2);		
+		NestedInteger.printNL(nestedList);
+		System.out.println(result.nestedListWeightSum(nestedList));
 	}
 
 }
