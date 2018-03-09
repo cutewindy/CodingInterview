@@ -34,35 +34,67 @@ public class WordLadder {
 	 * Space: O(wordList.size())
 	 */
 	public int wordLadder(String beginWord, String endWord, Set<String> wordList) { 
-		if (wordList.size() == 0) {
-			return 0;
-		}
-		int count = 0;
-		wordList.add(endWord);
-		Queue<String> queue = new LinkedList<>();
-		queue.add(beginWord);
-		while (!queue.isEmpty()) {
-			count++;
-			int size = queue.size();
-			for (int i = 0; i < size; i++) {
-				String curr = queue.poll();
-				if (curr.equals(endWord)) {
-					return count;
-				}
-				for (int j = 0; j < curr.length(); j++) {
-					char[] currArray = curr.toCharArray();
-					for (char c = 'a'; c <= 'z'; c++) {
-						currArray[j] = c;
-						String word = String.valueOf(currArray);
-						if (wordList.contains(word)) {
-							queue.offer(word);
-							wordList.remove(word);
-						}
-					}
-				}
-			}
-		}
-		return 0;
+		// it's better not change the input
+        Set<String> words = new HashSet<>();  // O(1) to find the word
+        for (String word: wordList) {       
+            words.add(word);                  
+        }
+        Set<String> seen = new HashSet<>();   // record which word has been find, avoid cycle
+        seen.add(beginWord);
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        int result = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                String curr = queue.poll();
+                if (curr.equals(endWord)) return result;
+                for (int i = 0; i < curr.length(); i++) {
+                    char[] currArray = curr.toCharArray();
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        currArray[i] = c;
+                        String currWord = String.valueOf(currArray);
+                        if (words.contains(currWord) && !seen.contains(currWord)) {
+                            queue.offer(currWord);
+                            seen.add(currWord);
+                        }
+                    }
+                }
+            }
+            result++;
+        } 
+        return 0;
+        
+        
+//		if (wordList.size() == 0) {
+//			return 0;
+//		}
+//		int count = 0;
+//		wordList.add(endWord);
+//		Queue<String> queue = new LinkedList<>();
+//		queue.add(beginWord);
+//		while (!queue.isEmpty()) {
+//			count++;
+//			int size = queue.size();
+//			for (int i = 0; i < size; i++) {
+//				String curr = queue.poll();
+//				if (curr.equals(endWord)) {
+//					return count;
+//				}
+//				for (int j = 0; j < curr.length(); j++) {
+//					char[] currArray = curr.toCharArray();
+//					for (char c = 'a'; c <= 'z'; c++) {
+//						currArray[j] = c;
+//						String word = String.valueOf(currArray);
+//						if (wordList.contains(word)) {
+//							queue.offer(word);
+//							wordList.remove(word);
+//						}
+//					}
+//				}
+//			}
+//		}
+//		return 0;
 	}
 	
 	public static void main(String[] args) {
