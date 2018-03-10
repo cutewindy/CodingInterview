@@ -55,6 +55,7 @@ public class Searcha2DMatrix {
 		// TODO Auto-generated method stub
 		Searcha2DMatrix result = new Searcha2DMatrix();
 		System.out.println(result.searcha2DMatrix(new int[][] {{1, 3, 5, 7}, {10, 11, 16, 20}, {23, 30, 34, 50}}, 35));
+		System.out.println(result.searcha2DMatrix(new int[][] {{1}}, 0));
 	}
 
 }
