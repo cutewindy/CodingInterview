@@ -17,11 +17,49 @@
  */
 public class PalindromicSubstrings {
 
+	
 	/**
-	 * Brute force
+	 * Method2: DP
 	 * @param String s
 	 * @return int
 	 * Time: O(n^2)
+	 * Space: O(1)
+	 */
+	public int palindromicSubstringsI(String s) {	
+		if (s == null || s.length() == 0) return 0;
+		int result = 0;
+		char[] S = s.toCharArray();
+		boolean[][] dp = new boolean[s.length()][s.length()];
+		// init dp
+		for (int i = 0; i < S.length; i++) {
+			dp[i][i] = true;
+			result++;
+		}
+		for (int j = 1; j < S.length; j++) {
+			if (S[j] == S[j - 1]) {
+				dp[j-1][j] = true;
+				result++;
+			}
+		}
+        // dp[i][j] = dp[i + 1][j - 1] && s[i] == s[j]
+		for (int len = 3; len <= S.length; len++) {
+			for (int i = 0; i < S.length - len + 1; i++) {
+				int j = i + len - 1;
+				if (dp[i + 1][j - 1] && S[i] == S[j]) {
+					dp[i][j] = true;
+					result++;
+				}
+			}
+		}
+		return result;
+	}
+	
+	
+	/**
+	 * Method1: Brute force
+	 * @param String s
+	 * @return int
+	 * Time: O(n^3)
 	 * Space: O(1)
 	 */
 	public int palindromicSubstrings(String s) {
@@ -49,6 +87,7 @@ public class PalindromicSubstrings {
 		// TODO Auto-generated method stub
 		PalindromicSubstrings result = new PalindromicSubstrings();
 		System.out.println(result.palindromicSubstrings("aaa"));
+		System.out.println(result.palindromicSubstringsI("aaaaa"));
 	}
 
 }
