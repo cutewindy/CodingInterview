@@ -14,6 +14,24 @@
 public class SumofSquareNumbers {
 	
 	/**
+	 * Method3: Two pointers
+	 * @param int c
+	 * @return boolean
+	 * Time: O(c) Two loops up to sqrt{c}.
+	 * Space: O(1)
+	 */
+	public boolean sumofSquareNumbersII(int c) {
+		int i = 0;
+		int j = (int) Math.sqrt(c);
+		while (i <= j ) {
+			if (c - i * i == j * j) return true;
+			else if (c - i * i > j * j) i++;
+			else j--;
+		}
+		return false;   
+	}	
+	
+	/**
 	 * Method2: Using sqrt function
 	 * Instead of finding if c - a^2 is a perfect square using sum of odd numbers, as done in the 
 	 * last approach, we can make use of the inbuilt sqrt function and check if sqrt{c - a^2}
@@ -54,6 +72,7 @@ public class SumofSquareNumbers {
 		// TODO Auto-generated method stub
 		SumofSquareNumbers result = new SumofSquareNumbers();
 		System.out.println(result.sumofSquareNumbers(5));
+		System.out.println(result.sumofSquareNumbersI(5));
 		System.out.println(result.sumofSquareNumbersI(5));
 	}
 
