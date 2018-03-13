@@ -9,6 +9,54 @@
 public class LongestPalindromicSubstring {
 	
 	/**
+	 * Method3: DP
+	 * use boolean dp[i][j] to store weather s.substring(i, j+1) is palindrome, and get the max
+	 * length j-i+1 as result.
+	 * @param String s
+	 * @return String
+	 * Time: O(n^2)
+	 * Space: O(n^2)
+	 */
+	public String longestPalindromicSubstringII(String s) {
+		if (s == null || s.length() == 0) return null;
+		int start = 0;
+		int end = 0;
+		int maxLen = 0;
+		int n = s.length();
+		char[] S = s.toCharArray();
+		boolean[][] dp = new boolean[n][n];
+		// init dp
+		for (int i = 0; i < n; i++) {
+			dp[i][i] = true;
+		}
+		for (int j = 1; j < n; j++) {
+			if (S[j] == S[j - 1]) {
+				dp[j - 1][j] = true;
+				maxLen = 2;
+				start = j - 1;
+				end = j;
+			}
+		}
+		// find the maxlen palindrome subtring
+		for (int len = 3; len <= n; len++) {
+			for (int i = 0; i < n - len + 1; i++) {
+				int j = len + i - 1;
+				if (dp[i + 1][j - 1] && S[i] == S[j]) {
+					dp[i][j] = true;
+					if (maxLen < len) {
+						start = i;
+						end = j;
+						maxLen = len;
+					}
+				}
+			}
+		}
+		return s.substring(start, end + 1);
+	}	
+	
+	
+	
+	/**
 	 * Method2: 
 	 * 1. char i has two case (i,i) and (i,i+1) as center that has palindrome. 
 	 * 2. work in the function (i, j). i move to left, j move to right.
@@ -96,6 +144,7 @@ public class LongestPalindromicSubstring {
 		LongestPalindromicSubstring result = new LongestPalindromicSubstring();
 		System.out.println(result.longestPalindromicSubstring("characcar"));
 		System.out.println(result.longestPalindromicSubstringI("characcar"));
+		System.out.println(result.longestPalindromicSubstringII("characcar"));
 	}
 
 }
