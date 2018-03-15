@@ -6,6 +6,27 @@
 public class LongestCommonPrefix {
 	
 	/**
+	 * Method3: using first str as prefix, then compare each word by word
+	 * @param String[] strs
+	 * @return String
+	 * Time: O(nk)
+	 * Space: O(1)
+	 */
+    public String longestCommonPrefixII(String[] strs) {
+        if (strs == null || strs.length == 0) return "";
+        int index = 0;
+        for (; index < strs[0].length(); index++) {
+            for (int i = 1; i < strs.length; i++) {
+                if (index >= strs[i].length() || strs[0].charAt(index) != strs[i].charAt(index)) {
+                    return index == 0 ? "" : strs[0].substring(0, index);
+                }
+            }            
+        }
+        return strs[0].substring(0, index);
+    }
+	
+	
+	/**
 	 * Method2: start from the first one, compare prefix with next string and update prefix, until end;
 	 * @param String strs
 	 * @return String
@@ -71,6 +92,8 @@ public class LongestCommonPrefix {
 		System.out.println(result.longestCommonPrefix(new String[] {""}));
 		System.out.println(result.longestCommonPrefixI(new String[] {"ABCD", "ABED", "ABCF"}));
 		System.out.println(result.longestCommonPrefixI(new String[] {""}));
+		System.out.println(result.longestCommonPrefixII(new String[] {"ABCD", "ABED", "ABCF"}));
+		System.out.println(result.longestCommonPrefixII(new String[] {""}));
 	}
 
 }
