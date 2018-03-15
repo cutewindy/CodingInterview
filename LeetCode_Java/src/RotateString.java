@@ -18,10 +18,40 @@
 public class RotateString {
 	
 	/**
+	 * Method2: two pointers, like "implement strstr"
+	 * @param String A, String B
+	 * @return boolean
+	 * Time: O(n^2);
+	 * Space: O(1)
+	 */
+	public boolean rotateStringI(String A, String B)	{
+        if (A == null && B == null) return true;
+        if (A == null || B == null || A.length() != B.length()) return false;
+        int n = A.length();
+        int start = 0;
+        int Ai = 0;
+        int Bi = 0;
+        while (start < n && Bi < n) {
+            if (A.charAt(Ai % n) == B.charAt(Bi)) {
+                Ai++;
+                Bi++;
+            }
+            else {
+                start++;
+                Ai = start;
+                Bi = 0;
+            }
+        }
+        return Bi == n ? true : false;
+	}
+	
+	
+	/**
+	 * Method1: 
 	 * BruteForce: rotate A for every possible, them compare with B, return true if there are same
 	 * @param String A, String B
 	 * @return boolean
-	 * Time: O(n)
+	 * Time: O(n^2)
 	 * Space: O(1)
 	 */
 	public boolean rotateString(String A, String B) {
@@ -39,6 +69,7 @@ public class RotateString {
 		// TODO Auto-generated method stub
 		RotateString result = new RotateString();
 		System.out.println(result.rotateString("abcde", "cdeab"));
+		System.out.println(result.rotateStringI("abcde", "cdeab"));
 	}
 
 }
