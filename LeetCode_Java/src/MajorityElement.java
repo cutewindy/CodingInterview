@@ -96,8 +96,9 @@ public class MajorityElement {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MajorityElement result = new MajorityElement();
-//		int[] nums = {1, 2, 4, 3, 2, 2, 1, 2};
-		int[] nums = {6, 5, 5};
+		int[] nums = {1, 2, 4, 3, 2, 2, 1, 2};
+//		int[] nums = {6, 5, 5};
+//		int[] nums = {2, 1, 3, 1};
 		System.out.println(result.majorityElement(nums));
 		System.out.println(result.majorityElementI(nums));
 		System.out.println(result.majorityElementII(nums));
