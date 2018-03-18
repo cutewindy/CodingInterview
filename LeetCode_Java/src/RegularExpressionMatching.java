@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 /**
  * Implement regular expression matching with support for '.' and '*'.
