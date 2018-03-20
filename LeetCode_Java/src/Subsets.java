@@ -74,7 +74,7 @@ public class Subsets {
 		for (int i = 0; i < nums.length; i++) {
 			int size = result.size();
 			for (int j = 0; j < size; j++) {
-				combo = new ArrayList(result.get(j));
+				combo = new ArrayList<>(result.get(j));
 				combo.add(nums[i]);
 				result.add(combo);
 			}

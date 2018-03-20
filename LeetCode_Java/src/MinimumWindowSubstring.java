@@ -23,7 +23,7 @@ import java.util.Map;
 public class MinimumWindowSubstring {
 	
 	/**
-	 * Method2: slide window, using one int[256] array instead of hash and list
+	 * Method2: slide window, using one int[256] array instead of hash and index instead of list
 	 * @param String s, String t
 	 * @return String
 	 * Time: O()
