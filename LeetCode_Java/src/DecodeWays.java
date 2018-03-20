@@ -28,7 +28,6 @@ public class DecodeWays {
 		if (s == null || s.length() == 0 || s.charAt(0) == '0') {
 			return 0;
 		}
-		int result = 0;
 		int[] dp = new int[s.length() + 1];
 		// init
 		dp[0] = 1;
@@ -49,6 +48,22 @@ public class DecodeWays {
 			}
 		}
 		return dp[s.length()];
+		
+		
+//        if (s == null || s.length() == 0) return 0;
+//        int res = 0;
+//        char[] S = s.toCharArray();
+//        int n = S.length;
+//        int[] dp = new int[n + 1];
+//        dp[0] = 1;
+//        dp[1] = S[0] == '0' ? 0 : 1;                 // take care
+//        for (int i = 2; i <= n; i++) {
+//            int curr = S[i - 1] - '0';
+//            int prev = S[i - 2] - '0';
+//            if (curr > 0) dp[i] += dp[i - 1];                            // one digit
+//            if (prev != 0 && prev * 10 + curr < 27) dp[i] += dp[i - 2];  // two digits
+//        }
+//        return dp[n];
 	}
 
 	public static void main(String[] args) {
