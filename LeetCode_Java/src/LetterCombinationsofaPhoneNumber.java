@@ -18,58 +18,12 @@ import java.util.Map;
  *
  */
 public class LetterCombinationsofaPhoneNumber {
-	
-//	public List<String> letterCombinationofaPhoneNumber(String digits) {
-//		List<StringBuilder> result = new ArrayList();
-//		if (digits == null || digits.length() == 0) {
-//			return null;
-//		}
-//		Map<Character, String> hash = new HashMap();
-//		hash.put('1', "");
-//		hash.put('2', "abc");
-//		hash.put('3', "def");
-//		hash.put('4', "ghi");
-//		hash.put('5', "jkl");
-//		hash.put('6', "mno");
-//		hash.put('7', "pqrs");
-//		hash.put('8', "tuv");
-//		hash.put('9', "wxyz");
-//		List<StringBuilder> oldRes = null;
-//		for (int i = 0; i < digits.length(); i++) {
-//			char digit = digits.charAt(i);
-//			String letters = hash.get(digit);
-//			oldRes = new ArrayList(result);
-//			result.clear();
-//			System.out.println(oldRes.size());
-//			if (oldRes.size() == 0) {
-//				for (int j = 0; j < letters.length(); j++) {
-//					StringBuilder letter = new StringBuilder();
-//					letter.append(String.valueOf(letters.charAt(j)));
-//					result.add(letter);
-//				}
-//			}
-//			else {
-//				for (StringBuilder res: oldRes) {
-//					for (int j = 0; j < letters.length(); j++) {
-//						res.append(String.valueOf(letters.charAt(j)));
-//						result.add(res);
-//					}
-//				}
-//			}
-//		}
-//		List<String> newResult = new ArrayList();
-//		for (StringBuilder sb: result) {
-//			newResult.add(sb.toString());
-//		}
-//		return newResult;
-//	}
-	
-	
+
 	/**
 	 * DFS
 	 * @param String digits
 	 * @return List<String>
-	 * Time:O(k^n), k is the average length of digits
+	 * Time:O(k^n), k is the average length of digit's letter list
 	 * Space:O(n), n level depth stack space, not included result(O(k^n))
 	 */
 	public List<String> letterCombinationofaPhoneNumber(String digits) {
