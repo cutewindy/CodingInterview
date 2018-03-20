@@ -73,11 +73,11 @@ public class LetterCombinationsofaPhoneNumber {
 	 * Space:O(n), n level depth stack space, not included result(O(k^n))
 	 */
 	public List<String> letterCombinationofaPhoneNumber(String digits) {
-		List<String> result = new ArrayList();
+		List<String> result = new ArrayList<>();
 		if (digits == null || digits.length() == 0) {
 			return result;
 		}
-		Map<Character, List<String>> hash = new HashMap();
+		Map<Character, List<String>> hash = new HashMap<>();
 		hash.put('1', Arrays.asList(""));
 		hash.put('2', Arrays.asList("a", "b", "c"));
 		hash.put('3', Arrays.asList("d", "e", "f"));
