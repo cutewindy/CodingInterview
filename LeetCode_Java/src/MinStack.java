@@ -19,15 +19,45 @@ import java.util.Stack;
  *
  */
 public class MinStack {
+	
+    /**
+     * Method3: two stacks
+     */
+    Stack<Integer> stackII = null;
+    Stack<Integer> minStack = null;
+    public MinStack() {
+        stackII = new Stack<>();
+        minStack = new Stack<>();
+    }
+    
+    public void pushII(int x) {
+        stackII.push(x);
+        if (minStack.isEmpty()) minStack.push(x);
+        else minStack.push(Math.min(minStack.peek() ,x));
+    }
+    
+    public void popII() {
+        stackII.pop();
+        minStack.pop();
+    }
+    
+    public int topII() {
+        return stackII.peek();
+    }
+    
+    public int getMinII() {
+        return minStack.peek();
+    }	
+	
 
 	/**
-	 * Using only one stack and a global value minNum
+	 * Method2: Using only one stack and a global value minNum
 	 */
 	private int minNum = Integer.MAX_VALUE;
 	private Stack<Integer> stackI;
-	public MinStack() {
-		stackI = new Stack<>();
-	}
+//	public MinStack() {
+//		stackI = new Stack<>();
+//	}
 	
 	public void pushI(int x) {
 		if (x <= minNum) {
@@ -38,9 +68,6 @@ public class MinStack {
 	}
 	
 	public void popI() {
-		if (stackI.isEmpty()) {
-			return;
-		}
 		int pop = stackI.pop();
 		if (pop == minNum) {
 			minNum = stackI.pop();
@@ -48,16 +75,10 @@ public class MinStack {
 	}
 	
 	public int topI() {
-		if (stackI.isEmpty()) {
-			return -1;
-		}
 		return stackI.peek();
 	}
 	
 	public int getMinI() {
-		if (stackI.isEmpty()) {
-			return -1;
-		}
 		return minNum;
 	}
 	
@@ -114,21 +135,29 @@ public class MinStack {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MinStack minStack = new MinStack();
-		minStack.push(-2);
-		minStack.push(0);
-		minStack.push(-3);
-		System.out.println(minStack.getMin());
-		minStack.pop();
-		System.out.println(minStack.top());
-		System.out.println(minStack.getMin());
+//		minStack.push(-2);
+//		minStack.push(0);
+//		minStack.push(-3);
+//		System.out.println(minStack.getMin());
+//		minStack.pop();
+//		System.out.println(minStack.top());
+//		System.out.println(minStack.getMin());
 		
-		minStack.pushI(-2);
-		minStack.pushI(0);
-		minStack.pushI(-3);
-		System.out.println(minStack.getMinI());
-		minStack.popI();
-		System.out.println(minStack.topI());
-		System.out.println(minStack.getMinI());
+//		minStack.pushI(-2);
+//		minStack.pushI(0);
+//		minStack.pushI(-3);
+//		System.out.println(minStack.getMinI());
+//		minStack.popI();
+//		System.out.println(minStack.topI());
+//		System.out.println(minStack.getMinI());
+		
+		minStack.pushII(-2);
+		minStack.pushII(0);
+		minStack.pushII(-3);
+		System.out.println(minStack.getMinII());
+		minStack.popII();
+		System.out.println(minStack.topII());
+		System.out.println(minStack.getMinII());
 	}
 
 }
