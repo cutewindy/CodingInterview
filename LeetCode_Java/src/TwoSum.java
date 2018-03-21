@@ -17,6 +17,27 @@ import java.util.Map;
  */
 public class TwoSum {
 	
+//	/**
+//	 * Method2: If given array is sorted, using two pointers
+//	 * @param int[] nums, int target
+//	 * @return int[]
+//	 * Time: O(n)
+//	 * Space: O(1)
+//	 */
+//	public int[] twoSumI(int[] nums, int target) {
+//		if (nums == null || nums.length < 2) return new int[] {-1, -1};	
+//		Arrays.sort(nums);
+//		int left = 0;
+//		int right = nums.length - 1;
+//		while (left < right) {
+//			if (nums[left] + nums[right] == target) return new int[] {left, right};
+//			else if (nums[left] + nums[right] < target) left++;
+//			else right--;
+//		}
+//		return new int[] {-1, -1};
+//	}
+	
+	
 	/**
 	 * Method: one pass hashMap
 	 * @param int[] nums, int target
@@ -37,12 +58,14 @@ public class TwoSum {
 		}
 		return null;
 	}
-
+ 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TwoSum result = new TwoSum();
 		System.out.println(Arrays.toString(result.twoSum(new int[] {2, 7, 11, 15}, 9)));
 		System.out.println(Arrays.toString(result.twoSum(new int[] {3, 5, 3}, 6)));
+//		System.out.println(Arrays.toString(result.twoSumI(new int[] {2, 7, 11, 15}, 9)));
+//		System.out.println(Arrays.toString(result.twoSumI(new int[] {3, 3, 5}, 6)));
 	}
 
 }

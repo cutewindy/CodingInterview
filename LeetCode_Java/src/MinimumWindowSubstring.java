@@ -23,20 +23,39 @@ import java.util.Map;
 public class MinimumWindowSubstring {
 	
 	/**
-	 * Method2: slide window, using one int[256] array instead of hash and index instead of list
+	 * Method2: slide window, using one int[256] array instead of hash and two pointer instead of list
 	 * @param String s, String t
 	 * @return String
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n)
+	 * Space: O(256)
 	 */
 	public String minimumWindowSubstring(String s, String t) {
-		String result = new String();
 		if (s == null || t == null || s.length() < t.length() || t.length() == 0) {
-			return result;
+			return "";
 		}
-		
-		
-		return result;
+		char[] S = s.toCharArray();
+		char[] T = t.toCharArray();
+		int[] counter = new int[256];
+		int start = 0;
+		int end = Integer.MAX_VALUE;
+		int matchCnt = 0;
+		for (char c: T) {
+			counter[c]++;
+		}
+		for (int i = 0, j = 0; i < S.length; i++) {
+			while (j < S.length && matchCnt < T.length) {
+				if (counter[S[j]] > 0) matchCnt++;
+				counter[S[j]]--;
+				j++;
+			}
+			if (matchCnt == T.length && j - i < end - start) {
+				start = i;
+				end = j;
+			}
+			if (counter[S[i]] >= 0) matchCnt--;
+			counter[S[i]]++;
+		}
+		return end == Integer.MAX_VALUE ? "" : s.substring(start, end);
 	}
 	
 	/**
