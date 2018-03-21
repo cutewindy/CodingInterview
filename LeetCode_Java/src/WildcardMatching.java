@@ -20,10 +20,10 @@
 public class WildcardMatching {
 		
 	/**
-	 * Method1: DP
+	 * DP
 	 * dp[i][j]: whether s[0..i-1] is matching p[0..j-1]
 	 * 1 If p[j-1] == s[i-1]: dp[i][j] = dp[i-1][j-1];
-	 * 2 Else if p[j-1] == '.': dp[i][j] = dp[i-1][j-1];
+	 * 2 Else if p[j-1] == '?': dp[i][j] = dp[i-1][j-1];
 	 * 3 Else if p[j-1] == '*', here are two sub conditions:
 	 *    3.1 dp[i][j] = dp[i][j-1]  // in this case, * matches 0 character;
 	 *    3.2 dp[i][j] = dp[i-1][j]  // in this case, * matches single or more characters;
