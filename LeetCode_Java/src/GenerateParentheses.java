@@ -19,8 +19,8 @@ public class GenerateParentheses {
 	 * Condition: left>0 -> go helper(left-1); left<right && right>0 -> go helper(right-1).
 	 * @param n
 	 * @return List<String>
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(2^2n)
+	 * Space: O(n)
 	 */
 	public List<String> generateParentheses(int n) {
 		List<String> result = new ArrayList<String>();

@@ -14,7 +14,7 @@ public class SudokuSolver {
 	/**
 	 * Backtracking: Try 1 through 9 for each cell.
 	 * @param char[][] board
-	 * Time: O(9^n) n represents the number of blanks to be filled in
+	 * Time: O(9^81) 81 represents the number of blanks to be filled in
 	 * Space: O(1)
 	 */
 	public void sudokuSolver(char[][] board) {

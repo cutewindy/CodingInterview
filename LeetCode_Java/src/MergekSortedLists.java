@@ -15,7 +15,7 @@ public class MergekSortedLists {
 	 * Method3: Minimum Heap
 	 * @param ListNode lists
 	 * @return ListNode
-	 * Time: O(nklog(k))
+	 * Time: O(n2log(k))
 	 * Space: O(k)
 	 */
 	public ListNode mergekSortedListsII(ListNode[] lists) {
