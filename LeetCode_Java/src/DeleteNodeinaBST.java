@@ -32,15 +32,60 @@
 public class DeleteNodeinaBST {
 	
 	/**
-	 * 
+	 * Find the node to be removed and its parent using binary search, and then use deleteNode 
+	 * to delete the root node of the subtree and return the new root node. 
+	 * @param TreeNode root, int key
+	 * @return TreeNode
+	 * Time: O(log(n))
+	 * Space: O(1)
 	 */
-	public void deleteNodeinaBST() {
-		
+	public TreeNode deleteNodeinaBST(TreeNode root, int key) {
+		if (root == null) return root;
+		if (root.val == key) return deleteNode(root);
+		TreeNode curr = root;
+		while (curr != null) {
+			if (curr.val > key) {
+				if (curr.left != null && curr.left.val == key) {
+					curr.left = deleteNode(curr.left);
+					break;
+				}
+				else curr = curr.left;
+			}
+			else {
+				if (curr.right != null && curr.right.val == key) {
+					curr.right = deleteNode(curr.right);
+					break;
+				}
+				else curr = curr.right;
+			}
+		}		
+		return root;
+	}
+	
+	public TreeNode deleteNode(TreeNode root) {
+		if (root == null) return root;
+		if (root.left == null) return root.right;
+		if (root.right == null) return root.left;
+		TreeNode prev = root;
+		TreeNode next = root.right;
+		while (next.left != null) {
+			prev = next;
+			next = next.left;
+		}
+		next.left = root.left;
+		if (prev != root) {
+			prev.left = next.right;
+			next.right = root.right;
+		}
+		return next;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		DeleteNodeinaBST result = new DeleteNodeinaBST();
+		TreeNode root = TreeNode.generateCBT(new int[] {5, 3, 7, 2, 4, 6});
+		TreeNode.printCBT(root);
+		TreeNode.printCBT(result.deleteNodeinaBST(root, 3));
 	}
 
 }
