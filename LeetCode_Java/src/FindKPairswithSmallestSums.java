@@ -45,7 +45,7 @@ public class FindKPairswithSmallestSums {
 	 * element's down(if j == 0) and right.
 	 * @param int[] nums1, int[] nums2, int k
 	 * @return List<int[]>
-	 * Time: O(k * (log(k) + 2log(k)))  one poll and two offer
+	 * Time: O(k * (1+2log(k)))  one poll and two offer
 	 * Space: O(k)
 	 */
 	public List<int[]> findKPairswithSmallestSumsII(int[] nums1, int[] nums2, int k) {
