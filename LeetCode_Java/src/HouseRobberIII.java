@@ -29,7 +29,7 @@ public class HouseRobberIII {
 	 * Method2(2 ms): 
 	 * DFS(Recursion) + DP: Use an array to save the profits of two states, no robber or robber at 
 	 * this node.
-	 * dp[0] means the profits that no robber at this node. dp[0] means the profits that robber at 
+	 * dp[0] means the profits that no robber at this node. dp[1] means the profits that robber at 
 	 * this node.
 	 * If no robber, dp[0] = max(left[0], left[1]) + max(right[0], right[1]).
 	 * If robber, dp[1] = left[0] + right[0] + node.val.
