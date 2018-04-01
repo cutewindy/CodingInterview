@@ -23,7 +23,7 @@ public class OneEditDistance {
 	 * Space: O(1)
 	 */
 	public boolean oneEditDistance(String s, String t) {
-        if (s == null || t == null) return false;
+        if (s == null || t == null || Math.abs(s.length() - t.length()) > 1) return false;
 		for (int i = 0; i < s.length() && i < t.length(); i++) {
 			if (s.charAt(i) != t.charAt(i)) {
 				if (s.length() == t.length()) {      // case1: replace

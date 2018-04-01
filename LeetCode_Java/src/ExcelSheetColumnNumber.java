@@ -32,7 +32,7 @@ public class ExcelSheetColumnNumber {
 				return 0;
 			}
 //			result = 26 * result + (int)c - d;
-			result = result * 26 + (int)(c - 'A') + 1;
+			result = result * 26 + c - 'A' + 1;
 		}			
 		return result;
 	}
@@ -40,7 +40,7 @@ public class ExcelSheetColumnNumber {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ExcelSheetColumnNumber result = new ExcelSheetColumnNumber();
-		System.out.println(result.excelSheetColumnNumber("AAA"));
+		System.out.println(result.excelSheetColumnNumber("AA"));
 	}
 
 }
