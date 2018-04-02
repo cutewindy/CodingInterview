@@ -1,25 +1,33 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * There are a total of n courses you have to take, labeled from 0 to n - 1.
- * Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a
+ * Some courses may have prerequisites, for example to take course 0 you have to first take course 1, 
+ * which is expressed as a
  *  pair: [0,1]
- * Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+ * Given the total number of courses and a list of prerequisite pairs, is it possible for you to 
+ * finish all courses?
  * For example:  2, [[1,0]]
- * There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
+ * There are a total of 2 courses to take. To take course 1 you should have finished course 0. So 
+ * it is possible.
  * 2, [[1,0],[0,1]]
- * There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also 
+ * There are a total of 2 courses to take. To take course 1 you should have finished course 0, and 
+ * to take course 0 you should also 
  * have finished course 1. So it is impossible.
  * Note:
- * The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is 
+ * 1. The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read 
+ * more about how a graph is 
  * represented.
+ * 2.You may assume that there are no duplicate edges in the input prerequisites.
  * 
  * Tags: DFS, BFS, Graph, Topological Sort
  * @author wendi
@@ -82,12 +90,12 @@ public class CourseSchedule {
 	
 	
 	/**
-	 * Method1: BFS: use indegree of each node.Indegree means before you take this course, 
+	 * Method1: topological(BFS): use indegree of each node.Indegree means before you take this course, 
 	 * you should take precourse.
-	 * Use while loop to find 0 indegree course, means can take this course without any precourses
+	 * Use graph loop to find 0 indegree course, means can take this course without any precourses
 	 * (or precourses has already been token). Then use this course as precourse, to update other 
 	 * courses' indegree. 
-	 * After numCourses times while loop, if all courses indegree is 0, then return true, 
+	 * If the count of all 0 indegree courses is equal to numCourses, return true, 
 	 * otherwise return false.
 	 * @param int numCourses, int[][] prerequisites
 	 * @return boolean
@@ -99,32 +107,30 @@ public class CourseSchedule {
 			return true;
 		}
 		int[] inDegree = new int[numCourses];
-		for (int[] prerequisite: prerequisites) {
-			inDegree[prerequisite[0]]++;
+		Map<Integer, Set<Integer>> graph = new HashMap<>();
+		// build graph and inDegree
+		for (int[] p: prerequisites) {
+			int u = p[1];
+			int v = p[0];
+			inDegree[v]++;
+			if (!graph.containsKey(u)) graph.put(u, new HashSet<Integer>());
+			graph.get(u).add(v);
 		}
 		Queue<Integer> queue= new LinkedList<>();
 		for (int i = 0; i < inDegree.length; i++) {
-			if (inDegree[i] == 0) {
-				queue.offer(i);
-			}
+			if (inDegree[i] == 0) queue.offer(i);
 		}
+		int count = 0;
 		while (!queue.isEmpty()) {
-			int course = queue.poll();
-			for (int[] prerequisite: prerequisites) {
-				if (prerequisite[1] == course) {
-					inDegree[prerequisite[0]]--;
-					if (inDegree[prerequisite[0]] == 0) { 
-						queue.offer(prerequisite[0]);
-					}
-				}		
+			count++;
+			int u = queue.poll();
+			if (!graph.containsKey(u)) continue;
+			for (Integer v: graph.get(u)) {
+				inDegree[v]--;
+				if (inDegree[v] == 0) queue.offer(v);
 			}
 		}
-		for (int i = 0; i < inDegree.length; i++) {
-			if (inDegree[i] != 0) {
-				return false;
-			}
-		}
-		return true;
+		return count == numCourses;
 	}
 	
 	
