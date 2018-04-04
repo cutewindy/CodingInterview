@@ -29,8 +29,8 @@ public class MeetingRooms {
 		Arrays.sort(intervals, new Comparator<Interval>() {
 			@Override
 			public int compare(Interval a, Interval b) {
-				return Integer.compare(a.start, b.start);
-//				return a.start - b.start;
+				if (a.start != b.start) return a.start - b.start;
+				return a.end - b.end;
 			}
 		});
 		for (int i = 1; i < intervals.length; i++) {
