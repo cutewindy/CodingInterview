@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 
 /**
  * Implement regular expression matching with support for '.' and '*'.
@@ -62,16 +64,16 @@ public class RegularExpressionMatching {
 				}
 			}
 		}
-//		for (boolean[] a: dp) {
-//			System.out.println(Arrays.toString(a));
-//		}
+		for (boolean[] a: dp) {
+			System.out.println(Arrays.toString(a));
+		}
 		return dp[m][n];
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		RegularExpressionMatching result = new RegularExpressionMatching();
-		System.out.println(result.regularExpressionMatching("aaa", "ab*a*c*a"));
+		System.out.println(result.regularExpressionMatching("aaa", "ab*.*c*a"));
 	}
 
 }
