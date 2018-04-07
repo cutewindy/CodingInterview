@@ -25,9 +25,41 @@ import java.util.Map;
  *
  */
 public class IntersectionofTwoArraysII {
+	
+	
+	/**
+	 * Method2: Array sort:
+	 * @param int[] nums1, int[] nums2
+	 * @return int[]
+	 * Time: O(nlog(n))
+	 * Space: O(1)
+	 */
+	public int[] intersectionofTwoArraysIII(int[] nums1, int[] nums2) {
+		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
+		Arrays.sort(nums1);
+		Arrays.sort(nums2);
+		List<Integer> list = new ArrayList<>();
+		int i1 = 0;
+		int i2 = 0;
+		while (i1 < nums1.length && i2 < nums2.length) {
+			if (nums1[i1] == nums2[i2]) {
+				list.add(nums1[i1]);
+				i1++;
+				i2++;
+			}
+			else if (nums1[i1] < nums2[i2]) i1++;
+			else i2++;
+		}
+		int[] res = new int[list.size()];
+		int i = 0;
+		for (Integer num: list) {
+			res[i++] = num;
+		}
+		return res;
+	}	
 
 	/**
-	 * HashMap + list:
+	 * Method1: HashMap + list:
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
 	 * Time: O(n)
@@ -59,6 +91,7 @@ public class IntersectionofTwoArraysII {
 		// TODO Auto-generated method stub
 		IntersectionofTwoArraysII result = new IntersectionofTwoArraysII();
 		System.out.println(Arrays.toString(result.intersectionofTwoArraysII(new int[] {1, 2, 2, 1}, new int[] {2, 2})));
+		System.out.println(Arrays.toString(result.intersectionofTwoArraysIII(new int[] {1, 2, 2, 1}, new int[] {2, 2})));
 	}
 
 }
