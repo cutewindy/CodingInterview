@@ -13,6 +13,33 @@
  *
  */
 public class MissingNumber {
+	
+	/**
+	 * Method3: swap to nums[i] with nums[nums[i]]
+	 * @param int nums
+	 * @return int 
+	 * Time: O(1)
+	 * Space: O(1)
+	 */
+	public int missingNumberII(int[] nums) {	
+        if (nums == null || nums.length == 0) return -1;
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            while (nums[i] != n && nums[i] != i) {
+                swap(nums, i, nums[i]);
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i) return i;
+        }
+        return n;
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;		
+	}
 
 	/**
 	 * Method2: Bit Manipulation
@@ -24,7 +51,7 @@ public class MissingNumber {
 	 * number.
 	 * @param int nums
 	 * @return int 
-	 * Time: O(n)
+	 * Time: O(1)
 	 * Space: O(1)
 	 */
 	public int missingNumberI(int[] nums) {
@@ -64,6 +91,7 @@ public class MissingNumber {
 		MissingNumber result = new MissingNumber();
 		System.out.println(result.missingNumber(new int[] {0, 1, 2, 3, 4, 5, 7, 8}));
 		System.out.println(result.missingNumberI(new int[] {0, 1, 2, 3, 4, 5, 7, 8}));
+		System.out.println(result.missingNumberII(new int[] {0, 1, 2, 3, 4, 5, 7, 8}));
 	}
 
 }
