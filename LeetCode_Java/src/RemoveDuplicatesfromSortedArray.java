@@ -14,7 +14,7 @@
 public class RemoveDuplicatesfromSortedArray {
 
 	/**
-	 * Two pointers, use i as a door, the value before i has no duplicate.
+	 * Two pointers, use i as a door, the value before i(exclude) has no duplicate.
 	 * @param int[] nums
 	 * @return int
 	 * Time: O(n)
@@ -24,14 +24,13 @@ public class RemoveDuplicatesfromSortedArray {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
-		int i = 0;
+		int i = 1;
 		for (int j = 1; j < nums.length; j++) {
-			if (nums[j] != nums[i]) {  // means it is not duplicate value, put it in front of i
-				i++;
-				nums[i] = nums[j];
+			if (nums[j] != nums[i]) {  // means n[j] is not duplicate value, swap n[j] with n[i]
+				nums[i++] = nums[j];
 			}
 		}
-		return i + 1;
+		return i;
 	}
 	
 	public static void main(String[] args) {

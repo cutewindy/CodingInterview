@@ -29,7 +29,7 @@ public class WordPatternII {
 	 * have to see if we can use it to match the same length of the string.
 	 * @param String pattern, String str
 	 * @return boolean
-	 * Time: O(?)
+	 * Time: O(n^k) n is the length of str, k is the length of pattern
 	 * Space: O(?)
 	 */
 	public boolean wordPatternII(String pattern, String str) {
