@@ -18,7 +18,7 @@ public class CountandSay {
 	 * Time: O(n * 2^n)  2^n:the longest length of subresult
 	 * Space: O(2^n)
 	 */
-    public static String countandSay(int n) {
+    public String countandSay(int n) {
         if (n == 0) {
             return "";
         }
@@ -39,28 +39,7 @@ public class CountandSay {
         }
         return result;
     }
-//	public String countandSay(int n) {
-//		if (n == 0) {
-//			return "";
-//		}
-//		String result = "1";
-//		while (n > 1) {
-//			String oldResult = result;
-//			result = "";
-//			int i = 0;
-//			while (i < oldResult.length()) {
-//				int count = 1;
-//				while (i + 1 < oldResult.length() && oldResult.charAt(i) == oldResult.charAt(i + 1)) {
-//					count++;
-//					i++;
-//				}
-//				result += String.valueOf(count) + String.valueOf(oldResult.charAt(i));
-//				i++;
-//			}
-//			n--;
-//		}
-//		return result;		
-//	}
+    
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
