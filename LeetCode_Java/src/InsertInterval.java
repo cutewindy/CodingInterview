@@ -19,6 +19,32 @@ import java.util.List;
 public class InsertInterval {
 	
 	/**
+	 * One pass
+	 * @param List<Interval> intervals, Interval newInterval
+	 * @return List<Interval>
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public List<Interval> insertIntervalI(List<Interval> intervals, Interval newInterval) {
+        List<Interval> result = new ArrayList<>();
+        for (Interval i: intervals) {
+        	if (newInterval == null || i.end < newInterval.start) result.add(i);
+        	else if (i.start > newInterval.end) {
+        		result.add(newInterval);
+        		result.add(i);
+        		newInterval = null;
+        	}
+        	else {
+        		newInterval.start = Math.min(i.start, newInterval.start);
+        		newInterval.end = Math.max(i.end, newInterval.end);
+        	}
+        }
+        if (newInterval != null) result.add(newInterval);
+        return result;
+	}
+	
+	
+	/**
 	 * Two pass, can be optimized to one pass, or using binary search as the follow up of "merge interval"
 	 * Brute Force: Using a value pos to record the position where to insert the newInterval.
 	 * Check whether curr Interval can merge into newInterval:
@@ -28,7 +54,7 @@ public class InsertInterval {
 	 * Then, add newInterval into res according to pos.
 	 * @param List<Interval> intervals, Interval newInterval
 	 * @return List<Interval>
-	 * Time: O(n)
+	 * Time: O(2n)
 	 * Space: O(1)
 	 */
 	public List<Interval> insertInterval(List<Interval> intervals, Interval newInterval) {
@@ -57,5 +83,6 @@ public class InsertInterval {
 		List<Interval> intervals = Interval.arrayListtoIntervalList(new int[][] {{1, 3}, {6, 9}});
 		Interval newInterval = new Interval(2, 5);
 		Interval.printIntervalList(result.insertInterval(intervals, newInterval));
+		Interval.printIntervalList(result.insertIntervalI(intervals, newInterval));
 	}
 }
