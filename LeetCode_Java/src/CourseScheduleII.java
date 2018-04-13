@@ -1,10 +1,10 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * There are a total of n courses you have to take, labeled from 0 to n - 1.
@@ -36,7 +36,8 @@ public class CourseScheduleII {
 	 * BFS:  if a node has incoming edges, it has prerequisites. Therefore, the first few in the 
 	 * order must be those with no prerequisites, i.e. no incoming edges. Any non-empty DAG must 
 	 * have at least one node without incoming links. If we visit these few and remove all edges 
-	 * attached to them, we are left with a smaller DAG, which is the same problem. This will then give our BFS solution.
+	 * attached to them, we are left with a smaller DAG, which is the same problem. This will then 
+	 * give our BFS solution.
 	 * @param int numCourse, int[][] prerequisites
 	 * @return int[]
 	 * Time: O(n)
@@ -44,40 +45,33 @@ public class CourseScheduleII {
 	 */
 	public int[] courseScheduleII(int numCourses, int[][]prerequisites) {
 		int[] result = new int[numCourses];
-		if (numCourses == 0) {
-			return result;
-		}
+		if (numCourses == 0) return result;
 		// build graph and inDegree
-		Map<Integer, List<Integer>> graph = new HashMap<>();
+		Map<Integer, Set<Integer>> graph = new HashMap<>();
 		int[] inDegree = new int[numCourses];
-		for (int i = 0; i < numCourses; i++) {  // create node
-			List<Integer> courses = new ArrayList<>();
-			graph.put(i, courses);
-		}
-		for (int[] prerequisite: prerequisites) {  // create next courses and update inDegree
-			graph.get(prerequisite[1]).add(prerequisite[0]);
-			inDegree[prerequisite[0]]++;
+		for (int[] pre: prerequisites) {
+			int u = pre[1];
+			int v = pre[0];
+			if (!graph.containsKey(u)) graph.put(u, new HashSet<Integer>());
+			graph.get(u).add(v);
+			inDegree[v]++;
 		}
 		// init: find the course, which inDegree[i]=0, offer it into queue
 		Queue<Integer> queue = new LinkedList<>();
 		for (int i = 0; i < numCourses; i++) {
-			if (inDegree[i] == 0) {
-				queue.offer(i);
-			}
+			if (inDegree[i] == 0) queue.offer(i);
 		}
 		// put course which inDegree is 0 into result, and update inDegree by graph
-		int count = 0; 
+		int index = 0; 
 		while (!queue.isEmpty()) {
-			int pre = queue.poll();
-			result[count++] = pre; 
-			for (int course: graph.get(pre)) {
-				inDegree[course]--;
-				if (inDegree[course] == 0) {
-					queue.offer(course);
-				}
+			int u = queue.poll();
+			result[index++] = u; 
+			if (!graph.containsKey(u)) continue;
+			for (int v: graph.get(u)) {
+				if (--inDegree[v] == 0) queue.offer(v);
 			}
 		}
-		return count == numCourses ? result : new int[0]; // be care about empty result
+		return index == numCourses ? result : new int[0]; // be care about empty result
 	}
 	
 	public static void main(String[] args) {

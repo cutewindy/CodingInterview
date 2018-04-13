@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -62,14 +61,15 @@ public class LRUCache {
 		}
 	}
 	private int capacity;
-	private Map<Integer, Node> hash = new HashMap<>(); // node in hash is the info of curr node
-	private Node dummyHead = new Node(-1, -1); 
+	private Map<Integer, Node> hash; // node in hash is the info of curr node
+	private Node dummyHead;
 	private Node tail;
 	
 	public LRUCache(int capacity) {
 		this.capacity = capacity;
-		tail = dummyHead;
-		
+		this.hash = new HashMap<>();
+		this.dummyHead = new Node(-1, -1); 
+		this.tail = dummyHead;
 	}
 	public int get(int key) {
 		if (!hash.containsKey(key)) {
