@@ -69,7 +69,8 @@ public class MeetingRoomsII {
 		Arrays.sort(intervals, new Comparator<Interval>(){
 			@Override
 			public int compare(Interval a, Interval b) {
-				return a.start - b.start;
+				if (a.start != b.start) return a.start - b.start;
+				return a.end - b.end;
 			}
 		});
 		// 2 use heap to record the sorted end time of each room, and then compare new inte.start 

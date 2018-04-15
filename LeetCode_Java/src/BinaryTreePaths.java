@@ -102,37 +102,36 @@ public class BinaryTreePaths {
 	 */
 	public List<String> binaryTreePaths(TreeNode root) {
 		List<String> result = new ArrayList<>();
-		if (root == null) {
-			return result;
-		}
-		helper(root, new StringBuilder(), result);
+		if (root == null) return result;
+		helper(root, new ArrayList<Integer>(), result);
 		return result;
 	}
 	
-	private void helper(TreeNode root, StringBuilder combo, List<String> result) {
+	private void helper(TreeNode root, List<Integer> comb, List<String> result) {
 		// Basecase
 		if (root.left == null && root.right == null) {
-			result.add(combo.append(root.val).toString());
+			comb.add(root.val);
+			StringBuilder sb = new StringBuilder();
+			for (int i: comb) sb.append(i).append("->");
+			result.add(sb.toString().substring(0, sb.length() - 2));
+			comb.remove(comb.size() - 1);
 			return;
 		}
 		// Condition
-		combo.append(root.val).append("->");
-		if (root.left != null) {
-			helper(root.left, new StringBuilder(combo), result); // take care of new StringBuidler()
+		comb.add(root.val);
+		if (root.left != null) helper(root.left, comb, result); 
+		if (root.right != null) helper(root.right, comb, result);
+		comb.remove(comb.size() - 1);
 		}
-		if (root.right != null) {
-			helper(root.right, new StringBuilder(combo), result);
-		}
-	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BinaryTreePaths result = new BinaryTreePaths();
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 2, 3, 5});
 		TreeNode.printCBT(root);
-//		System.out.println(result.binaryTreePaths(root));
+		System.out.println(result.binaryTreePaths(root));
 //		System.out.println(result.binaryTreePathsI(root));
-		System.out.println(result.binaryTreePathsII(root));
+//		System.out.println(result.binaryTreePathsII(root));
 	}
 
 }
