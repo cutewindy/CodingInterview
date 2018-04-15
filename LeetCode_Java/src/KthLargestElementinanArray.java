@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
 public class KthLargestElementinanArray {
 
 	/**
-	 * Method3: quick select
+	 * Method3: quick select, divide and conquer
 	 * @param int[] nums, int k
 	 * @return int
 	 * Time: O(n)
@@ -31,12 +31,16 @@ public class KthLargestElementinanArray {
 		int pivot = nums[end];   // take nums[end] as pivot
 		int left =start;
 		int right = end;
-		// put nums that are <= pivot to the left
-	    // put nums that are  > pivot to the right
+		// put nums that are <  pivot to the left
+	    // put nums that are >= pivot to the right
 		while (left < right) {
 			if (nums[left++] >= pivot) swap(nums, --left, --right);  
 		}
 		swap(nums, left, end);  // finally, swap nums[left] and nums[end]
+//		for (int i = start; i <= end; i++) {
+//			System.out.print(nums[i]);
+//		}
+//		System.out.println();
 		if (left == k) return nums[left];  // find kth smallest number
 		// pivot is too big, so it must be on the left
 		if (left > k) return quickSelect(nums, k, start, left - 1);   
@@ -92,7 +96,8 @@ public class KthLargestElementinanArray {
 		KthLargestElementinanArray result = new KthLargestElementinanArray();
 //		System.out.println(result.kthLargestElementinanArray(new int[] {3,2,1,5,6,4}, 4));
 //		System.out.println(result.kthLargestElementinanArrayII(new int[] {3,2,1,5,6,4}, 2));
-		System.out.println(result.kthLargestElementinanArrayIII(new int[] {3,2,1,5,6,4}, 2));
+//		System.out.println(result.kthLargestElementinanArrayIII(new int[] {3,2,1,5,6,4}, 2));
+		System.out.println(result.kthLargestElementinanArrayIII(new int[] {5,1,6,4,2,3}, 2));
 	}
 
 }
