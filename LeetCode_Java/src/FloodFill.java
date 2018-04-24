@@ -40,15 +40,14 @@ public class FloodFill {
 	 * Space: O(1)
 	 */
 	public int[][] flooddFill(int[][] image, int sr, int sc, int newColor) {
-		if (image == null || image.length == 0 || image[0].length == 0) return image;
+		if (image == null || image.length == 0 || image[0].length == 0 || image[sr][sc] == newColor) return image;
 		int color = image[sr][sc];
 		fillColor(image, sr, sc, color, newColor);
 		return image;
 	}
 	
 	public void fillColor(int[][] image, int i, int j, int color, int newColor) {
-		if (i < 0 || i >= image.length || j < 0 || j >= image[0].length 
-		 || image[i][j] != color || image[i][j] == newColor) return;
+		if (i < 0 || i >= image.length || j < 0 || j >= image[0].length || image[i][j] != color) return;
 		image[i][j] = newColor;
 		fillColor(image, i - 1, j, color, newColor);
 		fillColor(image, i, j + 1, color, newColor);
