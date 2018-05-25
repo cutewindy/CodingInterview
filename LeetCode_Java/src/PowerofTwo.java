@@ -8,6 +8,28 @@
 public class PowerofTwo {
 	
 	/**
+	 * Method3: Binary search
+	 * @param int n
+	 * @return boolean
+	 * Time: O(log(n))
+	 * Space: O(1)
+	 */
+	public boolean powerofTwoII(int n) {
+        if (n <= 0) return false;
+        int s = 0;
+        int e = n / 2;
+        while (s + 1 < e) {
+            int mid = (e - s) / 2 + s;
+            if (Math.pow(2, mid) == n) return true;
+            else if (Math.pow(2, mid) < n) s = mid;
+            else e = mid;
+        }
+        if (Math.pow(2, s) == n || Math.pow(2, e) == n) return true;
+        return false;
+	}	
+	
+	
+	/**
 	 * Method2: Bit Manipulation: n & (n-1) == 0
 	 * @param int n
 	 * @return boolean
@@ -45,7 +67,7 @@ public class PowerofTwo {
 		PowerofTwo result = new PowerofTwo();
 		System.out.println(result.powerofTwo(6));
 		System.out.println(result.powerofTwoI(6));
-
+		System.out.println(result.powerofTwoII(6));
 	}
 
 }
