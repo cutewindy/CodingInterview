@@ -10,7 +10,7 @@
 public class PowerofThree {
 	
 	/**
-	 * Math: Math.pow(3, 19) % n == 0
+	 * Math: 1162261467 is 3^19,  3^20 is bigger than int  
 	 * @param int n
 	 * @return boolean
 	 * Time: O(1)
