@@ -25,27 +25,15 @@ public class JudgeRouteCircle {
 	 * Space: O(1)
 	 */
 	public boolean judgeRouteCircle(String moves) {
-		if (moves == null || moves.length() == 0) {
-			return true;
-		}
+		if (moves == null || moves.length() == 0) return true;
 		int raw = 0;
 		int col = 0;
 		for (char c: moves.toCharArray()) {
-			if (c == 'R') {
-				raw += 1;
-			}
-			else if (c == 'L') {
-				raw -= 1;
-			}
-			else if (c == 'U') {
-				col += 1;
-			}
-			else if (c == 'D') {
-				col -= 1;
-			}
-			else {
-				return false;
-			}
+			if (c == 'R') raw += 1;
+			else if (c == 'L') raw -= 1;
+			else if (c == 'U') col += 1;
+			else if (c == 'D') col -= 1;
+			else return false;
 		}
 		return raw == 0 && col == 0;
 	}
