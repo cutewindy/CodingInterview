@@ -29,16 +29,36 @@ public class PathSumIII {
 
 	
 	/**
-	 * DP
+	 * Method2: DFS
 	 * @param TreeNode root, int sum
 	 * @return int
-	 * Time:O()
-	 * Space: O()
+	 * Time:O(n!)
+	 * Space: O(1)
+	 */
+	public int pathSumIIII(TreeNode root, int sum) {
+		if (root == null) return 0;
+		return getFromRoot(root, sum) + pathSumIIII(root.left, sum) + pathSumIIII(root.right, sum);
+	}
+	
+	
+	public int getFromRoot(TreeNode root, int sum) {
+		if (root == null) return 0;
+		return (root.val == sum ? 1 : 0) + 
+				getFromRoot(root.left, sum - root.val) + getFromRoot(root.right, sum - root.val);
+	}
+	
+	
+	
+	/**
+	 * Method1: DP
+	 * @param TreeNode root, int sum
+	 * @return int
+	 * Time:O(n)
+	 * Space: O(nlog(n))
 	 */
 	public int pathSumIII(TreeNode root, int sum) {
 		if (root == null) return 0;
-		Map<Integer, Integer> hash = new HashMap<>();
-		return helper(root, sum, hash);
+		return helper(root, sum, new HashMap<Integer, Integer>());
 	}
 	
 	public int helper(TreeNode root, int sum, Map<Integer, Integer> hash) {
@@ -46,10 +66,10 @@ public class PathSumIII {
 		int result = 0;
 		Map<Integer, Integer> newHash = new HashMap<>();
 		// update hash
-		for (Integer key: hash.keySet()) {
-			newHash.put(key, )
-		}
-		return result;
+		for (Integer key: hash.keySet()) newHash.put(key + root.val, hash.get(key));
+		newHash.put(root.val, newHash.getOrDefault(root.val, 0) + 1);
+		result += newHash.getOrDefault(sum, 0);
+		return result + helper(root.left, sum, newHash) + helper(root.right, sum, newHash);
 	}
 	
 	public static void main(String[] args) {
@@ -58,6 +78,7 @@ public class PathSumIII {
 //		TreeNode root = TreeNode.generateCBT(new int[] {10,5,-3,3,2,0,11,3,-2,0,1});
 		TreeNode root = TreeNode.generateCBT(new int[] {0, 1, 1});
 		System.out.println(result.pathSumIII(root, 1));
+		System.out.println(result.pathSumIIII(root, 1));
 	}
 
 }
