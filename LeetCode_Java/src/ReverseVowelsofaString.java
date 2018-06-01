@@ -25,19 +25,21 @@ public class ReverseVowelsofaString {
         char[] S = s.toCharArray();
 		Set<Character> set = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
 //		set.addAll(Arrays.asList('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
-		int start = 0;
-		int end = s.length() - 1;
-		while (start < end) {
-		    while (start < end && !set.contains(S[start])) start++;
-		    while (start < end && !set.contains(S[end])) end--;
-		    if (start >= end) break;  // take care
-		    char temp = S[start];
-		    S[start] = S[end];
-		    S[end] = temp;
-		    start++;
-		    end--;
+		int l = 0;
+		int r = s.length() - 1;
+		while (l < r) {
+		    while (l < r && !set.contains(S[l])) l++;
+		    while (l < r && !set.contains(S[r])) r--;
+		    if (l < r) swap(S, l++, r--);  
 		}
-		return String.valueOf(S);
+//		return String.valueOf(S);
+		return new String(S);
+	}
+	
+	public void swap(char[] S, int l, int r) {
+		char temp = S[l];
+		S[l] = S[r];
+		S[r] = temp;
 	}
 
 	public static void main(String[] args) {
