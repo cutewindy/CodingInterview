@@ -22,30 +22,24 @@ public class ImplementQueueusingStacks {
 	
 	/**
 	 * Method2: Just edit when push, change it to queue
+	 * Time: push: O(n) pop: O(1)
+	 * Space: O(n)
 	 */
 	private Stack<Integer> stack = new Stack<>();
 	public void pushI(int x) {
 		Stack<Integer> temp = new Stack<>();
-		while (!stack.isEmpty()) {
-			temp.push(stack.pop());
-		}
+		while (!stack.isEmpty()) temp.push(stack.pop());
 		stack.push(x);
-		while (!temp.isEmpty()) {
-			stack.push(temp.pop());
-		}
+		while (!temp.isEmpty()) stack.push(temp.pop());
 	}
 	
-	public void popI() {
-		if (stack.isEmpty()) {
-			return;
-		}
-		stack.pop();
+	public int popI() {
+		if (stack.isEmpty()) return -1;
+		return stack.pop();
 	}
 	
 	public int peekI() {
-		if (stack.isEmpty()) {
-			return -1;
-		}
+		if (stack.isEmpty()) return -1;
 		return stack.peek();
 	}
 	
@@ -53,8 +47,12 @@ public class ImplementQueueusingStacks {
 		return stack.isEmpty();
 	}
 	
+	
+	
 	/**
 	 * Method1: Using two stacks, edit when pop and peek.
+	 * Time: push:O(1) pop:O(1)
+	 * Space: O(n)
 	 */
 	private Stack<Integer> stack1 = new Stack<>();
 	private Stack<Integer> stack2 = new Stack<>();
@@ -63,21 +61,19 @@ public class ImplementQueueusingStacks {
 		stack1.push(x);
 	}
 	
-	public void pop() {
+	public int pop() {
 		if (stack2.isEmpty()) {
-			while (!stack1.isEmpty()) {
-				stack2.push(stack1.pop());
-			}			
+			while (!stack1.isEmpty()) stack2.push(stack1.pop());	
 		}
-		stack2.pop();
+		if (stack2.isEmpty()) return -1;
+		return stack2.pop();
 	}
 	
 	public int peek() {
 		if (stack2.isEmpty()) {
-			while (!stack1.isEmpty()) {
-				stack2.push(stack1.pop());
-			}	
-		}
+			while (!stack1.isEmpty()) stack2.push(stack1.pop());
+		} 
+		if (stack2.isEmpty()) return -1; 
 		return stack2.peek();
 	}
 	
@@ -87,7 +83,7 @@ public class ImplementQueueusingStacks {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ImplementQueueusingStacks queue = new ImplementQueueusingStacks();
+//		ImplementQueueusingStacks queue = new ImplementQueueusingStacks();
 	}
 
 }
