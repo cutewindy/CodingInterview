@@ -33,6 +33,7 @@ public class FactorialTrailingZeroes {
 		// TODO Auto-generated method stub
 		FactorialTrailingZeroes result = new FactorialTrailingZeroes();
 		System.out.println(result.factorialTrailingZeroes(4617));
+		System.out.println(result.factorialTrailingZeroes(7));
 	}
 
 }
