@@ -16,29 +16,27 @@ public class PalindromeNumber {
 
 	/**
 	 * Two Pointers: Get the reversed right half of x, then compare it with the left half.
-	 * Using two pointers to find the mid point.
 	 * @param int x
 	 * @return boolean
-	 * Time: O(n) n is the number of digits of x
+	 * Time: O(log10(n)). We divided the input by 10 for every iteration
 	 * Space: O(1)
 	 */
 	public boolean palindromeNumber(int x) {
 		if (x < 0) return false;
-		int half = 0;
-		int slow = x;
-		int fast = x;
-		while (fast != 0) {
-			half = half * 10 + slow % 10;
-			slow /= 10;
-			fast /= 100;
+		int reverse = 0;
+		int X = x;
+		while (x > 0) {
+			reverse = reverse * 10 + x % 10;
+			x /= 10;
 		}
-		return half == slow || half / 10 == slow;
+		return reverse == X;
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PalindromeNumber result = new PalindromeNumber();
 		System.out.println(result.palindromeNumber(91819));
+		System.out.println(result.palindromeNumber(100));
 	}
 
 }
