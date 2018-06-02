@@ -33,6 +33,13 @@
  */
 public class SubtreeofAnotherTree {
 	
+	/**
+	 * DFS
+	 * @param TreeNode s, TreeNode t
+	 * @return boolean
+	 * Time: O(mn)
+	 * Space: O(1)
+	 */
 	public boolean subtreeofAnotherTree(TreeNode s, TreeNode t) {
 		if (s == null) return false;
 		return helper(s, t) || subtreeofAnotherTree(s.left, t) || subtreeofAnotherTree(s.right, t);
