@@ -65,20 +65,9 @@ public class PathSum {
 	 * Stack space: O(log(n))
 	 */
 	public boolean pathSum(TreeNode root, int sum) {
-		if (root == null) {
-			return false;
-		}
-		return helper(root, sum);
-	}
-	
-	private boolean helper(TreeNode root, int sum) {
-		if (root == null) {
-			return false;
-		}
-		if (root.left == null && root.right == null) {
-			return sum == root.val ? true : false;
-		}
-		return helper(root.left, sum - root.val) || helper(root.right, sum - root.val);
+		if (root == null) return false;
+		if (root.left == null && root.right == null) return sum == root.val;
+		return pathSum(root.left, sum - root.val) || pathSum(root.right, sum - root.val);
 	}
 	
 	public static void main(String[] args) {
