@@ -39,7 +39,7 @@ public class ArrangingCoins {
 		if (n <= 0) {
 			return 0;
 		}	
-		return (int) (0.5 * (Math.sqrt(1 + (long) 8 * n) - 1)); // take care of the range
+		return (int) (- 1 + Math.sqrt(1 + 8.0 * n) / 2); // take care out of range
 	}	
 	
 	
