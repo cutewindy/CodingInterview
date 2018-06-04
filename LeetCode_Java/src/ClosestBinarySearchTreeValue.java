@@ -12,7 +12,7 @@
 public class ClosestBinarySearchTreeValue {
 	
 	/**
-	 * BST
+	 * BST Iteration
 	 * @param TreeNode root, double target
 	 * @return int
 	 * Time: O(log(n))
