@@ -1,4 +1,6 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,7 +14,7 @@ import java.util.Set;
 public class ContainsDuplicateII {
 	
 	/**
-	 * Set
+	 * Method2: Set
 	 * IDEA: it iterates over the array using a sliding window. The front of the window is at i, the 
 	 * rear of the window is k steps back. The elements within that window are maintained using a 
 	 * set. While adding new element to the set, if add() returns false, it means the element already 
@@ -39,10 +41,29 @@ public class ContainsDuplicateII {
 		}
 		return false;
 	}
+	
+	
+	/**
+	 * Method1: HashMap
+	 * @param int[] nums, int k
+	 * @return boolean
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public boolean containsDuplicateIII(int[] nums, int k) {
+        if (nums == null || nums.length <= 1) return false;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i]) && i - map.get(nums[i]) <= k) return true;
+            map.put(nums[i], i);
+        }
+        return false;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ContainsDuplicateII result = new ContainsDuplicateII();
+		System.out.println(result.containsDuplicateIII(new int[] {0, 1, 2, 3, 1, 5}, 3));
 		System.out.println(result.containsDuplicateII(new int[] {0, 1, 2, 3, 1, 5}, 3));
 	}
 
