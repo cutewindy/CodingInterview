@@ -29,6 +29,7 @@ public class RangeSumQueryImmutable {
 	}
 	
 	/**
+	 * Prefix sum
 	 * DP: using sum array to store sum[i] from 0 to i.
 	 * @param int i, int j
 	 * @return int
