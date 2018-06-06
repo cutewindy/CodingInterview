@@ -21,11 +21,21 @@ public class NthDigit {
 	 * 
 	 * @param int n
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(?)
+	 * Space: O(1)
 	 */
 	public int nthDigit(int n) {
-		return 0;
+		int len = 1;
+		long count = 9;
+		int start = 1;
+		while (n > len * count) {
+			n -= len * count;
+			len++;
+			count *= 10;
+			start *= 10;
+		}
+        start += (n - 1) / len;
+        return Integer.toString(start).charAt((n - 1) % len) - '0'; 
 	}
 
 	public static void main(String[] args) {
