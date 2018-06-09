@@ -22,11 +22,16 @@
 public class MaximumBinaryTree {
 	
 	/**
-	 * 
+	 * Recursion
 	 * @param int[] nums
 	 * @return TreeNode
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(nlog(n)) The function construct is called n times. At each level of the recursive 
+	 *       tree, we traverse over all the n elements to find the maximum element. In the average case, 
+	 *       there will be a log(n) levels leading to a complexity of O(nlog(n)). In the worst case, the 
+	 *       depth of the recursive tree can grow up to n, which happens in the case of a sorted nums 
+	 *       array, giving a complexity of O(n^2).
+	 * Space: O(1)
+	 * Stack space: O(log(n))
 	 */
 	public TreeNode maximumBinaryTree(int[] nums) {
 		if (nums == null || nums.length == 0) return null;
