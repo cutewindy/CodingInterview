@@ -31,22 +31,17 @@ public class ArithmeticSlices {
 	 * Space: O(1)
 	 */
 	public int arithmeticSlices(int[] A) {
-		if (A == null || A.length < 3) {
-			return 0;
-		}
-		int result = 0;
-		int previous = 0;
-		int n = A.length;
-		for (int i = 2; i < n; i++) {
+		if (A == null || A.length < 3) return 0;
+		int res = 0;
+		int prev = 0;
+		for (int i = 2; i < A.length; i++) {
 			if (A[i] - A[i - 1] == A[i - 1] - A[i - 2]) {
-				previous += 1;
-				result += previous;
+				prev += 1;
+				res += prev;
 			}
-			else {
-				previous = 0;
-			}
+			else prev = 0;
 		}
-		return result;
+		return res;
 	}
 
 	public static void main(String[] args) {
