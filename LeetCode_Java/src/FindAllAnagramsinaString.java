@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,22 +32,30 @@ import java.util.List;
 public class FindAllAnagramsinaString {
 	
 	/**
-	 * 
+	 * Sliding window
 	 * @param String s, String p
 	 * @return List<Integer>
 	 * Time: O()
 	 * Space: O()
 	 */
 	public List<Integer> findAllAnagramsinaString(String s, String p) {
-		List<Integer> result = new ArrayList<>();
-		if (s == null && p == null) return result;
-		
-		return result;
+		List<Integer> res = new ArrayList<>();
+		if (s == null && p == null) return res;
+		char[] P = p.toCharArray();
+		Arrays.sort(P);
+		int n = P.length;
+		for (int i = 0; i <= s.length() - n; i++) {
+			char[] str = s.substring(i, i + n).toCharArray();
+			Arrays.sort(str);
+			if (Arrays.equals(str, P)) res.add(i);
+		}
+		return res;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		FindAllAnagramsinaString result = new FindAllAnagramsinaString();
+		System.out.println(result.findAllAnagramsinaString("abab", "ab"));
 	}
 
 }

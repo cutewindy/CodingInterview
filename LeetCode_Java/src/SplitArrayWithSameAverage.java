@@ -10,8 +10,8 @@
  * Explanation: We can split the array into [1,4,5,8] and [2,3,6,7], and both of them have the 
  * average of 4.5.
  * Note:
- * The length of A will be in the range [1, 30].
- * A[i] will be in the range of [0, 10000].
+ * 1. The length of A will be in the range [1, 30].
+ * 2. A[i] will be in the range of [0, 10000].
  * @author wendi
  *
  */
@@ -25,7 +25,9 @@ public class SplitArrayWithSameAverage {
 	 * Space: O()
 	 */
 	public boolean splitArrayWithSameAverage(int[] A) {
+		if (A == null || A.length == 0) return true;
 		
+		return true;
 	}
 
 	public static void main(String[] args) {
