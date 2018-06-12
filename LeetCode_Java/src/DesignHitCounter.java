@@ -33,7 +33,7 @@ import java.util.Queue;
 public class DesignHitCounter {
 	
 	/**
-	 * Method2: Using two arrays
+	 * Method2: Using two arrays(Follow up)
 	 * times array for every second because we only need to keep the recent hits info for 300 seconds. 
 	 * hits array is wrapped around by mode operation. Each hit array is associated with times[] array 
 	 * which record current time. If it is not current time, it means it is 300s or 600s... ago and 
