@@ -32,11 +32,12 @@ public class ZigzagIterator {
 	 * Poll the iterator from queue and return the first the element of it. 
 	 * Offer the left iterator into the queue again if iterator has next.
 	 * Time: O(n)
-	 * Space: O(n) n = v1.size() + v2.size)( + v3.size()
+	 * Space: O(n) n = v1.size() + v2.size() + v3.size()
 	 */
-	private Queue<Iterator<Integer>> queue = new LinkedList<>();
+	private Queue<Iterator<Integer>> queue;
 	
 	public ZigzagIterator(List<Integer> v1, List<Integer> v2, List<Integer> v3) {
+		queue = new LinkedList<>();
 		if (!v1.isEmpty()) queue.offer(v1.iterator());
 		if (!v2.isEmpty()) queue.offer(v2.iterator());
 		if (!v3.isEmpty()) queue.offer(v3.iterator());
