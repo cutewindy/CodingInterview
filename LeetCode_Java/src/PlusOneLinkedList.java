@@ -21,7 +21,7 @@ public class PlusOneLinkedList {
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
-	public ListNode plusOne(ListNode head) {
+	public ListNode plusOneI(ListNode head) {
 		if (head == null) return head;
 		ListNode dummy = new ListNode(0);
 		dummy.next = head;
@@ -49,7 +49,39 @@ public class PlusOneLinkedList {
 	 * @return ListNode
 	 * Time: O(n)
 	 * Space: O(1)
+	 * 
 	 */
+	public ListNode plusOne(ListNode head) {
+        head = reverseLinkedList(head);
+        int carry = 1;
+        ListNode curr = head;
+        while (curr != null && carry != 0) {
+            int sum = curr.val + carry;
+            curr.val = sum % 10;
+            carry = sum / 10;
+            curr = curr.next;
+        }
+        if (carry == 1) {
+            ListNode newNode = new ListNode(1);
+            newNode.next = reverseLinkedList(head);
+            return newNode;
+        }
+        return reverseLinkedList(head);
+    }
+    
+    
+    private ListNode reverseLinkedList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        while (head.next != null) {
+            ListNode next = head.next;
+            head.next = next.next;
+            next.next = dummy.next;
+            dummy.next = next;
+        }
+        return dummy.next;	
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -60,6 +92,13 @@ public class PlusOneLinkedList {
 		ListNode head2 = ListNode.generateLinkedList(new int[] {9, 9, 9});
 		ListNode.printLinkedList(head2);
 		ListNode.printLinkedList(result.plusOne(head2));
+		System.out.println("----------------------");
+		ListNode head11 = ListNode.generateLinkedList(new int[] {1, 2, 3});
+		ListNode.printLinkedList(head11);
+		ListNode.printLinkedList(result.plusOneI(head11));
+		ListNode head12 = ListNode.generateLinkedList(new int[] {9, 9, 9});
+		ListNode.printLinkedList(head12);
+		ListNode.printLinkedList(result.plusOneI(head12));
 	}
 
 }
