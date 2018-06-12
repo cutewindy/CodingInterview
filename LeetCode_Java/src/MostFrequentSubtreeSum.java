@@ -41,33 +41,22 @@ public class MostFrequentSubtreeSum {
 	public int[] mostFrequentSubtreeSum(TreeNode root) {
 		if (root == null) return new int[0];
 		Map<Integer, Integer> sum = new HashMap<>();
-		int[] frequent = {0};
-		helper(root, sum, frequent);
-		List<Integer> result = new ArrayList<>();
+		int[] freq = {0};
+		helper(root, sum, freq);
+		List<Integer> list = new ArrayList<>();
 		for (Integer count: sum.keySet()) {
-			if (sum.get(count) == frequent[0]) {
-				result.add(count);
-			}
+			if (sum.get(count) == freq[0]) list.add(count);
 		}
-		int[] resultArray = new int[result.size()];
-		for (int i = 0; i < result.size(); i++) {
-			resultArray[i] = result.get(i);
-		}
-		return resultArray;
+		int[] res = new int[list.size()];
+		for (int i = 0; i < list.size(); i++) res[i] = list.get(i);
+		return res;
 	}
 	
-	public int helper(TreeNode root, Map<Integer, Integer> sum, int[] frequent) {
+	private int helper(TreeNode root, Map<Integer, Integer> sum, int[] freq) {
 		if (root == null) return 0;
-		int subtreeSum = root.val + helper(root.left, sum, frequent) + helper(root.right, sum, frequent);
-		if (sum.containsKey(subtreeSum)) {
-			sum.put(subtreeSum, sum.get(subtreeSum) + 1);
-		}
-		else {
-			sum.put(subtreeSum, 1);
-		}
-		if (sum.get(subtreeSum) > frequent[0]) {
-			frequent[0] = sum.get(subtreeSum);
-		}
+		int subtreeSum = root.val + helper(root.left, sum, freq) + helper(root.right, sum, freq);
+		sum.put(subtreeSum, sum.getOrDefault(subtreeSum, 0) + 1);
+		freq[0] = Math.max(sum.get(subtreeSum), freq[0]);
 		return subtreeSum;
 	}
 
