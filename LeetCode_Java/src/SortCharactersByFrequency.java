@@ -58,30 +58,20 @@ public class SortCharactersByFrequency {
 		Map<Character, Integer> count = new HashMap<>();
 		int max = 0;
 		for (char c: s.toCharArray()) {
-			if (count.containsKey(c)) {
-				count.put(c, count.get(c) + 1);
-			}
-			else {
-				count.put(c, 1);
-			}
+			count.put(c, count.getOrDefault(c, 0) + 1);
 			max = Math.max(count.get(c), max);
 		}
 		List<Character>[] bucket = new ArrayList[max + 1]; 
 		for (Character c: count.keySet()) {
 			int frequent = count.get(c);
-			if (bucket[frequent] == null) {
-				bucket[frequent] = new ArrayList<>();
-			}
+			if (bucket[frequent] == null) bucket[frequent] = new ArrayList<>();
 			bucket[frequent].add(c);
 		}
 		StringBuilder result = new StringBuilder();
 		for (int i = max; i >= 0; i--) {
-			if (bucket[i] != null) {
-				for (char c: bucket[i]) {
-					for (int j = 0; j < i; j++) {
-						result.append(c);
-					}
-				}
+			if (bucket[i] == null) continue;
+			for (char c: bucket[i]) {
+				for (int j = 0; j < i; j++) result.append(c);
 			}
 		}
 		return result.toString();
@@ -98,27 +88,18 @@ public class SortCharactersByFrequency {
 	public String sortCharactersByFrequency(String s) {
 		if (s == null || s.length() == 0) return "";
 		Map<Character, Integer> count = new HashMap<>();
-		for (char c: s.toCharArray()) {
-			if (count.containsKey(c)) {
-				count.put(c, count.get(c) + 1);
-			}
-			else {
-				count.put(c, 1);
-			}
-		}
-        Queue<Map.Entry<Character, Integer>> pq = new PriorityQueue<>(
-        		100,
-        		new Comparator<Map.Entry<Character, Integer>>() {
-	        		@Override
-		            public int compare(Map.Entry<Character, Integer> a, Map.Entry<Character, Integer> b) {
-		                return b.getValue() - a.getValue();
-	        		}
-	            }
-        );
-		pq.addAll(count.entrySet());
+		for (char c: s.toCharArray()) count.put(c, count.getOrDefault(c, 0) + 1);
+        Queue<Map.Entry<Character, Integer>> maxHeap = 
+        		new PriorityQueue<>(100, new Comparator<Map.Entry<Character, Integer>>() {
+    		@Override
+            public int compare(Map.Entry<Character, Integer> a, Map.Entry<Character, Integer> b) {
+                return b.getValue() - a.getValue();
+    		}
+        });
+        maxHeap.addAll(count.entrySet());
 		StringBuilder result = new StringBuilder();
-		while (!pq.isEmpty()) {
-			Map.Entry<Character, Integer> e = pq.poll();
+		while (!maxHeap.isEmpty()) {
+			Map.Entry<Character, Integer> e = maxHeap.poll();
 			for (int i = 0; i < (int) e.getValue(); i++) {
 				result.append(e.getKey());
 			}
