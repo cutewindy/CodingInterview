@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 /**
  * Given a non-empty array of integers, return the k most frequent elements.
@@ -20,14 +21,14 @@ import java.util.PriorityQueue;
 public class TopKFrequentElements {
 
 	/**
-	 * Method2: Bucket Sort: 
+	 * Method3: Bucket Sort: 
 	 * same like "451. Sort Characters By Frequency"
 	 * @param int[] nums, int k
 	 * @return List<Integer> 
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public List<Integer> topKFrequentElementsI(int[] nums, int k) {
+	public List<Integer> topKFrequentElementsII(int[] nums, int k) {
 		List<Integer> result = new ArrayList<>();
 		if (nums == null || nums.length == 0 || k == 0) return result;
 		Map<Integer, Integer> counter = new HashMap<>();
@@ -50,6 +51,33 @@ public class TopKFrequentElements {
 		}
 		return result;
 	}
+	
+	
+	
+	/**
+	 * Method2: TreeMap: 
+	 * @param int[] nums, int k
+	 * @return List<Integer> 
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public List<Integer> topKFrequentElementsI(int[] nums, int k) {
+		List<Integer> res = new ArrayList<>();
+		if (nums == null || nums.length == 0 || k == 0) return res;
+		Map<Integer, Integer> counter = new HashMap<>();
+		for (int n: nums) counter.put(n, counter.getOrDefault(n, 0) + 1);
+		TreeMap<Integer, List<Integer>> treeMap = new TreeMap<>();
+		for (Integer n: counter.keySet()) {
+			int freq = counter.get(n);
+			if (!treeMap.containsKey(freq)) treeMap.put(freq, new ArrayList<Integer>());
+			treeMap.get(freq).add(n);
+		}
+		while (res.size() < k) {
+			res.addAll(treeMap.pollLastEntry().getValue());
+		}
+		return res;
+	}
+	
 	
 	
 	/**
@@ -89,6 +117,7 @@ public class TopKFrequentElements {
 		TopKFrequentElements result = new TopKFrequentElements();
 		System.out.println(result.topKFrequentElements(new int[] {1, 1, 1, 2, 2, 3}, 2));
 		System.out.println(result.topKFrequentElementsI(new int[] {1, 1, 1, 2, 2, 3}, 2));
+		System.out.println(result.topKFrequentElementsII(new int[] {1, 1, 1, 2, 2, 3}, 2));
 	}
 
 }
