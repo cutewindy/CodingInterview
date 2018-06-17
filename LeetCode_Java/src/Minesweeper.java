@@ -56,6 +56,11 @@ public class Minesweeper {
 	
 	/**
 	 * DFS
+	 * This is a typical Search problem, either by using DFS or BFS. Search rules:
+	 * 1. If click on a mine ('M'), mark it as 'X', stop further search.
+	 * 2. If click on an empty cell ('E'), depends on how many surrounding mine:
+ 	 *    2.1 Has surrounding mine(s), mark it with number of surrounding mine(s), stop further search.
+ 	 *    2.2 No surrounding mine, mark it as 'B', continue search its 8 neighbors.
 	 * @param char[][] board, int[] click
 	 * @return char[][]
 	 * Time: O(m*n)
