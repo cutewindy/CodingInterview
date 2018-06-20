@@ -3,7 +3,13 @@ package Template;
 import java.util.Arrays;
 
 /**
- * Relate topics:
+ * Find: Determine which subset a particular element is in. This can be used for determining if two 
+ *       elements are in the same subset.
+ * Union: Join two subsets into a single subset.
+ * Union-Find Algorithm can be used to check whether an undirected graph contains cycle or not.
+ * 
+ * 
+ * Similar questions:
  * 128	Longest Consecutive Sequence
  * 130	Surrounded Regions	
  * 200	Number of Islands	
@@ -35,15 +41,15 @@ public class UnionFindSet {
 	 * Time: amortized O(1)
 	 */
 	public int find(int x) {
-//		int input = x;
+		int input = x;
 		while (parents[x] != x) {
 			x = parents[x];
 		}		
-//		while (parents[input] != x) {   // pass compression
-//			int next = parents[input];
-//			parents[input] = x;
-//			input = next;
-//		}
+		while (parents[input] != x) {   // pass compression
+			int next = parents[input];
+			parents[input] = x;
+			input = next;
+		}
 		return x;
 	}
 	
