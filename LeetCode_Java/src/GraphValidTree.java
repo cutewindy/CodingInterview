@@ -22,16 +22,44 @@ public class GraphValidTree {
 	 * Method2: Union find
 	 * @param int n, int[][] edges
 	 * @return boolean
-	 * Time: O(e + v)
-	 * Space: O(2e+ v)
+	 * Time: O(v + e)
+	 * Space: O(v)
 	 */
 	public boolean graphValidTreeI(int n, int[][] edges) {
 		if (n <= 1) return true;
-		if (edges == null || edges.length == 0 || edges[0].length == 0) return false;
-		
-		return edges.length == n - 1;
+		if (edges == null || edges.length != n - 1 || edges[0].length == 0) return false;
+		UnionFindSet ufs = new UnionFindSet(n);
+		for (int[] e: edges) {
+			if (!ufs.union(e[0], e[1])) return false;
+		}
+		return true;
 	}
 	
+	
+	class UnionFindSet {
+		int[] parents;
+		public UnionFindSet(int n) {
+			parents = new int[n];
+			for (int i = 0; i < n; i++) parents[i] = i;
+		}
+		
+		public int find(int x) {
+			while (parents[x] != x) {
+				x = parents[x];
+			}
+			return x;
+		}
+		
+		public boolean union(int a, int b) {
+			int pA = find(a);
+			int pB = find(b);
+			if (pA != pB) {
+				parents[pA] = pB;
+				return true;
+			}
+			return false;
+		}
+ 	}
 	
 	
 	/**
@@ -43,7 +71,7 @@ public class GraphValidTree {
 	 */
 	public boolean graphValidTree(int n, int[][] edges) {
 		if (n <= 1) return true;
-		if (edges == null || edges.length == 0 || edges[0].length == 0) return false;
+		if (edges == null || edges.length != n - 1 || edges[0].length == 0) return false;
 		Map<Integer, List<Integer>> graph = new HashMap<>();
 		// build undirected graph
 		for (int[] e: edges) {
