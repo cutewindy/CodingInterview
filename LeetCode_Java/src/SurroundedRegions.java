@@ -21,9 +21,85 @@ import java.util.Queue;
  *
  */
 public class SurroundedRegions {
+	
+	
+	/**
+	 * Method2: UnionFindSet
+	 * If a 'O' node is on the boundary, connect it to the dummy node(m * n), and for each node 
+	 * check it's neighbor, if it is 'O', connect to node.
+	 * Iterate each node again, if it's 'O' and don't connect to dummy node, change it to 'X'.
+	 * whole board and mark 'O' as 'X' and 'Y' as 'O'.
+	 * @param char[][] board
+	 * Time: O(2*m*n)
+	 * Space: O(m*n)
+	 */
+	public void surroundedRegionsI(char[][] board) {
+		if (board == null || board.length == 0 || board[0].length == 0) {
+			return;
+		}
+		int m = board.length;
+		int n = board[0].length;
+		UnionFindSet ufs = new UnionFindSet(m * n + 1);
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (board[i][j] == 'X') continue;
+				if (i == 0 || i == m - 1 || j == 0 || j == n - 1) {
+					ufs.union(i * n + j, m * n);   // if a 'O' node is on the boundary, connect it to the dummy node
+				}
+				int[] dx = {-1, 0, 1, 0};
+				int[] dy = {0, 1, 0, -1};
+				for (int k = 0; k < 4; k++) {
+					int row = i + dx[k];
+					int col = j + dy[k];
+					if (row >= 0 && row < m && col >= 0 && col < n && board[row][col] == 'O') {
+						ufs.union(row * n + col, i * n + j);  // connect a 'O' node to its neighbor 'O' nodes
+					}
+				}
+			}
+		}
+		for (int i = 1; i < m - 1; i++) {
+			for (int j = 1; j < n - 1; j++) {
+				if (board[i][j] == 'O' && ufs.find(i * n + j) != ufs.find(m * n)) {
+					board[i][j] = 'X';
+ 				}
+			}
+		}
+ 	}
+	
+	
+	class UnionFindSet {
+		int[] parents;
+		public UnionFindSet(int n) {
+			parents = new int[n];
+			for (int i = 0; i < n; i++) parents[i] = i;
+		}
+		
+		public int find(int x) {
+			int input = x;
+			while (parents[x] != x) {
+				x = parents[x];
+			}
+			while (parents[input] != x) {
+				int next = parents[input];
+				parents[input] = x;
+				input = next;
+			}
+			return x;
+		}
+		
+		public void union(int a, int b) {
+			int pA = find(a);
+			int pB = find(b);
+			if (pA != pB) parents[pA] = pB;
+		}
+	}
+	
+	
 
 	/**
-	 * BFS/ Union find
+	 * Method1: BFS
+	 * Use BFS starting from 'O's on the boundary and mark them as 'Y', then iterate over the 
+	 * whole board and mark 'O' as 'X' and 'Y' as 'O'.
 	 * @param char[][] board
 	 * Time: O(n^2)
 	 * Space: O(n)
@@ -81,13 +157,18 @@ public class SurroundedRegions {
 		// TODO Auto-generated method stub
 		SurroundedRegions result = new SurroundedRegions();
 		char[][] board = {{'X', 'X', 'X', 'X'}, 
-						 {'X', 'O', 'O', 'X'}, 
-						 {'X', 'X', 'O', 'X'}, 
-						 {'X', 'O', 'X', 'X'}};
+						  {'X', 'O', 'O', 'X'}, 
+						  {'X', 'X', 'O', 'X'}, 
+						  {'X', 'O', 'X', 'X'}};
 		result.surroundedRegions(board);
-		for (char[] bo: board) {
-			System.out.println(Arrays.toString(bo));
-		}
+		for (char[] row: board) System.out.println(Arrays.toString(row));
+		System.out.println("------------");
+		char[][] boardI = {{'X', 'X', 'X', 'X'}, 
+						   {'X', 'O', 'O', 'X'}, 
+						   {'X', 'X', 'O', 'X'}, 
+						   {'X', 'O', 'X', 'X'}};
+		result.surroundedRegionsI(boardI);
+		for (char[] row: boardI) System.out.println(Arrays.toString(row));
 	}
 
 }
