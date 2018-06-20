@@ -55,9 +55,9 @@ public class UnionFindSet {
 		int parentB = find(b);
 		if (parentA != parentB) {
 			parents[parentA] = parentB;
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	public static void main(String[] args) {
