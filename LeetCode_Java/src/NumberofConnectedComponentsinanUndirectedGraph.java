@@ -1,3 +1,10 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of 
  * nodes), write a function to find the number of connected components in an undirected graph.
@@ -57,7 +64,7 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 
 	
 	/**
-	 * Union find: for each edge, if we need to do union, then the single node--.
+	 * Method2: Union find: for each edge, if we need to do union, then the single node--.
 	 * 1. n points = n islands = n trees = n roots.
 	 * 2. with each edge added, check which island is e[0] or e[1] belonging to.
 	 * 3. If e[0] and e[1] are in same islands, do nothing.
@@ -65,10 +72,10 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 	 * 5. Bonus: path compression can reduce time by 50%.
 	 * @param int n, int[][] edges
 	 * @return int
-	 * Time: O(n^2)
+	 * Time: O(n) n = edges
 	 * Space: O(n)
 	 */
-	public int numberofConnectedComponentsinanUndirectedGraph(int n, int[][] edges) {
+	public int numberofConnectedComponentsinanUndirectedGraphI(int n, int[][] edges) {
 		if (edges == null || edges.length == 0 || n <= 1) {
 			return n;
 		}
@@ -82,10 +89,41 @@ public class NumberofConnectedComponentsinanUndirectedGraph {
 		return result;
 	}
 	
+	
+	public int numberofConnectedComponentsinanUndirectedGraph(int n, int[][] edges) {
+		if (edges == null || edges.length == 0 || n <= 1) return n;
+		int res = 0;
+		Map<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < n; i++) map.put(i, new ArrayList<Integer>());
+		for (int[] e: edges) {
+			map.get(e[0]).add(e[1]);
+			map.get(e[1]).add(e[0]);
+		}
+		Set<Integer> set = new HashSet<>();
+		for (int i = 0; i < n; i++) {
+			if (set.contains(i)) continue;
+			set.add(i);
+			findUnion(map, set, i);
+			res++;
+		}
+		return res;
+	}
+	
+	private void findUnion(Map<Integer, List<Integer>> map, Set<Integer> set, int i) {
+		for (Integer j: map.get(i)) {
+			if (!set.contains(j)) { 
+				set.add(j);
+				findUnion(map, set, j);
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NumberofConnectedComponentsinanUndirectedGraph result = new NumberofConnectedComponentsinanUndirectedGraph();
 		System.out.println(result.numberofConnectedComponentsinanUndirectedGraph(5, new int[][]
+				{{0,1},{2, 1},{2,0},{2,4}}));
+		System.out.println(result.numberofConnectedComponentsinanUndirectedGraphI(5, new int[][]
 				{{0,1},{2, 1},{2,0},{2,4}}));
 	}
 
