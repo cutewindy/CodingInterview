@@ -6,7 +6,8 @@ import java.util.Arrays;
  * Find: Determine which subset a particular element is in. This can be used for determining if two 
  *       elements are in the same subset.
  * Union: Join two subsets into a single subset.
- * Union-Find Algorithm can be used to check whether an undirected graph contains cycle or not.
+ * Union-Find Algorithm can be used to check whether an undirected graph contains cycle or not, and
+ * accounts merge.
  * 
  * 
  * Similar questions:
