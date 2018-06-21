@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -17,15 +19,15 @@ import java.util.Set;
  *
  */
 public class GraphValidTree {
-	
+			
 	/**
-	 * Method2: Union find
+	 * Method3: Union find
 	 * @param int n, int[][] edges
 	 * @return boolean
 	 * Time: O(v + e)
 	 * Space: O(v)
 	 */
-	public boolean graphValidTreeI(int n, int[][] edges) {
+	public boolean graphValidTreeII(int n, int[][] edges) {
 		if (n <= 1) return true;
 		if (edges == null || edges.length != n - 1 || edges[0].length == 0) return false;
 		UnionFindSet ufs = new UnionFindSet(n);
@@ -60,6 +62,51 @@ public class GraphValidTree {
 			return false;
 		}
  	}
+	
+	
+	
+	/**
+	 * Method2: BFS
+	 * @param int n, int[][] edges
+	 * @return boolean
+	 * Time: O(e + v)
+	 * Space: O(2v)
+	 */
+	public boolean graphValidTreeI(int n, int[][] edges) {
+		if (n <= 1) return true;
+		if (edges == null || edges.length != n - 1 || edges[0].length == 0) return false;	
+		
+		// build the graph using adjacent list
+		List<Set<Integer>> graph = new ArrayList<>();
+		for (int i = 0; i < n; i++) graph.add(new HashSet<Integer>());
+		for (int[] e: edges) {
+			graph.get(e[0]).add(e[1]);
+			graph.get(e[1]).add(e[0]);
+		}
+		
+		// no cycle
+		boolean[] visited = new boolean[n];
+		Queue<Integer> queue = new LinkedList<>();
+		queue.offer(0);
+		visited[0] = true;
+		while (!queue.isEmpty()) {
+			Integer curr = queue.poll();
+			for (Integer neighbor: graph.get(curr)) {
+				if (visited[neighbor]) return false;
+				visited[neighbor] = true;
+				graph.get(neighbor).remove(curr);
+				queue.offer(neighbor);
+			}
+		}
+		
+		// fully connected
+		for (boolean find: visited) {
+			if (!find) return false;
+		}
+		
+		return true;
+	}
+	
 	
 	
 	/**
@@ -105,6 +152,8 @@ public class GraphValidTree {
 		System.out.println(result.graphValidTree(5, new int[][] {{0, 1}, {1, 2}, {2, 3}, {1, 3}, {1, 4}}));
 		System.out.println(result.graphValidTreeI(5, new int[][] {{0, 1}, {0, 2}, {0, 3}, {1, 4}}));
 		System.out.println(result.graphValidTreeI(5, new int[][] {{0, 1}, {1, 2}, {2, 3}, {1, 3}, {1, 4}}));
+		System.out.println(result.graphValidTreeII(5, new int[][] {{0, 1}, {0, 2}, {0, 3}, {1, 4}}));
+		System.out.println(result.graphValidTreeII(5, new int[][] {{0, 1}, {1, 2}, {2, 3}, {1, 3}, {1, 4}}));
 	}
 
 }
