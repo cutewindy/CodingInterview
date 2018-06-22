@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -11,20 +12,30 @@ import java.util.Set;
  * Given two words (beginWord and endWord), and a dictionary's word list, find all shortest 
  * transformation sequence(s) from beginWord to endWord, such that:
  * Only one letter can be changed at a time
- * Each intermediate word must exist in the word list
- * For example,
- * Given:
+ * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+ * Note:
+ * Return an empty list if there is no such transformation sequence.
+ * All words have the same length.
+ * All words contain only lowercase alphabetic characters.
+ * You may assume no duplicates in the word list.
+ * You may assume beginWord and endWord are non-empty and are not the same.
+ * Example 1:
+ * Input:
+ * beginWord = "hit",
+ * endWord = "cog",
+ * wordList = ["hot","dot","dog","lot","log","cog"]
+ * Output:
+ * [
+ *   ["hit","hot","dot","dog","cog"],
+ *   ["hit","hot","lot","log","cog"]
+ * ]
+ * Example 2:
+ * Input:
  * beginWord = "hit"
  * endWord = "cog"
  * wordList = ["hot","dot","dog","lot","log"]
- * Return
-		  [
-		    ["hit","hot","dot","dog","cog"],
-		    ["hit","hot","lot","log","cog"]
-		  ]
- * Note:
- * All words have the same length.
- * All words contain only lowercase alphabetic characters.
+ * Output: []
+ * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  * 
  * Tags: Array, Backtracking, BFS, String
  * @author wendi
@@ -40,35 +51,30 @@ public class WordLadderII {
 	 * Space: O()
 	 * Stack space: O()
 	 */	
-	public List<List<String>> wordLadderII(String beginWord, String endWord, Set<String> wordList) {
-		List<List<String>> result = new ArrayList<>();
-		if (wordList.size() == 0) {
-			return result;
-		}
-		wordList.add(endWord);
-		Map<String, List<String>> hash = new HashMap<>();
+	public List<List<String>> wordLadderII(String beginWord, String endWord, List<String> wordList) {
+		List<List<String>> res = new ArrayList<>();
+		if (wordList.size() == 0) return res;
+		Set<String> wordSet = new HashSet<>(wordList);
+		if (!wordSet.contains(endWord)) return res;		
+		
 		// 1 BFS to build graph
-		buildGraph(beginWord, endWord, wordList, hash);
+		Map<String, List<String>> hash = new HashMap<>();  // example: [key:value]=[hot:hit]
+		buildGraph(beginWord, endWord, wordSet, hash);
+		if (!hash.containsKey(endWord)) return res;
 //		for (String word: hash.keySet()) {
 //			System.out.println(word + ": " + hash.get(word));
 //		}
 		
 		// 2 DFS to walk graph
-		if (!hash.containsKey(endWord)) {
-			return result;
-		}
-		List<String> path = new ArrayList<>();
-		path.add(endWord);
-		walkGraph(beginWord, endWord, hash, endWord, path, result);
-		return result;
+		List<String> path = new ArrayList<>(Arrays.asList(endWord));
+		walkGraph(endWord, beginWord, hash, path, res);
+		
+		return res;
 	}
 	
 	
-	private void buildGraph(
-			String beginWord, 
-			String endWord, 
-			Set<String> wordList, 
-			Map<String, List<String>> hash) {
+	private void buildGraph(String beginWord, String endWord, 
+			 				Set<String> wordSet, Map<String, List<String>> hash) {
 		Queue<String> queue = new LinkedList<>();
 		queue.offer(beginWord);
 		Set<String> visited = new HashSet<>();
@@ -76,56 +82,46 @@ public class WordLadderII {
 		while (!queue.isEmpty()) {
 			int size = queue.size();
 			List<String> newWord = new ArrayList<>();
-			for (int i = 0; i < size; i++) {
+			while (size-- > 0) {
 				String curr = queue.poll();
-				for (int j = 0; j < curr.length(); j++) {
-					char[] currArray = curr.toCharArray();
-					for (char c = 'a'; c <= 'z'; c++) {
-						currArray[j] = c;
+				char[] currArray = curr.toCharArray();
+				for (int i = 0; i < currArray.length; i++) {
+					char oldChar = currArray[i];
+					for (char newChar = 'a'; newChar <= 'z'; newChar++) {
+						currArray[i] = newChar;
 						String word = String.valueOf(currArray);
-						if (visited.contains(word)) {  // case1: if previous or curr level has word node, continue
-							continue;
-						}
-						if (hash.containsKey(word)) {  // case2: if next level has word node, add curr as child to word directly
-							hash.get(word).add(curr);
-						} 
-						else if (wordList.contains(word)) {  // case3: if wordList has word, create new node in graph and add curr as child to word
-							List<String> list = new ArrayList<>();
-							list.add(curr);
-							hash.put(word, list);
-							newWord.add(word);
-							queue.add(word);
-							wordList.remove(word);
-						}
 						
+						// case1: if wordSet don't have word or previous level already has word node, continue
+						if (!wordSet.contains(word) || visited.contains(word)) continue;
+						
+						// case2: if next level has word node, add curr as child to word directly
+						if (hash.containsKey(word)) hash.get(word).add(curr);
+						
+						// case3: create new node in graph and add curr as child to word
+						else {  
+							hash.put(word, new ArrayList<String>(Arrays.asList(curr)));
+							newWord.add(word);
+							queue.offer(word);
+						}
 					}	
+					currArray[i] = oldChar;
 				}
 			}
-			if (hash.containsKey(endWord)) {   // find the shortest path
-				break;
-			}
-			for (String newW: newWord) {    // add curr level's word into visited
-				visited.add(newW);
-			}
+			if (hash.containsKey(endWord)) break;          // find the shortest path
+			for (String newW: newWord) visited.add(newW);  // add curr level's word into visited
 		}
 	}
 	
 	
-	private void walkGraph(
-			String beginWord, 
-			String endWord, 
-			Map<String, List<String>> hash, 
-			String curr,
-			List<String> path, 
-			List<List<String>> result) {
-		if (curr.equals(beginWord)) {
+	private void walkGraph(String prevWord, String endWord, Map<String, List<String>> hash, 
+						   List<String> path, List<List<String>> result) {
+		if (prevWord.equals(endWord)) {
 			result.add(new ArrayList<>(path));
 			return;
 		}
-		List<String> children = hash.get(curr);
-		for (String child: children) {
-			path.add(0, child);
-			walkGraph(beginWord, endWord, hash, child, path, result);
+		for (String curr: hash.get(prevWord)) {
+			path.add(0, curr);
+			walkGraph(curr, endWord, hash, path, result);
 			path.remove(0);
 		}
 	}
@@ -133,13 +129,10 @@ public class WordLadderII {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WordLadderII result = new WordLadderII();
-		Set<String> wordList = new HashSet<>();
-		wordList.add("hot");
-		wordList.add("dot");
-		wordList.add("dog");
-		wordList.add("lot");
-		wordList.add("log");
-		System.out.println(result.wordLadderII("hit", "cog", wordList));
+		System.out.println(result.wordLadderII(
+				"hit", "cog", new ArrayList<String>(Arrays.asList("hot","dot","dog","lot","log","cog"))));
+		System.out.println(result.wordLadderII(
+				"hit", "cog", new ArrayList<String>(Arrays.asList("hot","dot","dog","lot","log"))));
 	}
 
 }
