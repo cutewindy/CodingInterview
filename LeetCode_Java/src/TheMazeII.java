@@ -52,6 +52,12 @@ public class TheMazeII {
 	/**
 	 * BFS
 	 * Use distances[i][j] to store the shortest distance from start to maze[i][j].
+	 * 
+	 * Can be improved by using PriorityQueue: We can consider this question as a shortest-route 
+	 * graph problem, that is, each stoppable point is a vertical, where every possible path between 
+	 * two nodes is an edge. In this way, we can using Dijkstra algorithm to solve this problem, and 
+	 * that's why we use PriorityQueue.
+	 * 
 	 * @param int[][] maze, int[] start, int[] destination
 	 * @return int
 	 * Time: O(m*n*max(m,n)) Complete traversal of maze will be done in the worst case. 
