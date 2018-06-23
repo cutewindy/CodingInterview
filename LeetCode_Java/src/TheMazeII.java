@@ -51,6 +51,7 @@ public class TheMazeII {
 
 	/**
 	 * BFS
+	 * Use distances[i][j] to store the shortest distance from start to maze[i][j].
 	 * @param int[][] maze, int[] start, int[] destination
 	 * @return int
 	 * Time: O(m*n*max(m,n)) Complete traversal of maze will be done in the worst case. 

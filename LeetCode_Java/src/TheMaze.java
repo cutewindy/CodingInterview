@@ -47,6 +47,7 @@ public class TheMaze {
 	
 	/**
 	 * BFS
+	 * Use boolean[][] visited to mark whether maze[i][j] can stop the boll.
 	 * @param int[][] maze, int[] start, int[] destination
 	 * @return boolean
 	 * Time: O(m*n)
@@ -67,12 +68,11 @@ public class TheMaze {
 			for (int k = 0; k < 4; k++) {
 				int i = curr[0];
 				int j = curr[1];
-				while (i >= 0 && i < m && j >= 0 && j < n && maze[i][j] == 0) {
+				while (i + dx[k] >= 0 && i + dx[k]< m && j + dy[k] >= 0 && j + dy[k] < n && 
+					   maze[i + dx[k]][j + dy[k]] == 0) {
 					i += dx[k];
 					j += dy[k];
 				}
-				i -= dx[k];
-				j -= dy[k];
 				if (i == destination[0] && j == destination[1]) return true;
 				if (!visited[i][j]) {
 					queue.offer(new int[] {i, j});
