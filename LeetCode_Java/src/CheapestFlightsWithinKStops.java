@@ -63,8 +63,7 @@ public class CheapestFlightsWithinKStops {
         queue.offer(src);
         while (!queue.isEmpty() && K-- >= 0) {
             int size = queue.size();
-            Integer[] temp = new Integer[n];
-            for (int i = 0; i < n; i++) temp[i] = costs[i];
+            Integer[] temp = costs.clone();
             while (size-- > 0) {
                 int u = queue.poll();
                 if (!map.containsKey(u)) continue;
