@@ -39,30 +39,22 @@ public class PathSumII {
 	 */
 	public List<List<Integer>> pathSumII(TreeNode root, int sum) {
 		List<List<Integer>> result = new ArrayList<>();
-		if (root == null) {
-			return result;
-		}
+		if (root == null) return result;
 		helper(root, sum, new ArrayList<Integer>(), result);
 		return result;
 	}
 	
 	private void helper(TreeNode root, int sum, List<Integer> currPath, List<List<Integer>> result) {
-		if (root.left == null && root.right == null) {  // if root is leaf, check sum
-			if (sum == root.val) {
-				currPath.add(root.val);
-				result.add(new ArrayList<>(currPath));
-				currPath.remove(currPath.size() - 1);
-			}
+		if (root.left == null && root.right == null && sum == root.val) {  // if root is leaf, check sum
+			currPath.add(root.val);
+			result.add(new ArrayList<>(currPath));
+			currPath.remove(currPath.size() - 1);
 			return;
 		}
+		
 		currPath.add(root.val);
-		sum -= root.val;
-		if (root.left != null) {
-			helper(root.left, sum, currPath, result);
-		}
-		if (root.right != null) {
-			helper(root.right, sum, currPath, result);
-		}
+		if (root.left != null) helper(root.left, sum, currPath, result);
+		if (root.right != null) helper(root.right, sum, currPath, result);		
 		currPath.remove(currPath.size() - 1);
 	}
 

@@ -34,7 +34,7 @@ public class FlattenBinaryTreetoLinkedList {
 
 	/**
 	 * Method3: DFS(Iteration) If root has left, then the result should be that the most right.right 
-	 * of root.left is root.right. Then set root.right = root.left, root.left = null. 
+	 * of root.left is the root of root.right. Then set root.right = root.left, root.left = null. 
 	 * @param TreeNode root
 	 * Time: O(n)
 	 * Space: O(1)
