@@ -20,61 +20,42 @@ import java.util.Stack;
 public class DecodeString {
 	
 	/**
-	 * Method2: DFS
-	 * @param String s
-	 * @return String
-	 * Time: O()
-	 * Space: O()
-	 * Stack space: O()
-	 */
-	public String decodeStringI(String s) {
-		if (s == null || s.length() == 0) {
-			return "";
-		}
-		
-		return "ttt";
-	}
-	
-	/**
-	 * Method1: Stack
+	 * Stack
 	 * @param String s
 	 * @return String
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
 	public String decodeString(String s) {
-		if (s == null || s.length() == 0) {
-			return "";
-		}
+		if (s == null || s.length() == 0) return "";
 		int num = 0;
-		String combo = "";
-		Stack<Integer> count = new Stack<>();
-		Stack<String> str = new Stack<>();
-		char[] S = s.toCharArray();
-		for (int i = 0; i < S.length; i++) {
+		String str = "";
+		Stack<Integer> nums = new Stack<>();
+		Stack<String> strs = new Stack<>();
+		for (char c: s.toCharArray()) {
 			// four different cases
-			if (Character.isDigit(S[i])) {
-				num = num * 10 + S[i] - '0';
+			if (Character.isDigit(c)) {
+				num = num * 10 + c - '0';
 			}
-			if (Character.isAlphabetic(S[i])) {
-				combo += S[i];
-			}
-			if (S[i] == '[') {
-				count.push(num);
-				str.push(combo);
+			else if (c == '[') {
+				nums.push(num);
+				strs.push(str);
 				num = 0;
-				combo = "";
+				str = "";
 			}
-			if (S[i] == ']') {
-				String temp = "";
-				int times = count.pop();
+			else if (c == ']') {
+				String newStr = "";
+				int times = nums.pop();
 				for (int j = 0; j < times; j++) {
-					temp += combo;
+					newStr += str;
 				}
-				combo = str.pop() + temp;
+				str = strs.pop() + newStr;
+			}
+			else {
+				str += c;
 			}
 		}
-		return combo;
+		return str;
 	}
 	
 	
@@ -84,7 +65,6 @@ public class DecodeString {
 		// TODO Auto-generated method stub
 		DecodeString result = new DecodeString();
 		System.out.println(result.decodeString("2[ab3[c]]1[d]e"));
-		System.out.println(result.decodeStringI("2[ab3[c]]1[d]e"));
 	}
 
 }
