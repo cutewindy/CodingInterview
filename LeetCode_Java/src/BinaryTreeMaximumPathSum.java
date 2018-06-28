@@ -26,21 +26,18 @@ public class BinaryTreeMaximumPathSum {
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
-	private int maxPath = Integer.MIN_VALUE;
+	private int maxPath;
 	public int binaryTreeMaximumPathSum(TreeNode root) {
-		if (root == null) {
-			return 0;
-		}
-		helper(root);
+		if (root == null) return 0;
+		maxPath = Integer.MIN_VALUE;
+		getRootPathSum(root);
 		return maxPath;
 	}
 	
-	private int helper(TreeNode root) {
-		if (root == null) {
-			return 0;
-		}
-		int leftPath = Math.max(helper(root.left), 0);   // take care about the negative result
-		int rightPath = Math.max(helper(root.right), 0);
+	private int getRootPathSum(TreeNode root) {
+		if (root == null) return 0;
+		int leftPath = Math.max(getRootPathSum(root.left), 0);   // take care about the negative result
+		int rightPath = Math.max(getRootPathSum(root.right), 0);
 		maxPath = Math.max(leftPath + root.val + rightPath, maxPath);
 		return Math.max(leftPath, rightPath) + root.val;
 	}
