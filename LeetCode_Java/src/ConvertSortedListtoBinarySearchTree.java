@@ -74,7 +74,6 @@ public class ConvertSortedListtoBinarySearchTree {
 		}
 		TreeNode left = helper(size/ 2); 
 		TreeNode root = new TreeNode(currListNode.val);
-		System.out.println(root.val);
 		currListNode = currListNode.next;
 		TreeNode right = helper(size  - size / 2 - 1);  // rightSize = size - leftSize - 1
 		root.left = left;
@@ -89,7 +88,7 @@ public class ConvertSortedListtoBinarySearchTree {
 //		ListNode head = ListNode.generateLinkedList(new int[] {3, 5, 8});
 		ListNode.printLinkedList(head);
 		TreeNode.printCBT(result.convertSortedListtoBinarySearchTree(head));	
-//		TreeNode.printCBT(result.convertSortedListtoBinarySearchTreeI(head));
+		TreeNode.printCBT(result.convertSortedListtoBinarySearchTreeI(head));
 	}
 
 }
