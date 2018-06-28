@@ -23,7 +23,49 @@
  *
  */
 public class LongestIncreasingPathinaMatrix {
+	
+	
+	/**
+	 * DP+DFS
+	 * @param int[][] matrix
+	 * @return int
+	 * Time: O(m*n)
+	 * Space: O(m*n)
+	 * Stack space: O(m*n)
+	 */
+	private int[] dx;
+	private int[] dy;
+    public int longestIncreasingPathinaMatrixI(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
+        dx = new int[] {-1, 0, 1, 0};
+        dy = new int[] {0, 1, 0, -1};
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] dp = new int[m][n];
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                findIncreasingPath(matrix, dp, i, j);
+                res = Math.max(dp[i][j], res);
+            }
+        }
+        return res;
+    }
+    
+    private void findIncreasingPath(int[][] matrix, int[][] dp, int row, int col) {
+        if (dp[row][col] != 0) return;
+        dp[row][col] = 1;
+        for (int k = 0; k < 4; k++) {
+            int i = row + dx[k];
+            int j = col + dy[k];
+            if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || 
+            		matrix[i][j] <= matrix[row][col]) continue;
+            findIncreasingPath(matrix, dp, i, j);
+            dp[row][col] = Math.max(dp[i][j] + 1, dp[row][col]);
+         }
+    }
 
+    
 	/**
 	 * Backtracking: see matrix[i][j] as the largest num on path, find the satisfied max_pathNum 
 	 * coming from up, down, left, right. Save max_pathNum+1 to pathNum[i][j].
@@ -38,43 +80,44 @@ public class LongestIncreasingPathinaMatrix {
 	 * Space: O(n^2)
 	 * Stack space: O(n^2)
 	 */
-	public int longestIncreasingPathinaMatrix(int[][] matrix) {
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-			return 0;
-		}
-		int result = 0;
-		int[][] pathNum = new int[matrix.length][matrix[0].length];
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix[0].length; j++) {
-				if (pathNum[i][j] == 0) {
-					helper(matrix, pathNum, i, j, Integer.MAX_VALUE);
-					result = Math.max(pathNum[i][j], result);
-				}
-			}
-		}
-		return result;
-	}
-	
-	private int helper(int[][] matrix, int[][] pathNum, int i, int j, int pre) {
-		// basecase1: index out of range or curr >= pre(pre is not the largest one on path)
-		if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || matrix[i][j] >= pre) {
-			return 0;
-		}
-		// basecase2: already calculate pathNum[i][j]
-		if (pathNum[i][j] != 0) {
-			return pathNum[i][j];
-		}
-		pathNum[i][j] = Math.max(helper(matrix, pathNum, i - 1, j, matrix[i][j]) + 1, pathNum[i][j]);
-		pathNum[i][j] = Math.max(helper(matrix, pathNum, i + 1, j, matrix[i][j]) + 1, pathNum[i][j]);
-		pathNum[i][j] = Math.max(helper(matrix, pathNum, i, j - 1, matrix[i][j]) + 1, pathNum[i][j]);
-		pathNum[i][j] = Math.max(helper(matrix, pathNum, i, j + 1, matrix[i][j]) + 1, pathNum[i][j]);
-		return pathNum[i][j];
-	}
+//	public int longestIncreasingPathinaMatrix(int[][] matrix) {
+//		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+//			return 0;
+//		}
+//		int result = 0;
+//		int[][] pathNum = new int[matrix.length][matrix[0].length];
+//		for (int i = 0; i < matrix.length; i++) {
+//			for (int j = 0; j < matrix[0].length; j++) {
+//				if (pathNum[i][j] == 0) {
+//					helper(matrix, pathNum, i, j, Integer.MAX_VALUE);
+//					result = Math.max(pathNum[i][j], result);
+//				}
+//			}
+//		}
+//		return result;
+//	}
+//	
+//	private int helper(int[][] matrix, int[][] pathNum, int i, int j, int pre) {
+//		// basecase1: index out of range or curr >= pre(pre is not the largest one on path)
+//		if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || matrix[i][j] >= pre) {
+//			return 0;
+//		}
+//		// basecase2: already calculate pathNum[i][j]
+//		if (pathNum[i][j] != 0) {
+//			return pathNum[i][j];
+//		}
+//		pathNum[i][j] = Math.max(helper(matrix, pathNum, i - 1, j, matrix[i][j]) + 1, pathNum[i][j]);
+//		pathNum[i][j] = Math.max(helper(matrix, pathNum, i + 1, j, matrix[i][j]) + 1, pathNum[i][j]);
+//		pathNum[i][j] = Math.max(helper(matrix, pathNum, i, j - 1, matrix[i][j]) + 1, pathNum[i][j]);
+//		pathNum[i][j] = Math.max(helper(matrix, pathNum, i, j + 1, matrix[i][j]) + 1, pathNum[i][j]);
+//		return pathNum[i][j];
+//	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LongestIncreasingPathinaMatrix result = new LongestIncreasingPathinaMatrix();
-		System.out.println(result.longestIncreasingPathinaMatrix(new int[][] {{3, 4, 5}, {3, 2, 6}, {2, 2, 1}}));
+//		System.out.println(result.longestIncreasingPathinaMatrix(new int[][] {{3, 4, 5}, {3, 2, 6}, {2, 2, 1}}));
+		System.out.println(result.longestIncreasingPathinaMatrixI(new int[][] {{3, 4, 5}, {3, 2, 6}, {2, 2, 1}}));
 	}
 
 }

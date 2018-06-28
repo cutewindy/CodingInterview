@@ -32,7 +32,7 @@ import java.util.Stack;
 public class ReconstructItinerary {
 
 	/**
-	 * 
+	 * Just Eulerian path. Greedy DFS, building the route backwards when retreating.
 	 * @param String[][] tickets
 	 * @return List<String>
 	 * Time: O(n)
@@ -40,36 +40,23 @@ public class ReconstructItinerary {
 	 */
 	public List<String> reconstructItinerary(String[][] tickets) {
 		List<String> result = new ArrayList<>();
-		if (tickets == null || tickets.length == 0) {
-			return result;
-		}
+		if (tickets == null || tickets.length == 0) return result;
+		
 		// generate graph
 		Map<String, PriorityQueue<String>> graph = new HashMap<>();
-		for (String[] ticket: tickets) {
-			String key = ticket[0];
-			String value = ticket[1];
-			if (graph.containsKey(key)) {
-				PriorityQueue<String> queue = graph.get(key);
-				queue.offer(value);
-				graph.put(key, queue);
-			}
-			else {
-				PriorityQueue<String> queue = new PriorityQueue<>();
-				queue.offer(value);
-				graph.put(key, queue);
-			}
+		for (String[] t: tickets) {
+			if (!graph.containsKey(t[0]))  graph.put(t[0], new PriorityQueue<String>());
+			graph.get(t[0]).offer(t[1]);
 		}
+		
+		// find the path
 		Stack<String> stack = new Stack<>();
 		stack.push("JFK");
-		// find the path
 		while (!stack.isEmpty()) {
-			String curr = stack.peek();
-			if (!graph.containsKey(curr) || graph.get(curr).isEmpty()) {
-				result.add(0, stack.pop());
+			while (graph.containsKey(stack.peek()) && !graph.get(stack.peek()).isEmpty()) {
+				stack.push(graph.get(stack.peek()).poll());
 			}
-			else {
-				stack.push(graph.get(curr).remove());
-			}
+			result.add(0, stack.pop());
 		}
 		return result;
 	}
