@@ -18,7 +18,7 @@ public class WordBreak {
 	
 	/**
 	 * DP: dp[i]: whether s[0..i-1] can be segmented with dictionary words.
-	 * dp[j] = dp[i - 1] && wordDict.contains(s[i..j-1]).
+	 * dp[i] = dp[j] && wordDict.contains(s[j]...s[i-1]).
 	 * @param String s, Set<String> wordDict
 	 * @return boolean
 	 * Time: O(n^2)
@@ -31,8 +31,11 @@ public class WordBreak {
         dp[0] = true;
         // update
         for (int i = 1; i <= s.length(); i++) {
-            for (int j = i; j <= s.length(); j++) {
-                if (wordDict.contains(s.substring(i - 1, j)) && dp[i - 1]) dp[j] = true;
+            for (int j = 0; j < i; j++) {
+                if (wordDict.contains(s.substring(j, i)) && dp[j]) {
+                	dp[i] = true;
+                	break;
+                }
             }
         }
         return dp[s.length()];
