@@ -22,7 +22,9 @@ import java.util.List;
 public class GrayCode {
 
 	/**
-	 * 
+	 * generate the sequence iteratively. For example, when n=3, we can get the result based on n=2.
+	 * 00,01,11,10 -> (000,001,011,010 ) (110,111,101,100). The middle two numbers only differ at 
+	 * their highest bit, while the rest numbers of part two are exactly symmetric of part one.
 	 * @param int n
 	 * @return List<Integer>
 	 * Time: O(2^n)
