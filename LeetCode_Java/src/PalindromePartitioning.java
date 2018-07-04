@@ -21,7 +21,7 @@ public class PalindromePartitioning {
 	 * Backtracking:
 	 * @param String s
 	 * @return List<List<Integer>>
-	 * Time:O(n * n!)
+	 * Time:O(n * n^2)
 	 * Space: O(n) n = s.length()
 	 * Stack space: O(n)
 	 */
