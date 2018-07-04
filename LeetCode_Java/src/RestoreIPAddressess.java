@@ -22,21 +22,17 @@ public class RestoreIPAddressess {
 	 */
 	public List<String> restoreIPAddresses(String s) {
 		List<String> result = new ArrayList<String>();
-		List<String> currIPAddr = new ArrayList<String>();
-		if (s == null || s.length() < 4 || s.length() > 12) {
-			return result;
-		}
-		helper(s, 0, currIPAddr, result);	
+		if (s == null || s.length() < 4 || s.length() > 12) return result;
+		helper(s, 0, new ArrayList<String>(), result);	
 		return result;
 	}
 	
 	private void helper(String s, int start, List<String> currIPAddr, List<String> result) {
-		if (currIPAddr.size() == 4) {
-			if (start == s.length()) {
-				result.add(processIPAddr(currIPAddr));
-			}
+		if (currIPAddr.size() == 4 && start == s.length()) {
+			result.add(processIPAddr(currIPAddr));
 			return;
 		}
+		if (currIPAddr.size() == 4 || start == s.length()) return;
 		for (int i = start; i < s.length() && i < start + 3; i++) {
 			String temp = s.substring(start, i + 1);
 			if (isValid(temp)) {
