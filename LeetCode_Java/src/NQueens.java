@@ -35,13 +35,10 @@ public class NQueens {
 	 * Time: 
 	 * Space: O(n)
 	 */
-	public List<List<String>> NQueens(int n) {
-		List<List<String>> result = new ArrayList();
-		if (n == 0) {
-			return result;
-		}
-		int[] QueensPos = new int[n];
-		helper(n, result, QueensPos, 0);
+	public List<List<String>> nQueens(int n) {
+		List<List<String>> result = new ArrayList<>();
+		if (n == 0) return result;
+		helper(n, result, new int[n], 0);
 		return result;
 	}
 	
@@ -51,12 +48,7 @@ public class NQueens {
 			return;
 		}
 		for (int col = 0; col < n; col++) {
-			if (row == 0) {  // first row of NQuees(One tree)
-				QueensPos[0] = col;
-				helper(n, result, QueensPos, row + 1);
-				continue;
-			}
-			else if (isValidPos(QueensPos, row, col)) {
+			if (isValidPos(QueensPos, row, col)) {
 				QueensPos[row] = col;
 				helper(n, result, QueensPos, row + 1);
 			}
@@ -75,16 +67,12 @@ public class NQueens {
 	}
 	
 	private List<String> NQueensProcess(int[] QueensPos) {
-		List<String> board = new ArrayList();
+		List<String> board = new ArrayList<>();
 		for (int i = 0; i < QueensPos.length; i++) {
 			StringBuilder rowBoard = new StringBuilder();
 			for (int j = 0; j < QueensPos.length; j++) {
-				if (j == QueensPos[i]) {
-					rowBoard.append("Q");
-				}
-				else {
-					rowBoard.append(".");
-				}
+				if (j == QueensPos[i]) rowBoard.append("Q");
+				else rowBoard.append(".");
 			}
 			board.add(rowBoard.toString());
 		}
@@ -94,7 +82,7 @@ public class NQueens {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NQueens result = new NQueens();
-		System.out.println(result.NQueens(4));
+		System.out.println(result.nQueens(4));
 	}
 
 }
