@@ -17,14 +17,14 @@ public class WordBreak {
 	
 	
 	/**
-	 * DP: dp[i]: whether s[0..i-1] can be segmented with dictionary words.
+	 * Method2: DP: dp[i]: whether s[0..i-1] can be segmented with dictionary words.
 	 * dp[i] = dp[j] && wordDict.contains(s[j]...s[i-1]).
 	 * @param String s, Set<String> wordDict
 	 * @return boolean
 	 * Time: O(n^2)
 	 * Space: O(n)
 	 */
-	public boolean wordBreak(String s, Set<String> wordDict) {
+	public boolean wordBreakI(String s, Set<String> wordDict) {
         if (s == null || s.length() == 0) return true;
         boolean[] dp = new boolean[s.length() + 1];
         // init
@@ -41,6 +41,30 @@ public class WordBreak {
         return dp[s.length()];
 	}
 
+	
+	/**
+	 * Method1: DFS + Moreization
+	 * @param String s, Set<String> wordDict
+	 * @return boolean
+	 * Time: O(n^2)
+	 * Space: O(n)
+	 * Stack space: O(n)
+	 */
+	public boolean wordBreak(String s, Set<String> wordDict) {
+        if (s == null || s.length() == 0) return true;
+        return dfs(s, 0, new boolean[s.length()], wordDict);
+	}
+	
+	private boolean dfs(String s, int start, boolean[] visited, Set<String> wordDict) {
+		if (start == s.length()) return true;
+		if (visited[start]) return false;
+		visited[start] = true;
+		for (int i = start; i < s.length(); i++) {
+			if (wordDict.contains(s.substring(start, i + 1)) && dfs(s, i + 1, visited, wordDict)) return true;
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generawordDictted method stub
 		WordBreak result = new WordBreak();
@@ -48,6 +72,7 @@ public class WordBreak {
 		wordDict.add("leet");
 		wordDict.add("code");
 		System.out.println(result.wordBreak("leetcode", wordDict));
+		System.out.println(result.wordBreakI("leetcode", wordDict));
 	}
 
 }
