@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,49 +23,44 @@ public class WordBreakII {
 	
 	
 	/**
-	 * Backtracking: 
-	 * @param String s, Set<String> wordDict
+	 * DFS + Memoization: used HashMap to save the previous results to prune duplicated branches
+	 * @param String s, List<String> wordDict
 	 * @return List<String> 
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n^2) n=s.length()
+	 * Space: O(n)
+	 * Stack space: O(n)
 	 */
-	public List<String> wordBreakII(String s, Set<String> wordDict) {
-		List<String> result = new ArrayList<>();
-		helper(s, wordDict, 0, new ArrayList<String>(), result);
-		return result;
-	}
-
-	
-	public void helper(String s, Set<String> wordDict, int start, List<String> curr, List<String> result) {
-		if (start == s.length()) {
-			StringBuilder res = new StringBuilder();
-			for (String str: curr) {
-				res.append(str).append(" ");
-			}
-			result.add(res.toString().substring(0, res.length() - 1));
-			return;
-		}
-		for (int i = start; i < s.length(); i++) {
-			String str = s.substring(start, i + 1);
-			if (wordDict.contains(str)) {
-				curr.add(str);
-				helper(s, wordDict, i + 1, curr, result);
-				curr.remove(curr.size() - 1);
-			}
-		}
+	public List<String> wordBreakII(String s, List<String> wordDict) {
+        Set<String> words = new HashSet<>(wordDict);        
+        return dfs(s, 0, words, new HashMap<Integer, List<String>>());
+    }
+    
+    private List<String> dfs(String s, int start, Set<String> words, Map<Integer, List<String>> visited) {
+        if (start == s.length()) return null;
+        if (visited.containsKey(start)) return visited.get(start);
+        List<String> res = new ArrayList<>();
+        for (int i = start; i < s.length(); i++) {
+            String word = s.substring(start, i + 1);
+            if (words.contains(word)) {
+                List<String> path = dfs(s, i + 1, words, visited);
+                if (path == null) {
+                	res.add(word);
+                	continue;
+                }
+                for (String p: path) {
+                    res.add(word + " " + p);
+                }
+            }
+        }
+        visited.put(start, res);
+        return res;
 	}
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WordBreakII result = new WordBreakII();
-		Set<String> wordDict = new HashSet<>();
-		wordDict.add("cat");
-		wordDict.add("cats");
-		wordDict.add("and");
-		wordDict.add("sand");
-		wordDict.add("dog");
-		System.out.println(result.wordBreakII("catsanddog", wordDict));
+		System.out.println(result.wordBreakII("catsanddog", new ArrayList<>(Arrays.asList("cat", "cats", "and", "sand", "dog"))));
 	}
 
 }

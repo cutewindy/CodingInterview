@@ -101,12 +101,14 @@ public class WordSearchII {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WordSearchII result = new WordSearchII();
-		char[][] board = {
-				{'o','a','a','n'},
-				{'e','t','a','e'},
-				{'i','h','k','r'},
-				{'i','f','l','v'}};
-		String[] words = {"oath","pea","eat","rain"};
+//		char[][] board = {
+//				{'o','a','a','n'},
+//				{'e','t','a','e'},
+//				{'i','h','k','r'},
+//				{'i','f','l','v'}};
+//		String[] words = {"oath","pea","eat","rain"};
+		char[][] board = {{'a', 'a'}};
+		String[] words = {"a"};
 		System.out.println(result.findWords(board, words));
 	}
 
