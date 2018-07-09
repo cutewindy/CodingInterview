@@ -28,9 +28,50 @@
  *
  */
 public class AndroidUnlockPatterns {
+
+	/**
+	 * Method2: DFS(Bottom up)
+	 * @param int m, int n
+	 * @return int
+	 * Time: O(9n)
+	 * Space: O(9)
+	 * Stack space: O(n)
+	 */
+	public int androidUnlockPatternsI(int m, int n) {
+        boolean[][] visited = new boolean[3][3];
+        int res = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                visited[i][j] = true;
+                res += dfs(m, n, i, j, 1, visited);
+                visited[i][j] = false;
+            }
+        }
+        return res;
+	}
+    
+    private int dfs(int m, int n, int row, int col, int h, boolean[][] visited) {
+        if (h > n) return 0;
+        int res = h >= m ? 1 : 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (visited[i][j]) continue;
+                int rowDiff = Math.abs(i - row);
+                int colDiff = Math.abs(j - col);
+                if (rowDiff == 0 && colDiff == 2 && !visited[row][1] ||
+                    rowDiff == 2 && colDiff == 0 && !visited[1][col] ||
+                    rowDiff == 2 && colDiff == 2 && !visited[1][1]) continue;
+                visited[i][j] = true;
+                res += dfs(m, n, i, j, h + 1, visited);
+                visited[i][j] = false;
+            }
+        }
+        return res;
+    }
+	
 	
 	/**
-	 * Backtracking
+	 * Method1: Backtracking DFS(Top down)
 	 * @param int m, int n
 	 * @return int
 	 * Time: O(9log(n))
@@ -79,6 +120,7 @@ public class AndroidUnlockPatterns {
 		// TODO Auto-generated method stub
 		AndroidUnlockPatterns result = new AndroidUnlockPatterns();
 		System.out.println(result.androidUnlockPatterns(1, 3));
+		System.out.println(result.androidUnlockPatternsI(1, 3));
 	}
 
 }
