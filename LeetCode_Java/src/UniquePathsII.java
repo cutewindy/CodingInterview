@@ -26,22 +26,20 @@ public class UniquePathsII {
 	 * Space: O(1)
 	 */
 	public int uniquePathsII(int[][] obstacleGrid) {
-		if (obstacleGrid == null) {
-			return 0;
-		}
-		if (obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
-			return 1;
-		}
+		if (obstacleGrid == null || obstacleGrid.length == 0 || obstacleGrid[0].length == 0) return 0;
+		if (obstacleGrid[0][0] == 1) return 0;
 		int m = obstacleGrid.length;
 		int n = obstacleGrid[0].length;
+		
 		// init
-		obstacleGrid[0][0] = obstacleGrid[0][0] == 1 ? 0 : 1;
+		obstacleGrid[0][0] = 1;
 		for (int i = 1; i < m; i++) {
 			obstacleGrid[i][0] = obstacleGrid[i][0] == 1 ? 0 : obstacleGrid[i - 1][0];
 		}
 		for (int j = 1; j < n; j++) {
 			obstacleGrid[0][j] = obstacleGrid[0][j] == 1 ? 0 : obstacleGrid[0][j - 1];
 		}
+		
 		// dp update
 		for (int i = 1; i < m; i++) {
 			for (int j = 1; j < n; j++) {
