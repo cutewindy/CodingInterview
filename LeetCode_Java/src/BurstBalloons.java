@@ -25,7 +25,9 @@ public class BurstBalloons {
 
 	/**
 	 * DP: 
-	 * dp[i][j]: the maximal coins for range [i...j]
+	 * dp[s][e]: the maximal coins for range [s,...,e]
+	 * dp[s][e] = max(dp[s][i-1] + n[s-1]*n[i]*n[e+1] + dp[i+1][e]) (i=s,...,e) i is the last balloon 
+	 * to burst between [s,...,e], the result should be dp[0][n-1]
 	 * @param int[] nums
 	 * @return int
 	 * Time:O(n^3)
@@ -41,7 +43,7 @@ public class BurstBalloons {
 			for (int start = 0; start <= n - len; start++) {
 				int end = len + start - 1;
 				System.out.println("start: " + start + ", end: " + end);
-				for (int i = start; i <= end; i++) {
+				for (int i = start; i <= end; i++) {  // i is the last balloon to burst in [start, ..,end]
 					int curr = (start - 1 < 0 ? 1 : nums[start - 1]) * nums[i] * (end + 1 >= n ? 1 : nums[end + 1]); // Deal with num[-1] and num[num.length]
 					curr += i == start ? 0 : dp[start][i - 1]; // If not start, we can add subRes from start to i-1.
 					curr += i == end ? 0 : dp[i + 1][end];  // If not end, we can add subRes from i+1 to end.
