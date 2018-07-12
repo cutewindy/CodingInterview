@@ -18,6 +18,9 @@ public class BestTimetoBuyandSellStockIV {
 	 * dp[0, j] = 0: 0 transactions makes 0 profit.
 	 * dp[i, 0] = 0: if there is only one price data point you can't make any transaction.
 	 * currProfit: max profit after i-1 transactions add buy one stock before day j.
+	 * dp[i][j] = max(prices[j] - prices[m] + dp[i-1][m](m=0,1,2..j-1), dp[i][j-1])
+	 *          = max(prices[j] + (-prices[m] + dp[i-1][m]) (m=0,1,2..j-1), dp[i][j-1])
+	 *          = max(prices[j] + currProfit, dp[i][j-1]), where currProfit = max(dp[i-1][j]-prices[j], currProfit)
 	 * @param int k, int[] prices
 	 * @return int
 	 * Time: O(kn)
