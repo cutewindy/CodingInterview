@@ -26,40 +26,26 @@ public class LongestIncreasingSubsequence {
 	 * Space: O(n)
 	 */
 	public int longestIncreasingSubsequenceI(int[] nums) {
-		if (nums == null || nums.length == 0) {
-			return 0;
-		}
+		if (nums == null || nums.length == 0) return 0;
 		int n = nums.length;
 		int[] tails = new int[n];
 		tails[0] = nums[0];
-		int start = 0;
-		int end = 0;
 		int size = 1;
 		for (int num: nums) {
-			start = 0;
-			end = size - 1;
+			int start = 0;
+			int end = size - 1;
 			while (start + 1 < end) {
 				int mid = start + (end - start) / 2;
-				if (tails[mid] < num) {
-					start = mid;
-				}
-				else {
-					end = mid;
-				}
+				if (tails[mid] < num) start = mid;
+				else end = mid;
 			}
-			if (num <= tails[start]) {
-				tails[start] = num;
-			}
-			else if (num <= tails[end]) {
-				tails[end] = num;
-			}
-			else {
-				tails[end + 1] = num;
-				size++;
-			}
+			if (num <= tails[start]) tails[start] = num;
+			else if (num <= tails[end]) tails[end] = num;
+			else tails[size++] = num;
 		}
 		return size;
  	}
+	
 	
 	/**
 	 * DP: LIS[i] means the LIS of the elements before nums[i] including nums[i]. 
