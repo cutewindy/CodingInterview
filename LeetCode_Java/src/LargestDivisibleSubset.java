@@ -40,8 +40,7 @@ public class LargestDivisibleSubset {
 		int maxLength = 1;
 		int lastIndex = 0;
 		// init
-		dp[0] = 1;
-		Arrays.fill(index, -1);
+		Arrays.fill(dp, 1);
 		// update
 		for (int i = 1; i < n; i++) {
 			for (int j = 0; j < i; j++) {
@@ -56,7 +55,7 @@ public class LargestDivisibleSubset {
 				lastIndex = i;
 			}
 		}
-		while (lastIndex != -1) {
+		while (maxLength-- > 0) {
 			result.add(0, nums[lastIndex]);
 			lastIndex = index[lastIndex];
 		}
@@ -66,7 +65,7 @@ public class LargestDivisibleSubset {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LargestDivisibleSubset result = new LargestDivisibleSubset();
-		System.out.println(result.largestDivisibleSubset(new int[] {1, 2, 3, 4, 5, 6, 8, 9, 72}));
+		System.out.println(result.largestDivisibleSubset(new int[] {2,3,8,9,27}));
 
 	}
 
