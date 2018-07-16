@@ -53,13 +53,14 @@ public class GuessNumberHigherorLowerII {
 			for (int i = 1; i + l - 1 <= n; i++) {
 				int j = i + l - 1;
 				costs[i][j] = Integer.MAX_VALUE;
+				System.out.println("i: " + j + " j: " + j);
 				for (int k = i; k <= j; k++) {
-					costs[i][j] = Math.min(k + Math.max(k - 1 < 0 ? 0 : costs[i][k - 1],
+					costs[i][j] = Math.min(k + Math.max(k - 1 < i ? 0 : costs[i][k - 1],
 														k + 1 > j ? 0 : costs[k + 1][j]), 
 							 			   costs[i][j]);
-					if (i == 2 && j == 6 && l == 5)
-					System.out.println(k + Math.max(k - 1 < 0 ? 0 : costs[i][k - 1],
-							k + 1 > j ? 0 : costs[k + 1][j]));
+//					if (i == 2 && j == 6 && l == 5)
+//					System.out.println(k + Math.max(k - 1 < 0 ? 0 : costs[i][k - 1],
+//							k + 1 > j ? 0 : costs[k + 1][j]));
 				}
 				for (int z = 0; z < n + 1; z++) {
 					System.out.println(Arrays.toString(costs[z]));
@@ -68,6 +69,27 @@ public class GuessNumberHigherorLowerII {
 			}
 		}
 		return costs[1][n];
+		
+		
+//		if (n <= 0) return 0;
+//        int[][] dp = new int[n + 1][n + 1];
+//        for (int l = 2; l <= n; l++) {
+//            for (int i = 1; i <= n - l + 1; i++) {
+//                int j = i + l - 1;
+//                System.out.println("i: " + j + " j: " + j);
+//                dp[i][j] = Integer.MAX_VALUE;
+//                for (int k = i; k <= j; k++) {
+//                    int left = k == i ? 0 : dp[i][k - 1];
+//                    int right = k == j ? 0 : dp[k + 1][j];
+//                    dp[i][j] = Math.min(k + left + right, dp[i][j]);
+//                }
+//                for (int z = 0; z < n + 1; z++) {
+//					System.out.println(Arrays.toString(dp[z]));
+//				}
+//				System.out.println("==============");
+//            }
+//        }
+//        return dp[1][n];
 	}
 	
 	public static void main(String[] args) {
