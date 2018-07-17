@@ -28,7 +28,7 @@ public class RepeatedStringMatch {
 			sb.append(A);
 			count++;
 		}
-		if (sb.indexOf(B) > 0) return count;
+		if (sb.indexOf(B) >= 0) return count;
 		if (sb.append(A).indexOf(B) > 0) return count + 1;
 		return -1;
 	}
@@ -38,6 +38,7 @@ public class RepeatedStringMatch {
 		// TODO Auto-generated method stub
 		RepeatedStringMatch result = new RepeatedStringMatch();
 		System.out.println(result.repeatedStringMatch("abcd", "cdabcdab"));
+		System.out.println(result.repeatedStringMatch("a", "aa"));
 	}
 
 }
