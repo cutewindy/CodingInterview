@@ -4,7 +4,6 @@ package google_intern;
  * you put into the backpack?
  * You cannot divide item into small pieces and the total size of items you choose should smaller or 
  * equal to m.
- * Have you met this question in a real interview?  
  * Example
  * Given 4 items with size [2, 3, 5, 7] and value [1, 5, 2, 4], and a backpack with size 10. The 
  * maximum value is 9.
