@@ -18,7 +18,7 @@ import java.util.Stack;
 public class BasicCalculatorII {
 	
 	/**
-	 * Method3: Do last operation when get operator. (Can't not do opeartion when get num, ' 1 01' case )
+	 * Method3: Do last operation when get operator. (Can't not do operation when get num, ' 1 01' case )
 	 * Use multi to record the last num, if op is * or /, call back.
 	 * If op = '+', res += num, multi = num.
 	 * If op = '-', res -= num, multi = -num.
@@ -138,26 +138,17 @@ public class BasicCalculatorII {
 		int num = 0;
 		Stack<Integer> stack = new Stack<>();	
 		for (int i = 0; i <= s.length(); i++) {
+			while (i < s.length() && Character.isDigit(s.charAt(i))) {
+				num = num * 10 + s.charAt(i++) - '0';
+			}
 			char c = i == s.length() ? ']' : s.charAt(i); // in order to do the last operator
-			if (c != ' ' && Character.isDigit(c)) {
-				num = num * 10 + c - '0';
-			}
-			if (c != ' ' && !Character.isDigit(c)) {
-				if (op == '+') {
-					stack.push(num);
-				}
-				else if (op == '-') {
-					stack.push(-1 * num);
-				}
-				else if (op == '*') {
-					stack.push(stack.pop() * num);
-				}
-				else if (op == '/') {
-					stack.push(stack.pop() / num);
-				}
-				num = 0;
-				op = c;
-			}
+			if (c == ' ') continue;
+			if (op == '+') stack.push(num);
+			if (op == '-') stack.push(-1 * num);
+			if (op == '*') stack.push(stack.pop() * num);
+			if (op == '/') stack.push(stack.pop() / num);
+			num = 0;
+			op = c;
 		}
 		for (int res: stack) {
 			result += res;
