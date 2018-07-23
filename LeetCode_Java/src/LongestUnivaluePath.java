@@ -33,8 +33,8 @@ public class LongestUnivaluePath {
 	 * DFS
 	 * @param TreeNode root
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(e+v)
+	 * Space: O(e+v)
 	 */
 	public int longestUnivaluePath(TreeNode root) {
 		if (root == null) return 0;
