@@ -23,19 +23,17 @@ import java.util.List;
 public class CombinationSum {
 
 	/**
-	 * Backtracking
+	 * DFS
 	 * @param int[] candidates, int target
 	 * @return List<List<Integer>>
-	 * Time: O(unknow)
-	 * Space: O(1)
-	 * Stack space: O(unknow)
+	 * Time: O(2^n)
+	 * Space: O(n)
+	 * Stack space: O(2^n)
 	 */
 	public List<List<Integer>> combinationSum(int[] candidates, int target) {
 		List<List<Integer>> result = new ArrayList<>();
-		if (candidates == null || candidates.length == 0) {
-			return result;
-		}
-		Arrays.sort(candidates);
+		if (candidates == null || candidates.length == 0) return result;
+		Arrays.sort(candidates);   // not necessary
 		helper(candidates, 0, target, new ArrayList<Integer>(), result);
 		return result;
 	}
