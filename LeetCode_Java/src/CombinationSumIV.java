@@ -39,16 +39,12 @@ public class CombinationSumIV {
 	 * Space: O(target)
 	 */
 	public int combinationSumV(int[] nums, int target) {
-		if (nums == null || nums.length == 0) {
-			return 0;
-		}
-		Arrays.sort(nums);
+		if (nums == null || nums.length == 0) return 0;
 		int[] dp = new int[target + 1];
+		dp[0] = 1;
 		for (int i = 1; i <= target; i++) {
 			for (int num: nums) {
-				if (num > i) break;
-				else if (num == i) dp[i] += 1;  // target can be 0
-				else dp[i] += dp[i - num];
+				if (i - num >= 0) dp[i] += dp[i - num];
 			}
 		}
 		return dp[target];

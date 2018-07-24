@@ -25,18 +25,16 @@ import java.util.List;
 public class CombinationSumII {
 
 	/**
-	 * Backtracking: 
+	 * DFS: 
 	 * @param int[] candidates, int target
 	 * @return List<List<Integer>>
-	 * Time: O(n^2)
+	 * Time: O(2^n)
 	 * Space: O(n)
 	 * Stack space: O(n)
 	 */
 	public List<List<Integer>> combinationSumII(int[] candidates, int target) {
 		List<List<Integer>> result = new ArrayList<>();
-		if (candidates == null || candidates.length == 0) {
-			return result;
-		}
+		if (candidates == null || candidates.length == 0) return result;
 		Arrays.sort(candidates);
 		helper(candidates, 0, target, new ArrayList<Integer>(), result);
 		return result;
@@ -45,6 +43,7 @@ public class CombinationSumII {
 	private void helper(int[] candidates, int pos, int target, List<Integer> combo, List<List<Integer>> result) {
 		if (target == 0) {
 			result.add(new ArrayList<>(combo));
+			return;
 		}
 		for (int i = pos; i < candidates.length; i++) { 
 			if (candidates[i] > target) break; 
