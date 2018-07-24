@@ -21,16 +21,11 @@ public class JumpGame {
 	 * Space: O(1) optimize dpO(n) to O(1)
 	 */
 	public boolean jumpGameI(int[] nums) {
-		if (nums == null || nums.length == 0) {
-            return true;
-        }
+		if (nums == null || nums.length == 0) return true;
         int maxIndex = 0;
         for (int i = 0; i < nums.length; i++) {
-        	if (i > maxIndex) {
-        		return false;
-        	}
+        	if (i > maxIndex) return false;
         	maxIndex = Math.max(i + nums[i], maxIndex);
-//        	System.out.println(maxIndex);
         }
         return true;
 	}
