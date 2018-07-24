@@ -27,7 +27,49 @@ import java.util.Queue;
 public class MaxAreaofIsland {
 	
 	/**
-	 * BFS
+	 * Method2: DFS
+	 * @param int[][] grid
+	 * @return int
+	 * Time: O(m*n)
+	 * Space: O(m*n)
+	 * Stack space: O(m*n)
+	 */
+    public int maxAreaofIslandI(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean[][] visited = new boolean[m][n];
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!visited[i][j] && grid[i][j] == 1) {
+                    visited[i][j] = true;
+                    int curr = dfs(grid, i, j, visited) + 1;
+                    res = Math.max(curr, res);
+                }
+            }
+        }
+        return res;
+    }
+	    
+    private int dfs(int[][] grid, int row, int col, boolean[][] visited) {
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        int res = 0;
+        for (int k = 0; k < 4; k++) {
+            int i = row + dx[k];
+            int j = col + dy[k];
+            if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j] || grid[i][j] == 0) continue;
+            visited[i][j] = true;
+            res += dfs(grid, i, j, visited) + 1;
+        }
+        return res;
+    }
+    
+    
+    
+	/**
+	 * Method1: BFS
 	 * @param int[][] grid
 	 * @return int
 	 * Time: O(m*n)
@@ -77,6 +119,14 @@ public class MaxAreaofIsland {
 		// TODO Auto-generated method stub
 		MaxAreaofIsland result = new MaxAreaofIsland();
 		System.out.println(result.maxAreaofIsland(new int[][] {{0,0,1,0,0,0,0,1,0,0,0,0,0},
+		                                                  	   {0,0,0,0,0,0,0,1,1,1,0,0,0},
+		                                                	   {0,1,1,0,1,0,0,0,0,0,0,0,0},
+		                                                	   {0,1,0,0,1,1,0,0,1,0,1,0,0},
+		                                                   	   {0,1,0,0,1,1,0,0,1,1,1,0,0},
+		                                                   	   {0,0,0,0,0,0,0,0,0,0,1,0,0},
+		                                                	   {0,0,0,0,0,0,0,1,1,1,0,0,0},
+		                                                	   {0,0,0,0,0,0,0,1,1,0,0,0,0}}));
+		System.out.println(result.maxAreaofIslandI(new int[][] {{0,0,1,0,0,0,0,1,0,0,0,0,0},
 		                                                  	   {0,0,0,0,0,0,0,1,1,1,0,0,0},
 		                                                	   {0,1,1,0,1,0,0,0,0,0,0,0,0},
 		                                                	   {0,1,0,0,1,1,0,0,1,0,1,0,0},
