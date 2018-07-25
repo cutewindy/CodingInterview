@@ -22,16 +22,12 @@ public class JumpGameII {
 	 * Space: O(1)
 	 */
 	public int jumpGameII(int[] nums) {
-		if (nums == null || nums.length == 0) {
-			return 0;
-		}
+		if (nums == null || nums.length == 0) return 0;
 		int maxReach = nums[0];
 		int currReach = 0;
 		int count = 0;
 		for (int i = 0; i < nums.length; i++) {
-			if (i > maxReach) {
-				return -1;
-			}
+			if (i > maxReach) return -1;
 			if (i > currReach) {
 				currReach = maxReach;
 				count++;
