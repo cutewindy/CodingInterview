@@ -9,6 +9,10 @@ package Template;
  * 区间最小值: root.min = Math.min(root.left.min, root.right.min);
  * 区间和: root.sum = root.left.sum + root.right.sum;
  * 区间数量: root.count = root.left.count + root.right.count;
+ * 
+ * 307. Range Sum Query - Mutable
+ * 315. Count of Smaller Numbers After Self
+ * 
  * @author wendi
  *
  */
