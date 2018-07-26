@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Given an integer array with all positive numbers and no duplicates, find the number of possible 
@@ -51,30 +53,30 @@ public class CombinationSumIV {
 	}
 	
 	/**
-	 * Method1: Backtracking: Time limited
+	 * Method1: DFS + Memoization
 	 * @param int[] nums, int target
 	 * @return int
-	 * Time: O(unknow)
-	 * Space: O(1)
-	 * Stack space: O(unknow)
+	 * Time: O(target*n)
+	 * Space: O(target)
+	 * Stack space: O(target)
 	 */
 	public int combinationSumIV(int[] nums, int target) {
 		if (nums == null || nums.length == 0) {
 			return 0;
 		}
 		Arrays.sort(nums);
-		return helper(nums, target);
+		return dfs(nums, new HashMap<Integer, Integer>(), target);
 	}
 	
-	private int helper(int[] nums, int target) {
-		if (target == 0) {
-			return 1;
-		}
+	private int dfs(int[] nums, Map<Integer, Integer> map, int target) {
+		if (target == 0) return 1;
+		if (map.containsKey(target)) return map.get(target);
 		int result = 0;
 		for (int i = 0; i < nums.length; i++) {
 			if (nums[i] > target) break;
-			result += helper(nums, target - nums[i]);
+			result += dfs(nums, map, target - nums[i]);
 		}
+		map.put(target, result);
 		return result;
 	}
 	
