@@ -14,14 +14,14 @@
 public class PlusOneLinkedList {
 
 	/**
-	 * Method2: Two Pointers: find the last node which node.val!=9, then all next nodes after
+	 * Method3: Two Pointers: find the last node which node.val!=9, then all next nodes after
 	 * last are nodes that node.val = 9, set last.val++ and all next node.val = 0.
 	 * @param ListNode head
 	 * @return ListNode
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
-	public ListNode plusOneI(ListNode head) {
+	public ListNode plusOneII(ListNode head) {
 		if (head == null) return head;
 		ListNode dummy = new ListNode(0);
 		dummy.next = head;
@@ -42,6 +42,37 @@ public class PlusOneLinkedList {
 		}		
 		return dummy.val == 1 ? dummy : dummy.next;
 	}
+	
+	
+	/**
+	 * Method2: DFS, get carry bottom up
+	 * @param ListNode head
+	 * @return ListNode
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(n)
+	 */
+	public ListNode plusOneI(ListNode head) {
+		if (head == null) return head;
+		int carry = dfs(head);
+		if (carry == 0) return head;
+		ListNode newHead = new ListNode(1);
+		newHead.next = head;
+		return newHead;
+	}
+	
+	private int dfs(ListNode head) {
+		if (head == null) return 1;
+		int carry = dfs(head.next);
+		if (carry == 0) return 0;
+		if (head.val != 9) {
+			head.val += 1;
+			return 0;
+		}
+		head.val = 0;
+		return 1;
+	}
+	
 	
 	/**
 	 * Method1: reverse the inputs, add one, then reverse back
@@ -99,6 +130,13 @@ public class PlusOneLinkedList {
 		ListNode head12 = ListNode.generateLinkedList(new int[] {9, 9, 9});
 		ListNode.printLinkedList(head12);
 		ListNode.printLinkedList(result.plusOneI(head12));
+		System.out.println("----------------------");
+		ListNode head21 = ListNode.generateLinkedList(new int[] {1, 2, 3});
+		ListNode.printLinkedList(head21);
+		ListNode.printLinkedList(result.plusOneII(head11));
+		ListNode head22 = ListNode.generateLinkedList(new int[] {9, 9, 9});
+		ListNode.printLinkedList(head12);
+		ListNode.printLinkedList(result.plusOneII(head22));
 	}
 
 }
