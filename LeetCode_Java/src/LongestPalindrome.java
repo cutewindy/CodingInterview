@@ -47,30 +47,21 @@ public class LongestPalindrome {
 	
 	
 	/**
-	 * Method1: hash table
+	 * Method1: hash table or int array int[256]
 	 * @param String s
 	 * @return int
 	 * Time: O(2n)
 	 * Space: O(n)
 	 */
 	public int longestPalindrome(String s) {
-		if (s == null || s.length() == 0) {
-			return 0;
-		}
+		if (s == null || s.length() == 0) return 0;
 		int result = 0;
 		Map<Character, Integer> hash = new HashMap<>();
 		for (char c: s.toCharArray()) {
-			if (hash.containsKey(c)) {
-				hash.put(c, hash.get(c) + 1);
-			}
-			else {
-				hash.put(c, 1);
-			}
+			hash.put(c, hash.getOrDefault(c, 0) + 1);
 		}
 		for (Character c: hash.keySet()) {
-			if (hash.get(c) > 1) {
-				result += hash.get(c) / 2 * 2;
-			}
+			result += hash.get(c) / 2 * 2;
 		}
 		return result < s.length() ? result + 1 : result;
 	}
