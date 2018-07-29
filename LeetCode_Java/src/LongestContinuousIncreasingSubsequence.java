@@ -17,9 +17,28 @@
  */
 public class LongestContinuousIncreasingSubsequence {
 	
+	/**
+	 * Method2: DP
+	 * @param int[] nums
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int longestContinuousIncreasingSubsequenceI(int[] nums) {
+		if (nums == null || nums.length == 0) return 0;	
+		int res = 1;
+		int curr = 1;
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[i] > nums[i - 1]) curr++;
+			else curr = 1;
+			res = Math.max(curr, res);
+		}
+		return res;
+	}
+	
 	
 	/**
-	 * Sliding window
+	 * Method1: Sliding window
 	 * @param int[] nums
 	 * @return int
 	 * Time: O(n)
@@ -40,6 +59,7 @@ public class LongestContinuousIncreasingSubsequence {
 		// TODO Auto-generated method stub
 		LongestContinuousIncreasingSubsequence result = new LongestContinuousIncreasingSubsequence();
 		System.out.println(result.longestContinuousIncreasingSubsequence(new int[] {1,3,5,4,7}));
+		System.out.println(result.longestContinuousIncreasingSubsequenceI(new int[] {1,3,5,4,7}));
 	}
 
 }
