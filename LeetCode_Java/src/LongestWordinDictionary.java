@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +30,35 @@ import java.util.Set;
  */
 public class LongestWordinDictionary {
 	
-	
+	/**
+	 * Method2: Sort + Set
+	 * 1. Sort the words alphabetically, therefore shorter words always comes before longer words;
+	 * 2. Along the sorted list, populate the words that can be built;
+	 * 3. Any prefix of a word must comes before that word.
+	 * @param String[] words
+	 * @return String
+	 * Time: O(nlog(n) + n), n = words.length
+	 * Space: O(n)
+	 */
+	public String longestWordinDictionaryI(String[] words) {
+		if (words == null || words.length == 0) return "";
+		Arrays.sort(words, new Comparator<String>() {
+			@Override
+			public int compare(String a, String b) {
+				if (a.length() != b.length()) return a.length() - b.length();
+				return a.compareTo(b); // take care sorted in lexicographical order
+			}
+		});
+		Set<String> set = new HashSet<>();
+		String res = "";
+		for (String w: words) {
+			if (w.length() == 1 || set.contains(w.substring(0, w.length() - 1))) {
+				if (w.length() > res.length()) res = w;
+				set.add(w);
+			}
+		}
+		return res;
+	}
 	
 	
 	/**
@@ -65,6 +95,8 @@ public class LongestWordinDictionary {
 		// TODO Auto-generated method stub
 		LongestWordinDictionary result = new LongestWordinDictionary();
 		System.out.println(result.longestWordinDictionary
+				(new String[] {"a", "banana", "app", "appl", "ap", "apply", "apple"}));
+		System.out.println(result.longestWordinDictionaryI
 				(new String[] {"a", "banana", "app", "appl", "ap", "apply", "apple"}));
 	}
 
