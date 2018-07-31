@@ -12,9 +12,35 @@ import java.util.Map;
  *
  */
 public class LongestSubstringwithAtMostKDistinctCharacters {
+	
+	/**
+	 * Method2: Slide Window + char array
+	 * @param String s, int k
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public int longestSubstringwithAtMostKDistinctCharacterI(String s, int k) {
+		if (s == null || s.length() == 0 || k == 0) return 0;
+		char[] S = s.toCharArray();
+		int[] charCnt = new int[256];
+		int res = 0;
+		int cnt = 0;
+		for (int start = 0, end = 0; start < S.length; start++) {
+			while (end < S.length && (charCnt[S[end]] > 0 || cnt < k)) {
+				if (charCnt[S[end]] == 0) cnt++;
+				charCnt[S[end]]++;
+				end++;
+			}
+			res = Math.max(end - start, res);
+			charCnt[S[start]]--;
+			if (charCnt[S[start]] == 0) cnt--;
+		}
+		return res;
+	}
 
 	/**
-	 * Slide Window + HashMap: Like longestSubstringwithAtMostKDistinctCharacters
+	 * Method1: Slide Window + HashMap: Like longestSubstringwithAtMostKDistinctCharacters
 	 * @param String s, int k
 	 * @return int
 	 * Time: O(n)
@@ -51,6 +77,7 @@ public class LongestSubstringwithAtMostKDistinctCharacters {
 		// TODO Auto-generated method stub
 		LongestSubstringwithAtMostKDistinctCharacters result = new LongestSubstringwithAtMostKDistinctCharacters();
 		System.out.println(result.longestSubstringwithAtMostKDistinctCharacter("eceba", 2));
+		System.out.println(result.longestSubstringwithAtMostKDistinctCharacterI("eceba", 2));
 	}
 
 }

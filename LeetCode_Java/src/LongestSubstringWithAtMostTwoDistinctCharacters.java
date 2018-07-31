@@ -13,9 +13,36 @@ import java.util.Map;
  */
 public class LongestSubstringWithAtMostTwoDistinctCharacters {
 	
+	/**
+	 * Method2: sliding window + char array
+	 * @param String s
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public int longestSubstringWithAtMostTwoDistinctCharactersI(String s) { 
+		if (s == null || s.length() == 0) return 0;
+		int[] charCnt = new int[256];
+		char[] S = s.toCharArray();
+		int cnt = 0;
+		int res = 0;
+		for (int start = 0, end = 0; start < S.length; start++) {
+			while (end < S.length && (charCnt[S[end]] > 0 || cnt < 2)) {
+				if (charCnt[S[end]] == 0) cnt++;
+				charCnt[S[end]]++;
+				end++;
+			}
+			res = Math.max(end - start, res);
+			charCnt[S[start]]--;
+			if (charCnt[S[start]] == 0) cnt--;
+		}
+		return res;
+	}
+	
+	
 	
 	/**
-	 * Two pointers and slide window: Slide window + hash table
+	 * Method1: Slide window + hash table
 	 * The main idea is to maintain a sliding window with 2 unique characters. The key is to store 
 	 * the last occurrence of each character as the value in the hashmap. This way, whenever the 
 	 * size of the hashmap exceeds 2, we can traverse through the s from start to remove the it in 
@@ -58,7 +85,7 @@ public class LongestSubstringWithAtMostTwoDistinctCharacters {
 		// TODO Auto-generated method stub
 		LongestSubstringWithAtMostTwoDistinctCharacters result = new LongestSubstringWithAtMostTwoDistinctCharacters();
 		System.out.println(result.longestSubstringWithAtMostTwoDistinctCharacters("eceba"));
-
+		System.out.println(result.longestSubstringWithAtMostTwoDistinctCharactersI("eceba"));
 	}
 
 }
