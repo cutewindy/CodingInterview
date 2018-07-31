@@ -23,6 +23,30 @@ public class LongestSubstringWithoutRepeatingCharacters {
 	
 	
 	/**
+	 * Method3(60ms): Two pointers: slide window + char array
+	 * @param String s
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public int longestSubstringWithoutRepeatingCharactersII(String s) {	
+		if (s == null || s.length() == 0) return 0;
+		int res = 0;
+		char[] S = s.toCharArray();
+		int[] charCnt = new int[256];
+		for (int start = 0, end = 0; start < S.length; start++) {
+			while (end < S.length && charCnt[S[end]] == 0) {
+				charCnt[S[end]]++;
+				end++;
+			}
+			res = Math.max(end - start, res);
+			charCnt[S[start]]--;
+		}
+		return res;
+	}
+	
+	
+	/**
 	 * Method2(60ms): Two pointers: slide window + hash table 
 	 * @param String s
 	 * @return int
@@ -80,6 +104,7 @@ public class LongestSubstringWithoutRepeatingCharacters {
 		LongestSubstringWithoutRepeatingCharacters result = new LongestSubstringWithoutRepeatingCharacters();
 		System.out.println(result.longestSubstringWithoutRepeatingCharacters("pwwkew"));
 		System.out.println(result.longestSubstringWithoutRepeatingCharactersI("pwwkew"));
+		System.out.println(result.longestSubstringWithoutRepeatingCharactersII("pwwkew"));
 	}
 
 }
