@@ -27,6 +27,11 @@ public class LongestIncreasingPathinaMatrix {
 	
 	/**
 	 * DP+DFS
+	 * 1. Do DFS from every cell
+	 * 2. Compare every 4 direction and skip cells that are out of boundary or smaller
+	 * 3. Get matrix max from every cell's max
+	 * 4. Use matrix[x][y] <= matrix[i][j] so we don't need a visited[m][n] array
+	 * 5. The key is to cache the distance because it's highly possible to revisit a cell
 	 * @param int[][] matrix
 	 * @return int
 	 * Time: O(m*n)
