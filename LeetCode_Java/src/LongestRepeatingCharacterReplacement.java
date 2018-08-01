@@ -25,14 +25,34 @@
 public class LongestRepeatingCharacterReplacement {
 	
 	/**
-	 * 
+	 * Sliding window + char array
+	 * (length of substring - number of times of the maximum occurring character in the substring) <= k
 	 * @param String s, int k
 	 * @return int
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(n)
+	 * Space: O(n)
 	 */
 	public int longestRepeatingCharacterReplacement(String s, int k) {
-		
+		if (s == null || s.length() == 0) return 0;
+		if (k >= s.length()) return s.length();
+		char[] S = s.toCharArray();
+		int[] charCnt = new int[256];
+		int res = 0;
+		int majorCnt = 0;
+		for (int start = 0, end = 0; start < S.length; start++) {
+			while (end < S.length) {
+				majorCnt = Math.max(majorCnt, charCnt[S[end]] + 1); // find the window longer than previous
+				if (end - start + 1 - majorCnt <= k) {
+					charCnt[S[end]]++;
+					end++;
+				}
+				else break;
+			}
+			// tricky: not every [start, end] is a valid result, which cannot longer than previous valid result
+			res = Math.max(end - start, res); 
+			charCnt[S[start]]--;
+		}
+		return res;
 	}
 
 	public static void main(String[] args) {
