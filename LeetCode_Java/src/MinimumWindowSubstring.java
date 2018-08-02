@@ -30,32 +30,27 @@ public class MinimumWindowSubstring {
 	 * Space: O(256)
 	 */
 	public String minimumWindowSubstring(String s, String t) {
-		if (s == null || t == null || s.length() < t.length() || t.length() == 0) {
-			return "";
+		if (s == null || t == null || s.length() < t.length() || t.length() == 0) return "";
+		int[] charCnt = new int[256];
+		int cnt = 0;
+		for (char c: t.toCharArray()) {
+			if (charCnt[c] == 0) cnt++;
+			charCnt[c]++;
 		}
 		char[] S = s.toCharArray();
-		char[] T = t.toCharArray();
-		int[] counter = new int[256];
-		int start = 0;
-		int end = Integer.MAX_VALUE;
-		int matchCnt = 0;
-		for (char c: T) {
-			counter[c]++;
-		}
-		for (int i = 0, j = 0; i < S.length; i++) {
-			while (j < S.length && matchCnt < T.length) {
-				if (counter[S[j]] > 0) matchCnt++;
-				counter[S[j]]--;
-				j++;
+		String res = "";
+		for (int start = 0, end = 0; start < S.length; start++) {
+			while(end < S.length && cnt != 0) {
+				charCnt[S[end]]--;
+				if (charCnt[S[end]] == 0) cnt--;
+				end++;
 			}
-			if (matchCnt == T.length && j - i < end - start) {
-				start = i;
-				end = j;
-			}
-			if (counter[S[i]] >= 0) matchCnt--;
-			counter[S[i]]++;
+			if (cnt == 0 && 
+			    (res.length() == 0 || res.length() > end - start)) res = s.substring(start, end);
+			if (charCnt[S[start]] == 0) cnt++;
+			charCnt[S[start]]++;
 		}
-		return end == Integer.MAX_VALUE ? "" : s.substring(start, end);
+		return res;
 	}
 	
 	/**
