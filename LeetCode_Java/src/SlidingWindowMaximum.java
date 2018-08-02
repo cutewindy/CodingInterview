@@ -1,8 +1,8 @@
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Deque;
-import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Given an array nums, there is a sliding window of size k which is moving from the very left 
@@ -35,14 +35,16 @@ import java.util.List;
 public class SlidingWindowMaximum {
 
 	/**
-	 * Deque: use deque as window [i-k+1, i] to save the index of nums, and keep the down one is the largest number in the window.
+	 * Method2: Deque
+	 * use deque as window [i-k+1, i] to save the index of nums, and keep the down one is the largest 
+	 * number in the window.
 	 * If nums[i] is large than the top one, it's fine to remove it, since the window contains nums[i].
 	 * @param int[] nums, int k
 	 * @return int[]
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public int[] slidingWindowMaximum(int[] nums, int k) {
+	public int[] slidingWindowMaximumI(int[] nums, int k) {
 		if (nums == null || nums.length == 0) {
 			return new int[0];
 		}
@@ -55,7 +57,7 @@ public class SlidingWindowMaximum {
 		}
 		int[] result = new int[nums.length - k + 1];
 		// use q to save the index of nums, and keep the down
-		Deque<Integer> q = new ArrayDeque();
+		Deque<Integer> q = new ArrayDeque<>();  // can use LinkedList<>() as well
 		for (int i = 0; i < nums.length; i++) {
 			// remove numbers out of range k
 			while (!q.isEmpty() && q.peekLast() < i - k + 1) {
@@ -77,11 +79,41 @@ public class SlidingWindowMaximum {
 		return result;
 	}
 	
+	/**
+	 * Method1: Maxheap(TLE)
+	 * @param int[] nums, int k
+	 * @return int[]
+	 * Time: O(nk)
+	 * Space: O(k)
+	 */
+	public int[] slidingWindowMaximum(int[] nums, int k) {
+		if (nums == null || nums.length == 0) return new int[0];
+		int n = nums.length;
+		int[] res = new int[n - k + 1];
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(k, new Comparator<Integer>(){
+			@Override
+			public int compare(Integer a, Integer b) {
+				return b - a;
+			}
+		});
+		for (int i = 0; i < k - 1; i++) {
+			maxHeap.offer(nums[i]);
+		}
+		for (int i = 0; i < n - k + 1; i++) {
+			maxHeap.offer(nums[i + k - 1]);
+			res[i] = maxHeap.peek();
+			maxHeap.remove(nums[i]);
+		}
+		return res;
+	}
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SlidingWindowMaximum result = new SlidingWindowMaximum();
 //		System.out.println(Arrays.toString(result.slidingWindowMaximum(new int[] {1,3,-1,-3,5,3,6,7}, 3)));
 		System.out.println(Arrays.toString(result.slidingWindowMaximum(new int[] {1, 3, 1, 2, 0, 5}, 3)));
+		System.out.println(Arrays.toString(result.slidingWindowMaximumI(new int[] {1, 3, 1, 2, 0, 5}, 3)));
 	}
 
 }
