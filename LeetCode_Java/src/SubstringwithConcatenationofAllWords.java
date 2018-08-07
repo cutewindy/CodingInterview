@@ -18,121 +18,108 @@ import java.util.Map;
  */
 public class SubstringwithConcatenationofAllWords {
 
+
 	/**
-	 * Slide window: two hashTables + int start + int count
+	 * Method2: Slide window: (25 ms)
+	 * Travel all the words combinations to maintain a window, there are len times travel. Each time, 
+	 * n/len words,
+	 * For each travel time, move window by one word instead of one char
 	 * @param String s, String[] words
 	 * @return List<Integer>
-	 * Time: O(n) n is the length of s(s.length() > words.length)
-	 * Space: O(n)
+	 * Time: O(n) n = s.length(), len = words[0].length()
+	 * Space: O(m) m = words.length
 	 */
-	public List<Integer> substringwithConcatenationofAllWords(String s, String[] words) {
-//		List<Integer> result = new ArrayList<>();
-//		if (s == null || s.length() == 0 || words == null || words.length == 0) {
-//			return result;
-//		}
-//		// 1 use counter to save the words needed to be find
-//		Map<String, Integer> counter = new HashMap<>();
-//		for (String word: words) {
-//			if (counter.containsKey(word)) {
-//				counter.put(word, counter.get(word) + 1);
-//			}
-//			else {
-//				counter.put(word, 1);
-//			}
-//		}
-//		// 2 find words and save first index at the same time
-//		int x = words[0].length();  // x is the length of word in words
-//		for (int i = 0; i < x; i++) {
-//			int start = i;
-//			int count = 0;  // use count to record how many words are found 
-//			Map<String, Integer> hash = new HashMap<>(); // use hash to record the occurrence of each word that be find
-//			for (int j = i; j < s.length() - x + 1;) {
-//				String curr = s.substring(j, j + x);  // curr is word in s that might be the words in word 
-//				// case 1: counter.containsKey(curr)
-//				if (counter.containsKey(curr)) { // if curr is the word in words, save it in window(hash, count) and check occurrence, otherwise move window
-//					count++;
-//					if (hash.containsKey(curr)) {
-//						hash.put(curr, hash.get(curr) + 1);
-//					}
-//					else {
-//						hash.put(curr, 1);
-//					}
-//					while (hash.get(curr) > counter.get(curr)) { // out of words occurrence, move window, until satisfied, since need substring
-//						String temp = s.substring(start, start + x);
-//						hash.put(temp, hash.get(temp) - 1);
-//						count--;
-//						start += x;
-//					}
-//					if (count == words.length) { // if count equals to the words lenght, mean that find all the words in s
-//						result.add(start);
-//					}
-//				}
-//				// case 2: !counter.containsKey(curr)
-//				else {
-//					start = j + x;
-//					count = 0;
-//					hash.clear();
-//				}
-//				j += x;
-//			}
-//		}
-//		return result;
-        List<Integer> result = new ArrayList<>();
-        if (s == null || s.length() == 0 || words == null || words.length == 0) return result;
-        int n = s.length();
-        int w = words.length;
-        int wl = words[0].length();
-        Map<String, Integer> counter = new HashMap<>();
-        for (String word: words) {
-            if (counter.containsKey(word)) {
-                counter.put(word, counter.get(word) + 1);
-            }
-            else {
-                counter.put(word, 1);
-            }
-        }
-        for (int k = 0; k < wl; k++) {
-            int start = k;
-            int count = 0;
-            Map<String, Integer> hash = new HashMap<>();
-            for (int i = k; i <= n - wl;) {
-                String curr = s.substring(i, i + wl);
-                if (counter.containsKey(curr)) {
-                    count++;
-                    if (hash.containsKey(curr)) {
-                        hash.put(curr, hash.get(curr) + 1);
-                    }
-                    else {
-                        hash.put(curr, 1);
-                    }
-                    while (hash.get(curr) > counter.get(curr)) {
-                        String temp = s.substring(start, start + wl);
-                        hash.put(temp, hash.get(temp) - 1);
-                        start += wl;
-                        count--;
-                    }
-                    if (count == w) {
-                        result.add(start);
-                    }
-                }
-                else {
-                    start = i + wl;
-                    count = 0;
-                    hash.clear();
-                }
-                System.out.println(i);
-                i += wl;
-            }
-            System.out.println(k);
-        }
-        return result;
+	public List<Integer> substringwithConcatenationofAllWordsI(String s, String[] words) {
+		List<Integer> res = new ArrayList<>();
+		if (s == null || s.length() == 0 || words == null || words.length == 0) return res;
+		
+		// init word occurence
+		Map<String, Integer> wordsMap = new HashMap<>();
+		for (String w: words) wordsMap.put(w, wordsMap.getOrDefault(w, 0) + 1);
+		
+		int len = words[0].length();
+		int n = words.length;
+		// travel all sub string combinations
+		for (int i = 0; i < len; i++) {
+			Map<String, Integer> currMap = new HashMap<>();
+			int count = 0;
+			boolean noWord = false;
+			for (int l = i, r = i; l <= s.length() - len;) {
+				while (r <= s.length() - len && count < n) { // move right window to find satisfied words
+					String str = s.substring(r, r + len);
+					if (!wordsMap.containsKey(str)) {
+						noWord = true;
+						break;
+					}
+					if (wordsMap.get(str) < currMap.getOrDefault(str, 0) + 1) break;
+					currMap.put(str, currMap.getOrDefault(str, 0) + 1);
+					count++;
+					r += len;
+				}
+				
+				if (noWord) { // !wordsMap.containsKey(str), restart from next word
+					currMap.clear();
+					count = 0;
+					noWord = false;
+					l = r + len;
+					r = l;
+				}
+				else {
+					if (count == n) res.add(l);  // find all words in s
+					String removeStr = s.substring(l, l + len);
+					currMap.put(removeStr, currMap.get(removeStr) - 1); // move left window
+					if (currMap.get(removeStr) == 0) currMap.remove(removeStr);
+					count--;
+					l += len;
+				}
+				
+			}			
+		}
+		return res;
 	}
+	
+	
+	/**
+	 * Method1: Brute force using hashmap (120 ms)
+	 * for each start in s, check whether the substring contains all words 
+	 * @param String s, String[] words
+	 * @return List<Integer> 
+	 * Time: O(n * m) n=s.length(), m = words.length
+	 * Space: O(m)
+	 */
+    public List<Integer> substringwithConcatenationofAllWords(String s, String[] words) {
+        List<Integer> res = new ArrayList<>();
+        if (s == null || s.length() == 0 || words == null || words.length == 0) return res;
+        Map<String, Integer> wordsMap = new HashMap<>();
+        for (String w: words) wordsMap.put(w, wordsMap.getOrDefault(w, 0) + 1);
+        int len = words[0].length();
+        int n = words.length;
+        for (int l = 0; l <= s.length() - len * n; l++) {
+            Map<String, Integer> currMap = new HashMap<>();
+            int count = 0;
+            for (int r = l; r <= s.length() - len; r += len) {
+                String str = s.substring(r, r + len);
+                if (!wordsMap.containsKey(str) || wordsMap.get(str) < currMap.getOrDefault(str, 0) + 1) break;
+                currMap.put(str, currMap.getOrDefault(str, 0) + 1);
+                count++;
+                if (count == n) {
+                    res.add(l);
+                    break;
+                }
+            }
+        }
+        return res;
+    }	
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SubstringwithConcatenationofAllWords result = new SubstringwithConcatenationofAllWords();
 //		System.out.println(result.substringwithConcatenationofAllWords("barfoobarthefoobarman", new String[] {"foo", "bar"}));
 		System.out.println(result.substringwithConcatenationofAllWords("barfoofoobarthefoobarman", new String[] {"foo", "bar", "the"}));
+		System.out.println(result.substringwithConcatenationofAllWordsI("barfoothefoobarman", new String[] {"foo", "bar"}));
+		System.out.println(result.substringwithConcatenationofAllWordsI("barfoofoobarthefoobarman", new String[] {"bar","foo","the"}));
+		System.out.println(result.substringwithConcatenationofAllWordsI("wordgoodgoodgoodbestword", new String[] {"word","good","best","word"}));
 
 	}
 
