@@ -26,32 +26,28 @@ public class KthLargestElementinanArray {
 		return quickSelect(nums, nums.length - k, 0, nums.length - 1);
 	}	
 	
-	public int quickSelect(int[] nums, int k, int start, int end) {
-		if (start > end) return Integer.MAX_VALUE;
-		int pivot = nums[end];   // take nums[end] as pivot
-		int left =start;
-		int right = end;
+	public int quickSelect(int[] nums, int k, int l, int r) {
+		if (l > r) return Integer.MAX_VALUE;
 		// put nums that are <  pivot to the left
 	    // put nums that are >= pivot to the right
-		while (left < right) {
-			if (nums[left++] >= pivot) swap(nums, --left, --right);  
+		int pivot = nums[r];   // take nums[end] as pivot
+		int i = l;  // starting index that all nums large than nums[r]
+		for (int j = l; j < r; j++) {
+			if (nums[j] < pivot) {
+				swap(nums, i, j);
+				i++;
+			}
 		}
-		swap(nums, left, end);  // finally, swap nums[left] and nums[end]
-//		for (int i = start; i <= end; i++) {
-//			System.out.print(nums[i]);
-//		}
-//		System.out.println();
-		if (left == k) return nums[left];  // find kth smallest number
-		// pivot is too big, so it must be on the left
-		if (left > k) return quickSelect(nums, k, start, left - 1);   
-		// pivot is too small, so it must be on the right
-		return quickSelect(nums, k, left + 1, end);
+		swap(nums, i, r);  // finally, swap nums[i] and nums[r]
+		if (i == k) return nums[i];  // find kth smallest number
+		if (i > k) return quickSelect(nums, k, l, i - 1); // pivot is too big, so it must be on the left
+		return quickSelect(nums, k, i + 1, r);  // pivot is too small, so it must be on the right
 	}
 	
-	public void swap(int[] nums, int left, int right) {
-		int temp = nums[left];
-		nums[left] = nums[right];
-		nums[right] = temp;	
+	public void swap(int[] nums, int i, int j) {
+		int temp = nums[i];
+		nums[i] = nums[j];
+		nums[j] = temp;	
 	}
 	
 	
