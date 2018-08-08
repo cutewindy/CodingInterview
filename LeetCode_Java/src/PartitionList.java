@@ -83,10 +83,10 @@ public class PartitionList {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PartitionList result = new PartitionList();
-		ListNode head = ListNode.generateLinkedList(new int[] {1, 2, 3});
+		ListNode head = ListNode.generateLinkedList(new int[] {1, 4, 3, 2, 5, 2});
 		ListNode.printLinkedList(head);
-		ListNode.printLinkedList(result.partitionList(head, 3));
-//		ListNode.printLinkedList(result.partitionListI(head, 3));
+//		ListNode.printLinkedList(result.partitionList(head, 3));
+		ListNode.printLinkedList(result.partitionListI(head, 3));
 	}
 
 }
