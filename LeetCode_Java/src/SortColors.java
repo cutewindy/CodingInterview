@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class SortColors {
 
 	/**
-	 * Two Pointers: 
+	 * Three way partition
 	 * @param int[] nums
 	 * Time: O(n)
 	 * Space: O(1)
