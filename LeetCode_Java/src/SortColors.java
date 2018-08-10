@@ -26,29 +26,20 @@ public class SortColors {
 	 * Space: O(1)
 	 */
 	public void sortColors(int[] nums) {
-		if (nums == null || nums.length == 0) {
-			return;
-		}
-		int start = 0;
-		int end = nums.length - 1;
-		int i = 0;
-		while (i <= end) {
-			if (nums[i] == 0) {
-				swap(nums, i, start);
-				start++;
-				i++;
-			}
-			else if (nums[i] == 1) {
-				i++;
-			}
-			else { //(nums[i] == 2)
-				swap(nums, i, end);
-				end--;
-			}
-		}
+        if (nums == null || nums.length <= 1) return;
+        int n = nums.length;
+        int s = 0;      // points to 0
+        int e = n - 1;  // points to 2
+        int i = 0;      // points to 1
+        while (i <= e) {
+            if (nums[i] == 0) swap(nums, s++, i++);
+            else if (nums[i] == 1) i++;
+            else swap(nums, i, e--);
+        }
 	}
 	
 	private void swap(int[] nums, int i, int j) {
+		if (i == j) return;
 		int temp = nums[i];
 		nums[i] = nums[j];
 		nums[j] = temp;
