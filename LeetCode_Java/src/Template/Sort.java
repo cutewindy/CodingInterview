@@ -1,9 +1,12 @@
 package Template;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Given an integer array, sort it in ascending order. Use selection sort, bubble sort, insertion 
- * sort, quick sort, heap sort, merge sort or..
+ * sort, quick sort, heap sort, merge sort, bucket sort, or..
  * Example
  * Given [3, 2, 1, 4, 5], return [1, 2, 3, 4, 5].
  * @author wendi
@@ -159,6 +162,38 @@ public class Sort {
 		}
 	}
 
+	/**
+	 * Bucket sort: stable sort, out-place sort
+	 * Time: worse case: O(nlog(n)), better case: O(n)
+	 * Space: O(n)
+	 */
+	public int[] bucketSort(int[] nums) {
+		if (nums == null || nums.length == 0) return nums;
+		int n = nums.length;
+		int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+		for (int num: nums) {
+			min = Math.min(num, min);
+			max = Math.max(num, max);
+		}
+		int bucketSize = (int) Math.ceil((double) (max - min + 1) / n);
+		int bucketNum = (int) Math.ceil((double) (max - min + 1) / bucketSize);
+		List<Integer>[] buckets = new ArrayList[bucketNum];
+		for (int num: nums) {
+			int i = (num - min) / bucketSize;
+			if (buckets[i] == null) buckets[i] = new ArrayList<>();
+			buckets[i].add(num);
+		}
+		int k = 0;
+		for (List<Integer> bucket: buckets) {
+			if (bucket == null) continue;
+			Collections.sort(bucket);
+			for (Integer num: bucket) {
+				nums[k++] = num;
+			}
+		}
+		return nums;
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -166,9 +201,10 @@ public class Sort {
 //		System.out.println(Arrays.toString(result.selectionSort(new int[] {3, 2, 1, 4, 5})));
 //		System.out.println(Arrays.toString(result.bubbleSort(new int[] {3, 2, 1, 4, 5})));
 //		System.out.println(Arrays.toString(result.insertionSort(new int[] {3, 2, 1, 4, 5})));
-		System.out.println(Arrays.toString(result.quickSort(new int[] {3, 2, 1, 4, 5})));
+//		System.out.println(Arrays.toString(result.quickSort(new int[] {3, 2, 1, 4, 5})));
 //		System.out.println(Arrays.toString(result.heapSort(new int[] {3, 2, 1, 4, 5})));
 //		System.out.println(Arrays.toString(result.mergeSort(new int[] {3, 2, 1, 4, 5})));
+		System.out.println(Arrays.toString(result.bucketSort(new int[] {1, 10, 3, 2, 1, 4, 5})));
 	}
 
 }

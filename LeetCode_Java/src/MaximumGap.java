@@ -26,9 +26,7 @@ public class MaximumGap {
 	 * Space: O(n)
 	 */
 	public int maximumGap(int[] nums) {
-		if (nums == null || nums.length < 2) {
-			return 0;
-		}
+		if (nums == null || nums.length < 2) return 0;
 		int n = nums.length;
 		// 1. get the bucketSize and bucketNum by min and max value of array
 		int minNum = Integer.MAX_VALUE;
@@ -37,28 +35,23 @@ public class MaximumGap {
 			minNum = Math.min(num, minNum);
 			maxNum = Math.max(num, maxNum);
 		}
-		int bucketSize = (int)Math.ceil((double)(maxNum - minNum) / (n - 1));
-		if (bucketSize == 0) {
-			bucketSize = 1;   // deal with the case [1, 1, 1, 1]
-		}
+		int bucketSize = (int)Math.ceil((double)(maxNum - minNum + 1) / n);
 		int bucketNum = (int)Math.ceil((double)(maxNum - minNum + 1) / bucketSize);
 		// 2. put numbers into buckets
 		int[] minNuminBucket = new int[bucketNum];
 		int[] maxNuminBucket = new int[bucketNum];
-		Arrays.fill(minNuminBucket, -1);
-		Arrays.fill(maxNuminBucket, -1);
+		Arrays.fill(minNuminBucket, Integer.MAX_VALUE);
+		Arrays.fill(maxNuminBucket, Integer.MIN_VALUE);
 		for (int num: nums) {
 			int bucket = (num - minNum) / bucketSize;  // index of the right position in the buckets
-			minNuminBucket[bucket] = minNuminBucket[bucket] == -1 ? num : Math.min(num, minNuminBucket[bucket]);
-			maxNuminBucket[bucket] = maxNuminBucket[bucket] == -1 ? num : Math.max(num, maxNuminBucket[bucket]);
+			minNuminBucket[bucket] = Math.min(num, minNuminBucket[bucket]);
+			maxNuminBucket[bucket] = Math.max(num, maxNuminBucket[bucket]);
 		}
 		// 3. scan the buckets for the max gap
 		int result = 0;
 		int prev = minNum;
 		for (int i = 0; i < bucketNum; i++) {
-			if (minNuminBucket[i] == -1) {   // skip empty bucket
-				continue;
-			}
+			if (minNuminBucket[i] == Integer.MAX_VALUE) continue;   // skip empty bucket
 			result = Math.max(minNuminBucket[i] - prev, result);
 			prev = maxNuminBucket[i];
 		}
