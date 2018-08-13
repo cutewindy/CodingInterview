@@ -10,7 +10,9 @@ import java.util.Random;
  *
  */
 public class WeightedRandomSampling {
-
+	
+	// credit: http://blog.gainlo.co/index.php/2016/11/11/uber-interview-question-weighted-random-numbers/
+	
 	/**
 	 * Method3:
 	 * base on method1 with Binary search
