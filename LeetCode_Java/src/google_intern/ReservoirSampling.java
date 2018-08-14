@@ -18,6 +18,22 @@ import java.util.Set;
 public class ReservoirSampling {
 	// Ref: https://www.geeksforgeeks.org/reservoir-sampling/	
 	
+//     Proof: prove that the probability that any item stream[i] where 0 <= i < n will be in final 
+//			  reservoir[] is k/n
+//     Case 1: For last n-k stream items, i.e., for stream[i] where k <= i < n
+//         1) let us first consider the last item. The probability that the last item is in final 	          
+//	          reservoir = The probability that one of the first k indexes is picked for last item =
+//            = k/n (the probability of picking one of the k items from a list of size n)
+//         2) let us now consider the second last item. The probability that the second last item is 
+//		      in final reservoir[] = [Probability that one of the first k indexes is picked in 
+//		      iteration for stream[n-2]] X [Probability that the index picked in iteration for 
+//		      stream[n-1] is not same as index picked for stream[n-2] ] = [k/(n-1)]*[(n-1)/n] = k/n.
+//     Case 2: For first k stream items, i.e., for stream[i] where 0 <= i < k
+//         1) The probability that an item from stream[0..k-1] is in final array = Probability that 
+//		      the item is not picked when items stream[k], stream[k+1], …. stream[n-1] are considered:
+//            = [k/(k+1)] x [(k+1)/(k+2)] x [(k+2)/(k+3)] x … x [(n-1)/n] = k/n
+
+	
 	/**
 	 * Approach2: select k from a stream of n items randomly
 	 * 1) Create an array reservoir[0..k-1] and copy first k items of stream[] to it.

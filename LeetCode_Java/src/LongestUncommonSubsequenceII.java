@@ -1,7 +1,5 @@
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Given a list of strings, you need to find the longest uncommon subsequence among them. The 
@@ -34,7 +32,7 @@ public class LongestUncommonSubsequenceII {
 	 * @param String[] strs
 	 * @return int
 	 * Time: O(n^2)
-	 * Space: O(n)
+	 * Space: O(1)
 	 */
 	public int longestUncommonSubsequenceII(String[] strs) {
 		if (strs == null || strs.length == 0) return 0;
@@ -45,9 +43,8 @@ public class LongestUncommonSubsequenceII {
 				return a.compareTo(b);
 			}
 		});
-		Set<String> duplicates = getDuplicate(strs);
 		for (int i = 0; i < strs.length; i++) {
-			if (duplicates.contains(strs[i])) continue;
+			if (i != 0 && strs[i].equals(strs[i - 1]) || i != strs.length - 1 && strs[i].equals(strs[i + 1])) continue;
 			if (i == 0) return strs[0].length();
 			for (int j = 0; j < i; j++) {
 				if (isSubsequence(strs[i], strs[j])) break;
@@ -67,16 +64,6 @@ public class LongestUncommonSubsequenceII {
 			bi++;
 		}
 		return ai == a.length();
-	}
-	
-	private Set<String> getDuplicate(String[] strs) {
-		Set<String> duplicates = new HashSet<>();
-		Set<String> set = new HashSet<>();
-		for (String str: strs) {
-			if (set.contains(str)) duplicates.add(str);
-			else set.add(str);
-		}
-		return duplicates;
 	}
 
 	public static void main(String[] args) {
