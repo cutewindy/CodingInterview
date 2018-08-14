@@ -26,8 +26,8 @@ public class WordSearch {
 	 * to check whether they equal to word[pos+1].
 	 * @param char[][] board, String word
 	 * @return boolean
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(m*n*4^len) len = word.length()
+	 * Space: O(m*n)
 	 */
 	public boolean wordSearch(char[][] board, String word) {
 		if ((board == null && word != null) || board.length == 0 || board[0].length == 0) {
