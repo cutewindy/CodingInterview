@@ -60,42 +60,41 @@ public class SerializeandDeserializeBinaryTree {
 	
 	// Decodes your encoded data to tree.
 	/**
-	 * Method2: Using two arrays to record the tree info, then build tree.
-	 * For a perfect tree, nodes[i].left = nodes[2 * i + 1], nodes[i].right = nodes[2 * i + 2].
+	 * Method2: Using queue to build tree
 	 * @param String data
 	 * @return TreeNode
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
 	public TreeNode deserializeI(String data) {
-		if (data == null || data.length() == 0) {
-			return null;
-		}
-		int[] count = new int[data.length()];// how many "#" appear before i(included)
-		TreeNode[] node = new TreeNode[data.length()]; // new node that need to be build
-		String[] newData = data.split(",");
-		// init
-		count[0] = 0;
-		node[0] = new TreeNode(Integer.parseInt(newData[0]));
-		// create tree node
-		for (int i = 1; i < newData.length; i++) {
-			if (newData[i].equals("#")) {
-				count[i] = count[i - 1] + 1;
-				node[i] = null;
-			}	
-			else {
-				count[i] = count[i - 1];
-				node[i] = new TreeNode(Integer.valueOf(newData[i]));
-			}
-		}
-		// build tree
-		for (int i = 0; i < newData.length; i++) {
-			if (node[i] != null) {
-				node[i].left = node[2 * (i - count[i]) + 1];
-				node[i].right = node[2 * (i - count[i]) + 2];
-			}
-		}
-		return node[0];
+        if (data == null || data.length() == 0) return null;
+        String[] datas = data.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(datas[0]));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int pos = 1;
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            
+            // build left
+            if (datas[pos].equals("#")) curr.left = null;
+            else {
+                TreeNode left = new TreeNode(Integer.valueOf(datas[pos]));
+                curr.left = left;
+                queue.offer(left);
+            }
+            pos++;
+            
+            // build right
+            if (datas[pos].equals("#")) curr.right = null;
+            else {
+                TreeNode right = new TreeNode(Integer.valueOf(datas[pos]));
+                curr.right = right;
+                queue.offer(right);
+            }
+            pos++;
+        }
+        return root;
 	}
 	
 	
