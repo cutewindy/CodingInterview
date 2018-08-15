@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class LengthofLongestFibonacciSubsequence {
 	 * Method2: DFS + Memoization
 	 * @param int[] A
 	 * @return int
-	 * Time: O(n^3)
+	 * Time: O(n^2)
 	 * Space: O(n^2)
 	 */
 	public int lengthofLongestFibonacciSubsequenceI(int[] A) {
@@ -71,7 +72,7 @@ public class LengthofLongestFibonacciSubsequence {
 		int res = 0;
 		Set<Integer> set = new HashSet<>();	
 		for (int a: A) set.add(a);
-		Map<int[], Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		for (int i = 0; i < A.length; i++) {
 			for (int j = i + 1; j < A.length; j++) {
 				int curr = dfs(set, map, A[i], A[j]);
@@ -81,12 +82,11 @@ public class LengthofLongestFibonacciSubsequence {
 		return res;
 	}
 	
-	private int dfs(Set<Integer> set, Map<int[], Integer> map, int left, int right) {
+	private int dfs(Set<Integer> set, Map<String, Integer> map, int left, int right) {
 		if (!set.contains(left + right)) return 0;
-		int[] curr = {left, right};
+		String curr = left + "+" + right;
 		if (map.containsKey(curr)) return map.get(curr);
-		int res = 0;
-		if (set.contains(left + right)) res = dfs(set, map, right, left + right) + 1;
+		int res = dfs(set, map, right, left + right) + 1;
 		map.put(curr, res);
 		return res;
 	}
