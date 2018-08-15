@@ -27,12 +27,12 @@ import java.util.Set;
 public class ConcatenatedWords {
 	
 	/**
-	 * DP
+	 * Approach2: DP
 	 * We iterate through each word and see if it can be formed by using other words. Same as the 
-	 * WordBreak
-	 * Of course it is also obvious that a word can only be formed by words shorter than it. So we 
+	 * "WordBreak"
+	 * (Of course it is also obvious that a word can only be formed by words shorter than it. So we 
 	 * can first sort the input by length of each word, and only try to form one word by using words 
-	 * in front of it.
+	 * in front of it.)
 	 * @param String[] words
 	 * @return List<String>
 	 * Time: O(nlog(n) + n*l^2) n=words.length, l=words[i].length()
@@ -78,7 +78,7 @@ public class ConcatenatedWords {
 	
 	
 	/**
-	 * Brute Force: DFS
+	 * Approach1: Brute Force: DFS(TLE)
 	 * Iterate through each word and see if it can be formed by using other words.
 	 * @param String[] words
 	 * @return List<String>

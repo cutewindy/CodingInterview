@@ -19,15 +19,11 @@ public class LengthofLastWord {
 	 * Space: O(1)
 	 */
 	public int lengthofLastWord(String s) {
-		if (s == null || s.length() == 0) {
-			return 0;
-		}
-		int result = 0;
-		char[] S = s.trim().toCharArray();
-		for (int i = S.length - 1; i >= 0 && S[i] != ' '; i--) {
-			result++;
-		}		
-		return result;
+        if (s == null || s.length() == 0) return 0;
+        String[] S = s.trim().split(" ");
+        if (S == null || S.length == 0) return 0;
+        int n = S.length;
+        return S[n - 1].length();
 	}
 
 	public static void main(String[] args) {
