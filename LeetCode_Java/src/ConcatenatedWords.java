@@ -82,7 +82,7 @@ public class ConcatenatedWords {
 	 * Iterate through each word and see if it can be formed by using other words.
 	 * @param String[] words
 	 * @return List<String>
-	 * Time: O(n*l) n=words.length, l=words[i].length()
+	 * Time: O(2^n) n=words.length
 	 * Space: O(n)
 	 * Stack space: O(n)
 	 */
