@@ -33,70 +33,77 @@ public class WordSearchII {
 
 	/**
 	 * Trie + Backtracking: build tree by using TrieNode class. And search word in Trie tree.If find,
-	 * add combo into result.
+	 * add word into result.
 	 * @param char[][] board, String[] words
 	 * @return List<String>
-	 * Time: O(n^2)
-	 * Space: O(n^2)
-	 * Stack space: O(k) k is the length of word
+	 * Time: O(m*n*4^len) len=words[i].length()
+	 * Space: O(26^len) and < Sum of len[i], len[i]=words[i].length()
+	 * Stack space: O(len)
 	 */
-	class TrieNode{
-		char val;
-		boolean isWord;
-		TrieNode[] children = new TrieNode[26];
-		public TrieNode() {} // prepare for root
-		public TrieNode(char val) {
-			this.val = val;
-			isWord = false;
-		}
-	}
-	public List<String> findWords(char[][] board, String[] words) {
-		List<String> result = new ArrayList<>();
-		if (words == null || words.length == 0) {
-			return result;
-		}
-		// build TrieNode tree
-		TrieNode root = new TrieNode();
-		for (String word: words) {
-			TrieNode curr = root;
-			for(int i = 0; i < word.length(); i++) {
-				char c = word.charAt(i);
-				if (curr.children[c - 'a'] == null) {
-					curr.children[c - 'a'] = new TrieNode(c);
-				}
-				curr = curr.children[c - 'a'];
-			}
-			curr.isWord = true;
-		}
-		// search word in TrieNode tree
-		boolean[][] isVisited = new boolean[board.length][board[0].length];
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[0].length; j++) {
-				TrieNode curr = root;
-				helper(board, isVisited, curr, i, j, "", result);
-			}
-		}
-		return result;
-	}
-	
-	private void helper(char[][] board, boolean[][] isVisited, TrieNode curr, int i, int j, String combo, List<String> result) {
-		if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || isVisited[i][j] ||
-				curr.children[board[i][j] - 'a'] == null) {
-			return;
-		}
-		isVisited[i][j] = true;
-		curr = curr.children[board[i][j] - 'a'];
-		combo += curr.val;
-		if (curr.isWord) {
-			result.add(combo);
-			curr.isWord = false; // cannot return right now
-		}
-		helper(board, isVisited, curr, i - 1, j, combo, result); // up
-		helper(board, isVisited, curr, i + 1, j, combo, result); // down
-		helper(board, isVisited, curr, i, j - 1, combo, result); // left
-		helper(board, isVisited, curr, i, j + 1, combo, result); // right
-		isVisited[i][j] = false;
-	}
+    public List<String> wordSearchII(char[][] board, String[] words) {
+        List<String> res = new ArrayList<>();
+        Trie trie = new Trie();
+        for (String w: words) trie.insert(w);
+        int m = board.length;
+        int n = board[0].length;
+        boolean[][] visited = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                dfs(board, i, j, trie.root, visited, new String(), res);
+            }
+        }
+        return res;
+    }
+    
+    public int[] dx = {-1, 0, 1, 0};
+    public int[] dy = {0, 1, 0, -1};
+    private void dfs(char[][] board, int row, int col, TrieNode root, boolean[][] visited, 
+    		         String word, List<String> res) {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col] ||
+            root.children[board[row][col] - 'a'] == null) return;
+        TrieNode curr = root.children[board[row][col] - 'a'];
+        word += curr.c;
+        if (curr.isWord) {
+            res.add(word);
+            curr.isWord = false; // take care and cannot return here
+        }
+        visited[row][col] = true;
+        for (int k = 0; k < 4; k++) {
+            int i = dx[k] + row;
+            int j = dy[k] + col;
+            dfs(board, i, j, curr, visited, word, res);
+        }
+        visited[row][col] = false;
+    }
+    
+    class Trie {
+        public TrieNode root;
+        
+        public Trie() {
+            this.root = new TrieNode('/');
+        }
+        
+        public void insert(String s) {
+            if (s == null || s.length() == 0) return;
+            TrieNode curr = root;
+            for (char c: s.toCharArray()) {
+                if (curr.children[c - 'a'] == null) curr.children[c - 'a'] = new TrieNode(c);
+                curr = curr.children[c - 'a'];
+            }
+            curr.isWord = true;
+        }
+    } 
+    
+    class TrieNode {
+        char c;
+        boolean isWord;
+        TrieNode children[];
+        public TrieNode(char c) {
+            this.c = c;
+            this.isWord = false;
+            this.children = new TrieNode[26];
+        }
+    }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -109,7 +116,7 @@ public class WordSearchII {
 //		String[] words = {"oath","pea","eat","rain"};
 		char[][] board = {{'a', 'a'}};
 		String[] words = {"a"};
-		System.out.println(result.findWords(board, words));
+		System.out.println(result.wordSearchII(board, words));
 	}
 
 }
