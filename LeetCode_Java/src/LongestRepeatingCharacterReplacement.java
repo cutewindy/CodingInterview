@@ -48,6 +48,7 @@ public class LongestRepeatingCharacterReplacement {
 				}
 				else break;
 			}
+//			System.out.println("s: " + start + " e: " + end);
 			// tricky: not every [start, end] is a valid result, which cannot longer than previous valid result
 			res = Math.max(end - start, res); 
 			charCnt[S[start]]--;
