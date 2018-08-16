@@ -1,4 +1,7 @@
 package Template;
+
+import java.util.Arrays;
+
 /**
  * 解决**区间操作**相关问题
  * 什么情况下，无法使用线段树？
@@ -12,6 +15,7 @@ package Template;
  * 
  * 307. Range Sum Query - Mutable
  * 315. Count of Smaller Numbers After Self
+ * 248. Count of Smaller Number(Lint code)
  * 
  * @author wendi
  *
@@ -29,6 +33,11 @@ public class SegmentTree {
 			this.right = null;
 			this.max = 0;
 		}
+	}	
+
+	public SegmentTreeNode root;
+	public SegmentTree(int[] nums) {
+		this.root = build(nums, 0, nums.length - 1);
 	}
 	
 	/**
@@ -36,12 +45,6 @@ public class SegmentTree {
 	 * 自上而下递归生成节点
 	 * 自下而上更新节点
 	 */
-	SegmentTreeNode root;
-	public SegmentTreeNode build(int[] nums) {
-		this.root = build(nums, 0, nums.length - 1);
-		return this.root;
-	}
-	
 	public SegmentTreeNode build(int[] nums, int start, int end) {
 		SegmentTreeNode root = new SegmentTreeNode(start, end);
 		if (start == end) {
@@ -93,11 +96,16 @@ public class SegmentTree {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SegmentTree result = new SegmentTree();
-		result.build(new int[] {1, 4, 2, 5, 6, 3});
-		System.out.println(result.query(1, 3));
-		result.modify(2, 7);
-		System.out.println(result.query(1, 3));
+		int[] nums = {1, 4, 2, 5, 6, 3};
+		SegmentTree ST = new SegmentTree(nums);
+		for (int i = 0; i < nums.length; i++) System.out.print(" " + i + " ");
+		System.out.println("\n" + Arrays.toString(nums));
+		System.out.println("max num in range [1, 3]:   " + ST.query(1, 3));
+		System.out.println("root.max:                  " + ST.root.max);
+		ST.modify(2, 7);
+		System.out.println("\nmodify nums[2] as 7:");
+		System.out.println("max num in range [1, 3]:   " + ST.query(1, 3));
+		System.out.println("root.max:                  " + ST.root.max);
 	}
 
 }
