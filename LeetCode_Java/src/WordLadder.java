@@ -1,26 +1,37 @@
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-/**
+/**	
  * Given two words (beginWord and endWord), and a dictionary's word list, find the length of 
  * shortest transformation sequence from beginWord to endWord, such that:
- * Only one letter can be changed at a time
- * Each intermediate word must exist in the word list
- * For example,
- * Given:
+ * 1. Only one letter can be changed at a time.
+ * 2. Each transformed word must exist in the word list. Note that beginWord is not a transformed 
+ * word.
+ * Note:
+ * 1. Return 0 if there is no such transformation sequence.
+ * 2. All words have the same length.
+ * 3. All words contain only lowercase alphabetic characters.
+ * 4. You may assume no duplicates in the word list.
+ * 5. You may assume beginWord and endWord are non-empty and are not the same.
+ * Example 1:
+ * Input:
+ * beginWord = "hit",
+ * endWord = "cog",
+ * wordList = ["hot","dot","dog","lot","log","cog"]
+ * Output: 5
+ * Explanation: As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+ * return its length 5.
+ * Example 2:
+ * Input:
  * beginWord = "hit"
  * endWord = "cog"
  * wordList = ["hot","dot","dog","lot","log"]
- * As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
- * return its length 5.
- * Note:
- * Return 0 if there is no such transformation sequence.
- * All words have the same length.
- * All words contain only lowercase alphabetic characters.
- * 
- * Tags: 
+ * Output: 0
+ * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  * @author wendi
  *
  */
@@ -28,85 +39,43 @@ public class WordLadder {
 	
 	/**
 	 * BFS: queue level traverse
-	 * @param String beginWord, String endWord, Set<String> wordList
+	 * @param String beginWord, String endWord, List<String> wordList
 	 * @return int
-	 * Time: O(wordList.size() * word.length * 26)
-	 * Space: O(wordList.size())
+	 * Time: O(E + V) O((26^l)^n)
+	 * Space: O(V)
 	 */
-	public int wordLadder(String beginWord, String endWord, Set<String> wordList) { 
+	public int wordLadder(String beginWord, String endWord, List<String> wordList) { 
 		// it's better not change the input
-        Set<String> words = new HashSet<>();  // O(1) to find the word
-        for (String word: wordList) {       
-            words.add(word);                  
-        }
-        Set<String> seen = new HashSet<>();   // record which word has been find, avoid cycle
-        seen.add(beginWord);
+        Set<String> dict = new HashSet<>(wordList);  // O(1) to find the word
         Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
-        int result = 1;
+        int level = 0;
         while (!queue.isEmpty()) {
+        	level++;
             int size = queue.size();
             while (size-- > 0) {
-                String curr = queue.poll();
-                if (curr.equals(endWord)) return result;
-                for (int i = 0; i < curr.length(); i++) {
-                    char[] currArray = curr.toCharArray();
+                char[] wordArray = queue.poll().toCharArray();
+                for (int i = 0; i < wordArray.length; i++) {
+                    char ch = wordArray[i];
                     for (char c = 'a'; c <= 'z'; c++) {
-                        currArray[i] = c;
-                        String currWord = String.valueOf(currArray);
-                        if (words.contains(currWord) && !seen.contains(currWord)) {
-                            queue.offer(currWord);
-                            seen.add(currWord);
-                        }
+                    	wordArray[i] = c;
+                        String newWord = String.valueOf(wordArray);
+                        if (!dict.contains(newWord)) continue;
+                        if (newWord.equals(endWord)) return level + 1;
+                        queue.offer(newWord);
+                        dict.remove(newWord);  // avoid cycle and duplicate
                     }
+                    wordArray[i] = ch;
                 }
             }
-            result++;
         } 
         return 0;
-        
-        
-//		if (wordList.size() == 0) {
-//			return 0;
-//		}
-//		int count = 0;
-//		wordList.add(endWord);
-//		Queue<String> queue = new LinkedList<>();
-//		queue.add(beginWord);
-//		while (!queue.isEmpty()) {
-//			count++;
-//			int size = queue.size();
-//			for (int i = 0; i < size; i++) {
-//				String curr = queue.poll();
-//				if (curr.equals(endWord)) {
-//					return count;
-//				}
-//				for (int j = 0; j < curr.length(); j++) {
-//					char[] currArray = curr.toCharArray();
-//					for (char c = 'a'; c <= 'z'; c++) {
-//						currArray[j] = c;
-//						String word = String.valueOf(currArray);
-//						if (wordList.contains(word)) {
-//							queue.offer(word);
-//							wordList.remove(word);
-//						}
-//					}
-//				}
-//			}
-//		}
-//		return 0;
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WordLadder result = new WordLadder();
-		Set<String> wordList = new HashSet<>();
-		wordList.add("hot");
-		wordList.add("dot");
-		wordList.add("dog");
-		wordList.add("lot");
-		wordList.add("log");
-		System.out.println(result.wordLadder("hit", "cog", wordList));
+		System.out.println(result.wordLadder("hit", "cog", Arrays.asList("hot","dot","dog","lot","log","cog")));
 	}
 
 }
