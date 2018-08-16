@@ -26,7 +26,7 @@ public class WordBreakII {
 	 * DFS + Memoization: used HashMap to save the previous results to prune duplicated branches
 	 * @param String s, List<String> wordDict
 	 * @return List<String> 
-	 * Time: O(n^2) n=s.length()
+	 * Time: O(2^n) n=s.length()
 	 * Space: O(n)
 	 * Stack space: O(n)
 	 */
