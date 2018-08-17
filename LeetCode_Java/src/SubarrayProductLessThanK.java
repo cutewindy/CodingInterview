@@ -16,6 +16,29 @@
  *
  */
 public class SubarrayProductLessThanK {
+
+	/**
+	 * Sliding window (template)
+	 * @param int[] nums, int k
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int subarrayProductLessThanKI(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k == 0) return 0;
+        double product = 1;    //use double type, take care
+        int res = 0;
+        for (int start = 0, end = 0; start < nums.length; start++) {
+            while (end < nums.length && product * nums[end] < k) {
+                product *= nums[end];
+                end++;
+            }
+            if (product < k) res += end - start;
+            product /= nums[start];
+        }
+        return res;
+	}
+	
 	
 	/**
 	 * Two pointers --> Sliding window
@@ -51,6 +74,8 @@ public class SubarrayProductLessThanK {
 		SubarrayProductLessThanK result = new SubarrayProductLessThanK();
 		System.out.println(result.subarrayProductLessThanK(new int[] {10, 5, 2, 6}, 100));
 		System.out.println(result.subarrayProductLessThanK(new int[] {1, 1, 1}, 1));
+		System.out.println(result.subarrayProductLessThanKI(new int[] {10, 5, 2, 6}, 100));
+		System.out.println(result.subarrayProductLessThanKI(new int[] {1, 1, 1}, 1));
 	}
 
 }
