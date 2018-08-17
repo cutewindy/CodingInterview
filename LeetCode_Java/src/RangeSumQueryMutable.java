@@ -29,59 +29,86 @@ public class RangeSumQueryMutable {
 		}
 	}
 	
-	private SegmentTreeNode root;
-	
+    class SegmentTree {
+        public SegmentTreeNode root;
+        
+        public SegmentTree(int[] nums) {
+            if (nums == null || nums.length == 0) return;
+            this.root = build(nums, 0, nums.length - 1);
+        }
+        
+        /**
+         * Time: O(n)
+         */
+        public SegmentTreeNode build(int[] nums, int start, int end) {
+            SegmentTreeNode root = new SegmentTreeNode(start, end);
+            if (start == end) {
+                root.sum = nums[start];
+                return root;
+            }
+            int mid = start + (end - start) / 2;
+            SegmentTreeNode left = build(nums, start, mid);
+            SegmentTreeNode right = build(nums, mid + 1, end);
+            root.left = left;
+            root.right = right;
+            root.sum = left.sum + right.sum;
+            return root;
+        }
+        
+        /**
+         * Time: O(log(n))
+         */
+        public int query(int start, int end) {
+            return query(this.root, start, end);
+        }
+        
+        public int query(SegmentTreeNode root, int start, int end) {
+            if (root.start == start && root.end == end) return root.sum;
+            int mid = root.start + (root.end - root.start) / 2;
+            if (mid >= end) return query(root.left, start, end);
+            else if (mid < start) return query(root.right, start, end);
+            return query(root.left, start, mid) + query(root.right, mid + 1, end);
+        }
+        
+        /**
+         * Time: O(log(n))
+         */
+        public void modify(int index, int val) {
+            modify(this.root, index, val);
+        }
+        
+        public void modify(SegmentTreeNode root, int index, int val) {
+            if (root.start == index && root.end == index) {
+                root.sum = val;
+                return;
+            }
+            int mid = root.start + (root.end - root.start) / 2;
+            if (mid >= index) modify(root.left, index, val);
+            else modify(root.right, index, val);
+            root.sum = root.left.sum + root.right.sum;
+        }
+    }
+
+    SegmentTree ST; 
     public RangeSumQueryMutable(int[] nums) {
-        this.root = buildSegmentTree(nums, 0, nums.length - 1);
+        this.ST = new SegmentTree(nums);
     }
     
     /**
-     * Time: O(n)
-     */
-    private SegmentTreeNode buildSegmentTree(int[] nums, int start, int end) {
-    	if (start > end) return null;
-    	SegmentTreeNode currRoot = new SegmentTreeNode(start, end);
-    	if (start == end) currRoot.sum = nums[start];
-    	else {
-    		int mid = start + (end - start) / 2;
-    		currRoot.left = buildSegmentTree(nums, start, mid);
-    		currRoot.right = buildSegmentTree(nums, mid + 1, end);
-    		currRoot.sum = currRoot.left.sum + currRoot.right.sum;
-    	}
-    	return currRoot;
-    }
-    
-    /**
+     * @param int i, int val
      * Time: O(log(n))
      */
     public void update(int i, int val) {
-        update(root, i, val);
-    }
-    
-    private void update(SegmentTreeNode root, int i, int val) {
-    	if (root.start == root.end) {
-    		root.sum = val;
-    		return;
-    	}
-    	int mid = root.start + (root.end - root.start) / 2;
-    	if (i <= mid) update(root.left, i, val);
-    	else update(root.right, i, val);
-    	root.sum = root.left.sum + root.right.sum;
+        ST.modify(i, val);
     }
     
     /**
+     * @param int i, int j
+     * @return int
      * Time: O(log(n))
      */
     public int sumRange(int i, int j) {
-        return sumRange(root, i, j);
-    }
-    
-    private int sumRange(SegmentTreeNode root, int start, int end) {
-    	if (root.start == start && root.end == end) return root.sum;
-    	int mid = root.start + (root.end - root.start) / 2;
-    	if (end <= mid) return sumRange(root.left, start, end);
-    	else if (start > mid) return sumRange(root.right, start, end);
-    	return sumRange(root.left, start, mid) + sumRange(root.right, mid + 1, end);
+        return ST.query(i, j);
     }
 	
 	public static void main(String[] args) {

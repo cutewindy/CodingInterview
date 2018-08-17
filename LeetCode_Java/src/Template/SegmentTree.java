@@ -37,6 +37,7 @@ public class SegmentTree {
 
 	public SegmentTreeNode root;
 	public SegmentTree(int[] nums) {
+		if (nums == null || nums.length == 0) return;
 		this.root = build(nums, 0, nums.length - 1);
 	}
 	
