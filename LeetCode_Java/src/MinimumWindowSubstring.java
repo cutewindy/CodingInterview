@@ -32,7 +32,7 @@ public class MinimumWindowSubstring {
 	public String minimumWindowSubstring(String s, String t) {
 		if (s == null || t == null || s.length() < t.length() || t.length() == 0) return "";
 		int[] charCnt = new int[256];
-		int cnt = 0;
+		int cnt = 0;  // the number of different characters in t
 		for (char c: t.toCharArray()) {
 			if (charCnt[c] == 0) cnt++;
 			charCnt[c]++;
