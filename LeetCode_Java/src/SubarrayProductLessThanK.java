@@ -19,6 +19,7 @@ public class SubarrayProductLessThanK {
 
 	/**
 	 * Sliding window (template)
+	 * for window (5, 2), when 6 is introduced, it add 3 new subarray: (((5), 2), 6)
 	 * @param int[] nums, int k
 	 * @return int
 	 * Time: O(n)
