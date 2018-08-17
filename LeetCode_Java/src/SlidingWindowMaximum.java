@@ -1,7 +1,7 @@
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Deque;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
@@ -45,36 +45,29 @@ public class SlidingWindowMaximum {
 	 * Space: O(n)
 	 */
 	public int[] slidingWindowMaximumI(int[] nums, int k) {
-		if (nums == null || nums.length == 0) {
-			return new int[0];
-		}
+		if (nums == null || nums.length == 0) return new int[0];
 		if (nums.length <= k) {
 			int max = Integer.MIN_VALUE;
-			for (int i = 0; i < nums.length; i++) {
-				max = Math.max(nums[i], max);
-			}
+			for (int i = 0; i < nums.length; i++) max = Math.max(nums[i], max);
 			return new int[] {max};
 		}
+		
 		int[] result = new int[nums.length - k + 1];
 		// use q to save the index of nums, and keep the down
-		Deque<Integer> q = new ArrayDeque<>();  // can use LinkedList<>() as well
+		Deque<Integer> q = new LinkedList<>();  // can use ArrayDeque<>() as well
 		for (int i = 0; i < nums.length; i++) {
 			// remove numbers out of range k
-			while (!q.isEmpty() && q.peekLast() < i - k + 1) {
-				q.pollLast();
-			}
+			while (!q.isEmpty() && q.peek() < i - k + 1) q.poll();
+			
 			// remove the numbers in q smaller than nums[i] from top to down(last come in the top of q)
 			// keep the down number is the largest number in the window
-			while (!q.isEmpty() && nums[i] >= nums[q.peek()]) {
-				q.poll();
-			}
+			while (!q.isEmpty() && nums[i] >= nums[q.peekLast()]) q.pollLast();
+			
 			// push nums[i] in q
-			q.push(i);
-			if (i - k + 1 >= 0) { 
-				result[i - k + 1] = nums[q.peekLast()];
-			}
-//			System.out.println(q);
-//			System.out.println(Arrays.toString(result));
+			q.offer(i);
+			
+			// get res
+			if (i - k + 1 >= 0) result[i - k + 1] = nums[q.peek()];
 		}
 		return result;
 	}
@@ -83,7 +76,7 @@ public class SlidingWindowMaximum {
 	 * Method1: Maxheap(TLE)
 	 * @param int[] nums, int k
 	 * @return int[]
-	 * Time: O(nk)
+	 * Time: O(n * (log(k) + k), time for heap.remove is O(k)
 	 * Space: O(k)
 	 */
 	public int[] slidingWindowMaximum(int[] nums, int k) {
