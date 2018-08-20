@@ -30,39 +30,30 @@ public class WordSearch {
 	 * Space: O(m*n)
 	 */
 	public boolean wordSearch(char[][] board, String word) {
-		if ((board == null && word != null) || board.length == 0 || board[0].length == 0) {
-			return false;
-		}
-		if ((board == null && word == null) || word.length() == 0) {
-			return true;
-		}
+		if ((board == null && word != null) || board.length == 0 || board[0].length == 0) return false;
+		if ((board == null && word == null) || word.length() == 0) return true;
 		boolean[][] visited = new boolean[board.length][board[0].length];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
-				if (board[i][j] == word.charAt(0) && helper(word, board, visited, i, j, 0)) {
-					return true;
-				}
+				if (dfs(word, board, visited, i, j, 0)) return true;
 			}
 		}		
 		return false;
 	}
 	
-	private boolean helper(String word, char[][] board, boolean[][] visited, int row, int col, int pos) {
+    private int[] dx = {-1, 0, 1, 0};
+    private int[] dy = {0, 1, 0, -1};	
+	private boolean dfs(String word, char[][] board, boolean[][] visited, int row, int col, int pos) {
 		// basecase
-		if (pos == word.length()) {
-			return true;
-		}
+		if (pos == word.length()) return true;
 		if (row < 0 || row > board.length - 1 || col < 0 || col > board[0].length -1 ||
 				visited[row][col] || board[row][col] != word.charAt(pos)) {
 			return false;
 		}
 		//condition
 		visited[row][col] = true;
-		if (helper(word, board, visited, row - 1, col, pos + 1) || 
-			helper(word, board, visited, row, col + 1, pos + 1) ||
-			helper(word, board, visited, row + 1, col, pos + 1) ||
-			helper(word, board, visited, row, col - 1, pos + 1)) {
-			return true;
+		for (int k = 0; k < 4; k++) {	
+			if (dfs(word, board, visited, row + dx[k], col + dy[k], pos + 1)) return true;
 		}
 		visited[row][col] = false;		
 		return false;
