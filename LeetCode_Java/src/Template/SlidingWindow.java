@@ -1,6 +1,11 @@
 package Template;
 /**
+ * 3. Longest Substring Without Repeating Characters
+ * 30. Substring with Concatenation of All Words
+ * 76. Minimum Window Substring
+ * 209. Minimum Size Subarray Sum
  * 340. Longest Substring with At Most K Distinct Characters
+ * 424. Longest Repeating Character Replacement
  * @author wendi
  *
  */
