@@ -41,7 +41,7 @@ public class WordLadder {
 	 * BFS: queue level traverse
 	 * @param String beginWord, String endWord, List<String> wordList
 	 * @return int
-	 * Time: O(E + V) O((26^l)^n)
+	 * Time: O(E + V) O(n*l*26) n=wordList.size(), l=wordList.get(0).length()
 	 * Space: O(V)
 	 */
 	public int wordLadder(String beginWord, String endWord, List<String> wordList) { 
