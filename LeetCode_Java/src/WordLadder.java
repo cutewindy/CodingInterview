@@ -49,6 +49,8 @@ public class WordLadder {
         Set<String> dict = new HashSet<>(wordList);  // O(1) to find the word
         Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
+        Set<String> visited = new HashSet<>();
+        visited.add(beginWord);
         int level = 0;
         while (!queue.isEmpty()) {
         	level++;
@@ -60,10 +62,10 @@ public class WordLadder {
                     for (char c = 'a'; c <= 'z'; c++) {
                     	wordArray[i] = c;
                         String newWord = String.valueOf(wordArray);
-                        if (!dict.contains(newWord)) continue;
+                        if (!dict.contains(newWord) || visited.contains(newWord)) continue; // avoid cycle and duplicate
                         if (newWord.equals(endWord)) return level + 1;
                         queue.offer(newWord);
-                        dict.remove(newWord);  // avoid cycle and duplicate
+                        visited.add(newWord);
                     }
                     wordArray[i] = ch;
                 }

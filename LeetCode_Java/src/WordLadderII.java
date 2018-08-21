@@ -47,9 +47,9 @@ public class WordLadderII {
 	 * BFS to build graph then DFS to walk graph
 	 * @param String beginWord, String endWord, Set<String> wordList
 	 * @return List<List<String>>
-	 * Time: O()
-	 * Space: O()
-	 * Stack space: O()
+	 * Time: O(E+V)
+	 * Space: O(V)
+	 * Stack space: O(V)
 	 */	
 	public List<List<String>> wordLadderII(String beginWord, String endWord, List<String> wordList) {
 		List<List<String>> res = new ArrayList<>();
