@@ -46,15 +46,16 @@ public class CountofSmallerNumbersAfterSelf {
             return root;
         }
         
-        public int query(int val) {
-            return query(root, val);
+        public int query(int start, int end) {
+            return query(root, start, end);
         }
         
-        public int query(SegmentTreeNode root, int val) {
-            if (root.end <= val) return root.count;
+        public int query(SegmentTreeNode root, int start, int end) {
+            if (root.start == start && root.end == end) return root.count;
             int mid = root.start + (root.end - root.start) / 2;
-            if (mid >= val) return query(root.left, val);
-            return query(root.left, val) + query(root.right, val);
+            if (mid >= end) return query(root.left, start, end);
+            else if (mid < start) return query(root.right, start, end);
+            return query(root.left, start, mid) + query(root.right, mid + 1, end);
         }
         
         public void modify(int val) {
@@ -92,7 +93,7 @@ public class CountofSmallerNumbersAfterSelf {
         SegmentTree ST = new SegmentTree(min, max);
         for (int i = nums.length - 1; i >= 0; i--) {
         	if (nums[i] == min) res.add(0, 0);  // take care when nums[i]==min
-        	else res.add(0, ST.query(nums[i] - 1));
+        	else res.add(0, ST.query(min, nums[i] - 1));
         	ST.modify(nums[i]);
         }
         return res;
