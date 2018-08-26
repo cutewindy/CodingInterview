@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,51 +60,43 @@ public class MinimumHeightTrees {
 	 */
 	public List<Integer> minimumHeightTrees(int n, int[][] edges) {
 		List<Integer> result = new ArrayList<>();
-		if (n == 0) {
-			return result;
-		}
-		if (n == 1) {
-			result.add(0);
-			return result;
-		}
+		if (n == 0) return result;
+		if (n == 1) return new ArrayList<>(Arrays.asList(0)); 
+		
 		// build graph and inDegree
 		Map<Integer, List<Integer>> graph = new HashMap<>();  
 		int[] inDegree = new int[n];
-		for (int i = 0; i < n; i++) { // create node
-			List<Integer> neighbors = new ArrayList<>();
-			graph.put(i, neighbors);
-		}
+		for (int i = 0; i < n; i++) graph.put(i, new ArrayList<Integer>()); // create node
+		
 		for (int[] edge: edges) {  // add neighbors for each node, and record inDegree of each node
 			graph.get(edge[0]).add(edge[1]);
 			graph.get(edge[1]).add(edge[0]);
 			inDegree[edge[0]]++;
 			inDegree[edge[1]]++;
 		}
+		
 		// init: find the leaf, which inDegree is 1, and offer it into queue
 		Queue<Integer> queue = new LinkedList<>();
 		for (int i = 0; i < n; i++) {
-			if (inDegree[i] == 1) {
-				queue.offer(i);
-			}
+			if (inDegree[i] == 1) queue.offer(i);
 		}
+		
 		// remove leaf level by level, until there are no more than 2.(At most two roots)
 		while (n > 2) {
-			n -= queue.size();
 			int size = queue.size();
-			for (int i = 0; i < size; i++) {
+			n -= size;
+			while (size-- > 0) {
 				int leaf = queue.poll();
 				inDegree[leaf]--;
 				for (int neighbor: graph.get(leaf)) {
 					inDegree[neighbor]--;
-					if (inDegree[neighbor] == 1) {
-						queue.offer(neighbor);
-					}
+					if (inDegree[neighbor] == 1) queue.offer(neighbor);
 				}
 			}
 		}
-		for (int root: queue) {
-			result.add(root);
-		}
+		
+		for (int root: queue) result.add(root);
+		
 		return result;
 	}
 	
