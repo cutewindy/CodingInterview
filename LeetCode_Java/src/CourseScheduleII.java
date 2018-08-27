@@ -33,6 +33,7 @@ import java.util.Set;
 public class CourseScheduleII {
 
 	/**
+	 * Topology Sort
 	 * BFS:  if a node has incoming edges, it has prerequisites. Therefore, the first few in the 
 	 * order must be those with no prerequisites, i.e. no incoming edges. Any non-empty DAG must 
 	 * have at least one node without incoming links. If we visit these few and remove all edges 
