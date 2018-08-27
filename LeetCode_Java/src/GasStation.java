@@ -22,7 +22,7 @@ public class GasStation {
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
-	public int gasStation(int[] gas, int[] cost) {
+	public int gasStationI(int[] gas, int[] cost) {
 		if (gas == null || cost == null || gas.length != cost.length) {
 			return 0;
 		}
@@ -39,11 +39,36 @@ public class GasStation {
 		}
 		return sum < 0 ? -1 : index;
 	}
+	
+	
+	/**
+	 * Bruteforce: 
+	 * @param int[] gas, int[] cost
+	 * @return int
+	 * Time: O(n^2)
+	 * Space: O(1)
+	 */
+	public int gasStation(int[] gas, int[] cost) {
+        if (gas == null || gas.length == 0) return -1;
+        int n = gas.length;
+        for (int i = 0; i < n; i++) {
+            int currGas = 0;
+            for (int j = i; j < i + n; j++) {
+                int pos = j % n;
+                currGas += gas[pos] - cost[pos];
+                // System.out.println(currGas);
+                if (currGas < 0) break;
+                if (j == i + n - 1) return i;
+            }
+        }
+        return -1;
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GasStation result = new GasStation();
 		System.out.println(result.gasStation(new int[] {4, 2, 3, 6, 1},  new int[] {3, 3, 5, 1, 2}));
+		System.out.println(result.gasStationI(new int[] {4, 2, 3, 6, 1},  new int[] {3, 3, 5, 1, 2}));
 	}
 
 }
