@@ -53,18 +53,15 @@ public class CourseScheduleIII {
 				return b[0] - a[0]; 
 			}
 		});
-		int res = 0;
 		int time = 0;
 		for (int[] course: courses) {
-			res++;
 			time += course[0];
 			maxHeap.offer(course);
 			if (time > course[1]) {
 				time -= maxHeap.poll()[0];
-				res--;
 			}
 		}
-		return res;
+		return maxHeap.size();
 	}
 	
 	public static void main(String[] args) {
