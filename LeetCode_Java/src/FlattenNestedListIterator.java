@@ -20,6 +20,7 @@ import java.util.Stack;
  */
 public class FlattenNestedListIterator {
 
+	// Approach2: Stack
 	Stack<NestedInteger> stack = null;
     public FlattenNestedListIterator(List<NestedInteger> nestedList) {
     	stack = new Stack<>();
@@ -48,6 +49,39 @@ public class FlattenNestedListIterator {
         }
         return false;
     }
+    
+    // Approach1: DFS + list
+//    List<Integer> list;
+//    int index;
+//    public FlattenNestedListIterator(List<NestedInteger> nestedList) {
+//        list = new ArrayList<>();
+//        index = 0;
+//        if (nestedList == null || nestedList.size() == 0) return;
+//        dfs(nestedList);
+//    }
+//    
+//    private void dfs(List<NestedInteger> nestedList) {
+//        if (nestedList == null || nestedList.size() == 0) return;
+//        for (NestedInteger value: nestedList) {
+//            if (value.isInteger()) {
+//                list.add(value.getInteger());
+//            }
+//            else {
+//                dfs(value.getList());
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public Integer next() {
+//        if (!hasNext()) return null;
+//        return list.get(index++);
+//    }
+//
+//    @Override
+//    public boolean hasNext() {
+//        return index != list.size();
+//    }    
 
 	
 	public static void main(String[] args) {
