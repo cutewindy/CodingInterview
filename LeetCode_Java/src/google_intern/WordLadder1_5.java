@@ -33,55 +33,61 @@ public class WordLadder1_5 {
 	 */
 	public List<String> wordLadder1_5(String beginWord, String endWord, List<String> wordList) {
 		List<String> res = new ArrayList<>();
-		if (wordList == null || wordList.size() == 0) return res;
 		Set<String> dict = new HashSet<>(wordList);
 		if (!dict.contains(endWord)) return res;
-		Map<String, String> childToParent = new HashMap<>();
-		if (!findWords(beginWord, endWord, dict, childToParent)) return res;
-		return getParents(beginWord, endWord, childToParent);
+		
+		// build graph
+		Map<String, String> graph = new HashMap<>();
+		buildGraph(beginWord, endWord, dict, graph);
+		
+		// walk graph
+		if (!graph.containsKey(endWord)) return res;
+		walkGraph(beginWord, endWord, graph, res);
+		
+		return res;
 	}
 	
-	private boolean findWords(String beginWord, String endWord, Set<String> dict, Map<String, String> childToParent) {
+	private void buildGraph(String beginWord, String endWord, Set<String> dict, Map<String, String> graph) {
 		Queue<String> queue = new LinkedList<>();
 		queue.offer(beginWord);
 		Set<String> visited = new HashSet<>();
 		visited.add(beginWord);
 		while (!queue.isEmpty()) {
-			String parent = queue.poll();
-			char[] parentArray = parent.toCharArray();
-			for (int i = 0; i < parentArray.length; i++) {
-				char c = parentArray[i];
-				for (char ch = 'a'; ch <= 'z'; ch++) {
-					parentArray[i] = ch;
-					String child = String.valueOf(parentArray);
-					if (!dict.contains(child) || visited.contains(child)) continue;
-					childToParent.put(child, parent);
-					if (child.equals(endWord)) return true;
-					queue.offer(child);
-					visited.add(child);
+			int size = queue.size();
+			while (size-- > 0) {
+				String u = queue.poll();
+				if (u.equals(endWord)) return;
+				char[] uArray = u.toCharArray();
+				for (int i = 0; i < uArray.length; i++) {
+					char c = uArray[i];
+					for (char ch = 'a'; ch <= 'z'; ch++) {
+						uArray[i] = ch;
+						String v = String.valueOf(uArray);
+						if (!dict.contains(v) || visited.contains(v)) continue;
+						graph.put(v, u);
+						queue.offer(v);
+						visited.add(v);
+					}
+					uArray[i] = c;
 				}
-				parentArray[i] = c;
 			}
 		}
-		return false;
 	}
-	
-	private List<String> getParents(String beginWord, String endWord, Map<String, String> childToParent) {
-		List<String> res = new ArrayList<>();
-		if (childToParent.isEmpty()) return res;
-		res.add(endWord);
-		String nextWord = endWord;
-		while (!nextWord.equals(beginWord)) {
-			nextWord = childToParent.get(nextWord);
-			res.add(0, nextWord);
+  
+	private void walkGraph(String beginWord, String endWord, Map<String, String> graph, List<String> res) {
+		if (beginWord.equals(endWord)) {
+			res.add(0, beginWord);
+			return;
 		}
-		return res;
+		res.add(0, endWord);
+		walkGraph(beginWord, graph.get(endWord), graph, res);
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WordLadder1_5 result = new WordLadder1_5();
 		System.out.println(result.wordLadder1_5("hit", "cog", new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log","cog"))));
+		System.out.println(result.wordLadder1_5("hit", "cog", new ArrayList<>(Arrays.asList("hot","dot","dog","lot","log"))));
 	}
 
 }
