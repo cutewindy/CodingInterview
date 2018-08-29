@@ -10,7 +10,7 @@
 public class InorderSuccessorinBST {
 	
 	/**
-	 * Method2: Iteration
+	 * Method3: Iteration
 	 * The idea is to compare root's value with p's value if root is not null, and consider the 
 	 * following two cases:
 	 * 1. root.val > p.val. In this case, root can be a possible answer, so we store the root node 
@@ -26,7 +26,7 @@ public class InorderSuccessorinBST {
 	 * Time: O(log(n))
 	 * Space: O(1)
 	 */
-	public TreeNode inorderSuccessorinBSTI(TreeNode root, TreeNode p) {
+	public TreeNode inorderSuccessorinBSTII(TreeNode root, TreeNode p) {
 		if (root == null || p == null) {
 			return null;
 		}
@@ -45,7 +45,7 @@ public class InorderSuccessorinBST {
 	
 	
 	/**
-	 * Method1: Recursion
+	 * Method2: Recursion
 	 * If root.val <= p.val, then the inorder successor must be in the right subtree. 
 	 * Else if root.val > p.val, the inorder successor could be current root, or some smaller value 
 	 * inside the left subtree.
@@ -55,7 +55,7 @@ public class InorderSuccessorinBST {
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
-	public TreeNode inorderSuccessorinBST(TreeNode root, TreeNode p) {
+	public TreeNode inorderSuccessorinBSTI(TreeNode root, TreeNode p) {
 		if (root == null || p == null) {
 			return null;
 		}
@@ -74,16 +74,52 @@ public class InorderSuccessorinBST {
 			return left == null ? root : left;
 		}
 	}
+	
+
+	/**
+	 * Method1: Inorder traversal(DFS)
+	 * @param TreeNode root, TreeNode p
+	 * @return TreeNode
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
+	 */
+	private TreeNode res;
+	private TreeNode prev;
+	public TreeNode inorderSuccessorinBST(TreeNode root, TreeNode p) {
+		if (root == null || p == null) {
+			return null;
+		}
+		res = null;
+		prev = null;
+		dfs(root, p);
+		return res;
+	}
+	
+	private void dfs(TreeNode root, TreeNode p) {
+		if (root == null) return;
+		dfs(root.left, p);
+		if (res != null) return;
+		if (prev != null && prev.val == p.val) {
+			res = root;
+			return;
+		}
+		else {
+			prev = root;
+		}
+		dfs(root.right, p);
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		InorderSuccessorinBST result = new InorderSuccessorinBST();
 		TreeNode root = TreeNode.generateCBT(new int[] {10, 4, 12, 1, 6});
-		TreeNode p = root.left.right;
+		TreeNode p = root.left.left;
 		TreeNode.printCBT(root);
 		System.out.println(p.val);
 		System.out.println(result.inorderSuccessorinBST(root, p).val);
-		System.out.println(result.inorderSuccessorinBST(root, p).val);
+		System.out.println(result.inorderSuccessorinBSTI(root, p).val);
+		System.out.println(result.inorderSuccessorinBSTII(root, p).val);
 	}
 
 }
