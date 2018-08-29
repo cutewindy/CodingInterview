@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * Given an array of characters, compress it in-place.
  * The length after compression must always be smaller than or equal to the original array.
@@ -38,7 +36,7 @@ import java.util.Arrays;
 public class StringCompression {
 	
 	/**
-	 * Tow points
+	 * Tow points(sliding window)
 	 * We will use separate pointers read and write to mark where we are reading and writing from. 
 	 * Both operations will be done left to right alternately: we will read a contiguous group of 
 	 * characters, then write the compressed version to the array. At the end, the position of the 
@@ -49,23 +47,23 @@ public class StringCompression {
 	 * Space: O(1)
 	 */
 	public int stringCompression(char[] chars) {
-		if (chars == null || chars.length == 0) return 0;
-		int write = 0;
-		char anchor = chars[0];
-		int count = 0;
-		for (int read = 0; read <= chars.length; read++) {
-			if (read != chars.length && chars[read] == anchor) count++;
-			else {
-				chars[write++] = anchor;
-				if (count != 1) {
-					for (char c: (count + "").toCharArray()) chars[write++] = c;
-				}
-				if (read != chars.length) anchor = chars[read];
-				count = 1;
-			}
-		}
-		System.out.println(Arrays.toString(chars));
-		return write;
+        if (chars == null || chars.length == 0) return 0;
+        int index = 0;
+        for (int start = 0, end = 0; start < chars.length;) {
+            char ancher = chars[start];
+            while (end < chars.length && chars[end] == ancher) {
+                end++;
+            }
+            chars[index++] = ancher;
+            if (end - start > 1) {
+                String count = end - start + "";
+                for (char c: count.toCharArray()) {
+                    chars[index++] = c;
+                }
+            }
+            start = end;
+        }
+        return index;
 	}
 
 	public static void main(String[] args) {

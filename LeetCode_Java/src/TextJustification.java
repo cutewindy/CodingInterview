@@ -33,46 +33,48 @@ public class TextJustification {
 	 * Space: O(l)
 	 */
 	public List<String> textJustification(String[] words, int maxWidth) {
-		List<String> result = new ArrayList<>();
-		int start = 0; // first word's index of line
-		int end = 0;   // end - 1 is the last word's index of line
-		while (start < words.length) {
-			int count = 0;  // count how many words in a line
-			int length = 0; // the length of words in a line
-			while (end < words.length && length + count + words[end].length() <= maxWidth) {
-				count += 1;
-				length += words[end].length();
-				end++;
-			}
-			StringBuilder sb = new StringBuilder();
-			// check current line is middle line or last line
-			if (end < words.length) {   // current line is middle line
-				int space = count == 1 ? maxWidth - words[start].length() : (maxWidth - length) / (count - 1);
-				int extraSpace = count == 1 ? maxWidth - words[start].length() : (maxWidth - length) % (count - 1);
-				while (start < end) {
-					sb.append(words[start]);
-					for (int i = 0; i < space; i++) {
-						sb.append(" ");
-					}
-					if (extraSpace-- > 0) {
-						sb.append(" ");
-					}
-					
-					start++;
-				}
-			}
-			else {                      // current line is last line
-				while (start < end) {
-					sb.append(words[start]).append(" ");
-					start++;
-				}
-				while (sb.length() < maxWidth) {
-					sb.append(" ");
-				}
-			}
-			result.add(sb.toString().substring(0, maxWidth));
-		}
-		return result;
+        List<String> res = new ArrayList<>();
+        if (words == null || words.length == 0) return res;
+        for (int start = 0, end = 0; start < words.length;) {
+            int wordsLength = 0;   // total length of words
+            while (end < words.length && wordsLength + words[end].length() + end - start <= maxWidth) {
+                wordsLength += words[end].length();
+                end++;
+            }
+            if (end != words.length) {
+                res.add(getLine(words, start, end, wordsLength, maxWidth));  // not include end
+            } 
+            else {
+                res.add(getLastLine(words, start, end, maxWidth));  // not include end
+            }
+            start = end;
+        }
+        return res;
+    }
+    
+    private String getLine(String[] words, int start, int end, int wordsLength, int maxWidth) {
+        int space = (start + 1 == end) ? (maxWidth - wordsLength) : ((maxWidth - wordsLength) / (end - start - 1));  // take care zero
+        int extraSpace = (start + 1 == end) ? 0 : ((maxWidth - wordsLength) % (end - start - 1)); // take care zero
+        StringBuilder spaceSb = new StringBuilder();
+        for (int i = 0; i < space; i++) spaceSb.append(" ");
+        StringBuilder resSb = new StringBuilder();
+        for (int i = start; i < end; i++) {
+        	resSb.append(words[i]).append(spaceSb);
+            if (extraSpace-- > 0) resSb.append(" ");
+        }
+        return resSb.toString().substring(0, maxWidth);
+    }
+    
+    private String getLastLine(String[] words, int start, int end, int maxWidth) {
+        StringBuilder resSb = new StringBuilder();
+        for (int i = start; i < end; i++) {
+        	resSb.append(words[i]).append(" ");
+        }
+        int space = maxWidth - resSb.length();
+        for (int i = 0; i < space; i++) {
+        	resSb.append(" ");
+        }
+        return resSb.toString().substring(0, maxWidth);
 	}
 	
 
