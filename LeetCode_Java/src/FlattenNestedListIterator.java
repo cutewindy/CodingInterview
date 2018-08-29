@@ -50,14 +50,13 @@ public class FlattenNestedListIterator {
         return false;
     }
     
-    // Approach1: DFS + list
+    // Approach1: DFS + list + (Iterator)
 //    List<Integer> list;
-//    int index;
+//    int index;  // Iterator<Integer> it;
 //    public FlattenNestedListIterator(List<NestedInteger> nestedList) {
 //        list = new ArrayList<>();
-//        index = 0;
-//        if (nestedList == null || nestedList.size() == 0) return;
-//        dfs(nestedList);
+//        index = 0;  
+//        dfs(nestedList); // it = list.iterator();
 //    }
 //    
 //    private void dfs(List<NestedInteger> nestedList) {
