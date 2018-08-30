@@ -76,6 +76,32 @@ public class TextJustification {
         }
         return resSb.toString().substring(0, maxWidth);
 	}
+    
+    // deal with if the input word's length large than the maxWidth
+	public List<String> preprocess(String[] words, int maxWidth) {
+		List<String> res = new ArrayList<>();
+		for (String word: words) {
+			if (word.length() <= maxWidth) res.add(word);
+			else {
+				for (int i = 0; i < word.length();) {
+					System.out.println(i);
+					if (i == 0) {   // first line
+						res.add(word.substring(i, i + maxWidth - 1) + '-');
+						i += maxWidth - 1;
+					}
+					else if (i + maxWidth - 1 >= word.length()) { // last line
+						res.add("-" + word.substring(i, word.length()));
+						i += maxWidth - 1;
+					}
+					else {
+						res.add("-" + word.substring(i, i + maxWidth - 2) + '-'); // middle line
+						i += maxWidth - 2;
+					}
+				}
+			}
+		}
+		return res;
+	}   
 	
 
 	public static void main(String[] args) {
