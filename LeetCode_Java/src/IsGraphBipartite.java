@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -42,30 +43,38 @@ public class IsGraphBipartite {
 	
 	/**
 	 * BFS:we need to check each if each cluster(edges linked together) is Bipartite.
+	 * staining method
 	 * @param int[][] graph
 	 * @return boolean
 	 * Time: O(v*e)
 	 * Space: O(e)
 	 */
 	public boolean isGraphBipartite(int[][] graph) {
-		int n = graph.length;
-		for (int i = 0; i < n; i++) {
-			int[] bipartite = new int[n]; // 0(not meet), 1(black), 2(white)
-			bipartite[i] = 1;
-			Queue<Integer> queue = new LinkedList<>();
-			queue.offer(i);
-			while (!queue.isEmpty()) {
-				int a = queue.poll();
-				for (int b: graph[a]) {
-					if (bipartite[b] == bipartite[a]) return false;
-					if (bipartite[b] == 0) {
-						bipartite[b] = bipartite[a] == 1 ? 2 : 1;
-						queue.offer(b);
-					}
-				}
-			}
-		}
-		return true;
+        int n = graph.length;
+        int[] color = new int[n];
+        Arrays.fill(color, -1);
+        //This graph might be a disconnected graph. So check each unvisited node.
+        for (int i = 0; i < n; i++) {
+            if (color[i] == -1 && !isValid(graph, i, color)) return false;
+        }
+        return true;
+    }
+     
+    private boolean isValid(int[][] graph, int i, int[] color) {
+        Queue<Integer> queue = new LinkedList<>();
+        color[i] = 0;
+        queue.offer(i);
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            for (int v: graph[u]) {
+                if (color[v] == color[u]) return false;
+                if (color[v] == -1) {
+                    color[v] = color[u] ^ 1;
+                    queue.offer(v);
+                }
+            }
+        }
+        return true;
 	}
 
 	
