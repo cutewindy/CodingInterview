@@ -43,6 +43,8 @@ public class AddNumberinaString {
 		// TODO Auto-generated method stub
 		AddNumberinaString result = new AddNumberinaString();
 		System.out.println(result.addNumberinaString("asv123bjh^-25j2"));
+		System.out.println(result.addNumberinaString("12abc3def5"));
+		System.out.println(result.addNumberinaString("10abc-5ghi3xyz"));
 	}
 
 }

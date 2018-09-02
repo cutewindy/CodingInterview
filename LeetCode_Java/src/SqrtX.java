@@ -17,18 +17,16 @@ public class SqrtX {
 	 */
 	public int sqrtX(int x) {
 		if (x <= 0) return 0;
-		int start = 1;
-		int end = x;
-		while (start + 1 < end) {
-			int mid = start + (end - start) / 2;
-			if ((long) mid * mid < x) {
-				start = mid;
-			}
-			else {
-				end = mid;
-			}
-		}
-		return (long) end * end <= x ? end : start;
+        int start = 1;
+        int end = x;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if ((long) mid * mid == x) return mid;
+            else if ((long) mid * mid < x) start = mid;
+            else end = mid;
+        }
+        if ((long) end * end <= x) return end;
+        return start;
 	}
 
 	public static void main(String[] args) {

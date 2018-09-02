@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,6 +58,7 @@ public class NQueens {
 	}
 	
 	private boolean isValidPos(int[] QueensPos, int row, int col) {
+		System.out.println("row: " + row + " col: " + col + " " + Arrays.toString(QueensPos));
 		for (int i = 0; i < row; i++) {
 			int j = QueensPos[i];
 			if (j == col || j - col == i - row || j - col == -(i - row)) {
