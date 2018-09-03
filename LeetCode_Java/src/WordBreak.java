@@ -15,6 +15,72 @@ import java.util.Set;
  */
 public class WordBreak {
 	
+    class TrieNode {
+        char val;
+        boolean isWord;
+        TrieNode[] children;
+        public TrieNode(char val) {
+            this.val = val;
+            this.isWord = false;
+            this.children = new TrieNode[256];
+        }
+    }
+    
+    class Trie {
+        TrieNode root;
+        
+        public Trie() {
+            root = new TrieNode('/');
+        }
+        
+        public void insert(String word) {
+            if (word == null || word.length() == 0) return;
+            TrieNode curr = root;
+            for (char c: word.toCharArray()) {
+                if (curr.children[c] == null) curr.children[c] = new TrieNode(c);
+                curr = curr.children[c];
+            }
+            curr.isWord = true;
+        }
+        
+        public boolean search(String word) {
+            if (word == null || word.length() == 0) return false;
+            TrieNode curr = root;
+            for (char c: word.toCharArray()) {
+                if (curr.children[c] == null) return false;
+                curr = curr.children[c];
+            }
+            return curr.isWord;
+        }
+    }
+	
+	/**
+	 * Method3: Trie(TLE)
+	 * @param String s, Set<String> wordDict
+	 * @return boolean
+	 * Time: O(n^2)
+	 * Space: O(n)
+	 */
+	public boolean wordBreakII(String s, Set<String> wordDict) {
+        if (s == null || s.length() == 0) return true;	
+        Trie trie = new Trie();
+        for (String word: wordDict) {
+            trie.insert(word);
+        }
+        return dfs(s, 0, trie);
+    }
+    
+    private boolean dfs(String s, int start, Trie trie) {
+        if (start == s.length()) return true;
+        for (int i = start; i < s.length(); i++) {
+            String subStr = s.substring(start, i + 1);
+            if (trie.search(subStr) && dfs(s, i + 1, trie)) {
+                return true;
+            }
+        }
+        return false;
+	}
+	
 	
 	/**
 	 * Method2: DP: dp[i]: whether s[0..i-1] can be segmented with dictionary words.
@@ -73,6 +139,7 @@ public class WordBreak {
 		wordDict.add("code");
 		System.out.println(result.wordBreak("leetcode", wordDict));
 		System.out.println(result.wordBreakI("leetcode", wordDict));
+		System.out.println(result.wordBreakII("leetcode", wordDict));
 	}
 
 }
