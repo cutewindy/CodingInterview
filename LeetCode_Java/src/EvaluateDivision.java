@@ -61,7 +61,6 @@ public class EvaluateDivision {
 	
 	private double dfs(String u, String dst, Map<String, Map<String, Double>> graph, Set<String> visited) {
 		if (u.equals(dst)) return 1.0;
-		if (visited.contains(u)) return -1.0;
 		for (String v: graph.get(u).keySet()) {
 			if (visited.contains(v)) continue;
 			visited.add(u);
