@@ -26,21 +26,25 @@ public class InsertInterval {
 	 * Space: O(1)
 	 */
 	public List<Interval> insertIntervalI(List<Interval> intervals, Interval newInterval) {
-        List<Interval> result = new ArrayList<>();
-        for (Interval i: intervals) {
-        	if (newInterval == null || i.end < newInterval.start) result.add(i);
-        	else if (i.start > newInterval.end) {
-        		result.add(newInterval);
-        		result.add(i);
-        		newInterval = null;
-        	}
-        	else {
-        		newInterval.start = Math.min(i.start, newInterval.start);
-        		newInterval.end = Math.max(i.end, newInterval.end);
-        	}
+        if (newInterval == null) return intervals;
+        List<Interval> res = new ArrayList<>();
+        int i = 0;
+        // add all the intervals ending before newInterval starts
+        while (i < intervals.size() && intervals.get(i).end < newInterval.start) {
+            res.add(intervals.get(i++));
         }
-        if (newInterval != null) result.add(newInterval);
-        return result;
+        // merge all overlapping intervals to one considering newInterval
+        while (i < intervals.size() && intervals.get(i).start <= newInterval.end) {
+            newInterval.start = Math.min(intervals.get(i).start, newInterval.start);
+            newInterval.end = Math.max(intervals.get(i).end, newInterval.end);
+            i++;
+        }
+        res.add(newInterval); // add the union of intervals we got
+        // add all the rest
+        while (i < intervals.size()) {
+            res.add(intervals.get(i++));
+        }
+        return res;
 	}
 	
 	
