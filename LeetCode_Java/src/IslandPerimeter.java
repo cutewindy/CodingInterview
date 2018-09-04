@@ -21,7 +21,7 @@ public class IslandPerimeter {
 
 	
 	/**
-	 * Brute force
+	 * Approach2: Brute force
 	 * 1. Loop over the matrix and count the number of islands;
 	 * 2. If the current dot is an island, count if it has any down neighbor or right neighbor;
 	 * 3. The result is islands * 4 - neighbors * 2.
@@ -30,7 +30,7 @@ public class IslandPerimeter {
 	 * Time: O(m * n)
 	 * Space: O(1)
 	 */
-	public int islandPerimeter(int[][] grid) {
+	public int islandPerimeterI(int[][] grid) {
 		if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
 		int islands = 0;
 		int neighbors = 0;
@@ -48,10 +48,42 @@ public class IslandPerimeter {
 		return islands * 4 - neighbors * 2;
 	}
 	
+	
+	/**
+	 * Approach1: Brute force
+	 * @param int[][] grid
+	 * @return int
+	 * Time: O(m * n * 4)
+	 * Space: O(1)
+	 */
+	public int islandPerimeter(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int res = 0;
+        int m = grid.length;
+        int n = grid[0].length;
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) continue;
+                for (int k = 0; k < 4; k++) {
+                    if (isValid(grid, i + dx[k], j + dy[k])) res++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    private boolean isValid(int[][] grid, int i, int j) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) return true;
+        return false;
+    }
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		IslandPerimeter result = new IslandPerimeter();
 		System.out.println(result.islandPerimeter(new int[][] {{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}}));
+		System.out.println(result.islandPerimeterI(new int[][] {{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}}));
 	}
 
 }
