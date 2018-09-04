@@ -27,6 +27,47 @@ import java.util.Queue;
 public class MaxAreaofIsland {
 	
 	/**
+	 * 如果左边界和右边界是相连，上边界和下边界相连
+	 * @param int[][] grid
+	 * @return int
+	 * Time: O(m*n)
+	 * Space: O(m*n)
+	 * Stack space: O(m*n)
+	 */
+    public int maxAreaofIslandII(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;	
+		int result = 0;
+		int m = grid.length;
+		int n = grid[0].length;
+		int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (grid[i][j] == 0) continue;
+				int sum = 0;
+				Queue<Integer> queue = new LinkedList<>();
+				queue.offer(i * n + j);
+				while (!queue.isEmpty()) {
+					int pos = queue.poll();
+					int row = pos / n;
+					int col = pos % n;
+					sum++;
+					grid[row][col] = 0;
+					for (int k = 0; k < 4; k++) {
+						int nextRow = (row + dx[k] + m) % m;
+						int nextCol = (col + dy[k] + n) % n;
+						if (grid[nextRow][nextCol] == 0) continue;
+						queue.offer(nextRow * n + nextCol);
+						grid[nextRow][nextCol] = 0;
+					}
+				}
+				result = Math.max(sum, result);
+			}
+		}
+		return result;
+    }
+	
+	/**
 	 * Method2: DFS
 	 * @param int[][] grid
 	 * @return int
@@ -80,6 +121,8 @@ public class MaxAreaofIsland {
 		int result = 0;
 		int m = grid.length;
 		int n = grid[0].length;
+		int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < n; j++) {
 				if (grid[i][j] == 0) continue;
@@ -92,21 +135,13 @@ public class MaxAreaofIsland {
 					int col = pos % n;
 					sum++;
 					grid[row][col] = 0;
-					if (row - 1 >= 0 && grid[row - 1][col] == 1) {
-						queue.offer((row - 1) * n + col);
-						grid[row - 1][col] = 0;
-					}
-					if (col + 1 < n && grid[row][col + 1] == 1) {
-						queue.offer(row * n + (col + 1));
-						grid[row][col + 1] = 0;
-					}
-					if (row + 1 < m && grid[row + 1][col] == 1) {
-						queue.offer((row + 1) * n + col);
-						grid[row + 1][col] = 0;
-					}
-					if (col - 1 >= 0 && grid[row][col - 1] == 1) {
-						queue.offer(row * n + (col - 1));
-						grid[row][col - 1] = 0;
+					for (int k = 0; k < 4; k++) {
+						int nextRow = row + dx[k];
+						int nextCol = col + dy[k];
+						if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || 
+								grid[nextRow][nextCol] == 0) continue;
+						queue.offer(nextRow * n + nextCol);
+						grid[nextRow][nextCol] = 0;
 					}
 				}
 				result = Math.max(sum, result);
@@ -134,6 +169,9 @@ public class MaxAreaofIsland {
 		                                                   	   {0,0,0,0,0,0,0,0,0,0,1,0,0},
 		                                                	   {0,0,0,0,0,0,0,1,1,1,0,0,0},
 		                                                	   {0,0,0,0,0,0,0,1,1,0,0,0,0}}));
+		System.out.println(result.maxAreaofIslandII(new int[][] {{1, 0, 0, 0},
+																{0, 0, 1, 1},
+																{1, 1, 0, 0}}));
 	}
 
 }
