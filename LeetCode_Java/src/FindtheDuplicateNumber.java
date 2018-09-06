@@ -59,7 +59,7 @@ public class FindtheDuplicateNumber {
 			return 0;
 		}
 		int start = 1;
-		int end = nums.length - 1;
+		int end = nums.length;
 		while (start + 1 < end) {
 			int mid = start + (end - start) / 2;
 			int count = 0;

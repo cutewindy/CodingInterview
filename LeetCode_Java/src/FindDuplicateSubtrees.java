@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Given a binary tree, return all duplicate subtrees. For each kind of duplicate subtrees, you only 
@@ -44,7 +46,7 @@ public class FindDuplicateSubtrees {
     
     private String dfs(TreeNode root, Map<String, Integer> map, List<TreeNode> res) {
         if (root == null) return "";
-        String str = root.val + "," + dfs(root.left, map, res) + "," + dfs(root.right, map, res);
+        String str = root.val + "," + dfs(root.left, map, res) + "," + dfs(root.right, map, res); // can't be left+root+right
         if (!map.containsKey(str)) map.put(str, 0);
         map.put(str, map.get(str) + 1);
         if (map.get(str) == 2) res.add(root);
@@ -60,22 +62,25 @@ public class FindDuplicateSubtrees {
 	 */
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         if (root == null) return new ArrayList<>();
+        Set<TreeNode> set = new HashSet<>();
+        dfs(root, new HashMap<Integer, List<TreeNode>>(), set);
         List<TreeNode> res = new ArrayList<>();
-        dfs(root, new HashMap<TreeNode, Integer>(), new HashMap<Integer, List<TreeNode>>(), res);
+        for (TreeNode node: set) {
+        	res.add(node);
+        }
         return res;
     }
     
-    private void dfs(TreeNode root, Map<TreeNode, Integer> count, Map<Integer, List<TreeNode>> map, List<TreeNode> res) {
+    private void dfs(TreeNode root, Map<Integer, List<TreeNode>> map, Set<TreeNode> set) {
     	if (root == null) return;
-    	dfs(root.left, count, map, res);
-    	dfs(root.right, count, map, res);
+    	dfs(root.left, map, set);
+    	dfs(root.right, map, set);
     	if (map.containsKey(root.val)) {
     		for (TreeNode root1: map.get(root.val)) {
-    			if (count.get(root1) == 1 && isSame(root, root1)) {
-    				res.add(root);
-    				count.put(root1, 2);
-    				break;
-    			}
+//    			if (isSame(root, root1) && set.contains(o)) {
+//    				set.add(root);
+//    				break;
+//    			}
     		}
     	}
     	
