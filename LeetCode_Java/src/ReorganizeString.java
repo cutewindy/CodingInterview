@@ -27,15 +27,15 @@ public class ReorganizeString {
 	 * Time: O(nlog(n))
 	 * Space: O(n)
 	 */
-	public String reorganizeString(String s) {
-		if (s == null || s.length() == 0) return "";
+	public String reorganizeString(String S) {
+		if (S == null || S.length() == 0) return "";
 		int[] count = new int[26];
-		for (char c: s.toCharArray()) {
+		for (char c: S.toCharArray()) {
 			count[c - 'a']++;
-			if (count[c - 'a'] > (s.length() + 1) / 2) return "";  // Impossible to form a solution
+			if (count[c - 'a'] > (S.length() + 1) / 2) return "";  // Impossible to form a solution
 		} 
 		
-		PriorityQueue<int[]> maxHeap = new PriorityQueue<>(10, new Comparator<int[]>() {
+		PriorityQueue<int[]> maxHeap = new PriorityQueue<>(new Comparator<int[]>() {
 			@Override
 			public int compare(int[] a, int[] b) {
 				return b[1] - a[1];
@@ -63,6 +63,41 @@ public class ReorganizeString {
 		
 		return sb.toString();
 	}
+	
+//    public String reorganizeString(String S) {
+//        if (S == null || S.length() == 0) return "";
+//        Map<Character, Integer> count = new HashMap<>();
+//        for (char c: S.toCharArray()) {
+//            if (!count.containsKey(c)) count.put(c, 0);
+//            count.put(c, count.get(c) + 1);
+//            if (count.get(c) > (S.length() + 1) / 2) return "";
+//        }
+//        PriorityQueue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<>(
+//            new Comparator<Map.Entry<Character, Integer>>() {
+//                @Override
+//                public int compare(Map.Entry<Character, Integer> e1, Map.Entry<Character, Integer> e2) {
+//                    return e2.getValue() - e1.getValue();
+//                }
+//            });
+//        maxHeap.addAll(count.entrySet());
+//        StringBuilder sb = new StringBuilder();
+//        while (!maxHeap.isEmpty()) {
+//            Map.Entry<Character, Integer> first = maxHeap.poll();
+//            if (sb.length() == 0 || sb.charAt(sb.length() - 1) != first.getKey()) {
+//                sb.append(first.getKey());
+//                first.setValue(first.getValue() - 1);
+//                if (first.getValue() != 0) maxHeap.offer(first);
+//            }
+//            else {
+//                Map.Entry<Character, Integer> second = maxHeap.poll();
+//                sb.append(second.getKey());
+//                second.setValue(second.getValue() - 1);
+//                if (second.getValue() != 0) maxHeap.offer(second);
+//                maxHeap.offer(first);
+//            }
+//        }
+//        return sb.length() == S.length() ? sb.toString() : "";
+//    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
