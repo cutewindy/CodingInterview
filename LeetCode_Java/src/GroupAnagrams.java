@@ -22,6 +22,36 @@ import java.util.Map;
 public class GroupAnagrams {
 	
 	/**
+	 * Approach2: 
+	 * Assign a prime number for a to z, and then multiply all prime numbers together to form a hash key.
+	 * @param String strs
+	 * @return List<List<String>>
+	 * Time: O(n * k), k is the average length of string in strs
+	 * Space: O(n) 
+	 */
+	public List<List<String>> groupAnagramsI(String[] strs) {
+		List<List<String>> res = new ArrayList<>();
+		if (strs == null || strs.length == 0) return res;
+		int[] primes = new int[] {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103};
+		Map<Integer, List<String>> map = new HashMap<>();
+		for (String str: strs) {
+			int key = 1;
+			for (char c: str.toCharArray()) {
+				key *= primes[c - 'a'];
+			}
+			if (!map.containsKey(key)) map.put(key, new ArrayList<String>());
+			map.get(key).add(str);
+		}
+		for (List<String> list: map.values()) {
+			Collections.sort(list);
+			res.add(list);
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * Approach1: 
 	 * Using HashMap<String, List<String>>, key is the sorted string, value is the original string
 	 * @param String strs
 	 * @return List<List<String>>
@@ -59,7 +89,7 @@ public class GroupAnagrams {
 		GroupAnagrams res = new GroupAnagrams();
 		String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
 		System.out.println(res.groupAnagrams(strs));
-		
+		System.out.println(res.groupAnagramsI(strs));
 	}
 
 }
