@@ -16,9 +16,68 @@ import java.util.Stack;
  *
  */
 public class AddTwoNumbersII {
-	
+
 	/**
-	 * Stack
+	 * Approach2: reverse linkedlist + AddTwoNumbers
+	 * @param ListNode l1, ListNode l2
+	 * @return ListNode
+	 * Time: O(m + n)
+	 * Space: O(m + n)
+	 */
+	public ListNode addTwoNumbersIII(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        l1 = reverse(l1);
+        l2 = reverse(l2);
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while (l1 != null && l2 != null) {
+            int sum = l1.val + l2.val + carry;
+            curr.next = new ListNode(sum % 10);
+            carry = sum / 10;
+            curr = curr.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+        while (l1 != null) {
+            int sum = l1.val + carry;
+            curr.next = new ListNode(sum % 10);
+            carry = sum / 10;
+            curr = curr.next;
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            int sum = l2.val + carry;
+            curr.next = new ListNode(sum % 10);
+            carry = sum / 10;
+            curr = curr.next;
+            l2 = l2.next;
+        }
+        if (carry != 0) {
+            curr.next = new ListNode(carry);
+        }
+        return reverse(dummy.next);
+    }
+    
+    private ListNode reverse(ListNode head) {
+        if (head == null) return null;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode tail = head;
+        while (tail.next != null) {
+            ListNode curr = tail.next;
+            ListNode next = curr.next;
+            curr.next = dummy.next;
+            dummy.next = curr;
+            tail.next = next;
+        }
+        return dummy.next;
+    }
+	
+    
+	/**
+	 * Approach1: Stack
 	 * @param ListNode l1, ListNode l2
 	 * @return ListNode
 	 * Time: O(m + n)
@@ -82,6 +141,7 @@ public class AddTwoNumbersII {
 		ListNode l1 = ListNode.generateLinkedList(new int[] {7, 2, 4, 3});
 		ListNode l2 = ListNode.generateLinkedList(new int[] {5, 6, 4});
 		ListNode.printLinkedList(result.addTwoNumbersII(l1, l2));
+		ListNode.printLinkedList(result.addTwoNumbersIII(l1, l2));
 	}
 
 }
