@@ -13,7 +13,40 @@ import java.util.Stack;
 public class RecoverBinarySearchTree {
 
 	/**
-	 * DFS(Iteration: Inorder,Template) Using inorder traverse to find the two wrong nodes. 
+	 * Approach: DFS(Recursion: Inorder,Template) Using inorder traverse to find the two wrong nodes. 
+	 * If pre>curr, f1=pre. After f1 been found, if pre>curr, f2 = curr.
+	 * @param TreeNode root
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+    TreeNode p1;
+    TreeNode p2;
+    TreeNode prev;
+	public void recoverBinarySearchTreeI(TreeNode root) {
+        if (root == null) return;
+        p1 = null;
+        p2 = null;
+        prev = null;
+        dfs(root);
+        int temp = p1.val;
+        p1.val = p2.val;
+        p2.val = temp;
+    }
+    private void dfs(TreeNode root) {
+        if (root == null) return;
+        dfs(root.left);
+        if (prev != null) {
+            if (p1 == null && prev.val >= root.val) p1 = prev;
+            if (p1 != null && prev.val >= root.val) p2 = root;
+        }
+        prev = root;
+        dfs(root.right);	
+	}
+	
+	
+	
+	/**
+	 * Approach: DFS(Iteration: Inorder,Template) Using inorder traverse to find the two wrong nodes. 
 	 * If pre>curr, f1=pre. After f1 been found, if pre>curr, f2 = curr.
 	 * @param TreeNode root
 	 * Time: O(n)

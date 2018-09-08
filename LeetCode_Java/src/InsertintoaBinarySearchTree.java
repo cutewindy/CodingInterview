@@ -31,9 +31,31 @@
  */
 public class InsertintoaBinarySearchTree {
 	
-	
 	/**
-	 * BST
+	 * Approach2: BST Iteration
+	 * @param TreeNode root, int val
+	 * @return TreeNode
+	 * Time: O(log(n))
+	 * Space: O(1)
+	 */
+    public TreeNode insertintoaBSTI(TreeNode root, int val) {
+        if (root == null) return new TreeNode(val);
+        TreeNode prev = null;
+        TreeNode curr = root;
+        while (curr != null) {
+            prev = curr;
+            if (curr.val > val) curr = curr.left;
+            else curr = curr.right;
+        }
+        if (prev.val > val) prev.left = new TreeNode(val);
+        else prev.right = new TreeNode(val);
+        return root;
+    }
+    
+    
+    
+	/**
+	 * Approach1: BST Recursion
 	 * @param TreeNode root, int val
 	 * @return TreeNode
 	 * Time: O(log(n))
