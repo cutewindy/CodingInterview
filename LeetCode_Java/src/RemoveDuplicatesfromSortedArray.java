@@ -21,16 +21,21 @@ public class RemoveDuplicatesfromSortedArray {
 	 * Space: O(1)
 	 */
 	public int removeDuplicatesfromSortedArray(int[] nums) {
-		if (nums == null || nums.length == 0) {
-			return 0;
-		}
-		int i = 1;
-		for (int j = 1; j < nums.length; j++) {
-			if (nums[j] != nums[i]) {  // means n[j] is not duplicate value, swap n[j] with n[i]
-				nums[i++] = nums[j];
-			}
-		}
-		return i;
+        if (nums == null || nums.length == 0) return 0;
+        int i = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[j] != nums[i]) {
+                swap(nums, ++i, j);
+            }
+        }
+        return i + 1;
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+        if (i == j) return;
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
 	}
 	
 	public static void main(String[] args) {
