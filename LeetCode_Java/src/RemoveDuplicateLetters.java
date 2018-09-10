@@ -15,8 +15,9 @@ import java.util.Stack;
  *
  */
 public class RemoveDuplicateLetters {
-
+		
 	/**
+	 * Stack
 	 * Stack: Using int[26] to record the frequency of each char in string and boolean[26] to record 
 	 * whether the char is in stack. If c doesn't appear in stack && c < stack.peek() && the left 
 	 * string has stack.peek(), we can pop it from stack without matter. 
@@ -24,7 +25,7 @@ public class RemoveDuplicateLetters {
 	 * @param String s
 	 * @return String
 	 * Time: O(n)
-	 * Space: O(n)
+	 * Space: O(26)
 	 */
 	public String removeDuplicatedLetters(String s) {
 		if (s == null || s.length() == 0) {
