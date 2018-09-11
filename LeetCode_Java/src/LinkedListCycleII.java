@@ -6,7 +6,11 @@
  *
  */
 public class LinkedListCycleII {
-	
+	// prove:
+	// credit: "https://www.qiujiawei.com/leetcode-problem-142/"
+	// slow: L1 + L2
+	// fast: L1 + L2 + n * C
+	// 2*slow=fast ==> 2*(L1+L2)=L1+L2+n*C ==> L1=(n-1)*C+(C-L2)
 	
 	/**
 	 * Two pointers: slow and fast + math
