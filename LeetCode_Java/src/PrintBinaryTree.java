@@ -72,7 +72,7 @@ public class PrintBinaryTree {
 		int w = (1 << h) - 1;
 		List<String> rows = new ArrayList<>();
 		for (int j = 0; j < w; j++) rows.add("");
-		for (int i = 0; i < h; i++) res.add(new ArrayList<>(rows));
+		for (int i = 0; i < h; i++) res.add(new ArrayList<>(rows)); // should add a new one, take care
 		fill(root, 0, 0, w - 1, res);
 		return res;
 	}
