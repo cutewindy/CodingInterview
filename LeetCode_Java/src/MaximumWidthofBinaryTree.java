@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -53,9 +55,32 @@ import java.util.Queue;
  */
 public class MaximumWidthofBinaryTree {
 	
-
 	/**
-	 * BFS
+	 * Approach2: DFS
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(log(n))
+	 * Stack space: O(log(n))
+	 */
+    public int maximumWidthofBinaryTreeI(TreeNode root) {
+        if (root == null) return 0;	
+        int[] res = new int[1];
+        dfs(root, 1, 0, new ArrayList<Integer>(), res);
+        return res[0];
+    }
+    
+    private void dfs(TreeNode root, int pos, int level, List<Integer> lefts, int[] res) {
+    	if (root == null) return;
+    	if (lefts.size() <= level) lefts.add(pos);  // add left most node
+    	res[0] = Math.max(pos - lefts.get(level) + 1, res[0]);
+    	dfs(root.left, pos * 2, level + 1, lefts, res);
+    	dfs(root.right, pos * 2 + 1, level + 1, lefts, res);
+    }
+
+    
+	/**
+	 * Approach1: BFS
 	 * traverse all the node in the tree in level order(Here I use one Queue to store each level's 
 	 * nodes and positions. The time I traverse each level is the queue's size(the number of nodes from 
 	 * upper level)). If the position of the parent node is 'n', then the left child is '2 * n' and 
@@ -102,6 +127,7 @@ public class MaximumWidthofBinaryTree {
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 3, 2, 5});
 		TreeNode.printCBT(root);
 		System.out.println(result.maximumWidthofBinaryTree(root));
+		System.out.println(result.maximumWidthofBinaryTreeI(root));
 	}
 
 }
