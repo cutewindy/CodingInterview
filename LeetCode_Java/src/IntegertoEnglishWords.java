@@ -25,39 +25,28 @@ public class IntegertoEnglishWords {
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
+    String[] nums = {"", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine ", "Ten ", "Eleven ",                          "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen "};
+    String[] tens = {"", "", "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety "};
+    String[] thousand = {"", "Thousand ", "Million ", "Billion "};
 	public String integertoEnglishWords(int num) {
-		if (num == 0) {
-			return "Zero";
-		}
-		StringBuilder result = new StringBuilder();
-		if (num >= 1000000000) {
-			result.append(helper(num / 1000000000)).append("Billion ");
-			num %= 1000000000;
-		}
-		if (num >= 1000000) {
-			result.append(helper(num / 1000000)).append("Million ");
-			num %= 1000000;
-		}
-		if (num >= 1000) {
-			result.append(helper(num / 1000)).append("Thousand ");
-			num %= 1000;
-		}
-		result.append(helper(num));
-		return result.substring(0, result.length() - 1).toString();
-	}
-	
-	private String helper(int num) {
-		StringBuilder sb = new StringBuilder();
-		String[] nums = {"", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", 
-				"Nine ", "Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", 
-				"Seventeen ", "Eighteen ", "Nineteen "};
-		String[] tens = {"", "", "Twenty ", "Thirty ", "Forty ", "Fifty ","Sixty ", "Seventy ", "Eighty ", 
-				"Ninety "};
-		int a = num / 100;
-		int b = num % 100;
-		sb.append(a == 0 ? "" : nums[a] + "Hundred ");
-		sb.append(b < 20 ? nums[b] : tens[b / 10] + nums[b % 10]);
-		return sb.toString();
+        if (num == 0) return "Zero";
+        int i = 0;
+        String word = "";
+        while (num != 0) {
+            if (num % 1000 != 0) word = helper(num % 1000) + thousand[i] + word;
+            num /= 1000;
+            i++;
+        }
+        return word.trim();
+    }
+    
+    private String helper(int num) {
+        StringBuilder sb = new StringBuilder();
+        int a = num / 100;
+        int b = num % 100;
+        if (a != 0) sb.append(nums[a]).append("Hundred ");
+        sb.append(b < 20 ? nums[b] : tens[b / 10] + nums[b % 10]);
+        return sb.toString();
 	}
 
 	public static void main(String[] args) {
