@@ -25,45 +25,21 @@ public class DecodeWays {
 	 * Space: O(n)
 	 */
 	public int decodeWays(String s) {
-		if (s == null || s.length() == 0 || s.charAt(0) == '0') {
-			return 0;
-		}
-		int[] dp = new int[s.length() + 1];
-		// init
-		dp[0] = 1;
-		dp[1] = 1;
-		// update
-		for (int i = 2; i < s.length() + 1; i++) {
-			if (s.charAt(i - 1) == '0') {
-				if (s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2') {
-					dp[i] = dp[i - 2];
-				}
-				else {
-					return 0;
-				}
-			}
-			else {
-				dp[i] = s.charAt(i - 2) == '1' || (s.charAt(i - 2) == '2' && s.charAt(i - 1) < '7') ?
-						dp[i - 1] + dp[i - 2] : dp[i - 1];
-			}
-		}
-		return dp[s.length()];
-		
-		
-//        if (s == null || s.length() == 0) return 0;
-//        int res = 0;
-//        char[] S = s.toCharArray();
-//        int n = S.length;
-//        int[] dp = new int[n + 1];
-//        dp[0] = 1;
-//        dp[1] = S[0] == '0' ? 0 : 1;                 // take care
-//        for (int i = 2; i <= n; i++) {
-//            int curr = S[i - 1] - '0';
-//            int prev = S[i - 2] - '0';
-//            if (curr > 0) dp[i] += dp[i - 1];                            // one digit
-//            if (prev != 0 && prev * 10 + curr < 27) dp[i] += dp[i - 2];  // two digits
-//        }
-//        return dp[n];
+        if (s == null || s.length() == 0) return 0;
+        if (s.charAt(0) == '0') return 0;
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        // init
+        dp[0] = 1;
+        dp[1] = 1;
+        
+        // update
+        for (int i = 2; i <= n; i++) {
+            if (s.charAt(i - 1) == '0' && s.charAt(i - 2) != '1' && s.charAt(i - 2) != '2') return 0;
+            if (s.charAt(i - 1) != '0') dp[i] = dp[i - 1];
+            if (s.charAt(i - 2) == '1' || s.charAt(i - 2) == '2' && s.charAt(i - 1) <= '6') dp[i] += dp[i - 2];
+        }
+        return dp[n];
 	}
 
 	public static void main(String[] args) {

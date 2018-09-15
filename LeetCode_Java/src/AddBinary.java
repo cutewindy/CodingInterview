@@ -16,12 +16,8 @@ public class AddBinary {
 	 * Space: O(1)
 	 */
 	public String addBinary(String a, String b) {
-		if (a == null || a.length() == 0) {
-			return b;
-		}
-		else if (b == null || b.length() == 0) {
-			return a;
-		}
+		if (a == null || a.length() == 0) return b;
+		else if (b == null || b.length() == 0) return a;
 		StringBuilder result = new StringBuilder();
 		int iA = a.length() - 1;
 		int iB = b.length() - 1;
@@ -30,8 +26,8 @@ public class AddBinary {
 			int numA = iA >= 0 ? a.charAt(iA--) - '0' : 0;
 			int numB = iB >= 0 ? b.charAt(iB--) - '0' : 0;
 			int sum = numA + numB + carry;
-			result.append(sum & 1);
-			carry = sum >> 1;	
+			result.append(sum % 2);
+			carry = sum / 2;	
 //			iA--;
 //			iB--;
 		}		
