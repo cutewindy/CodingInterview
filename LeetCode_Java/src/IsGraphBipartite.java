@@ -46,7 +46,7 @@ public class IsGraphBipartite {
 	 * staining method
 	 * @param int[][] graph
 	 * @return boolean
-	 * Time: O(v*e)
+	 * Time: O(v+e)
 	 * Space: O(e)
 	 */
 	public boolean isGraphBipartite(int[][] graph) {

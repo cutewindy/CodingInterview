@@ -42,7 +42,7 @@ public class LRUCache {
 	
 	
 	/**
-	 * Method1: Double linked list: node in hash is the curr Node info.
+	 * Method1: Double linked list + HashMap: node in hash is the curr Node info.
 	 * DummyHead.next of list is the oldest element. 
 	 * Tail is the last element of the list.
 	 * @author wendi
@@ -61,7 +61,7 @@ public class LRUCache {
 		}
 	}
 	private int capacity;
-	private Map<Integer, Node> hash; // node in hash is the info of curr node
+	private Map<Integer, Node> hash; // (key, val) = (key, node)
 	private Node dummyHead;
 	private Node tail;
 	
