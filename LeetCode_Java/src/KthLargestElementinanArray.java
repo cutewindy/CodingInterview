@@ -18,7 +18,7 @@ public class KthLargestElementinanArray {
 	 * Method3: quick select, divide and conquer
 	 * @param int[] nums, int k
 	 * @return int
-	 * Time: O(n)
+	 * Time: ave: O(n), worse case: O(n^2)
 	 * Space: O(1)
 	 */
 	public int kthLargestElementinanArrayIII(int[] nums, int k) {
