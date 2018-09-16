@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 /**
@@ -108,27 +105,25 @@ public class SerializeandDeserializeBinaryTree {
 	 */
 	// Encodes a tree to a single string.
 	public String serialize(TreeNode root) {
-		if (root == null) {
-			return "";
-		}
-		StringBuilder data = new StringBuilder();
-		helperS(root, data);
-		return data.toString().substring(0, data.length() - 1);
-	}
-	
-	private void helperS(TreeNode root, StringBuilder data) {
-		if (root == null) {
-			data.append("#").append(",");
-			return;
-		}
-		data.append(root.val).append(",");
-		helperS(root.left, data);
-		helperS(root.right, data);
+        if (root == null) return "";
+        StringBuilder sb = new StringBuilder();
+        dfs(root, sb);
+        return sb.toString().trim();
+    }
+    
+    private void dfs(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            sb.append("#").append(" ");
+            return;
+        }
+        sb.append(root.val).append(" ");
+        dfs(root.left, sb);
+        dfs(root.right, sb);
 	}
 	
 	// Decodes your encoded data to tree.
 	/**
-	 * Method1: Use a list to store the pre-order traversal and since we have "#" as null node, we 
+	 * Method1: Use a string array to store the pre-order traversal and since we have "#" as null node, we 
 	 * know exactly how to where to end building subtress.
 	 * @param String data
 	 * @return TreeNode
@@ -137,36 +132,37 @@ public class SerializeandDeserializeBinaryTree {
 	 * Stack space: O(log(n))
 	 */
 	public TreeNode deserialize(String data) {
-		if (data == null || data.length() == 0) {
-			return null;
-		}
-		List<String> newData = new ArrayList<>(Arrays.asList(data.split(",")));
-		return helperD(newData);
-	}
-	
-	private TreeNode helperD(List<String> data) {
-		if (data == null || data.size() == 0) return null;
-		String curr = data.remove(0);
-		if (curr.equals("#")) {
-			return null;
-		}
-		TreeNode root = new TreeNode(Integer.valueOf(curr));
-		root.left = helperD(data);
-		root.right = helperD(data);
-		return root;
+        if (data == null || data.length() == 0) return null;
+        String[] datas = data.split(" ");
+        int[] index = new int[1];
+        return dfs(datas, index);
+    }
+    
+    private TreeNode dfs(String[] datas, int[] index) {
+        if (index[0] == datas.length || datas[index[0]].equals("#")) return null;
+        TreeNode root = new TreeNode(Integer.valueOf(datas[index[0]]));
+        index[0]++;
+        root.left = dfs(datas, index);
+        index[0]++;
+        root.right = dfs(datas, index);
+        return root;
 	}
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SerializeandDeserializeBinaryTree result = new SerializeandDeserializeBinaryTree();
+		
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
 		TreeNode.printCBT(root);
 		String data = result.serialize(root);
 		System.out.println(data);
 		TreeNode.printCBT(result.deserialize(data));
 		
+		System.out.println("============================");
+		
 		TreeNode root1 = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
+		TreeNode.printCBT(root1);
 		String dataI = result.serializeI(root1);
 		System.out.println(dataI);
 		TreeNode.printCBT(result.deserializeI(dataI));
