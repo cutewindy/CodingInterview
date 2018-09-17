@@ -27,34 +27,31 @@ public class LetterCombinationsofaPhoneNumber {
 	 * Space:O(n), n level depth stack space, not included result(O(k^n))
 	 */
 	public List<String> letterCombinationofaPhoneNumber(String digits) {
-		List<String> result = new ArrayList<>();
-		if (digits == null || digits.length() == 0) {
-			return result;
-		}
-		Map<Character, List<String>> hash = new HashMap<>();
-		hash.put('1', Arrays.asList(""));
-		hash.put('2', Arrays.asList("a", "b", "c"));
-		hash.put('3', Arrays.asList("d", "e", "f"));
-		hash.put('4', Arrays.asList("g", "h", "i"));
-		hash.put('5', Arrays.asList("j", "k", "l"));
-		hash.put('6', Arrays.asList("m", "n", "o"));
-		hash.put('7', Arrays.asList("p", "q", "r", "s"));
-		hash.put('8', Arrays.asList("t", "u", "v"));
-		hash.put('9', Arrays.asList("w", "x", "y", "z"));
-		hash.put('0', Arrays.asList(" "));
-		helper(digits, hash, "", 0, result);
-		return result;
-	}
-	
-	private void helper(String digits, Map<Character, List<String>> hash, String combo, int position, List<String> result) {
-		if (position == digits.length()) {
-			result.add(combo);
-			return;
-		}
-		List<String> letters = hash.get(digits.charAt(position));
-		for (int i = 0; i < letters.size(); i++) {
-			helper(digits, hash, combo + letters.get(i), position + 1, result);
-		}
+        List<String> res = new ArrayList<>();
+        if (digits == null || digits.length() == 0) return res;
+        Map<Character, List<Character>> map = new HashMap<>();
+        map.put('2', new ArrayList<>(Arrays.asList('a', 'b', 'c')));
+        map.put('3', new ArrayList<>(Arrays.asList('d', 'e', 'f')));
+        map.put('4', new ArrayList<>(Arrays.asList('g', 'h', 'i')));
+        map.put('5', new ArrayList<>(Arrays.asList('j', 'k', 'l')));
+        map.put('6', new ArrayList<>(Arrays.asList('m', 'n', 'o')));
+        map.put('7', new ArrayList<>(Arrays.asList('p', 'q', 'r', 's')));
+        map.put('8', new ArrayList<>(Arrays.asList('t', 'u', 'v')));
+        map.put('9', new ArrayList<>(Arrays.asList('w', 'x', 'y', 'z')));
+        dfs(digits, 0, map, new StringBuilder(), res);
+        return res;
+    }
+    
+    private void dfs(String digits, int index, Map<Character, List<Character>> map, StringBuilder sb, List<String> res) {
+        if (index == digits.length()) {
+            res.add(sb.toString());
+            return;
+        }
+        for (Character c: map.get(digits.charAt(index))) {
+            sb.append(c);
+            dfs(digits, index + 1, map, sb, res);
+            sb.setLength(sb.length() - 1);
+        }
 	}
 
 
