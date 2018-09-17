@@ -74,33 +74,35 @@ public class TrappingRainWater {
 	 * Space: O(n)
 	 */
 	public int trappingRainWater(int[] height) {
-		if (height == null || height.length < 3) {
-			return 0;
-		}
-		int result = 0;
-		Stack<Integer> stack = new Stack<>();
-		int i = 0;
-		while (i < height.length) {
-			if (stack.isEmpty() || height[i] < height[stack.peek()]) {
-				stack.push(i);
-				i++;
-			}
-			else if (height[i] > height[stack.peek()]) {
-				int bottom = height[stack.pop()];
-				if (stack.isEmpty()) continue;   // leftBount is -1 and height[-1] = 0 
-				int top = Math.min(height[stack.peek()], height[i]);
-				int width = i - stack.peek() - 1;
-				result += (top - bottom) * width;
-			}
-			else i++; // skip height[i] = height[stack.peek()]
-		}
-		return result;
+        if (height == null || height.length == 0) return 0;
+        Stack<Integer> stack = new Stack<>(); // index
+        int res = 0;
+        for (int i = 0; i < height.length;) {
+            if (stack.isEmpty() || height[i] < height[stack.peek()]) {
+                stack.push(i);
+            }
+            else if (height[i] > height[stack.peek()]) {
+                int bottom = height[stack.pop()];
+                if (stack.isEmpty()) continue; // leftBount is -1 and height[-1] = 0 
+                int left = stack.peek();
+                int right = i;
+                int top = Math.min(height[left], height[right]);
+                res += (top - bottom) * (right - left - 1);
+            }
+            else {
+                stack.pop();      // replace height[i] = height[stack.peek()]
+                stack.push(i);
+                i++;
+            }
+        }
+        return res;
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		TrappingRainWater result = new TrappingRainWater();
 		System.out.println(result.trappingRainWater(new int[] {0,1,0,2,1,0,1,3,2,1,2,1}));
+		System.out.println(result.trappingRainWater(new int[] {5,2,1,2,1,5}));
 		System.out.println(result.trappingRainWaterI(new int[] {0,1,0,2,1,0,1,3,2,1,2,1}));
 	}
 
