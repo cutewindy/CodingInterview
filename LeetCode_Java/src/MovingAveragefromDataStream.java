@@ -26,9 +26,8 @@ public class MovingAveragefromDataStream {
 	}
 
 	/**
-	 * Method2: Essentially, we just need to keep track of the sum of the current window as we go. 
-	 * This prevents an O(n) traversal over the Queue as we add new numbers to get the new average. 
-	 * If we need to evict then we just subtract that number off of our sum and divide by the size.
+	 * Method2: Using an int array to implement a window, n and insert to store the size of window 
+	 * and the position to insert.
 	 * @param int val
 	 * @return double
 	 * Time: O(1)
