@@ -91,30 +91,27 @@ public class NumberofIslands {
 	 * Stack space: O(n)
 	 */
 	public int numberofIslands(char[][] grid) {
-		if(grid == null || grid.length == 0 || grid[0].length == 0) {
-			return 0;
-		}
-		int result = 0;
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[0].length; j++) {
-				if (grid[i][j] == '1') {
-					result++;
-					helper(grid, i, j);
-				}
-			}
-		}
-		return result;
-	}
-	
-	private void helper(char[][] grid, int i, int j) {
-		if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') {
-			return;
-		}
-		grid[i][j] = '0';
-		helper(grid, i - 1, j); // up
-		helper(grid, i + 1, j); // down
-		helper(grid, i, j - 1); // left
-		helper(grid, i, j + 1); // right
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int res = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '0') continue;
+                dfs(grid, i, j);
+                res++;
+            }
+        }
+        return res;
+    }
+    
+    private void dfs(char[][] grid, int row, int col) {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length || 
+        		grid[row][col] == '0') return;
+        grid[row][col] = '0';
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        for (int k = 0; k < 4; k++) {
+            dfs(grid, row + dx[k], col + dy[k]);
+        }
 	}
 	
 	public static void main(String[] args) {
