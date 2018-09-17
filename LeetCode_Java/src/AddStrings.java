@@ -20,41 +20,23 @@ public class AddStrings {
 	 * Space: O(n1 + n2)
 	 */
 	public String addString(String num1, String num2) {
-		if (num1 == null || num1.length() == 0) {
-			return num2;
-		}
-		if (num2 == null || num2.length() == 0) {
-			return num1;
-		} 
-		StringBuilder result = new StringBuilder();
-		char[] Num1 = num1.toCharArray();
-		char[] Num2 = num2.toCharArray();
-		int i = Num1.length - 1;
-		int j = Num2.length - 1;
-		int carry = 0;
-		while (i >= 0 && j >= 0) {
-			int sum = Num1[i] - '0' + Num2[j] - '0' + carry;
-			result.append(sum % 10);
-			carry = sum / 10;
-			i--;
-			j--;
-		}
-		while (i >= 0) {
-			int sum = Num1[i] - '0' + carry;
-			result.append(sum % 10);
-			carry = sum / 10;
-			i--;
-		}
-		while (j >= 0) {
-			int sum = Num2[j] - '0' + carry;
-			result.append(sum % 10);
-			carry = sum / 10;
-			j--;
-		}
-		if (carry > 0) {   // Don't forget
-			result.append(carry);
-		}
-		return result.reverse().toString();
+		if (num1 == null || num1.length() == 0) return num2;
+		if (num2 == null || num2.length() == 0) return num1;
+        char[] array1 = num1.toCharArray();
+        char[] array2 = num2.toCharArray();
+        int i = array1.length - 1, j = array2.length - 1;
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        while (i >= 0 || j >= 0 || carry != 0) {
+            int a = i >= 0 ? array1[i] - '0' : 0;
+            int b = j >= 0 ? array2[j] - '0' : 0;
+            int sum = a + b + carry;
+            sb.append(sum % 10);
+            carry = sum / 10;
+            i--;
+            j--;
+        }
+        return sb.reverse().toString();
 	}
 
 	public static void main(String[] args) {
