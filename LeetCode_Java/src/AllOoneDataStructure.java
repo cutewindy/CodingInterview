@@ -1,3 +1,8 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Implement a data structure supporting the following operations:
  * 1. Inc(Key) - Inserts a new key with value 1. Or increments an existing key by 1. Key is 
@@ -14,13 +19,28 @@
  *
  */
 public class AllOoneDataStructure {
+	
+	class Bucket {
+		int cnt;
+		Set<String> keys;
+		Bucket prev;
+		Bucket next;
+		public Bucket(int cnt) {
+			this.cnt = cnt;
+			this.keys = new HashSet<>();
+			this.prev = null;
+			this.next = null;
+		}
+	}
 
-	/**
-	 * 
-	 */
+	Map<Integer, Bucket> buckets;  // (key, value): (cnt, Bucket)
+	Bucket dummyHead;
+	Bucket tail;
     /** Initialize your data structure here. */
     public AllOoneDataStructure() {
-        
+        this.buckets = new HashMap<>();
+        this.dummyHead = new Bucket(0);
+        this.tail = dummyHead;
     }
     
     /** Inserts a new key <Key> with value 1. Or increments an existing key by 1. */
@@ -47,5 +67,6 @@ public class AllOoneDataStructure {
 		// TODO Auto-generated method stub
 
 	}
-
 }
+
+
