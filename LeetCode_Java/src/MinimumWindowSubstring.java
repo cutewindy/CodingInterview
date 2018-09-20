@@ -52,6 +52,27 @@ public class MinimumWindowSubstring {
 		}
 		return res;
 	}
+// another version
+//    public String minWindow(String s, String t) {
+//        char[] S = s.toCharArray();
+//        char[] T = t.toCharArray();
+//        int[] charCnts = new int[256];
+//        for (char c: T) {
+//            charCnts[c]++;
+//        }
+//        int cnt = 0;
+//        String res = "";
+//        for (int start = 0, end = 0; start < S.length; start++) {
+//            while (end < S.length && cnt < T.length) {
+//                if (charCnts[S[end]]-- > 0) cnt++;
+//                end++;
+//            }
+//            if (cnt == T.length && (res.length() == 0 || end - start < res.length())) res = s.substring(start, end);
+//            if (++charCnts[S[start]] > 0) cnt--;
+//        }
+//        return res;
+//    }	
+	
 	
 	/**
 	 * Method1: slide window + hash table + list:

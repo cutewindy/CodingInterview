@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -19,36 +20,66 @@ import java.util.Stack;
  *
  */
 public class FlattenNestedListIterator {
-
-	// Approach2: Stack
-	Stack<NestedInteger> stack = null;
+	
+	// Approach2: Stack to store all the iterator
+	Stack<Iterator<NestedInteger>> stack;
+	NestedInteger nextInt;
     public FlattenNestedListIterator(List<NestedInteger> nestedList) {
     	stack = new Stack<>();
-        if (nestedList == null || nestedList.size() == 0) return;
-        for (int i = nestedList.size() - 1; i >= 0; i--) {
-        	stack.push(nestedList.get(i));
-        } 
+        stack.push(nestedList.iterator());
+        nextInt = null;
     }
 
 //    @Override
     public Integer next() {
-        if (hasNext()) {
-        	return stack.pop().getInteger();
-        }
-        return null;
+        if (nextInt == null) return null;
+        return nextInt.getInteger();
     }
 
 //    @Override
     public boolean hasNext() {
-        while (!stack.isEmpty()) {
-        	if (stack.peek().isInteger()) return true;
-        	List<NestedInteger> currList = stack.pop().getList();
-            for (int i = currList.size() - 1; i >= 0; i--) {
-            	stack.push(currList.get(i));
-            } 
-        }
-        return false;
+    	while (!stack.isEmpty()) {
+    		if (!stack.peek().hasNext()) stack.pop();
+    		else {
+    			nextInt = stack.peek().next();
+    			if (nextInt.isInteger()) return true;
+    			else stack.push(nextInt.getList().iterator());
+    		}
+    	}
+    	return false;
     }
+
+    
+	// Approach2: Stack to store all the input value
+//	Stack<NestedInteger> stack = null;
+//    public FlattenNestedListIterator(List<NestedInteger> nestedList) {
+//    	  stack = new Stack<>();
+//        if (nestedList == null || nestedList.size() == 0) return;
+//        for (int i = nestedList.size() - 1; i >= 0; i--) {
+//        	stack.push(nestedList.get(i));
+//        } 
+//    }
+//
+////    @Override
+//    public Integer next() {
+//        if (hasNext()) {
+//        	return stack.pop().getInteger();
+//        }
+//        return null;
+//    }
+//
+////    @Override
+//    public boolean hasNext() {
+//        while (!stack.isEmpty()) {
+//        	if (stack.peek().isInteger()) return true;
+//        	List<NestedInteger> currList = stack.pop().getList();
+//            for (int i = currList.size() - 1; i >= 0; i--) {
+//            	stack.push(currList.get(i));
+//            } 
+//        }
+//        return false;
+//    }
+    
     
     // Approach1: DFS + list + (Iterator)
 //    List<Integer> list;
@@ -87,16 +118,19 @@ public class FlattenNestedListIterator {
 		// TODO Auto-generated method stub
 		NestedInteger list1 = new NestedInteger();
 		list1.add(new NestedInteger(1));
-		list1.add(new NestedInteger(1));
+		list1.add(new NestedInteger(2));
 		NestedInteger list2 = new NestedInteger();
-		list2.add(new NestedInteger(1));
-		list2.add(new NestedInteger(1));
+		list2.add(new NestedInteger(3));
+		list2.add(new NestedInteger(4));
 		List<NestedInteger> nestedList = new ArrayList<>();
 		nestedList.add(list1);
-		nestedList.add(new NestedInteger(2));
+		nestedList.add(new NestedInteger(5));
 		nestedList.add(list2);		
 		NestedInteger.printNL(nestedList);
 		FlattenNestedListIterator result = new FlattenNestedListIterator(nestedList);
+		while (result.hasNext()) {
+			System.out.println(result.next());
+		}
 	}
 
 }
