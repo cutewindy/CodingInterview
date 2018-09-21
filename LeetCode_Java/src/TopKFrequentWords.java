@@ -36,8 +36,8 @@ public class TopKFrequentWords {
 	 * candidates. At the end, we pop off the heap up to k times and reverse the result.
 	 * @param String[] words, int k
 	 * @return List<String>
-	 * Time: O(n)
-	 * Space: O(nlog(k))
+	 * Time: O(nlog(k))
+	 * Space: O(n)
 	 */
 	public List<String> topKFrequentWords(String[] words, int k) {
 		List<String> result = new ArrayList<>();
