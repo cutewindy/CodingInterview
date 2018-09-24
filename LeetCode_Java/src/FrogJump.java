@@ -47,7 +47,7 @@ public class FrogJump {
 	public boolean frogJump(int[] stones) {
 		if (stones == null || stones.length == 0) return false;
 		int n = stones.length;
-		Set<Integer>[] dp = new Set[n];
+		Set<Integer>[] dp = new HashSet[n];
 		dp[0] = new HashSet<>();
 		dp[0].add(0);
 		for (int end = 1; end < n; end++) {
@@ -59,7 +59,7 @@ public class FrogJump {
 				}
 			}
 		}
-		return dp[n - 1].size() == 0 ? false : true;
+		return dp[n - 1].size() != 0;
 	}
 
 	public static void main(String[] args) {
