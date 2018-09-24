@@ -64,32 +64,30 @@ public class CopyListwithRandomPointer {
 	 * Method1: Using hashMap
 	 * @param RandomListNode head
 	 * @return RandomListNode
-	 * Time: O(2n)
+	 * Time: O(n) one pass
 	 * Space: O(n)
 	 */
 	public RandomListNode copyRandomList(RandomListNode head) {
 		if (head == null) return null;
-		RandomListNode dummy = new RandomListNode(0);
-		Map<RandomListNode, RandomListNode> hash = new HashMap<>();
-		RandomListNode oldNode = head;
-		RandomListNode newNode;
-		// 1 copy old node and save the new node into hash
-		while (oldNode != null) {
-			newNode = new RandomListNode(oldNode.label);
-			hash.put(oldNode, newNode);
-			oldNode = oldNode.next;
+		Map<RandomListNode, RandomListNode> mapping = new HashMap<>();
+		RandomListNode curr = head;
+		// copy old node and save the new node into hash
+		while (curr != null) {
+            if (!mapping.containsKey(curr)) mapping.put(curr, new RandomListNode(curr.label));
+            RandomListNode newCurr = mapping.get(curr);
+            if (curr.next != null) {
+                RandomListNode next = curr.next;
+                mapping.putIfAbsent(next, new RandomListNode(next.label));
+                newCurr.next = mapping.get(next);
+            }
+            if (curr.random != null) {
+                RandomListNode random = curr.random;
+                mapping.putIfAbsent(random, new RandomListNode(random.label));
+                newCurr.random = mapping.get(random);
+            }
+            curr = curr.next;
 		}
-		// 2 link next and random of each new node
-		oldNode = head;
-		newNode = dummy;
-		while (oldNode != null) {
-			newNode.next = hash.get(oldNode);
-			newNode.next.next = hash.get(oldNode.next);
-			newNode.next.random = hash.get(oldNode.random);
-			oldNode = oldNode.next;
-			newNode = newNode.next;
-		}
-		return dummy.next;
+		return mapping.get(head);
 	}
 
 	public static void main(String[] args) {
