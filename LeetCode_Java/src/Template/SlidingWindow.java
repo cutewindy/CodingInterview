@@ -6,7 +6,8 @@ package Template;
  * 209. Minimum Size Subarray Sum
  * 340. Longest Substring with At Most K Distinct Characters
  * 424. Longest Repeating Character Replacement
- * 567. Permutation in String (like sliding window, window is fixed size)
+ * 438. Find All Anagrams in a String (like sliding window, window is fixed size)
+ * 567. Permutation in String (like sliding window, window is fixed size. same like 438. Find All Anagrams in a String)
  * @author wendi
  *
  */
