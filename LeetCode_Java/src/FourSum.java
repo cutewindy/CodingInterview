@@ -31,6 +31,7 @@ public class FourSum {
 		List<List<Integer>> result = new ArrayList<>();
 		if (nums == null || nums.length < 4) return result;
 		Arrays.sort(nums);
+		if (4 * nums[0] > target || 4 * nums[nums.length - 1] < target) return result;
 		for (int i = 0; i <= nums.length - 4; i++) {
 			if (i != 0 && nums[i] == nums[i - 1]) continue; // skip duplicate
 			for (int j = i + 1; j <= nums.length - 3; j++) {
