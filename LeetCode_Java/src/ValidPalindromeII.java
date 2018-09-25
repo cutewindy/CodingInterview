@@ -25,10 +25,13 @@ public class ValidPalindromeII {
 	public boolean validPalindromeIII(String s) {
 		char[] S = s.toCharArray();
 		int n = S.length;
-		for (int i = 0; i < n / 2; i++) {
-			if (S[i] != S[n - i - 1]) {
-				return isPalindrome(S, i + 1, n - i - 1) || isPalindrome(S, i, n - i - 2);
+		int left = 0, right = n - 1;
+		while (left < right) {
+			if (S[left] != S[right]) {
+				return isPalindrome(S, left + 1, right) || isPalindrome(S, left, right - 1);
 			}
+			left++;
+			right--;
 		}
 		return true;
 	}

@@ -76,14 +76,14 @@ public class MeetingRoomsII {
 		// 2 use heap to record the sorted end time of each room, and then compare new inte.start 
 		// with the heap.peek() to check whether it's an empty room. If it's not, no empty room 
 		// right now, otherwise, poll the old inte from heap.
-		PriorityQueue<Integer> heap = new PriorityQueue<>();
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 		for (Interval inte: intervals) {
-			if (!heap.isEmpty() && inte.start >= heap.peek()) {
-				heap.poll();
+			if (!minHeap.isEmpty() && inte.start >= minHeap.peek()) {
+				minHeap.poll();
 			}
-			heap.offer(inte.end);
+			minHeap.offer(inte.end);
 		}		
-		return heap.size();
+		return minHeap.size();
 	}
 	
 	/**

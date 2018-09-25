@@ -38,9 +38,15 @@ public class ReadNCharactersGivenRead4II_CallMultipleTimes {
      * @return    The number of characters read
      */
 	// temp need to be init as global value
-    char[] temp = new char[4];
-    int tempIndex = 0;
-    int size = 0;
+    char[] temp;
+    int tempIndex;
+    int size;
+    public ReadNCharactersGivenRead4II_CallMultipleTimes() {
+    	temp = new char[4];
+        tempIndex = 0;
+        size = 0;
+    }
+    
     public int readN(char[] buf, int n) {
         int index = 0;
         while (index < n) {
