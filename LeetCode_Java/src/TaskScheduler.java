@@ -33,7 +33,7 @@ public class TaskScheduler {
 	 * Space: O(k)
 	 */
 	public int taskScheduler(char[] tasks, int n) {
-		if (tasks == null || tasks.length == 0) return 0;
+		if (n == 0) return tasks.length;
 		// get frequency of each char
 		Map<Character, Integer> cnts = new HashMap<>();
 		for (char c: tasks) {
@@ -58,17 +58,15 @@ public class TaskScheduler {
 		while (m > 0) {
 			Map.Entry<Character, Integer> curr = null;
 			if (!maxHeap.isEmpty()) {
-				curr = maxHeap.poll(); 
+				curr = maxHeap.poll();
+				curr.setValue(curr.getValue() - 1);
 				m--;
 			}
 			res++;
 			queue.offer(curr);
 			if (queue.size() > n) {
 				Map.Entry<Character, Integer> front = queue.poll();
-				if (front != null) {
-					front.setValue(front.getValue() - 1);
-					if (front.getValue() != 0) maxHeap.offer(front);
-				}
+				if (front != null && front.getValue() != 0) maxHeap.offer(front);
 			}
 		}
 		
