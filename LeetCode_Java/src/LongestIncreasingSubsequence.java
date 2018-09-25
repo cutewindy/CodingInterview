@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class LongestIncreasingSubsequence {
 
 	/**
-	 * Binary Search: 
+	 * Approach2: Binary Search + using int array to implement deque
 	 * Tails is an array storing the smallest tail of all increasing subsequences with length i+1 in 
 	 * tails[i].
 	 * @param int[] nums
@@ -48,7 +48,8 @@ public class LongestIncreasingSubsequence {
 	
 	
 	/**
-	 * DP: LIS[i] means the LIS of the elements before nums[i] including nums[i]. 
+	 * Approach1: DP: 
+	 * LIS[i] means the LIS of the elements before nums[i] including nums[i]. 
 	 * Need to find the satisfied max(LIS[j]+1), where 0<j<i.
 	 * Then return the max(LIS[i]), where 0<i<nums.length.
 	 * @param int[] nums
