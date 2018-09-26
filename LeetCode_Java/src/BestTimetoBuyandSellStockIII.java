@@ -11,9 +11,35 @@
  */
 public class BestTimetoBuyandSellStockIII {
 	
+	/**
+	 * DP, two pass
+	 * @param int[] prices
+	 * @return int
+	 * Time: O(2n)
+	 * Space: O(n)
+	 */
+	public int bestTimetoBuyandSellStockIIII(int[] prices) {
+        if (prices == null || prices.length <= 1) return 0;
+        int n = prices.length;
+        int[] dp = new int[n];
+        int min = prices[0];
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.max(prices[i] - min, dp[i - 1]);
+            min = Math.min(prices[i], min);
+        }
+        int max = prices[n - 1];
+        int res = dp[n - 1]; // take care, eg: [1, 2, 3, 4, 5]
+        for (int i = n - 2; i >= 0; i--) {
+            dp[i] += Math.max(max - prices[i + 1], 0);
+            max = Math.max(prices[i], max);
+            res = Math.max(dp[i], res);
+        }
+        return res;		
+	}
+	
 	
 	/**
-	 * DP
+	 * DP: three pass
 	 * first[i]: first max profit transaction before day i;
 	 * second[i]: second max profit transaction after day i;
 	 * @param int[] prices
@@ -52,6 +78,7 @@ public class BestTimetoBuyandSellStockIII {
 		// TODO Auto-generated method stub
 		BestTimetoBuyandSellStockIII result = new BestTimetoBuyandSellStockIII();
 		System.out.println(result.bestTimetoBuyandSellStockIII(new int[] {6, 1, 3, 2, 4, 7}));
+		System.out.println(result.bestTimetoBuyandSellStockIIII(new int[] {6, 1, 3, 2, 4, 7}));
 	}
 
 }
