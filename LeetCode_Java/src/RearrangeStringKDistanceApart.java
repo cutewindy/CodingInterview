@@ -53,7 +53,7 @@ public class RearrangeStringKDistanceApart {
 		(new Comparator<Map.Entry<Character, Integer>>() {
 			@Override
 			public int compare(Map.Entry<Character, Integer> e1, Map.Entry<Character, Integer> e2) {
-				if (e2.getValue() != e1.getValue()) return e2.getValue() - e1.getValue();
+				if (e2.getValue().intValue() != e1.getValue().intValue()) return e2.getValue() - e1.getValue();
 				return e1.getKey() - e2.getKey();
 			}
 		});
