@@ -64,7 +64,7 @@ public class TheMaze {
 		int[] dy = {0, 1, 0, -1};
 		while (!queue.isEmpty()) {
 			int[] curr = queue.poll();
-			if (curr[0] == destination[0] && curr[1] == destination[1]) return true;
+//			if (curr[0] == destination[0] && curr[1] == destination[1]) return true;
 			for (int k = 0; k < 4; k++) {
 				int i = curr[0];
 				int j = curr[1];
