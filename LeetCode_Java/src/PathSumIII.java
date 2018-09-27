@@ -29,7 +29,8 @@ public class PathSumIII {
 
 	
 	/**
-	 * Method2: DFS
+	 * Method2: DFS(top-down)
+	 * Take each node as root each time.
 	 * @param TreeNode root, int sum
 	 * @return int
 	 * Time:O(n!)
@@ -50,10 +51,10 @@ public class PathSumIII {
 	
 	
 	/**
-	 * Method1: DP
+	 * Method1: DFS(Bottom up)
 	 * @param TreeNode root, int sum
 	 * @return int
-	 * Time:O(n)
+	 * Time:O(n^2)
 	 * Space: O(nlog(n))
 	 */
 	public int pathSumIII(TreeNode root, int sum) {
