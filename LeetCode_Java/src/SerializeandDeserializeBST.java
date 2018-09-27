@@ -20,6 +20,8 @@ public class SerializeandDeserializeBST {
 	
 	/**
 	 * DFS(Iteration) (Preorder template)
+	 * different from #297 is as compact as possible.
+	 * There is no need to use "#" or "null" in BST which makes it more compact!
 	 * @param TreeNode root
 	 * @return String
 	 * Time: O(n)
