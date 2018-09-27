@@ -1,3 +1,8 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * In the "100 game," two players take turns adding, to a running total, any integer from 1..10. The 
  * player who first causes the running total to reach or exceed 100 wins.
@@ -27,25 +32,88 @@
 public class CanIWin {
 	
 	/**
-	 * 
+	 * Approach1: DFS + Memorization
+	 * using a boolean array to mark whether the number has been chosen, and the boolean array saved
+	 * as key in HashMap
 	 * @param int maxChoosableInteger, int desiredTotal
 	 * @return boolean
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(2^n)
+	 * Space: O(n)
+	 * Stack space: O(n)
+	 */
+	public boolean canIWinI(int maxChoosableInteger, int desiredTotal) {
+        if (maxChoosableInteger >= desiredTotal) return true;
+        int sum = 0;
+        for (int i = 1; i <= maxChoosableInteger; i++) sum += i;
+        if (sum < desiredTotal) return false;
+        return dfs(maxChoosableInteger, desiredTotal, new boolean[maxChoosableInteger + 1], new HashMap<Integer, Boolean>());
+	}
+	
+	private boolean dfs(int maxChoosableInteger, int desiredTotal, boolean[] mark, Map<Integer, Boolean> map) {
+		if (desiredTotal <= 0) return false;
+		int key = getKey(mark);
+		if (map.containsKey(key)) return map.get(key);
+		for (int i = 1; i <= maxChoosableInteger; i++) {
+			if (mark[i]) continue;
+			mark[i] = true;
+			if (!dfs(maxChoosableInteger, desiredTotal - i, mark, map)) {
+				mark[i] = false;  // take care, before return, have to rechange
+				return true;
+			}
+			mark[i] = false;
+		}
+		map.put(key, false);
+		return false;
+	}
+	
+	private int getKey(boolean[] mark) {
+		int res = 0;
+		for (boolean used: mark) {
+			res = (res << 1) + (used ? 1 : 0);
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * Approach1: DFS(TLE)
+	 * @param int maxChoosableInteger, int desiredTotal
+	 * @return boolean
+	 * Time: O(n!)
+	 * Space: O(n)
+	 * Stack space: O(n)
 	 */
 	public boolean canIWin(int maxChoosableInteger, int desiredTotal) {
-		
-		
-		
-		
-		
-		return true;
+        if (maxChoosableInteger >= desiredTotal) return true;
+        int sum = 0;
+        Set<Integer> set = new HashSet<>();
+        for (int i = 1; i <= maxChoosableInteger; i++) {
+            set.add(i);
+            sum += i;
+        }
+        if (sum < desiredTotal) return false;
+        return dfs(set, maxChoosableInteger, desiredTotal);
+    }
+    
+    private boolean dfs(Set<Integer> set, int maxChoosableInteger, int desiredTotal) {
+        if (desiredTotal <= 0) return false;
+        for (int i = 1; i <= maxChoosableInteger; i++) {
+            if (!set.contains(i)) continue;
+            set.remove(i);
+            if (!dfs(set, maxChoosableInteger, desiredTotal - i)) {
+                set.add(i);
+                return true;   
+            }
+            set.add(i);
+        }
+        return false;
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		CanIWin result = new CanIWin();
 		System.out.println(result.canIWin(10, 11));
+		System.out.println(result.canIWinI(10, 11));
 	}
 
 }
