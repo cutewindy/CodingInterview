@@ -54,7 +54,7 @@ public class CountCompleteTreeNodes {
 	 * the nodes number is 2^h - 1. Otherwise, count left complete tree + right complete tree + 1.
 	 * @param TreeNode root
 	 * @return int
-	 * Time: O(n(log(n)))
+	 * Time: O(log(n)^2)
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
