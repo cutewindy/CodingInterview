@@ -39,19 +39,17 @@ public class LinkedListComponents {
 	 * Space: O(m) m=G.length
 	 */
 	public int linkedListComponents(ListNode head, int[] G) {
-		Set<Integer> set = new HashSet<>();
-		for (int g: G) set.add(g);
-		int res = 0;
-		while (head != null) {
-			boolean found = false;
-			while (head != null && set.contains(head.val)) {
-				head = head.next;
-				found = true;
-			}
-			if (found) res++;
-			head = head.next == null ? null : head.next;
-		}
-		return res;
+        Set<Integer> set = new HashSet<>();
+        for (int g: G) set.add(g);
+        int res = 0;
+        while (head != null) {
+            if (set.contains(head.val)) {
+                res++;
+                while (head != null && set.contains(head.val)) head = head.next;
+            }
+            head = head == null ? null : head.next;
+        }
+        return res;
 	}
 
 	public static void main(String[] args) {
