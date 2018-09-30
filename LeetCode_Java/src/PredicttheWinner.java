@@ -30,6 +30,29 @@ import java.util.Arrays;
  *
  */
 public class PredicttheWinner {
+	// like 877 "Stone Game"
+	/**
+	 * Approach4: DP, same like approach3 but with rolling array
+	 * 我能够获得的最大分数-对手能够获得的最大分数
+	 * dp[i][j]: how much more scores that the first-in-action player will get from i to j than the 
+	 * second player. First-in-action means whomever moves first, might not play1.
+	 * @param nums
+	 * @return boolean
+	 * Time: O(n^2)
+	 * Space: O(n);
+	 */
+    public boolean predicttheWinnerIII(int[] nums) {
+    	int n = nums.length;
+    	int[][] dp = new int[2][nums.length];
+    	for (int i = 0; i < n; i++) dp[i % 2][i] = nums[i];
+    	for (int len = 2; len <= n; len++) {
+    		for (int i = 0; i <= n - len; i++) {
+    			int j = i + len - 1;
+    			dp[i % 2][j] = Math.max(nums[i] - dp[(i + 1) % 2][j], nums[j] - dp[i % 2][j - 1]);
+    		}
+    	}
+    	return dp[0][nums.length - 1] >= 0;
+    }
 	
 	/**
 	 * Approach3: DP, same like approach2
@@ -39,7 +62,7 @@ public class PredicttheWinner {
 	 * @param nums
 	 * @return boolean
 	 * Time: O(n^2)
-	 * Space: O(1);
+	 * Space: O(n^2);
 	 */
     public boolean predicttheWinnerII(int[] nums) {
     	int[][] dp = new int[nums.length][nums.length];
@@ -120,6 +143,8 @@ public class PredicttheWinner {
 		System.out.println(result.predicttheWinnerI(new int[] {1, 5, 233, 7}));
 		System.out.println(result.predicttheWinnerII(new int[] {1, 5, 2}));
 		System.out.println(result.predicttheWinnerII(new int[] {1, 5, 233, 7}));
+		System.out.println(result.predicttheWinnerIII(new int[] {1, 5, 2}));
+		System.out.println(result.predicttheWinnerIII(new int[] {1, 5, 233, 7}));
 	}
 
 }
