@@ -1,5 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 
 /**
  * Design a max stack that supports push, pop, top, peekMax and popMax.
@@ -28,43 +27,60 @@ import java.util.Deque;
  *
  */
 public class MaxStack {
+	
+	/**
+	 * Approach2: TreeMap + DDL
+	 * push(log(n)), pop(log(n)), top(1), peekMax(1), popMap(log(n))
+	 */
 
-	Deque<Integer> stack = null;
-	Deque<Integer> maxStack = null;
+	/**
+	 * Approach1: Two stacks
+	 * push(1), pop(1), top(1), peekMax(1), popMap(n)
+	 */
+	Stack<Integer> stack = null;
+	Stack<Integer> maxStack = null;
     /** initialize your data structure here. */
     public MaxStack() {
-        stack = new ArrayDeque<>();
-        maxStack = new ArrayDeque<>();
+        stack = new Stack<>();
+        maxStack = new Stack<>();
     }
     
     public void push(int x) {
-        stack.offerLast(x);
-        if (maxStack.isEmpty()) maxStack.offerLast(x);
-        else maxStack.offerLast(maxStack.peekLast() > x ? maxStack.peekLast() : x);
+        pushHelp(x);
+    }
+    
+    private void pushHelp(int x) {
+    	stack.push(x);
+        if (!maxStack.isEmpty() && maxStack.peek() > x) {
+        	maxStack.push(maxStack.peek());
+        }
+        else maxStack.push(x);
     }
     
     public int pop() {
-        maxStack.pollLast();
-        return stack.pollLast();
+        maxStack.pop();
+        return stack.pop();
     }
     
     public int top() {
-        return stack.peekLast();
+        return stack.peek();
     }
     
     public int peekMax() {
-        return maxStack.peekLast();
+        return maxStack.peek();
     }
     
     public int popMax() {
-        int max = maxStack.peekLast();
-        Deque<Integer> buffer = new ArrayDeque<>();
-        while (stack.peekLast() != max) {
-        	buffer.offerLast(pop());
+        int max = maxStack.peek();
+        Stack<Integer> buffer = new Stack<>();
+        while (stack.peek() != max) {
+        	buffer.push(stack.pop());
+        	maxStack.pop();
         }
-        pop();
+        stack.pop();
+        maxStack.pop();
         while (!buffer.isEmpty()) {
-        	push(buffer.pollLast());
+        	pushHelp(buffer.pop());
         }
         return max;
     }

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * We are playing the Guess Game. The game is as follows:
  * I pick a number from 1 to n. You have to guess which number I picked.
@@ -57,10 +59,10 @@ public class GuessNumberHigherorLowerII {
 														k + 1 > j ? 0 : costs[k + 1][j]), 
 							 			   costs[i][j]);
 				}
-//				for (int z = 0; z < n + 1; z++) {
-//					System.out.println(Arrays.toString(costs[z]));
-//				}
-//				System.out.println("==============");
+				for (int z = 0; z < n + 1; z++) {
+					System.out.println(Arrays.toString(costs[z]));
+				}
+				System.out.println("==============");
 			}
 		}
 		return costs[1][n];
