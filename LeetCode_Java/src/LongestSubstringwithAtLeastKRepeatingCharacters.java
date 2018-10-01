@@ -16,6 +16,35 @@ import java.util.Set;
  *
  */
 public class LongestSubstringwithAtLeastKRepeatingCharacters {
+	
+	/**
+	 * Method3: sliding window
+	 * @param String s, int k
+	 * @return int
+	 * Time: O(26 * n)
+	 * Space: O(26)
+	 */
+	public int longestSubstringwithAtLeastKRepeatingCharactersII(String s, int k) {
+        if (k <= 1) return s.length();
+        int res = 0;
+        char[] S = s.toCharArray();
+        for (int h = 1; h <= 26; h++) {  // h: the number of unique characters in substring
+        	int[] cnts = new int[26];
+        	int uniqueCnt = 0;
+        	int noLessThanKCnt = 0;
+        	for (int start = 0, end = 0; start < S.length; start++) {
+        		while (end < S.length && (uniqueCnt < h || cnts[S[end] - 'a'] != 0)) {
+        			if (cnts[S[end] - 'a']++ == 0) uniqueCnt++;
+        			if (cnts[S[end] - 'a'] == k) noLessThanKCnt++;
+        			end++;
+        		}
+        		if (uniqueCnt == h && noLessThanKCnt == h && end - start > res) res = end - start;
+        		if (cnts[S[start] - 'a']-- == k) noLessThanKCnt--;
+        		if (cnts[S[start] - 'a'] == 0) uniqueCnt--;
+        	}
+        }
+        return res;
+	}
 
 	
 	/**
@@ -26,31 +55,33 @@ public class LongestSubstringwithAtLeastKRepeatingCharacters {
 	 * 要求的子串。
 	 * @param String s, int k
 	 * @return int
-	 * Time: O(n^2)
+	 * Time: O(n + n * log(n))
 	 * Space: O(26)
 	 * Stack space: O(n)
 	 */
 	public int longestSubstringwithAtLeastKRepeatingCharactersI(String s, int k) {
-		if (s == null || s.length() == 0 || s.length() < k) return 0;
-		if (k <= 1) return s.length();
-		return dfs(s, k);
-	}
-	
-	private int dfs(String s, int k) {
-		if (s.length() == 0 || s.length() < k) return 0;
-		int[] counts = new int[26];
-		for (char c: s.toCharArray()) counts[c - 'a']++;
-		for (int i = 0; i < s.length(); i++) {
-			if (counts[s.charAt(i) - 'a'] < k) {
-				return Math.max(dfs(s.substring(0,  i), k), dfs(s.substring(i + 1), k)); 
-			}
-		}
-		return s.length();
+        if (k <= 1) return s.length();
+        if (s.length() == 0) return 0;
+        return dfs(s, 0, s.length() - 1, k);
+    }
+    
+    private int dfs(String s, int start, int end, int k) {
+        if (start > end || end - start + 1 < k) return 0;
+        int[] cnts = new int[26];
+        for (int i = start; i <= end; i++) {
+            cnts[s.charAt(i) - 'a']++;
+        }
+        for (int i = start; i <= end; i++) {
+            if (cnts[s.charAt(i) - 'a'] < k) {
+            	return Math.max(dfs(s, start, i - 1, k), dfs(s, i + 1, end, k));
+            }
+        }
+        return end - start + 1;
 	}
 	
 	
 	/**
-	 * Method1: Brute Force + window + set
+	 * Method1: Brute Force + int array + set (hashmap: TLE)
 	 * @param String s, int k
 	 * @return int
 	 * Time: O(n^2)
@@ -80,6 +111,7 @@ public class LongestSubstringwithAtLeastKRepeatingCharacters {
 		LongestSubstringwithAtLeastKRepeatingCharacters result = new LongestSubstringwithAtLeastKRepeatingCharacters();
 		System.out.println(result.longestSubstringwithAtLeastKRepeatingCharacters("abcababbdabae", 2));
 		System.out.println(result.longestSubstringwithAtLeastKRepeatingCharactersI("abcababbdabae", 2));
+		System.out.println(result.longestSubstringwithAtLeastKRepeatingCharactersII("abcababbdabae", 2));
 	}
 
 }
