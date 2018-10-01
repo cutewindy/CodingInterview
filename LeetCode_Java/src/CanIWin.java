@@ -43,8 +43,7 @@ public class CanIWin {
 	 */
 	public boolean canIWinI(int maxChoosableInteger, int desiredTotal) {
         if (maxChoosableInteger >= desiredTotal) return true;
-        int sum = 0;
-        for (int i = 1; i <= maxChoosableInteger; i++) sum += i;
+        int sum = (1 + maxChoosableInteger) * maxChoosableInteger / 2;
         if (sum < desiredTotal) return false;
         return dfs(maxChoosableInteger, desiredTotal, new boolean[maxChoosableInteger + 1], new HashMap<Integer, Boolean>());
 	}
