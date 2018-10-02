@@ -31,26 +31,37 @@ public class FriendofAppropriateAges {
 	
 	
 	/**
+	 * prefixSum + count array
 	 * Since the age range is limited to [1..120], we can count number of people of each age and 
 	 * store in the array. Then we can use that array to count friend requests:
 	 * Three conditions could be merged to one:
 	 * The Person with age A can request person with age B if B is in range (0.5 * A + 7, A]
 	 * @param int[] ages
 	 * @return int
-	 * Time: O(n + n*m)
+	 * Time: O(n + 121)
 	 * Space: O(121)
 	 */
 	public int friendofAppropriateAges(int[] ages) {
 		if (ages == null || ages.length == 0) return 0;
-		int res = 0;
+		
+		// count age
 		int[] numinAge = new int[121];
 		for (int a: ages) numinAge[a]++;
-		for (int a: ages) {
-			for (int f = a / 2 + 8; f <= a; f++) {
-				if (f == a) res += numinAge[f] - 1; //people will not friend request themselves
-				else res += numinAge[f];
-			}
+		
+		// get prefix sum
+		int[] prefixSum = new int[121];
+		for (int i = 1; i <= 120; i++) {
+			prefixSum[i] = numinAge[i] + prefixSum[i - 1];
 		}
+		
+		// get res
+		int res = 0;
+		for (int i = 15; i <= 120; i++) {  // take care, age should start from 15, eg: {108,115,5,24,82}
+			if (numinAge[i] == 0) continue;
+			int minAge = i / 2 + 7;
+			res += numinAge[i] * (prefixSum[i] - prefixSum[minAge] - 1);
+		}
+		
 		return res;
 	}
 
@@ -58,6 +69,7 @@ public class FriendofAppropriateAges {
 		// TODO Auto-generated method stub
 		FriendofAppropriateAges result = new FriendofAppropriateAges();
 		System.out.println(result.friendofAppropriateAges(new int[] {20,30,100,110,120}));
+		System.out.println(result.friendofAppropriateAges(new int[] {108,115,5,24,82}));
 	}
 
 }
