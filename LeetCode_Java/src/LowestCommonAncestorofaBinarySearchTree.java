@@ -22,7 +22,25 @@
 public class LowestCommonAncestorofaBinarySearchTree {
 	
 	/**
-	 * DFS (Recursion) (using BST)
+	 * Approach2: DFS (Iteration) (using BST), same like approach1
+	 * @param TreeNode root, TreeNode p, TreeNode q
+	 * @return TreeNode LCA
+	 * Time: O(log(n))
+	 * Space: O(1)
+	 * Stack space: O(log(n))
+	 */
+	public TreeNode LCAofaBSTI(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return null;
+        while (root != null) {
+            if (root.val > Math.max(p.val, q.val)) root = root.left;
+            else if (root.val < Math.min(p.val, q.val)) root = root.right;
+            else return root;
+        }
+        return null;		
+	}
+	
+	/**
+	 * Approach1: DFS (Recursion) (using BST)
 	 * If root.val>q.val&&root.val<p.val (q.val<p.val), then root will be the LCA.
 	 * @param TreeNode root, TreeNode p, TreeNode q
 	 * @return TreeNode LCA
@@ -54,6 +72,7 @@ public class LowestCommonAncestorofaBinarySearchTree {
 		System.out.println("p: " + p.val);
 		System.out.println("q: " + q.val);
 		System.out.println(result.LCAofaBST(root, p, q).val);
+		System.out.println(result.LCAofaBSTI(root, p, q).val);
 	}
 
 }
