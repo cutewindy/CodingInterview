@@ -42,8 +42,8 @@ public class ValidateIPAddress {
 	 */
 	public String validateIPAddressI(String IP) {
 		if (IP == null) return "Neither";
-		String IPv4Pattern = "(([0-9]|[1-9][0-9]|[1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5]) \\.) {3} ([0-9]|[1-9][0-9]|[1][0-9][0-9]|[2][0-4][0-9]|[2][5][0-5])";
-		String IPv6Pattern = "(([0-9 a-f A-F]) {1,4} :) {7} ([0-9 a-f A-F])";
+		String IPv4Pattern = "(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])";
+		String IPv6Pattern = "(([0-9a-fA-F]){1,4}:){7}([0-9a-fA-F]{1,4})";
 		if (IP.matches(IPv4Pattern)) return "IPv4";
 		if (IP.matches(IPv6Pattern)) return "IPv6";
 		return "Neither";

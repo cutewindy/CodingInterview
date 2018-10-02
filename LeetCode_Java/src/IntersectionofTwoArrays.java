@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,7 +25,7 @@ public class IntersectionofTwoArrays {
 	 * set to skip duplicate.
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
-	 * Time: O(nlog(n))
+	 * Time: O(nlog(n) + mlog(n))
 	 * Space: O(n)
 	 */
 	public int[] intersectionofTwoArraysII(int[] nums1, int[] nums2) {
@@ -62,8 +64,8 @@ public class IntersectionofTwoArrays {
 	 * 2 if set num contains element from nums2, add it into result set.
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
-	 * Time: O(n)
-	 * Space: O(n)
+	 * Time: O(m+n)
+	 * Space: O(max(m,n))
 	 */
 	public int[] intersectionofTwoArraysI(int[] nums1, int[] nums2) {
 		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
@@ -91,31 +93,32 @@ public class IntersectionofTwoArrays {
 	 * using two pointers, save them into set to skip duplicate.
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
-	 * Time: O(nlog(n))
+	 * Time: O(nlog(n) + mlog(m) + m+n)
 	 * Space: O(n)
 	 */
 	public int[] intersectionofTwoArrays(int[] nums1, int[] nums2) {
 		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
-		Set<Integer> set = new HashSet<>();
-		Arrays.sort(nums1);
-		Arrays.sort(nums2);
-		int p1 = 0;
-		int p2 = 0;
-		while (p1 < nums1.length && p2 < nums2.length) {
-			if (nums1[p1] == nums2[p2]) {
-				set.add(nums1[p1]);
-				p1++;
-				p2++;
-			}
-			else if (nums1[p1] < nums2[p2]) p1++;
-			else p2++;
-		}
-		int[] res = new int[set.size()];
-		int i = 0;
-		for (Integer num: set) {
-			res[i++] = num;
-		}
-		return res;
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int i = 0;
+        int j = 0;
+        List<Integer> list = new ArrayList<>();
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] == nums2[j]) {
+                list.add(nums1[i]);
+                i++;
+                j++;
+            }
+            else if (nums1[i] > nums2[j]) j++;
+            else i++;
+            while (i != 0 && i < nums1.length && nums1[i] == nums1[i - 1]) i++;
+            while (j != 0 && j < nums2.length && nums2[j] == nums2[j - 1]) j++;
+        }
+        int[] res = new int[list.size()];
+        for (int k = 0; k < res.length; k++) {
+            res[k] = list.get(k);
+        }
+        return res;
 	}
 	
 	public static void main(String[] args) {
