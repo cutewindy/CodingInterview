@@ -88,7 +88,8 @@ public class RemoveInvalidParentheses {
 	}
 	
 	/**
-	 * Method1: BFS(Idea: remove which one): with the input string s, we generate all possible states
+	 * Method1: BFS, Level order traversal
+	 * (Idea: remove which one): with the input string s, we generate all possible states
 	 * by removing one ( or ), check if they are valid, if found valid ones on the current level,
 	 * put them to the final result list and we are done, otherwise, add them to a queue and carry 
 	 * on to the next level.
@@ -97,59 +98,51 @@ public class RemoveInvalidParentheses {
 	 * Time: O(n*2^n)
 	 * Space: O(2^n)
 	 */
-	public List<String> removeInvalidParentheses(String s) {
-		List<String> result = new ArrayList<>();
-		if (s == null) {   // if s = "", return [""]
-			return result;
-		}
-		Set<String> visited = new HashSet<>();
-		Queue<String> queue = new LinkedList<>();
-		boolean found = false;  // used to find the valid parentheses with removing min number of invalid parentheses
-		queue.offer(s);
-		visited.add(s);
-		while (!queue.isEmpty()) {
-			String curr = queue.poll();
-			if (isValid(curr)) {    // find the answer, add to result and set found flag means that find the parentheses with removing min invalid parentheses
-				result.add(curr);
-				found = true;
-			}
-			// if found, iterate left string in the queue,(since removing rm is ans, removing rm+1 cannot be ans),
-			// do not remove '(' or ')' any more. Otherwise, continue remove.
-			if (!found) { 
-				for (int i = 0; i < curr.length(); i++) {
-					if (curr.charAt(i) == '(' || curr.charAt(i) == ')') {  // ignore alphabet
-						String subStr = curr.substring(0, i) + curr.substring(i + 1);  // remove curr[i]
-						if (!visited.contains(subStr)) {  // avoid duplicate
-							queue.offer(subStr);
-							visited.add(subStr);
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
-	
-	private boolean isValid(String s) {
-		int count = 0;
-		for (int i = 0; i < s.length(); i++) {
-			if (s.charAt(i) == '(') {
-				count++;
-			}
-			else if (s.charAt(i) == ')') {
-				count--;
-				if (count < 0) {
-					return false;
-				}
-			}
-		}
-		return count == 0;
-	}
+    public List<String> removeInvalidParentheses(String s) {
+        List<String> res = new ArrayList<>();
+        if (s == null) return res; // if s = "", return [""]
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(s);
+        boolean found = false; // used to find the valid parentheses with removing min number of invalid parentheses
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Set<String> visited = new HashSet<>();
+            while (size-- > 0) {
+                String curr = queue.poll();
+                if (isValid(curr)) {  // find the answer, add to result and set found flag means that find the parentheses with removing min invalid parentheses
+                    res.add(curr);
+                    found = true;
+                }
+                // if found, do not remove '(' or ')' any more. Otherwise, continue remove.
+                if (found) continue; 
+                for (int i = 0; i < curr.length(); i++) {
+                    if (curr.charAt(i) != '(' && curr.charAt(i) != ')') continue; // ignore alphabet
+                    String next = curr.substring(0, i) + curr.substring(i + 1);// remove curr[i]
+                    if (visited.contains(next)) continue; // avoid duplicate
+                    visited.add(next);
+                    queue.offer(next);
+                }
+            }
+            if (found) return res;
+        }
+        return res;
+    }
+    
+    private boolean isValid(String s) {
+        if (s == null || s.length() == 0) return true;
+        int open = 0;
+        for (char c: s.toCharArray()) {
+            if (c == '(') open++;
+            else if (c == ')') open--;
+            if (open < 0) return false;
+        }
+        return open == 0;
+    }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		RemoveInvalidParentheses result = new RemoveInvalidParentheses();
-//		System.out.println(result.removeInvalidParentheses("(a)()))"));
+		System.out.println(result.removeInvalidParentheses("(a)()))"));
 		System.out.println(result.removeInvalidParenthesesI("(a)()))"));
 //		System.out.println(result.removeInvalidParenthesesI(")()"));
 	}
