@@ -49,6 +49,7 @@ public class NumberofIslands {
 					if (row < 0 || row >= m || col < 0 || col >= n || grid[row][col] == '0') continue;
 					if (ufs.union(i * n + j, row * n + col)) res--;
 				}
+				System.out.println("i: " + i + " j: " + j + " res: " + res);
 			}
 		}
 		return res;
