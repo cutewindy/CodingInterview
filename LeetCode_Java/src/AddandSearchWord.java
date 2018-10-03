@@ -39,58 +39,110 @@ public class AddandSearchWord {
 		}
 	}
 	
-	private TrieNode root;
 	
+//    /** Initialize your data structure here. */
+	/**
+	 * Approach2: Trie with node '.'
+	 * S: O(27^n)
+	 */
+//    Trie trie;
+//    public WordDictionary() {
+//        trie = new Trie();
+//    }
+//    
+	/**
+	 * T: O(2^n)
+	 */
+//    public void addWord(String word) {
+//        trie.insert(word);
+//    }
+//    
+	/**
+	 * T: O(n)
+	 */
+//    public boolean search(String word) {
+//        return trie.search(word);
+//    }
+//}
+//    TrieNode root;
+//    public Trie() {
+//        this.root = new TrieNode('.');
+//    }
+//                            
+//    public void insert(String word) {
+//        insert(word, 0, root);
+//    }                      
+//    
+//    private void insert(String word, int i, TrieNode prev) {
+//        if (i == word.length()) {
+//            prev.isWord = true;
+//            return;
+//        }
+//        char c = word.charAt(i);
+//        if (prev.children[c - 'a'] == null) prev.children[c - 'a'] = new TrieNode(c);
+//        if (prev.children[26] == null) prev.children[26] = new TrieNode('.');
+//        insert(word, i + 1, prev.children[c - 'a']);
+//        insert(word, i + 1, prev.children[26]);
+//    } 
+//                            
+//    public boolean search(String word) {
+//        TrieNode curr = root;
+//        for (char c: word.toCharArray()) {
+//            int index = c == '.' ? 26 : (c - 'a');
+//            if (curr.children[index] == null) return false;
+//            curr = curr.children[index];
+//        }
+//        return curr.isWord;
+//    }
+	
+	/**
+	 * Approach1:  Trie without node '.'
+	 * S: O(26^n)
+	 */
+	private TrieNode root;
 	public AddandSearchWord() {
 		root = new TrieNode();
 	}
 	
-	// Adds a word into the data structure.
+	/**
+	 * T: O(n)
+	 * @param word
+	 */
 	public void addWord(String word) {
-		if (word == null || word.length() == 0) {
-			return;
-		}
+		if (word == null || word.length() == 0) return;
 		TrieNode curr = root;
 		for (int i = 0; i < word.length(); i++) {
 			char c = word.charAt(i);
-			if (curr.children[c - 'a'] == null) {
-				curr.children[c - 'a'] = new TrieNode(c);
-			}
+			if (curr.children[c - 'a'] == null) curr.children[c - 'a'] = new TrieNode(c);
 			curr = curr.children[c - 'a'];
 		}
 		curr.isWord = true;
 	}
 	
-    // Returns if the word is in the data structure. A word could contain the dot character '.' 
-	// to represent any one letter.
+    /**
+     * T: O(26^n)
+     */
 	public boolean search(String word) {
-		if (word == null || word.length() == 0) {
-			return true;
-		}
-		TrieNode curr = root;
-		return helper(word, 0, curr);
+		if (word == null || word.length() == 0) return true;
+		return search(word, 0, root);
 	}
 	
-	private boolean helper(String word, int pos, TrieNode parent) {
-		if (pos == word.length()) {
-			return parent.isWord;
-		}
+	private boolean search(String word, int pos, TrieNode parent) {
+		if (pos == word.length()) return parent.isWord;
 		char c = word.charAt(pos);
 		if (c != '.' && parent.children[c - 'a'] != null) {
-			return helper(word, pos + 1, parent.children[c - 'a']);
+			return search(word, pos + 1, parent.children[c - 'a']);
 		}
-		else if (c != '.' && parent.children[c - 'a'] == null) {
-			return false;
-		}
-		else { // recursion to find the possible char in tree equals to word[pos]='.' that can return true
+		else if (c == '.'){ // recursion to find the possible char in tree equals to word[pos]='.' that can return true
 			for (int i = 0; i < 26; i++) {
-				if (parent.children[i] != null && helper(word, pos + 1, parent.children[i])) {
+				if (parent.children[i] != null && search(word, pos + 1, parent.children[i])) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
