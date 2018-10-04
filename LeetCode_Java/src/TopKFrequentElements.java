@@ -58,7 +58,7 @@ public class TopKFrequentElements {
 	 * Method2: TreeMap: 
 	 * @param int[] nums, int k
 	 * @return List<Integer> 
-	 * Time: O(n)
+	 * Time: O(nlog(n))
 	 * Space: O(n)
 	 */
 	public List<Integer> topKFrequentElementsI(int[] nums, int k) {
