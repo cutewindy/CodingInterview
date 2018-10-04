@@ -30,13 +30,13 @@ import java.util.TreeMap;
  * @author wendi
  *
  */
-public class MaCalendarII {
+public class MyCalendarII {
 	
 	/**
 	 * TreeMap + 
 	 */
     Map<Integer, Integer> map;
-    public MaCalendarII() {
+    public MyCalendarII() {
         map = new TreeMap<>();
     }
     
@@ -57,7 +57,7 @@ public class MaCalendarII {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		MaCalendarII result = new MaCalendarII();
+		MyCalendarII result = new MyCalendarII();
 		System.out.println(result.book(10, 20));
 		System.out.println(result.book(50, 60));
 		System.out.println(result.book(10, 40));
