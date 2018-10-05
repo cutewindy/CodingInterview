@@ -42,14 +42,13 @@ public class BasicCalculator {
 		Stack<Pair> stack = new Stack<>();
 		char[] S = s.toCharArray();
 		for (int i = 0; i < S.length; i++) {
-			if (Character.isDigit(S[i])) {
-				num = 0;
-				while (i < S.length && Character.isDigit(S[i])) {
-					num = num * 10 + S[i] - '0';
-					i++;
-				}
-				result += sign * num;
+			num = 0;
+			while (i < S.length && Character.isDigit(S[i])) {
+				num = num * 10 + S[i] - '0';
+				i++;
 			}
+			result += sign * num;
+			
 			if (i == S.length) {   // if num is last number in string
 				break;
 			}
