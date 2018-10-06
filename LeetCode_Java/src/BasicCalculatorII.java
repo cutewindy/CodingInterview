@@ -30,42 +30,38 @@ public class BasicCalculatorII {
 	 * Space: O(1)
 	 */
 	public int basicCalculatorIIII(String s) {
-		if (s == null || s.length() == 0) {
-			return 0;
-		}		
-		int result = 0;
-		char op = '+';
-		int num = 0;
-		int multi = 0;
-		char[] S = s.toCharArray();
-		for (int i = 0; i <= S.length; i++) {
-			char c = i == S.length ? ']' : S[i];
-			if (c == ' ') continue;
-			if (Character.isDigit(c)) {
-				num = num * 10 + c - '0';
-			}
-			else {
-				if (op == '+') {
-					result += num;
-					multi = num;
-				}
-				else if (op == '-') {
-					result -= num;
-					multi = - num;
-				}
-				else if (op == '*') {
-					result = result - multi + multi * num;
-					multi *= num;
-				}
-				else if (op == '/') {
-					result = result - multi + multi / num;
-					multi /= num;
-				}
-				op = c;
-				num = 0;
-			}
-		}
-		return result;
+        s = s.trim();
+        char op = '+';
+        int res = 0;
+        int prevNum = 0;
+        for (int i = 0; i <= s.length(); i++) {
+            if (i != s.length() && s.charAt(i) == ' ') continue;
+            int num = 0;
+            while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                num = num * 10 + s.charAt(i) - '0';
+                i++;
+            }
+            if (op == '+') {
+                res += num;
+                prevNum = num;
+            }
+            else if (op == '-') {
+                res -= num;
+                prevNum = -num;
+            }
+            else if (op == '*') {
+                res -= prevNum;
+                res += prevNum * num;
+                prevNum = prevNum * num;
+            }
+            else if (op == '/') {
+                res -= prevNum;
+                res += prevNum / num;
+                prevNum = prevNum / num;
+            }
+            if (i != s.length()) op = s.charAt(i);
+        }
+        return res;
 	}
 
 	
