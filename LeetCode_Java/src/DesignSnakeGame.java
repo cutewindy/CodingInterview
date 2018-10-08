@@ -42,35 +42,12 @@ import java.util.Set;
  *
  */
 public class DesignSnakeGame {
-	class Node{
-		int x;
-		int y;
-		public Node(int x, int y){
-			this.x = x;
-			this.y = y;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (!(obj instanceof Node)) {
-				return false;
-			}
-			Node that = (Node) obj;
-			return this.x == that.x && this.y == that.y;
-		}
-		
-		@Override
-		public int hashCode() {
-			return 31 * this.x + this.y;
-		}
-	}
 	
 	private int width;
 	private int height;
 	private int[][] food;
-	private Deque<Node> deque;  // use for updating tail
-	private Node head;
-	private Set<Node> set;  // use for fast loop-up for eating body case
+	private Deque<Integer> body;  // use for updating tail
+	private Set<Integer> set;  // use for fast loop-up for eating body case
 	private int foodIndex;
 	private boolean gameOver = false;
 
@@ -83,11 +60,10 @@ public class DesignSnakeGame {
 		this.width = width;
 		this.height = height;;
 		this.food = food;
-		this.deque = new LinkedList<>();;
-		this.head = new Node(0, 0);
-		this.set = new HashSet<Node>();  
-		this.deque.push(head);  
-		this.set.add(head);
+		this.body = new LinkedList<>();
+		this.set = new HashSet<>();  
+		this.body.offer(0);  
+		this.set.add(0);
 		this.foodIndex = 0;
 	}
 	
@@ -96,44 +72,36 @@ public class DesignSnakeGame {
     @return The game's score after the move. Return -1 if game over. 
     Game over when snake crosses the screen boundary or bites its body. */	
 	public int move(String direction) {
-		if (gameOver) {  // don't forget to check whether game already over: do nothing
-			return -1;
-		}
-		Node newHead = null;
-		switch (direction) {
-			case "U": 
-				newHead = new Node(head.x - 1, head.y);
-				break;
-			case "L": 
-				newHead = new Node(head.x, head.y - 1);
-				break;
-			case "R":
-				newHead = new Node(head.x, head.y + 1);
-				break;
-			default:
-				newHead = new Node(head.x + 1, head.y);
-				break;
-		}
+		if (gameOver) return -1;  // don't forget to check whether game already over: do nothing
+		int i = body.peek() / width;
+		int j = body.peek() % width;
+		if (direction.equals("U")) i--;
+		else if (direction.equals("L")) j--;
+		else if (direction.equals("R")) j++;
+		else if (direction.equals("D")) i++;
+	
 		// 1. remove tail
-		Node tail = deque.pollLast();
+		int tail = body.pollLast();
 		set.remove(tail);
+		int newHead = i * width + j;
+		
 		// 2. check whether out of boundary or eating body
-		if (newHead.x < 0 || newHead.x >= height || newHead.y < 0 || newHead.y >= width || 
-				set.contains(newHead)) {
+		if (i < 0 || i >= height || j < 0 || j >= width || set.contains(newHead)) {
 			gameOver = true;   // don't forget if game is over, over never.
 			return -1;
 		}
+		
 		// 3. check whether eating food, add tail
-		if (foodIndex < food.length && newHead.x == food[foodIndex][0] && newHead.y == food[foodIndex][1]) {  // don't forget to check foodIndex
-			deque.offerLast(tail);
+		if (foodIndex < food.length && i == food[foodIndex][0] && j == food[foodIndex][1]) {  // don't forget to check foodIndex
+			body.offer(tail);
 			set.add(tail);
 			foodIndex++;
 		}
+		
 		// 4. add new head
-		deque.offerFirst(newHead);
+		body.offerFirst(newHead);
 		set.add(newHead);
-		head = newHead;
-		return deque.size() - 1;
+		return body.size() - 1;
 	}
 
 	public static void main(String[] args) {
