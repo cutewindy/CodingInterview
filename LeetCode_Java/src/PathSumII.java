@@ -38,24 +38,24 @@ public class PathSumII {
 	 * Stack space: O(log(n))
 	 */
 	public List<List<Integer>> pathSumII(TreeNode root, int sum) {
-		List<List<Integer>> result = new ArrayList<>();
-		if (root == null) return result;
-		helper(root, sum, new ArrayList<Integer>(), result);
-		return result;
-	}
-	
-	private void helper(TreeNode root, int sum, List<Integer> currPath, List<List<Integer>> result) {
-		if (root.left == null && root.right == null && sum == root.val) {  // if root is leaf, check sum
-			currPath.add(root.val);
-			result.add(new ArrayList<>(currPath));
-			currPath.remove(currPath.size() - 1);
-			return;
-		}
-		
-		currPath.add(root.val);
-		if (root.left != null) helper(root.left, sum, currPath, result);
-		if (root.right != null) helper(root.right, sum, currPath, result);		
-		currPath.remove(currPath.size() - 1);
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) return res;
+        dfs(root, sum, new ArrayList<Integer>(), res);
+        return res;
+    }
+    
+    private void dfs(TreeNode root, int sum, List<Integer> path, List<List<Integer>> res) {
+        if (root == null) return;
+        if (root.left == null && root.right == null) {
+            path.add(root.val);
+            if (sum == root.val) res.add(new ArrayList<>(path));
+            path.remove(path.size() - 1);
+            return;
+        }
+        path.add(root.val);
+        dfs(root.left, sum - root.val, path, res);
+        dfs(root.right, sum - root.val, path, res);
+        path.remove(path.size() - 1);
 	}
 
 	public static void main(String[] args) {
