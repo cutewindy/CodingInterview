@@ -38,7 +38,7 @@ public class ArithmeticSlicesIISubsequence {
 	
 	
 	/**
-	 * DP: 
+	 * DP + hashMap: 
 	 * @param int[] A
 	 * @return int
 	 * Time: O(n^2)
