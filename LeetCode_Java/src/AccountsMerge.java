@@ -41,13 +41,22 @@ public class AccountsMerge {
 	
 	
 	/**
-	 * UnionFindSet
+	 * Approach2: UnionFindSet
+	 * 1. The key task here is to connect those emails, and this is a perfect use case for union find.
+	 * 2. to group these emails, each group need to have a representative, or parent.
+	 * 3. At the beginning, set each email as its own representative.
+	 * 4. Emails in each account naturally belong to a same group, and should be joined by assigning 
+	 *    to the same parent (let's use the parent of first email in that list);
+	 * a b c // now b, c have parent a
+	 * d e f // now e, f have parent d
+	 * g a d // now abc, def all merged to group g
+	 * 
 	 * @param List<List<String>> accounts
 	 * @return List<List<String>>
 	 * Time: O(nlog(n)) n=a1+a2+a3..+ai, where ai = accounts.get(i)
 	 * Space: O(n)
 	 */
-	public List<List<String>> accountsMerge(List<List<String>> accounts) {
+	public List<List<String>> accountsMergeI(List<List<String>> accounts) {
 		Map<String, String> emlToName = new HashMap<>();
 		Map<String, Integer> emlToId = new HashMap<>();
 		int id = 0;
@@ -80,12 +89,12 @@ public class AccountsMerge {
 		
 		List<List<String>> res = new ArrayList<>();
 		for (Integer rootEmlId: map.keySet()) {
-			Set<String> emls = map.get(rootEmlId);
-			List<String> sortedEmls = new ArrayList<>(emls);
-			Collections.sort(sortedEmls);
-			String name = emlToName.get(sortedEmls.get(0));
-			sortedEmls.add(0, name);
-			res.add(sortedEmls);
+			Set<String> emlsSet = map.get(rootEmlId);
+			List<String> emlsList = new ArrayList<>(emlsSet);
+			Collections.sort(emlsList);
+			String name = emlToName.get(emlsList.get(0));
+			emlsList.add(0, name);
+			res.add(emlsList);
 		}
 		
 		return res;
@@ -118,6 +127,75 @@ public class AccountsMerge {
 			return false;
 		}
 	}
+	
+	/**
+	 * Approach1: build graph + dfs search
+	 * 
+	 * Basicly, this is a graph problem. Notice that each account[i] tells us some edges. What we 
+	 * have to do is as follows:
+	 * 1. Use these edges to build some components. Common email addresses are like the intersections 
+	 *    that connect each single component for each account.
+	 * 2. Because each component represents a merged account, do DFS search for each components and 
+	 *    add into a list. Before add the name into this list, sort the emails. Then add name string 
+	 *    into it.
+	 *    
+	 * Examples: Assume we have two accounts, we connect them like this in order to use DFS.
+	 * {Name, 1, 2, 3} => [1: (2)], [2: (1, 3)], [3: (2)]
+	 * {Name, 2, 4, 5, 6} => [2: (1, 3, 4)], [4: (2, 5)], [5: (4, 6)], [6: (5)]
+	 * finally:
+	 * [1: (2)], [2: (1, 3, 4)], [3: (2)], [4: (2, 5)], [5: (4, 6)], [6: (5)]
+	 * 
+	 * @param List<List<String>> accounts
+	 * @return List<List<String>>
+	 * Time: O(nlog(n)) n=a1+a2+a3..+ai, where ai = accounts.get(i)
+	 * Space: O(n)
+	 */
+	public List<List<String>> accountsMerge(List<List<String>> accounts) {
+		List<List<String>> res = new ArrayList<>();
+		if (accounts == null || accounts.size() == 0) return res;
+		
+		Map<String, String> names = new HashMap<>();      // [key, val]: [email, name]
+		Map<String, Set<String>> graph = new HashMap<>(); // [key, val]: [email, [neighbor's email]]
+		buildGraph(accounts, names, graph);
+		
+		Set<String> visited = new HashSet<>();
+		for (String email: names.keySet()) {
+			if (visited.contains(email)) continue;
+			visited.add(email);
+			List<String> emails = new ArrayList<>(Arrays.asList(email));
+			dfs(graph, email, visited, emails);
+			Collections.sort(emails);
+			emails.add(0, names.get(email));
+			res.add(emails);
+		}
+		
+		return res;
+	}
+	
+	// build graph that connect neighbors
+	private void buildGraph(List<List<String>> accounts, Map<String, String> names, Map<String, Set<String>> graph) {
+		for (List<String> account: accounts) {
+			String name = account.get(0);
+			for (int i = 1; i < account.size(); i++) {
+				String email = account.get(i);
+				names.put(email, name);
+				if (!graph.containsKey(email)) graph.put(email, new HashSet<String>());
+				if (i == 1) continue;
+				graph.get(email).add(account.get(i - 1));
+				graph.get(account.get(i - 1)).add(email);
+			}
+		}
+	}
+	
+	// dfs to walk graph finding neighbors, than add to the same group
+	private void dfs(Map<String, Set<String>> graph, String email, Set<String> visited, List<String> emails) {
+		for (String next: graph.get(email)) {
+			if (visited.contains(next)) continue;
+			emails.add(next);
+			visited.add(next);
+			dfs(graph, next, visited, emails);
+		}
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -128,6 +206,7 @@ public class AccountsMerge {
 		list.add(Arrays.asList("John", "johnsmith@mail.com", "john_newyork@mail.com"));
 		list.add(Arrays.asList("Mary", "mary@mail.com"));
 		System.out.println(result.accountsMerge(list));
+		System.out.println(result.accountsMergeI(list));
 	}
 
 }
