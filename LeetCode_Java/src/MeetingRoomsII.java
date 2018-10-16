@@ -18,35 +18,38 @@ import java.util.PriorityQueue;
 public class MeetingRoomsII {
 
 	/**
-	 * Method3: Greedy
+	 * Method3:Linear sweep
 	 * @param Interval[] intervals
 	 * @return int
 	 * Time: O(2nlog(n))
 	 * Space: O(2n)
 	 */
 	public int meetingRoomsIIII(Interval[] intervals) {
-		if (intervals == null || intervals.length == 0) {
-			return 0;
-		}
-		int result = 0;
-		int[] start = new int[intervals.length];
-		int[] end = new int[intervals.length];
-		for (int i = 0; i < intervals.length; i++) {
-			start[i] = intervals[i].start;
-			end[i] = intervals[i].end;
-		}
-		Arrays.sort(start);
-		Arrays.sort(end);
-		int endIndex = 0;
-		for (int i = 0; i < start.length; i++) {
-			if (start[i] < end[endIndex]) {
-				result++;
-			}
-			else {
-				endIndex++;
-			}
-		}
-		return result;
+        int n = intervals.length;
+        int[] start = new int[n];
+        int[] end = new int[n];
+        for (int i = 0; i < n; i++) {
+            start[i] = intervals[i].start;
+            end[i] = intervals[i].end;
+        }
+        Arrays.sort(start);
+        Arrays.sort(end);
+        int res = 0;
+        int currRes = 0;
+        for (int i = 0, j = 0; i <= n && j <= n;) {
+            int startNum = i == n ? Integer.MAX_VALUE : start[i];
+            int endNum = j == n ? Integer.MAX_VALUE : end[j];
+            if (startNum < endNum) {
+                currRes++;
+                i++;
+            }
+            else {
+                currRes--;
+                j++;
+            }
+            res = Math.max(currRes, res);
+        }
+        return res;
 	}
 	
 	/**
