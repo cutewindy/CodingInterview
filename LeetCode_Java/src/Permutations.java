@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Given a collection of distinct numbers, return all possible permutations.
@@ -29,26 +31,25 @@ public class Permutations {
 	 * Stack space: O(n)
 	 */
 	public List<List<Integer>> permutations(int[] nums) {
-		List<List<Integer>> result = new ArrayList<>();
-		if (nums == null || nums.length == 0) {
-			return result;
-		}
-		helper(nums, new ArrayList<Integer>(), result);
-		return result;
-	}
-	
-	private void helper(int[] nums, List<Integer> combo, List<List<Integer>> result) {
-		if (combo.size() == nums.length) {
-			result.add(new ArrayList<>(combo));
-			return;
-		}
-		for (int i = 0; i < nums.length; i++) {
-			if (!combo.contains(nums[i])) {   // if nums[i] has not exist in combo, add it to combo
-				combo.add(nums[i]);
-				helper(nums, combo, result);
-				combo.remove(combo.size() - 1);
-			}
-		}
+        List<List<Integer>> res = new ArrayList<>();
+        if (nums == null || nums.length == 0) return res;
+        dfs(nums, new HashSet<Integer>(), new ArrayList<Integer>(), res);
+        return res;
+    }
+    
+    private void dfs(int[] nums, Set<Integer> visited, List<Integer> list, List<List<Integer>> res) {
+        if (list.size() == nums.length) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (visited.contains(i)) continue;
+            visited.add(i);
+            list.add(nums[i]);
+            dfs(nums, visited, list, res);
+            list.remove(list.size() - 1);
+            visited.remove(i);
+        }
 	}
 	
 	public static void main(String[] args) {

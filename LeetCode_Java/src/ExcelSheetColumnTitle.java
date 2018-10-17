@@ -23,16 +23,13 @@ public class ExcelSheetColumnTitle {
 	 * Space:O(1)
 	 */
 	public String excelSheetColumnTitle(int n) {
-		StringBuilder result = new StringBuilder();
-		if (n == 0) {
-			return result.toString();
-		}
-		while (n != 0) {
-			char c = (char) ((n - 1) % 26 + 'A');
-			n = (n - 1) / 26;
-			result.insert(0, c);
-		}		
-		return result.toString();
+        if (n == 0) return "";
+        String res = "";
+        while (n != 0) {
+            res = (char) (((n - 1) % 26)  + 'A') + res;
+            n = (n - 1) / 26;
+        }
+        return res;
 	}
 	
 	public static void main(String[] args) {

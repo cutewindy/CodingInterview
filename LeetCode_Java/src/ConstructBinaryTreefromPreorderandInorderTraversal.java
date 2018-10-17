@@ -18,7 +18,7 @@ public class ConstructBinaryTreefromPreorderandInorderTraversal {
 	 * inIndex - inStart + 1 is the number of left nodes 
 	 * @param int[] preorder, int[] inorder
 	 * @return TreeNode
-	 * Time: O(n^2)
+	 * Time: O(n^2)   // can use a hashmap save inorder [value, index] pair to improve T to O(n)
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
