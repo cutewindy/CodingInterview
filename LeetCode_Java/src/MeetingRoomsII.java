@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 /**
  * Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] 
@@ -16,6 +17,30 @@ import java.util.PriorityQueue;
  *
  */
 public class MeetingRoomsII {
+	
+	/**
+	 * Method4:Linear sweep + TreeMap
+	 * @param Interval[] intervals
+	 * @return int
+	 * Time: O(2nlog(n))
+	 * Space: O(2n)
+	 */
+	public int meetingRoomsIIIII(Interval[] intervals) {
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+        for (Interval interval: intervals) {
+        	if (!treeMap.containsKey(interval.start)) treeMap.put(interval.start, 0);
+        	if (!treeMap.containsKey(interval.end)) treeMap.put(interval.end, 0);
+        	treeMap.put(interval.start, treeMap.get(interval.start) + 1);
+        	treeMap.put(interval.end, treeMap.get(interval.end) - 1);
+        }
+        int res = 0;
+        int currRes = 0;
+        for (Integer value: treeMap.values()) {
+        	currRes += value;
+        	res = Math.max(currRes, res);
+        }
+        return res;
+	}
 
 	/**
 	 * Method3:Linear sweep
@@ -136,6 +161,7 @@ public class MeetingRoomsII {
 		System.out.println(result.meetingRoomsII(new Interval[] {new Interval(5, 10), new Interval(0, 5), new Interval(8, 9)}));
 		System.out.println(result.meetingRoomsIII(new Interval[] {new Interval(5, 10), new Interval(0, 5), new Interval(8, 9)}));
 		System.out.println(result.meetingRoomsIIII(new Interval[] {new Interval(5, 10), new Interval(0, 5), new Interval(8, 9)}));
+		System.out.println(result.meetingRoomsIIIII(new Interval[] {new Interval(5, 10), new Interval(0, 5), new Interval(8, 9)}));
 	}
 
 }
