@@ -20,7 +20,35 @@ import java.util.Stack;
 public class ConvertBinarySearchTreetoSortedDoublyLinkedList {
 	
 	/**
-	 * Stack, inorder traversal
+	 * Approach2: DFS, inorder traversal
+	 * @param Node root
+	 * @return Node
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
+	 */
+    Node dummyHead = new Node();
+    Node tail = dummyHead;
+    public Node ConvertBinarySearchTreetoSortedDoublyLinkedListI(Node root) {
+        if (root == null) return null;
+        dfs(root);
+        tail.right = dummyHead.right;
+        dummyHead.right.left = tail;
+        return dummyHead.right;
+    } 
+    
+    private void dfs(Node root) {
+        if (root == null) return;
+        dfs(root.left);
+        tail.right = root;
+        root.left = tail;
+        tail = tail.right;
+        dfs(root.right);
+    }
+	
+	
+	/**
+	 * Approach1: Stack, inorder traversal
 	 * @param Node root
 	 * @return Node
 	 * Time: O(n)
@@ -50,7 +78,7 @@ public class ConvertBinarySearchTreetoSortedDoublyLinkedList {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ConvertBinarySearchTreetoSortedDoublyLinkedList result = new ConvertBinarySearchTreetoSortedDoublyLinkedList();
-		
+
 	}
 
 }
