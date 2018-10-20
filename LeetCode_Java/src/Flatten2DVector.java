@@ -22,6 +22,12 @@ import java.util.List;
  */
 public class Flatten2DVector implements Iterator<Integer> {
 	
+
+	/**
+	 * Iterator
+	 * Time: O(1)
+	 * Space:O(1)
+	 */
 	Iterator<List<Integer>> matrixItr;
 	Iterator<Integer> rowItr;
     public Flatten2DVector(List<List<Integer>> vec2d) {
