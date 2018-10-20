@@ -27,10 +27,12 @@ public class ConvertBinarySearchTreetoSortedDoublyLinkedList {
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
-    Node dummyHead = new Node();
-    Node tail = dummyHead;
+    
+    Node tail;
     public Node ConvertBinarySearchTreetoSortedDoublyLinkedListI(Node root) {
         if (root == null) return null;
+        Node dummyHead = new Node();
+        tail = dummyHead;
         dfs(root);
         tail.right = dummyHead.right;
         dummyHead.right.left = tail;
