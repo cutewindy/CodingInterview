@@ -34,7 +34,7 @@ public class FindtheCelebrity {
 		for (int i = 1; i < n; i++) {
 			// if res knows i, that means res cannot be a celebrity, 
 			// what's more, if res doesn't know i, that means i cannot be a celebrity(cannot miss).
-			if (knows(result, i)) result = i;   
+			if (knows(result, i)) result = i;  // or !knows(i, result)   
 		}
 		for (int i = 0; i < n; i++) {
 			if (i != result && (knows(result, i) || !knows(i, result))) {
