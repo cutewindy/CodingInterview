@@ -24,23 +24,25 @@ public class RecoverBinarySearchTree {
     TreeNode prev;
 	public void recoverBinarySearchTreeI(TreeNode root) {
         if (root == null) return;
-        p1 = null;
-        p2 = null;
-        prev = null;
         dfs(root);
-        int temp = p1.val;
-        p1.val = p2.val;
-        p2.val = temp;
+        swap(p1, p2);
     }
+    
     private void dfs(TreeNode root) {
         if (root == null) return;
         dfs(root.left);
-        if (prev != null) {
-            if (p1 == null && prev.val >= root.val) p1 = prev;
-            if (p1 != null && prev.val >= root.val) p2 = root;
+        if (prev != null && root.val < prev.val) {
+            if (p1 == null) p1 = prev;
+            p2 = root;
         }
         prev = root;
-        dfs(root.right);	
+        dfs(root.right);
+    }
+    
+    private void swap(TreeNode p1, TreeNode p2) {
+        int temp = p1.val;
+        p1.val = p2.val;
+        p2.val = temp;	
 	}
 	
 	
