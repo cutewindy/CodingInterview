@@ -14,6 +14,49 @@ import java.util.Stack;
 public class LongestValidParentheses {
 
 	/**
+	 * Method3: iterate from left to right and right to left
+	 * In this approach, we make use of two counters left and right. First, we start traversing the 
+	 * string from the left towards the right and for every ‘(’ encountered, we increment the left 
+	 * counter and for every ‘)’ encountered, we increment the right counter. Whenever left becomes 
+	 * equal to right, we calculate the length of the current valid string and keep track of maximum 
+	 * length substring found so far. If right becomes greater than left we reset left and right to 0.
+	 * Next, we start traversing the string from right to left and similar procedure is applied.
+	 * @param String s
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int longestValidParenthesesII(String s) {
+        if (s == null || s.length() == 0) return 0;
+        int left = 0;
+        int right = 0;
+        int res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') left++;
+            else right++;
+            if (left == right) res = Math.max(right * 2, res);
+            else if (left < right) {
+                left = 0;
+                right = 0;
+            }
+        }
+        
+        left = 0;
+        right = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {    // case: "(()"
+            if (s.charAt(i) == '(') left++;
+            else right++;
+            if (left == right) res = Math.max(right * 2, res);
+            else if (left > right) {
+                left = 0;
+                right = 0;
+            }
+        }
+        
+        return res;		
+	}
+	
+	/**
 	 * Method2: DP: Using dp[] to save the longest length of valid parentheses which is end at i.
 	 * If s[i]='(', have an open parentheses.
 	 * If s[i]=')' and open > 0, can close a parentheses, dp[i]=dp[i-1]+2; and need to add dp[i-dp[i]].
