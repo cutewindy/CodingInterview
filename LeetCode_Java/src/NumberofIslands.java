@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is 
  * surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You 
@@ -23,13 +26,13 @@ public class NumberofIslands {
 	
 	
 	/**
-	 * Method2: UnionFindSet. 
+	 * Method3: UnionFindSet. 
 	 * @param char[][] grid
 	 * @return int
 	 * Time: O(n^2)
 	 * Space: O(n)
 	 */
-	public int numberofIslandsI(char[][] grid) {
+	public int numberofIslandsII(char[][] grid) {
 		if(grid == null || grid.length == 0 || grid[0].length == 0) {
 			return 0;
 		}
@@ -49,7 +52,7 @@ public class NumberofIslands {
 					if (row < 0 || row >= m || col < 0 || col >= n || grid[row][col] == '0') continue;
 					if (ufs.union(i * n + j, row * n + col)) res--;
 				}
-				System.out.println("i: " + i + " j: " + j + " res: " + res);
+//				System.out.println("i: " + i + " j: " + j + " res: " + res);
 			}
 		}
 		return res;
@@ -79,6 +82,52 @@ public class NumberofIslands {
 			return false;
 		}
 	}
+	
+	/**
+	 * Method2: DFS(Recursion). 
+	 * Find '1' in the grid first. Then use helper to find the union island.
+	 * If find, set grid[i][j]='0', means this area has already been found, it's union island,
+	 * should not count to res.
+	 * @param char[][] grid
+	 * @return int
+	 * Time: O(n^2)
+	 * Space: O(1)
+	 * Stack space: O(n)
+	 */
+	public int numberofIslandsI(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int res = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '0') continue;
+                grid[i][j] = '0';
+                bfs(grid, i, j);
+                res++;
+            }
+        }
+        return res;
+    }
+    
+    private void bfs(char[][] grid, int row, int col) {
+        int m = grid.length;
+        int n = grid[0].length;
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(row * n + col);
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            for (int k = 0; k < 4; k++) {
+                int i = curr / n + dx[k];
+                int j = curr % n + dy[k];
+                if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == '0') continue;
+                grid[i][j] = '0';
+                queue.offer(i * n + j);
+            }
+        }		
+	}
+	
+	
 
 	/**
 	 * Method1: DFS(Recursion). 
@@ -125,6 +174,12 @@ public class NumberofIslands {
 				 {'1', '1', '0', '0', '0'},
 				 {'0', '0', '0', '0', '0'}}));
 		System.out.println(result.numberofIslandsI(new char[][] 
+				{{'1', '1', '1', '1', '0'}, 
+				 {'1', '1', '0', '1', '0'},
+				 {'1', '1', '0', '0', '0'},
+				 {'1', '1', '0', '0', '0'},
+				 {'0', '0', '0', '0', '0'}}));
+		System.out.println(result.numberofIslandsII(new char[][] 
 				{{'1', '1', '1', '1', '0'}, 
 				 {'1', '1', '0', '1', '0'},
 				 {'1', '1', '0', '0', '0'},
