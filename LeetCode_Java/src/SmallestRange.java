@@ -37,44 +37,39 @@ public class SmallestRange {
 	 * Space: O(n)
 	 */
 	public int[] smallestRange(List<List<Integer>> nums) {
-		if (nums == null || nums.size() == 0) return new int[2];
-		PriorityQueue<Node> minHeap = new PriorityQueue<>(nums.size(), new Comparator<Node>() {
-			@Override
-			public int compare(Node a, Node b) {
-				return a.val - b.val;
-			}
-		});
-		int max = Integer.MIN_VALUE;
-		for (int i = 0; i < nums.size(); i++) {
-			int val = nums.get(i).get(0);
-			minHeap.offer(new Node(i, 0, val));
-			max = Math.max(val, max);
-		}
-		int[] res = {0, Integer.MAX_VALUE};
-		while (true) {
-			Node curr = minHeap.poll();
-			if (max - curr.val < res[1] - res[0]) {
-				res[1] = max;
-				res[0] = curr.val;
-			}
-			if (curr.j + 1 >= nums.get(curr.i).size()) break;
-			curr.j = curr.j + 1;
-			curr.val = nums.get(curr.i).get(curr.j);
-			minHeap.offer(curr);
-			max = Math.max(curr.val, max);
-		}
-		return res;
-	}
-	
-	class Node{
-		int i;
-		int j;
-		int val;
-		public Node(int i, int j, int val) {
-			this.i = i;
-			this.j = j;
-			this.val = val;
-		}
+        if (nums == null || nums.size() == 0) return new int[0];
+        
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>(new Comparator<int[]>() {     // int[] = [i, j, val]
+            @Override
+            public int compare(int[] a, int[] b) {
+                return a[2] - b[2];
+            }
+        });
+        
+        // init
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.size(); i++) {
+            minHeap.offer(new int[] {i, 0, nums.get(i).get(0)});
+            max = Math.max(nums.get(i).get(0), max);
+        }
+        
+        // update
+        int[] res = null;
+        while (true) {
+            int[] curr = minHeap.poll();
+            if (res == null || max - curr[2] < res[1] - res[0]) {
+                if (res == null) res = new int[2];
+                res[0] = curr[2];
+                res[1] = max;
+            }
+            if (curr[1] + 1 == nums.get(curr[0]).size()) break;
+            curr[1] = curr[1] + 1;
+            curr[2] = nums.get(curr[0]).get(curr[1]);
+            minHeap.offer(curr);
+            max = Math.max(curr[2], max);
+        }
+        
+        return res;
 	}
 
 	public static void main(String[] args) {
