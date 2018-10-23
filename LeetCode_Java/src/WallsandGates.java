@@ -49,17 +49,14 @@ public class WallsandGates {
 		int[] dx = {-1, 0, 1, 0};
 		int[] dy = {0, 1, 0, -1};
 		while (!queue.isEmpty()) {
-			int size = queue.size();
-			while (size-- > 0) {
-				int[] curr = queue.poll();
-				for (int k = 0; k < 4; k++) {
-					int i = curr[0] + dx[k];
-					int j = curr[1] + dy[k];
-					if (i < 0 || i >= rooms.length || j < 0 || j >= rooms[0].length ||
-						rooms[i][j] <= rooms[curr[0]][curr[1]] + 1) continue;
-					rooms[i][j] = rooms[curr[0]][curr[1]] + 1;
-					queue.offer(new int[] {i, j});
-				}
+			int[] curr = queue.poll();
+			for (int k = 0; k < 4; k++) {
+				int i = curr[0] + dx[k];
+				int j = curr[1] + dy[k];
+				if (i < 0 || i >= rooms.length || j < 0 || j >= rooms[0].length ||
+					rooms[i][j] <= rooms[curr[0]][curr[1]] + 1) continue;
+				rooms[i][j] = rooms[curr[0]][curr[1]] + 1;
+				queue.offer(new int[] {i, j});
 			}
 		}
 	}
