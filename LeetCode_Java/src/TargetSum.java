@@ -37,6 +37,7 @@ public class TargetSum {
 		if (nums == null || nums.length == 0) return 0;
 		int sum = 0;
 		for (int n: nums) sum += n;
+		if (S < -sum || S > sum) return 0;   // take care
 		int[] dp = new int[2 * sum + 1];
 		
 		// init
@@ -54,7 +55,30 @@ public class TargetSum {
 			dp = newDp;
 		}
 		
-		return sum >= dp.length - S ? 0 : dp[sum + S];  // take care
+		return dp[sum + S];  
+		
+		// rolling array
+//        if (nums == null || nums.length == 0) return 0;
+//        int sum = 0;
+//        for (int num: nums) sum += num;
+//        if (S > sum || S < -sum) return 0;       // take care: eg: nums = [1], S = 0
+//        int[][] dp = new int[2][sum * 2 + 1];   // dp[i][j]: ways that sum of nums[0,..,i] equals to j
+//        
+//        // init
+//        dp[0][nums[0] + sum] = 1;
+//        dp[0][-nums[0] + sum] += 1;    // take care, eg: nums = [0, 0, 1], S = 1
+//        
+//        // update
+//        for (int i = 1; i < nums.length; i++) {        // i: index of nums
+//            Arrays.fill(dp[i % 2], 0);
+//            for (int j = 0; j < 2 * sum + 1; j++) {    // j: index of sum 
+//                if (dp[(i - 1) % 2][j] == 0) continue;
+//                dp[i % 2][j - nums[i]] += dp[(i - 1) % 2][j];
+//                dp[i % 2][j + nums[i]] += dp[(i - 1) % 2][j];
+//            }
+//        }
+//        
+//        return dp[(nums.length - 1) % 2][sum + S];
 	}
 
 	
