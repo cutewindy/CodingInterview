@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * You are given a doubly linked list which in addition to the next and previous pointers, it could 
  * have a child pointer, which may or may not point to a separate doubly linked list. These child 
@@ -34,6 +36,39 @@ public class FlattenaMultilevelDoublyLinkedList {
 	        child = _child;
 	    }		
 	}
+	
+	/**
+	 * Approach3: Like approach2, iteration with stack
+	 * flatten the node "head" and return the tail in its child (if exists)
+   	 * the tail means the last node after flattening "head"
+	 * @param Node head
+	 * @return Node
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public Node flattenaMultilevelDoublyLinkedListII(Node head) {
+        if (head == null) return head;
+        Stack<Node> stack = new Stack<>();
+        Node curr = head;
+        Node prev = head;
+        while (curr != null) {
+            if (curr.child != null) {
+                if (curr.next != null) stack.push(curr.next);  // make sure that next will not be null
+                curr.next = curr.child;
+                curr.child.prev = curr;
+                curr.child = null;
+            }
+            prev = curr;
+            curr = curr.next;
+            if (curr == null && !stack.isEmpty()) {
+                Node next = stack.pop();
+                prev.next = next;
+                next.prev = prev;
+                curr = next;
+            }
+        }
+        return head;		
+	}
 
 	
 	/**
@@ -42,33 +77,41 @@ public class FlattenaMultilevelDoublyLinkedList {
    	 * the tail means the last node after flattening "head"
 	 * @param Node head
 	 * @return Node
-	 * Time: O(n^2)
+	 * Time: O(n)
 	 * Space: O(1)
 	 */
 	public Node flattenaMultilevelDoublyLinkedListI(Node head) {
-        if (head == null) return head;
         getTail(head);
         return head;
     }
     
     private Node getTail(Node head) {
-        if (head == null) return null;
-        if (head.next == null && head.child == null) return head;
-        if (head.child != null) {
-            Node child = head.child;
-            Node next = head.next;
-            Node tail = getTail(child); // Find the tail of the child
-            
-            // connect curr and child, and remove curr.child
-            head.next = child;
-            child.prev = head;
-            head.child = null;
-            
-            // connect tail and next
-            tail.next = next;
-            if (next != null) next.prev = tail;
+        Node tail = head;
+        Node curr = head;
+        while (curr != null) {
+            if (curr.child == null) {
+                tail = curr;
+                curr = curr.next;
+            }
+            else {
+                Node childTail = getTail(curr.child); // Find the tail of the child
+                
+                // connect curr and child, and remove curr.child
+                Node next = curr.next;
+                curr.next = curr.child;
+                curr.child.prev = curr;
+                curr.child = null;
+                
+                // connect tail and next
+                childTail.next = next;
+                if (next != null) next.prev = childTail;
+                
+                tail = childTail;
+                curr = next;
+            }
         }
-        return getTail(head.next);
+        
+        return tail;  // tail will not be null
 	}
 	
 	
