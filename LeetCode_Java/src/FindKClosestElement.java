@@ -30,9 +30,9 @@ public class FindKClosestElement {
 	 */
 	public List<Integer> findKClosestElement(int[] arr, int k, int x) {
 		List<Integer> result = new ArrayList<>();
-		int left = findClosestElementIndex(arr, x) - 1;  // left bound(exclude)
-		int right = left + 2;                            // right bound(exclude)
-		while (--k > 0) {
+		int left = findClosestElementIndex(arr, x);      // left bound(exclude)
+		int right = left + 1;                            // right bound(exclude)
+		while (k-- > 0 && (left >= 0 || right < arr.length)) {
 			if (left < 0) right++;
 			else if (right > arr.length - 1) left--;
 			else if (Math.abs(arr[left] - x) <= Math.abs(arr[right] - x)) left--;
@@ -54,8 +54,7 @@ public class FindKClosestElement {
 			else if (arr[mid] < x) start = mid;
 			else end = mid;
 		}
-		if (Math.abs(arr[start] - x) <= Math.abs(arr[end] - x)) return start;
-		else return end;
+		return Math.abs(arr[start] - x) <= Math.abs(arr[end] - x) ? start : end;
 	}
 
 	public static void main(String[] args) {

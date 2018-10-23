@@ -42,11 +42,12 @@ public class UTF_8Validation {
         int i = 0;
         while (i < data.length) {
             int cnt = 0;
-            if (data[i] < 0b10000000) {i++;}                    // 0000 0000-0000 007F | 0xxxxxxx
-            else if ((data[i] >> 5) == 0b110) {cnt = 1; i++;}   // 0000 0080-0000 07FF | 110xxxxx 10xxxxxx
-            else if ((data[i] >> 4) == 0b1110) {cnt = 2; i++;}  // 0000 0800-0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx
-            else if ((data[i] >> 3) == 0b11110) {cnt = 3; i++;} // 0001 0000-0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+            if ((data[i] >> 7) == 0) cnt = 0;            // 0000 0000-0000 007F | 0xxxxxxx
+            else if ((data[i] >> 5) == 0b110) cnt = 1;   // 0000 0080-0000 07FF | 110xxxxx 10xxxxxx
+            else if ((data[i] >> 4) == 0b1110) cnt = 2;  // 0000 0800-0000 FFFF | 1110xxxx 10xxxxxx 10xxxxxx
+            else if ((data[i] >> 3) == 0b11110) cnt = 3; // 0001 0000-0010 FFFF | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
             else return false;
+            i++;
             while (cnt-- > 0) {
                 if (i >= data.length || (data[i] >> 6) != 0b10) return false;
                 i++;
