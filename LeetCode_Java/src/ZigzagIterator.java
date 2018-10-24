@@ -57,34 +57,35 @@ public class ZigzagIterator {
 	
 	
 	/**
-	 * Using two iterator i, j, always print i except i.hasNext() = false, then swap i, j
+	 * Using two iterator i, j, always print i, then swap i, j if j hasNext()
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
-//	private Iterator<Integer> i;
-//	private Iterator<Integer> j;
-//	public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
-//		this.i = v1.iterator();
-//		this.j = v2.iterator();
-//	}
-//	
-//	public int next() {
-//		Integer res;
-//		if (i.hasNext()) {
-//			res = i.next();
-//			Iterator<Integer> temp = i;
-//			i = j;
-//			j = temp;
-//		}
-//		else {
-//			res = j.next();
-//		}
-//		return res;
-//	}
-//	
-//	public boolean hasNext() {
-//		return i.hasNext() || j.hasNext();
-//	}
+//    Iterator<Integer> it1;
+//    Iterator<Integer> it2;
+//    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+//        it1 = v1.iterator();
+//        it2 = v2.iterator();
+//        if (!it1.hasNext()) {
+//            Iterator<Integer> temp = it1;
+//            it1 = it2;
+//            it2 = temp;
+//        }
+//    }
+//
+//    public int next() {
+//        int res = it1.next();
+//        if (it2.hasNext()) {
+//            Iterator<Integer> temp = it1;
+//            it1 = it2;
+//            it2 = temp;
+//        }
+//        return res;
+//    }
+//
+//    public boolean hasNext() {
+//        return it1.hasNext();
+//    }
 	
 	
 	public static void main(String[] args) {

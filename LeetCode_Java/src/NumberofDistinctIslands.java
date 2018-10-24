@@ -112,6 +112,7 @@ public class NumberofDistinctIslands {
         		grid[i][j] = 0;
         		StringBuilder sb = new StringBuilder("s");
         		dfs(grid, i, j, sb);
+        		System.out.println(sb.toString());
         		set.add(sb.toString());
         	}
         }
