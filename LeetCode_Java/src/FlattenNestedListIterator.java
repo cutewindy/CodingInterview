@@ -19,34 +19,45 @@ import java.util.Stack;
  * @author wendi
  *
  */
-public class FlattenNestedListIterator {
+public class FlattenNestedListIterator implements Iterator<Integer> {
 	
 	// Approach2: Stack to store all the iterator
-	Stack<Iterator<NestedInteger>> stack;
-	NestedInteger nextInt;
+    Stack<Iterator<NestedInteger>> stack;
+    NestedInteger nextInt;
     public FlattenNestedListIterator(List<NestedInteger> nestedList) {
-    	stack = new Stack<>();
-        stack.push(nestedList.iterator());
+        this.stack = new Stack<>();
         nextInt = null;
+        if (nestedList == null || nestedList.size() == 0) return;
+        stack.push(nestedList.iterator());
+        getNext();
     }
 
-//    @Override
+    @Override
     public Integer next() {
-        if (nextInt == null) return null;
-        return nextInt.getInteger();
+        if (!hasNext()) return null;
+        Integer res = nextInt.getInteger();
+        nextInt = null;
+        getNext();
+        return res;
     }
 
-//    @Override
+    @Override
     public boolean hasNext() {
-    	while (!stack.isEmpty()) {
-    		if (!stack.peek().hasNext()) stack.pop();
-    		else {
-    			nextInt = stack.peek().next();
-    			if (nextInt.isInteger()) return true;
-    			else stack.push(nextInt.getList().iterator());
-    		}
-    	}
-    	return false;
+        return nextInt != null;
+    }
+    
+    private void getNext() {
+        while (!stack.isEmpty()) {
+            if (!stack.peek().hasNext()) stack.pop();
+            else {
+                NestedInteger temp = stack.peek().next();
+                if (temp.isInteger()) {
+                    nextInt = temp;
+                    break;
+                }
+                else stack.push(temp.getList().iterator());
+            }
+        }
     }
 
     
