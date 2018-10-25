@@ -18,29 +18,31 @@ import java.util.Map;
  */
 public class TwoSumIII_DataStructureDesign {
 
-	private List<Integer> list = new ArrayList<>();   // speed up
-	private Map<Integer, Integer> hash = new HashMap<>();
-	
-    // Add the number to an internal data structure.
-	public void add(int number) {
-	    if (hash.containsKey(number)) hash.put(number, 2); // two is enough
-	    else {
-	    	hash.put(number, 1);
-	    	list.add(number);
-	    }
-	}
-
-    // Find if there exists any pair of numbers which sum is equal to the value.
-	public boolean find(int value) {
-		for (int i = 0; i < list.size(); i++) {
-			int num1 = list.get(i);
-			int num2 = value - num1;
-			if (num2 != num1 && hash.containsKey(num2) || num2 == num1 && hash.get(num2) > 1) {
-				return true;
-			}
-		}
-	    return false;
-	}	
+	/**
+	 * HashMap
+	 * T: add: O(1), find: T: O(n)
+	 * S: O(n)
+	 */
+    /** Initialize your data structure here. */
+    Map<Integer, Integer> map;
+    
+    public TwoSumIII_DataStructureDesign() {
+        map = new HashMap<>();
+    }
+    
+    /** Add the number to an internal data structure.. */
+    public void add(int number) {
+        map.put(number, map.getOrDefault(number, 0) + 1);
+    }
+    
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    public boolean find(int value) {
+        for (Integer a: map.keySet()) {
+            if (!map.containsKey(value - a)) continue;
+            if (value - a != a || map.get(value - a) > 1) return true;
+        }
+        return false;
+    }	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
