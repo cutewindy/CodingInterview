@@ -24,54 +24,37 @@ public class SetMatrixZeroes {
 	 * Space: O(1)
 	 */
 	public void setMatrixZeroesI(int[][] matrix) {
-		if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-			return;
-		}
-		int m = matrix.length;
-		int n = matrix[0].length;
-		boolean row0 = false;
-		boolean col0 = false;
-		// 1 mark columns and rows to be set to zero. 
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				if (matrix[i][j] == 0) {
-					if (i == 0) row0 = true;
-					if (j == 0) col0 = true;
-					if (i != 0 && j != 0) {
-						matrix[0][j] = 0;
-						matrix[i][0] = 0;
-					}
-				}
-			}
-		}
-		// 2 make rows zero
-		for (int i = 1; i < m; i++) {
-			if (matrix[i][0] == 0) {
-				for (int j = 0; j < n; j++) {
-					matrix[i][j] = 0;
-				}
-			}
-		}
-		// 3 make columns zero
-		for (int j = 1; j < n; j++) {
-			if (matrix[0][j] == 0) {
-				for (int i = 0; i < m; i++) {
-					matrix[i][j] = 0;
-				}
-			}
-		}
-		// 4 zero out first row (if needed)
-		if (row0) {
-			for (int j = 0; j < n; j++) {
-				matrix[0][j] = 0;
-			}
-		}
-		// 5 zero out first column (if needed)
-		if (col0) {
-			for (int i = 0; i < m; i++) {
-				matrix[i][0] = 0;
-			}
-		}
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean row0 = false;
+        boolean col0 = false;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] != 0) continue;
+                if (i == 0) row0 = true;
+                if (j == 0) col0 = true;
+                matrix[0][j] = 0;
+                matrix[i][0] = 0;
+            }
+        }
+
+        // 1. set matrix
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) matrix[i][j] = 0;
+            }
+        }
+        
+        // 2. set row0
+        if (row0) {
+            for (int j = 0 ; j < n; j++) matrix[0][j] = 0;
+        }
+        
+        // 3. set col0
+        if (col0) {
+            for (int i = 0; i < m; i++) matrix[i][0] = 0;
+        }
 	}
 	
 	
