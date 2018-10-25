@@ -24,11 +24,12 @@ public class RemoveDuplicatesfromSortedArray {
         if (nums == null || nums.length == 0) return 0;
         int i = 0;
         for (int j = 0; j < nums.length; j++) {
-            if (nums[j] != nums[i]) {
-                swap(nums, ++i, j);
+            if (i == 0 || nums[j] != nums[i - 1]) {
+                swap(nums, i, j);
+                i++;
             }
         }
-        return i + 1;
+        return i;
     }
     
     private void swap(int[] nums, int i, int j) {
@@ -36,7 +37,7 @@ public class RemoveDuplicatesfromSortedArray {
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
-	}
+    }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
