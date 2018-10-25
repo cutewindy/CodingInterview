@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Given a nested list of integers, return the sum of all integers in the list weighted by their 
@@ -16,8 +18,37 @@ import java.util.List;
  *
  */
 public class NestedListWeightSum {	
+	
 	/**
-	 * DFS
+	 * Approach2: BFS
+	 * @param List<NestedInteger> nestedList
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public int nestedListWeightSumI(List<NestedInteger> nestedList) {
+		if (nestedList == null || nestedList.size() == 0) return 0;
+		Queue<List<NestedInteger>> queue = new LinkedList<>();
+		queue.offer(nestedList);
+		int level = 0;
+		int res = 0;
+		while (!queue.isEmpty()) {
+			level++;
+			int size = queue.size();
+			while (size-- > 0) {
+				List<NestedInteger> currList = queue.poll();
+				for (NestedInteger currNested: currList) {
+					if (currNested.isInteger()) res += currNested.getInteger() * level;
+					else queue.offer(currNested.getList());
+				}
+			}
+		}
+		return res;
+	}
+	
+	
+	/**
+	 * Approach1: DFS
 	 * @param List<NestedInteger> nestedList
 	 * @return int
 	 * Time: O(n)
@@ -65,6 +96,7 @@ public class NestedListWeightSum {
 		nestedList.add(list2);		
 		NestedInteger.printNL(nestedList);
 		System.out.println(result.nestedListWeightSum(nestedList));
+		System.out.println(result.nestedListWeightSumI(nestedList));
 	}
 
 }
