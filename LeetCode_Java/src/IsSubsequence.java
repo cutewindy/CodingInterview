@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,56 +35,42 @@ public class IsSubsequence {
 	 * Space: O(n)
 	 */
 	public boolean isSubsequenceI(String s, String t) {
-		if (s == null || s.length() > t.length()) {
-			return false;
-		}
-		Map<Character, List<Integer>> hash = new HashMap<>();
-		char[] T = t.toCharArray();
-		char[] S = s.toCharArray();
-		for (int i = 0; i < T.length; i++) {
-			if (hash.containsKey(T[i])) {
-				hash.get(T[i]).add(i);
-			}
-			else {
-				hash.put(T[i], new ArrayList<>(Arrays.asList(i)));
-			}
-		}
-		for (Character c: hash.keySet()) {
-			System.out.println(c + ": " + hash.get(c));
-		}
-		int index = -1;
-		for (int i = 0; i < S.length; i++) {
-			if (!hash.containsKey(S[i])) {
-				return false;
-			}
-			index = binarySearchFirstEqualOrLarger(hash, S[i], index) + 1;
-			if (index == -1) return false;
-		}
-		return true;
+        if (s == null && t == null) return true;
+        if (s == null || t == null || s.length() > t.length()) return false;
+        
+        Map<Character, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            if (!map.containsKey(c)) map.put(c, new ArrayList<Integer>());
+            map.get(c).add(i);
+        }
+        
+        int index = -1;
+        for (char c: s.toCharArray()) {
+            if (!map.containsKey(c)) return false;
+            int indexInT = getNextIndexInT(map.get(c), index);
+            if (indexInT == -1) return false;
+            index = indexInT;
+        }
+        
+        return true;
 	}
 	
 	
-	// Binary Search to find the possible minimum index in T, otherwise return -2
-	private int binarySearchFirstEqualOrLarger(Map<Character, List<Integer>> hash, char c, int index) {
-		if (!hash.containsKey(c)) return -2;
-		Integer[] array = hash.get(c).toArray(new Integer[hash.get(c).size()]);
-		int start = 0;
-		int end = array.length - 1;
-		while (start + 1 < end) {
-			int mid = start + (end - start) / 2;
-			if (array[mid] == index) {
-				return array[mid];
-			}
-			else if (array[mid] < index) {
-				start = mid;
-			}
-			else {
-				end = mid;
-			}
-		}
-		if (array[start] >= index) return array[start];
-		if (array[end] >= index) return array[end];
-		return -2;
+	// Binary Search to find the possible minimum index in T, otherwise return -1
+	private int getNextIndexInT(List<Integer> list, int index) {
+        int start = 0;
+        int end = list.size() - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (list.get(mid) == index) return mid + 1 < list.size() ? list.get(mid + 1) : -1;
+            else if (list.get(mid) < index) start = mid;
+            else end = mid;
+        } 
+        if (list.get(start) > index) return list.get(start);
+        if (list.get(end) > index) return list.get(end);
+        if (end + 1 < list.size()) return list.get(end + 1);
+        return -1;
 	}
 	
 	
