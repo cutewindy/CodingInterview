@@ -25,32 +25,34 @@ public class ReverseNodesinKGroup {
 	 * Space: O(1)
 	 */
 	public ListNode reverseNodesinKGroupI(ListNode head, int k) {
-        if (head == null || head.next == null || k == 0 || k == 1) return head;
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        head = dummy;
-        ListNode tail = head.next;
-        ListNode curr = tail.next;
-        ListNode node = dummy.next;
+        if (k == 0 || head == null || head.next == null) return head;
         int n = 0;
-        while (node != null) {
+        ListNode curr = head;
+        while (curr != null) {
             n++;
-            node = node.next;
+            curr = curr.next;
         }
+        
         n /= k;
-        while (n > 0) {
-            for (int i = 0; i < k - 1; i++) {
-                tail.next = curr.next;
-                curr.next = head.next;
-                head.next = curr;
-                curr = tail.next;
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+        ListNode tail = head;
+        ListNode prev = dummyHead;
+        curr = head.next;
+        while (n-- > 0) {
+            for (int i = 1; i < k; i++) {
+                ListNode next = curr.next;
+                curr.next = prev.next;
+                prev.next = curr;
+                tail.next = next;
+                curr = next;
             }
-            head = tail;
-            tail = head.next;
-            curr = tail == null ? null : tail.next;
-            n--;
+            prev = tail;
+            tail = tail.next;
+            if (tail != null) curr = tail.next;
         }
-        return dummy.next;	
+        
+        return dummyHead.next;
 	}
 	
 
