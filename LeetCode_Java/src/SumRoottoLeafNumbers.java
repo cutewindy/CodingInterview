@@ -90,7 +90,7 @@ public class SumRoottoLeafNumbers {
 	}
 	
 	/**
-	 * Method1: DFS(Recursion):the sum of curr node is left sum + right sum. 
+	 * Method1: DFS(Recursion)(bottom_up):the sum of curr node is left sum + right sum. 
 	 * Need to give children curr path sum, is sum * 10 + curr.val.
 	 * @param TreeNode root
 	 * @return int
@@ -121,11 +121,40 @@ public class SumRoottoLeafNumbers {
 
 	}
 	
+	/**
+	 * Method0: DFS(Recursion)(Top_down):the sum of curr node is left sum + right sum. 
+	 * Need to give children curr path sum, is sum * 10 + curr.val.
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
+	 */
+	public int sumRoottoLeafNumbers0(TreeNode root) {
+        if (root == null) return 0;
+        int[] res = new int[1];
+        dfs(root, 0, res);
+        return res[0];
+    }
+    
+    private void dfs(TreeNode root, int sum, int[] res) {
+        if (root == null) return;
+        if (root.left == null && root.right == null) {
+            sum = sum * 10 + root.val;
+            res[0] += sum;
+            return;
+        }
+        sum = sum * 10 + root.val;
+        dfs(root.left, sum, res);
+        dfs(root.right, sum, res);
+    }
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SumRoottoLeafNumbers result = new SumRoottoLeafNumbers();
 		TreeNode root = TreeNode.generateCBT(new int[] {1, 2, 3, 4, 5, 6});
 		TreeNode.printCBT(root);
+		System.out.println(result.sumRoottoLeafNumbers0(root));
 //		System.out.println(result.sumRoottoLeafNumbers(root));
 //		System.out.println(result.sumRoottoLeafNumbersI(root));
 		System.out.println(result.sumRoottoLeafNumbersII(root));
