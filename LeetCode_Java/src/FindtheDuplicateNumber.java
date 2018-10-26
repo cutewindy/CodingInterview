@@ -14,6 +14,32 @@
  */
 public class FindtheDuplicateNumber {
 	
+
+	/**
+	 * Method3: Tow pointers, fast and slow, like "linked list cycleII"
+	 * @param int[] nums
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int findtheDuplicateNumberII(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int n = nums.length;
+        for (int i = 0; i < n; i++) nums[i]--;
+        int slow = n - 1;   // take care: should start from n-1, eg: [1,3,4,2,2]
+        int fast = n - 1;
+        while (true) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            if (slow == fast) break;
+        }
+        fast = n - 1;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow + 1;
+	}
 	
 	/**
 	 * Method2: Modify the array using index is sorted array.
@@ -91,6 +117,7 @@ public class FindtheDuplicateNumber {
 		System.out.println(result.findtheDuplicateNumber(new int[] {2, 2, 2, 3, 1, 5, 6}));
 		System.out.println(result.findtheDuplicateNumber(new int[] {1, 5, 6, 3, 2, 2, 2}));
 		System.out.println(result.findtheDuplicateNumberI(new int[] {1, 5, 6, 3, 2, 2, 2}));
+		System.out.println(result.findtheDuplicateNumberII(new int[] {1, 5, 6, 3, 2, 2, 2}));
 	}
 
 }
