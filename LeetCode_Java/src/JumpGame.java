@@ -35,24 +35,23 @@ public class JumpGame {
 	 * Method1: DP(brute force)
 	 * @param int[] nums
 	 * @return boolean
-	 * Time: O(n^2)
-	 * Space: O(1)
+	 * Time: O(n)
+	 * Space: O(n)
 	 */
 	public boolean jumpGame(int[] nums) {
-		if (nums == null || nums.length == 0) {
-            return true;
+        if (nums == null || nums.length == 0) return false;
+        if (nums.length == 1) return true;
+        int n = nums.length;
+        boolean[] dp = new boolean[n];
+        dp[0] = true;
+        for (int i = 0; i < n; i++) {
+            if (!dp[i]) continue;
+            for (int j = 1; j <= nums[i]; j++) {
+                if (i + j < n) dp[i + j] = true;
+                if (dp[n - 1]) return true;
+            }
         }
-        boolean[] canJump = new boolean[nums.length];
-        canJump[0] = true;
-        for (int i = 1; i < nums.length; i++) {
-        	for (int j = 0; j < i; j++) {
-        		if (canJump[j] && j + nums[j] >= i) {
-        			canJump[i] = true;
-        			break;
-        		}
-        	}
-        }
-        return canJump[nums.length - 1];
+        return false;
 	}
 		
 

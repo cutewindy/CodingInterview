@@ -20,13 +20,13 @@ import java.util.Stack;
 public class DecodeString {
 	
 	/**
-	 * Stack
+	 * Approach2: Stack
 	 * @param String s
 	 * @return String
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public String decodeString(String s) {
+	public String decodeStringI(String s) {
 		if (s == null || s.length() == 0) return "";
 		int num = 0;
 		String str = "";
@@ -59,12 +59,52 @@ public class DecodeString {
 	}
 	
 	
+	/**
+	 * Approach1: DFS
+	 * @param String s
+	 * @return String
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack space: O(n)
+	 */
+	public String decodeString(String s) {
+		if (s == null || s.length() == 0) return "";
+		int[] index = new int[1];  // global index
+		return dfs(s, index);
+	}
+	
+	private String dfs(String s, int[] index) {
+		StringBuilder sb = new StringBuilder();
+		while (index[0] < s.length()) {
+			int num = 0;
+			while (Character.isDigit(s.charAt(index[0]))) {
+				num = num * 10 + s.charAt(index[0]) - '0';
+				index[0]++;
+			}
+			char c = s.charAt(index[0]);
+			index[0]++;
+			if (c == '[') {
+				String next = dfs(s, index);
+				while (num-- > 0) {
+					sb.append(next);
+				}
+			}
+			else if (c == ']') {
+				return sb.toString();
+			}
+			else {
+				sb.append(c);
+			}
+		}
+		return sb.toString();
+	}
 
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		DecodeString result = new DecodeString();
 		System.out.println(result.decodeString("2[ab3[c]]1[d]e"));
+		System.out.println(result.decodeStringI("2[ab3[c]]1[d]e"));
 	}
 
 }
