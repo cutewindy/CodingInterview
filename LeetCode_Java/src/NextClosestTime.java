@@ -49,54 +49,41 @@ public class NextClosestTime {
 	 * Space: O(4)
 	 */
 	public String nextClosestTime(String time) {
-		int[] prevTime = new int[4];
-        int intTime = Integer.parseInt(time.replaceAll(":", ""));
-        for (int i = 3; i >= 0; i--) {
-        	prevTime[i] = intTime % 10;
-        	intTime /= 10;
-        }
-        int[] digits = prevTime.clone();
+		int[] times = new int[4];
+        times[0] = time.charAt(0) - '0';
+        times[1] = time.charAt(1) - '0';
+        times[2] = time.charAt(3) - '0';
+        times[3] = time.charAt(4) - '0'; 
+        int[] digits = times.clone();
         Arrays.sort(digits);
         
-        // find the next large digit
-        int[] nextTime = prevTime.clone();
-        for (int i = 3; i >= 0; i--) {
-        	for (int j = 0; j < 4; j++) {
-        		if (j != 0 && digits[j] == digits[j - 1]) continue; // skip duplicate digit
-        		nextTime[i] = digits[j];
-        		if (isValid(nextTime) && isLarge(nextTime, prevTime)) return getNextTime(nextTime);
+        for (int i = 3; i >= 0; i--) {    // start from end of time
+        	for (int j = 0; j < 4; j++) { // start from smallest digit, 
+        		if (j != 0 && digits[j] == digits[j - 1]) continue;   // skip duplicate
+                if (digits[j] <= times[i]) continue;                  // find the first digit large than time[i]
+        		times[i] = digits[j];
+        		if (isValid(times)) return getNextTime(times);
+                break;
         	}
-        	// if cannot find the next digit at position i, keep position i as the small valid digit
-        	for (int j = 0; j < 4; j++) {  
-        		nextTime[i] = digits[j];
-        		if (isValid(nextTime)) break;
-        	}
+            times[i] = digits[0];         // if not find valid digit, set time[i] as the smallest digit
         }
 
-        return getNextTime(nextTime);
+        return getNextTime(times);
     }
 	
-	private String getNextTime(int[] nextTime) {
+	private String getNextTime(int[] times) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 2; i++) sb.append(nextTime[i]);
+		for (int i = 0; i < 2; i++) sb.append(times[i]);
 		sb.append(":");
-		for (int i = 2; i < 4; i++) sb.append(nextTime[i]);
+		for (int i = 2; i < 4; i++) sb.append(times[i]);
 		return sb.toString();
 	}
 	
-	private boolean isLarge(int[] nextTime, int[] prevTime) {
-		for (int i = 0; i < 4; i++) {
-			if (nextTime[i] < prevTime[i]) return false;
-			if (nextTime[i] > prevTime[i]) return true; 
-		}
-		return false;
-	}
-	
-	private boolean isValid(int[] nextTime) {
-		int hour = nextTime[0] * 10 + nextTime[1];
-		int second = nextTime[2] * 10 + nextTime[3];
-		return hour < 24 && second < 60;
-	}
+	private boolean isValid(int[] times) {
+		int hour = times[0] * 10 + times[1];
+		int second = times[2] * 10 + times[3];
+		return hour < 24 && second < 60;        
+    }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
