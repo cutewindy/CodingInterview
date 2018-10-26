@@ -30,6 +30,7 @@ public class SumofTwoIntegers {
 			int carry = a & b;
 			a ^= b;
 			b = carry << 1;
+			System.out.println("a: " + Integer.toBinaryString(a) + ", b: " + Integer.toBinaryString(b) +", c: " + Integer.toBinaryString(carry));
 		}
 		return a;
 	}
@@ -38,10 +39,10 @@ public class SumofTwoIntegers {
 		// TODO Auto-generated method stub
 		SumofTwoIntegers result = new SumofTwoIntegers();
 		System.out.println(result.sumofTwoIntegers(3, 9));
-		System.out.println(result.sumofTwoIntegers(-1, -2));
-		System.out.println(Integer.toBinaryString(-1));
-		System.out.println(Integer.toBinaryString(-2));
-		System.out.println(Integer.toBinaryString(-3));
+//		System.out.println(result.sumofTwoIntegers(-1, -2));
+//		System.out.println(Integer.toBinaryString(-1));
+//		System.out.println(Integer.toBinaryString(-2));
+//		System.out.println(Integer.toBinaryString(-3));
 	}
 
 }
