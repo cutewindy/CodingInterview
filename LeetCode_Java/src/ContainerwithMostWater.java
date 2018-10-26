@@ -26,20 +26,8 @@ public class ContainerwithMostWater {
 		while (start < end) {
 			int h = Math.min(height[start], height[end]);
 			result = Math.max(h * (end - start), result);
-			System.out.println(h * (end - start));
-			while (height[start] <= h) start++;
-			while (height[end] <= h) end--;
-			// too slow
-//			if (height[start] < height[end]) {
-//				start++;
-//				while (height[start] < height[start - 1]) start++;
-////				while (++start < end && height[start] < height[start - 1]);
-//			}	
-//			else {
-//				end--;
-////				while (height[end] < height[end + 1]) end--;
-////				while (start < --end && height[end] < height[end + 1]);
-//			}
+			while (start < end && height[start] <= h) start++;
+			while (start < end && height[end] <= h) end--;
 		}
 		return result;
 	}
