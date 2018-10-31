@@ -35,7 +35,6 @@ public class IntersectionofTwoArraysII {
 	 * Space: O(n2)
 	 */
 	public int[] intersectionofTwoArraysIIII(int[] nums1, int[] nums2) {
-		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
         if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) return new int[0];
         List<Integer> res = new ArrayList<>();
         // suppose nums1 is very long and nums1 is a sorted array
