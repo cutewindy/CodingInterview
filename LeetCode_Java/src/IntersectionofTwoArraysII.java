@@ -28,6 +28,66 @@ public class IntersectionofTwoArraysII {
 	
 	
 	/**
+	 * Method3: if (nums1 is sorted and length is very long): Binary search + hashMap
+	 * @param int[] nums1, int[] nums2
+	 * @return int[]
+	 * Time: O(n2log(n1))
+	 * Space: O(n2)
+	 */
+	public int[] intersectionofTwoArraysIIII(int[] nums1, int[] nums2) {
+		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
+        if (nums1 == null || nums2 == null || nums1.length == 0 || nums2.length == 0) return new int[0];
+        List<Integer> res = new ArrayList<>();
+        // suppose nums1 is very long and nums1 is a sorted array
+        Arrays.sort(nums1);
+        Map<Integer, Integer>  map = new HashMap<>();
+        for (int num: nums2) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        } 
+        for (Integer num: map.keySet()) {
+            int start = findStartIndex(nums1, num);
+            if (start == -1) continue;
+            int end = findEndIndex(nums1, num);
+            int cnt = Math.min(end - start + 1, map.get(num));
+            while (cnt-- > 0) {
+                res.add(num);
+            }
+        }
+        
+        int[] array = new int[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            array[i] = res.get(i);
+        }
+        return array;
+    }
+    
+    private int findStartIndex(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] >= target) end = mid;
+            else start = mid;
+        }
+        if (nums[start] == target) return start; 
+        if (nums[end] == target) return end;
+        return -1;
+    }
+    
+    private int findEndIndex(int[] nums, int target) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start + 1 < end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] <= target) start = mid;
+            else end = mid;
+        }
+        if (nums[end] == target) return end;
+        if (nums[start] == target) return start;
+        return -1;
+	}
+	
+	/**
 	 * Method2: Array sort:
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
@@ -92,6 +152,8 @@ public class IntersectionofTwoArraysII {
 		IntersectionofTwoArraysII result = new IntersectionofTwoArraysII();
 		System.out.println(Arrays.toString(result.intersectionofTwoArraysII(new int[] {1, 2, 2, 1}, new int[] {2, 2})));
 		System.out.println(Arrays.toString(result.intersectionofTwoArraysIII(new int[] {1, 2, 2, 1}, new int[] {2, 2})));
+		System.out.println(Arrays.toString(result.intersectionofTwoArraysIIII(new int[] {1, 2, 2, 1}, new int[] {2, 2})));
+		
 	}
 
 }

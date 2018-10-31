@@ -139,12 +139,11 @@ public class SumRoottoLeafNumbers {
     
     private void dfs(TreeNode root, int sum, int[] res) {
         if (root == null) return;
+        sum = sum * 10 + root.val;
         if (root.left == null && root.right == null) {
-            sum = sum * 10 + root.val;
             res[0] += sum;
             return;
         }
-        sum = sum * 10 + root.val;
         dfs(root.left, sum, res);
         dfs(root.right, sum, res);
     }

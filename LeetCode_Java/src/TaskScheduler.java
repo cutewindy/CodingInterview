@@ -25,7 +25,50 @@ import java.util.Queue;
 public class TaskScheduler {
 	
 	/**
-	 * PriorityQueue + queue
+	 * Approach2: Math
+	 * example: 3 A 3 B 2 C 1 D, n = 3
+	 * think of sequence "AB" as a special task "X", then we got:
+	 * X ? ? X ? ? X
+	 * partCnt = count(X) - 1
+	 * partEmptyCnt = n + 1 - count(X)
+	 * totalEmptyCnt = partEmptyCnt * partCnt
+	 * leftTask = tasks.length - length(X) * count(X);
+	 * idles = max(0, totalEmptyCnt - leftTask)
+	 * result = tasks.length + idles
+	 * credit: "https://leetcode.com/problems/task-scheduler/discuss/104500/Java-O(n)-time-O(1)-space-1-pass-no-sorting-solution-with-detailed-explanation"
+	 * @param char[] tasks, int n
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int taskSchedulerI(char[] tasks, int n) {
+        if (tasks == null || tasks.length == 0) return 0;
+        if (n == 0) return tasks.length;
+        int m = tasks.length;
+        
+        int maxCnt = 0;
+        int maxNum = 0;
+        char[] cnts = new char[26];
+        for (char c: tasks) {
+            cnts[c - 'A']++;
+            if (cnts[c - 'A'] == maxCnt) maxNum++;
+            else if (cnts[c - 'A'] > maxCnt) {
+                maxCnt = cnts[c - 'A'];
+                maxNum = 1;
+            }
+        }
+        
+        int partCnt = maxCnt - 1;
+        int partEmptyCnt = n + 1 - maxNum;
+        int totalEmptyCnt = partEmptyCnt * partCnt;
+        int leftTask = m - maxCnt * maxNum;
+        int idle = Math.max(totalEmptyCnt - leftTask, 0);
+        return idle + m;
+	}
+	
+	
+	/**
+	 * Approach1: PriorityQueue + queue
 	 * Same like "358. Rearrange String k Distance Apart"
 	 * @param char[] tasks, int n
 	 * @return int
@@ -77,7 +120,7 @@ public class TaskScheduler {
 		// TODO Auto-generated method stub
 		TaskScheduler result = new TaskScheduler();
 		System.out.println(result.taskScheduler(new char[] {'A','A','A','B','B','B'}, 2));
-		
+		System.out.println(result.taskSchedulerI(new char[] {'A','A','A','B','B','B'}, 2));
 	}
 
 }
