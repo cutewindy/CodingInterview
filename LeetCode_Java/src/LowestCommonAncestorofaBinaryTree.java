@@ -32,12 +32,12 @@ public class LowestCommonAncestorofaBinaryTree {
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
-	public TreeNode LCAofaBT(TreeNode root, TreeNode p, TreeNode q) {
+	public TreeNode lowestCommonAncestorofaBinaryTree(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null || root == p || root == q) {
 			return root;
 		}
-		TreeNode left = LCAofaBT(root.left, p, q);
-		TreeNode right = LCAofaBT(root.right, p, q);
+		TreeNode left = lowestCommonAncestorofaBinaryTree(root.left, p, q);
+		TreeNode right = lowestCommonAncestorofaBinaryTree(root.right, p, q);
 		if (left != null && right != null) {
 			return root;
 		}
@@ -50,32 +50,6 @@ public class LowestCommonAncestorofaBinaryTree {
 		return null;
 	}
 	
-	
-	// Version 2(Same method)
-	public TreeNode lowestCommonAncestorofaBinaryTree(TreeNode root, TreeNode p, TreeNode q) {
-		if (root == null) {
-			return root;
-		}
-		return helper(root, p, q);
-	}
-	
-	private TreeNode helper(TreeNode root, TreeNode p, TreeNode q) {
-		if (root == null || root == p || root == q) {
-			return root;
-		}
-		TreeNode left = helper(root.left, p, q);
-		TreeNode right = helper(root.right, p, q);
-		if (left != null && right != null) {
-			return root;
-		}
-		else if (left != null && right == null) {
-			return left;
-		}
-		else if (left == null && right != null){
-			return right;
-		}
-		return null;
-	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -87,7 +61,7 @@ public class LowestCommonAncestorofaBinaryTree {
 		TreeNode q = root.left.left.right;
 		System.out.println("p: " + p.val);
 		System.out.println("q: " + q.val);
-		System.out.println(result.LCAofaBT(root, p, q).val);
+		System.out.println(result.lowestCommonAncestorofaBinaryTree(root, p, q).val);
 	}
 
 }
