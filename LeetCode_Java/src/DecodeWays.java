@@ -22,7 +22,7 @@ public class DecodeWays {
 	 * @param String s
 	 * @return int
 	 * Time: O(n)
-	 * Space: O(n)
+	 * Space: O(n) rolling array -> O:(1)
 	 */
 	public int decodeWays(String s) {
         if (s == null || s.length() == 0) return 0;

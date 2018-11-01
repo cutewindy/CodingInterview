@@ -26,8 +26,8 @@ public class WordBreakII {
 	 * DFS + Memoization: used HashMap to save the previous results to prune duplicated branches
 	 * @param String s, List<String> wordDict
 	 * @return List<String> 
-	 * Time: O(2^n) n=s.length()
-	 * Space: O(n)
+	 * Time: O(n^3) Size of recursion tree can go up to n^2. The creation of list takes ns time.
+	 * Space: O(n^2) 
 	 * Stack space: O(n)
 	 */
 	public List<String> wordBreakII(String s, List<String> wordDict) {
