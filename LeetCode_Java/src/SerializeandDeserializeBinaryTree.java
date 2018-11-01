@@ -139,11 +139,13 @@ public class SerializeandDeserializeBinaryTree {
     }
     
     private TreeNode dfs(String[] datas, int[] index) {
-        if (index[0] == datas.length || datas[index[0]].equals("#")) return null;
-        TreeNode root = new TreeNode(Integer.valueOf(datas[index[0]]));
+        if (index[0] == datas.length || datas[index[0]].equals("#")) {
+        	index[0]++;
+        	return null;
+        }
+        TreeNode root = new TreeNode(Integer.parseInt(datas[index[0]]));
         index[0]++;
         root.left = dfs(datas, index);
-        index[0]++;
         root.right = dfs(datas, index);
         return root;
 	}
