@@ -61,18 +61,18 @@ public class MeetingRoomsII {
         Arrays.sort(end);
         int res = 0;
         int currRes = 0;
-        for (int i = 0, j = 0; i <= n && j <= n;) {
-            int startNum = i == n ? Integer.MAX_VALUE : start[i];
-            int endNum = j == n ? Integer.MAX_VALUE : end[j];
-            if (startNum < endNum) {
+        int i = 0;
+        int j = 0;
+        while (i < n && j < n) {
+            if (start[i] < end[j]) {
                 currRes++;
+                res = Math.max(currRes, res);
                 i++;
             }
             else {
                 currRes--;
                 j++;
             }
-            res = Math.max(currRes, res);
         }
         return res;
 	}

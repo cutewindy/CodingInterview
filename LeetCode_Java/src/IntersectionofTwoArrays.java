@@ -19,10 +19,10 @@ import java.util.Set;
 public class IntersectionofTwoArrays {
 
 	/**
-	 * (8 ms)Method3: BinarySearch + one set
+	 * (8 ms)Method3: BinarySearch + remove duplicate
 	 * 1 sort nums1
 	 * 2 using binary search method to find whether element in nums2 is in nums1, save result into
-	 * set to skip duplicate.
+	 * list
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
 	 * Time: O(nlog(n) + mlog(n))
@@ -30,11 +30,13 @@ public class IntersectionofTwoArrays {
 	 */
 	public int[] intersectionofTwoArraysII(int[] nums1, int[] nums2) {
 		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
-		Set<Integer> result = new HashSet<>();
+		List<Integer> result = new ArrayList<>();
 		Arrays.sort(nums1);
-		for (int num: nums2) {
-			if(binarySearch(nums1, num)) {
-				result.add(num);
+		Arrays.sort(nums2);
+		for (int i = 0; i < nums2.length; i++) {
+			if (i != 0 && nums2[i - 1] == nums2[i]) continue; // remove duplicate
+			if(binarySearch(nums1, nums2[i])) {
+				result.add(nums2[i]);
 			}
 		}
 		int[] res = new int[result.size()];
