@@ -64,7 +64,7 @@ public class MaximumSumof3NonOverlappingSubarrays {
 			int left = leftIdx[i - k];
 			int right = rightIdx[i + k];
 			currSum = sum[left] + sum[i] + sum[right];
-			if (i == k || currSum > maxSum) {
+			if (currSum > maxSum) {
 				res[0] = left;
 				res[1] = i;
 				res[2] = right;
