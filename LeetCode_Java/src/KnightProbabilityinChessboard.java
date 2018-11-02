@@ -1,5 +1,5 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * On an NxN chessboard, a knight starts at the r-th row and c-th column and attempts to make exactly 
@@ -92,37 +92,39 @@ public class KnightProbabilityinChessboard {
     }
     
 	/**
-	 * Approach1: BFS: MLE
+	 * Approach1: BFS, using hashmap instead of queue to save space
 	 * 分子是走完K步还在棋盘上的走法，分母是没有限制条件的总共的走法。
 	 * 那么分母最好算，每步走有8种跳法，那么K步就是8的K次方种了。
 	 * 关键是要求出分子，以给定位置为起始点，然后进行BFS，每步遍历8种情况，遇到在棋盘上的就计数器加1.
 	 * @param int N, int K, int r, int c
 	 * @return double 
-	 * Time: O(8^k)
-	 * Space: O(8^k)
+	 * Time: O(k*n^2)
+	 * Space: O(n^2)
 	 */
     public double knightProbabilityinChessboard(int N, int K, int r, int c) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(r * N + c);
-        int res = 1;
         int times = K;
         int[][] d = new int[][] {{-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
-        while (!queue.isEmpty() && times-- > 0) {
-        	int size = queue.size();
-        	int currRes = 0;
-        	while (size-- > 0) {
-        		int currPos = queue.poll();
+        
+        Map<Integer, Double> map = new HashMap<>(); // [key, value] = [position, cnts]
+        map.put(r * N + c, 1.0);
+        while (times-- > 0) {
+        	Map<Integer, Double> newMap = new HashMap<>();
+        	for (Integer pos: map.keySet()) {
         		for (int k = 0; k < 8; k++) {
-        			int i = currPos / N + d[k][0];
-        			int j = currPos % N + d[k][1];
+        			int i = pos / N + d[k][0];
+        			int j = pos % N + d[k][1];
         			if (i < 0 || i >= N || j < 0 || j >= N) continue;
-        			currRes++;
-        			queue.offer(i * N + j);
+        			newMap.put(i * N + j, newMap.getOrDefault(i * N + j, 0.0) + map.get(pos));
         		}
         	}
-        	res = currRes;
+        	map = newMap;
         }
-        return (double)res / Math.pow(8, K);  
+        
+        Double totalCnt = 0.0;
+        for (Double cnt: map.values()) {
+        	totalCnt += cnt;
+        }
+        return totalCnt / Math.pow(8, K);  
     }
     
     
