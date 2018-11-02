@@ -30,7 +30,7 @@ public class NumberofIslands {
 	 * @param char[][] grid
 	 * @return int
 	 * Time: O(n^2)
-	 * Space: O(n)
+	 * Space: O(n^2)
 	 */
 	public int numberofIslandsII(char[][] grid) {
 		if(grid == null || grid.length == 0 || grid[0].length == 0) {
@@ -84,15 +84,12 @@ public class NumberofIslands {
 	}
 	
 	/**
-	 * Method2: DFS(Recursion). 
-	 * Find '1' in the grid first. Then use helper to find the union island.
-	 * If find, set grid[i][j]='0', means this area has already been found, it's union island,
+	 * Method2: BFS 
 	 * should not count to res.
 	 * @param char[][] grid
 	 * @return int
 	 * Time: O(n^2)
-	 * Space: O(1)
-	 * Stack space: O(n)
+	 * Space: O(n^2)
 	 */
 	public int numberofIslandsI(char[][] grid) {
         if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
