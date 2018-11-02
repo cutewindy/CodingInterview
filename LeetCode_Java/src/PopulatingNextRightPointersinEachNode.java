@@ -42,17 +42,13 @@ public class PopulatingNextRightPointersinEachNode {
 	 * Stack space: O(log(n))
 	 */
 	public void populatingNextRightPointersinEachNodeI(TreeLinkNode root) {
-		if (root == null) {
-			return;
-		}
+		if (root == null) return;
 		helper(root);
 		return;
 	}
 	
 	private void helper(TreeLinkNode root) {
-		if (root == null) {
-			return;
-		}
+		if (root == null) return;
 		if (root.left != null) {
 			root.left.next = root.right;
 			root.right.next = root.next != null ? root.next.left : null;
