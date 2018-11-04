@@ -28,7 +28,7 @@ public class ExpressionAddOperators {
  	 * 	 recursion.
 	 * @param String num, int target
 	 * @return List<String>
-	 * Time: O(4^n)
+	 * Time: O(n*4^(n - 1)) one for loop in dfs, and have non, +, - and *, four operations between n characters.
 	 * Space: O(1)
 	 * Stack space: O(n)
 	 */
