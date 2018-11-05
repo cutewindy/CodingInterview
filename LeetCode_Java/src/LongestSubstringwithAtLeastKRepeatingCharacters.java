@@ -81,7 +81,7 @@ public class LongestSubstringwithAtLeastKRepeatingCharacters {
 	
 	
 	/**
-	 * Method1: Brute Force + int array + set (hashmap: TLE)
+	 * Method1: Brute Force + int array
 	 * @param String s, int k
 	 * @return int
 	 * Time: O(n^2)
@@ -94,13 +94,12 @@ public class LongestSubstringwithAtLeastKRepeatingCharacters {
 		char[] S = s.toCharArray();
 		for (int i = 0; i < S.length; i++) {
 			int[] counts = new int[26];
-			int cnt = 0;
-			Set<Character> set = new HashSet<>();
+			int unionCnt = 0;
+			int noLessThanKCnt = 0;
 			for (int j = i; j < S.length; j++) {
-				set.add(S[j]);
-				counts[S[j] - 'a']++;
-				if (counts[S[j] - 'a'] == k) cnt++;
-				if (set.size() == cnt && j - i + 1 > res) res = j - i + 1;
+				if (counts[S[j] - 'a']++ == 0) unionCnt++;
+				if (counts[S[j] - 'a'] == k) noLessThanKCnt++;
+				if (noLessThanKCnt == unionCnt && j - i + 1 > res) res = j - i + 1;
 			}
 		}
 		return res;
