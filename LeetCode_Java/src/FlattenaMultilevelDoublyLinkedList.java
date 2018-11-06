@@ -51,23 +51,22 @@ public class FlattenaMultilevelDoublyLinkedList {
         Stack<Node> stack = new Stack<>();
         Node curr = head;
         Node prev = head;
-        while (curr != null) {
+        while (!stack.isEmpty() || curr != null) {
+            if (curr == null) {
+                curr = stack.pop();
+                prev.next = curr;
+                curr.prev = prev;
+            }
             if (curr.child != null) {
-                if (curr.next != null) stack.push(curr.next);  // make sure that next will not be null
+                if (curr.next != null) stack.push(curr.next); // make sure that next will not be null
                 curr.next = curr.child;
                 curr.child.prev = curr;
                 curr.child = null;
             }
             prev = curr;
             curr = curr.next;
-            if (curr == null && !stack.isEmpty()) {
-                Node next = stack.pop();
-                prev.next = next;
-                next.prev = prev;
-                curr = next;
-            }
         }
-        return head;		
+        return head;	
 	}
 
 	

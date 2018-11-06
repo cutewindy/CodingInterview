@@ -19,6 +19,41 @@
  */
 public class IslandPerimeter {
 
+	/**
+	 * Approach3: dfs, find the island first, than dfs to find all the same island, count the 
+	 * perimeter when facing an edge
+	 * @param int[][] grid
+	 * @return int
+	 * Time: O(m * n)
+	 * Space: O(m*n )
+	 */
+	public int islandPerimeterII(int[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        int[] res = new int[1];
+        int m = grid.length;
+        int n = grid[0].length;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    dfs(grid, i, j, new boolean[m][n], res);
+                    return res[0];
+                }
+            }
+        }
+        return res[0];
+    }
+    
+    private void dfs(int[][] grid, int row, int col, boolean[][] visited, int[] res) {
+        visited[row][col] = true;
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, 1, 0, -1};
+        for (int k = 0; k < 4; k++) {
+            int i = dx[k] + row;
+            int j = dy[k] + col;
+            if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) res[0]++;
+            else if (!visited[i][j]) dfs(grid, i, j, visited, res);
+        }
+	}
 	
 	/**
 	 * Approach2: Brute force
@@ -84,6 +119,7 @@ public class IslandPerimeter {
 		IslandPerimeter result = new IslandPerimeter();
 		System.out.println(result.islandPerimeter(new int[][] {{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}}));
 		System.out.println(result.islandPerimeterI(new int[][] {{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}}));
+		System.out.println(result.islandPerimeterII(new int[][] {{0, 1, 0, 0}, {1, 1, 1, 0}, {0, 1, 0, 0}, {1, 1, 0, 0}}));
 	}
 
 }
