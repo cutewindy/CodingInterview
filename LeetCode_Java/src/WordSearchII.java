@@ -37,7 +37,7 @@ public class WordSearchII {
 	 * @param char[][] board, String[] words
 	 * @return List<String>
 	 * Time: O(m*n*4^len) len=words[i].length()
-	 * Space: O(26^len) and < Sum of len[i], len[i]=words[i].length()
+	 * Space: O(Sum of len[i]), len[i]=words[i].length()
 	 * Stack space: O(len)
 	 */
     public List<String> wordSearchII(char[][] board, String[] words) {
