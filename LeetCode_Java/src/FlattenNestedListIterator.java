@@ -48,15 +48,15 @@ public class FlattenNestedListIterator implements Iterator<Integer> {
     
     private void getNext() {
         while (!stack.isEmpty()) {
-            if (!stack.peek().hasNext()) stack.pop();
-            else {
-                NestedInteger temp = stack.peek().next();
-                if (temp.isInteger()) {
-                    nextInt = temp;
-                    break;
-                }
-                else stack.push(temp.getList().iterator());
+            while (!stack.isEmpty() && !stack.peek().hasNext()) stack.pop();
+            if (stack.isEmpty()) break;
+            NestedInteger temp = stack.peek().next();
+            if (temp.isInteger()) {
+                nextInt = temp;
+                break;
             }
+            else stack.push(temp.getList().iterator());
+            
         }
     }
 

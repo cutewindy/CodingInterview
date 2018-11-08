@@ -51,13 +51,13 @@ public class LongestAbsoluteFilePath {
         Stack<Integer> stack = new Stack<>();
         int res = 0;
         for (String path: paths) {
-        	int level = path.lastIndexOf("\t") + 1;   // number of "\t", "\t" count as 1
-        	while (stack.size() > level) stack.pop(); // find parent
-        	int len = (stack.size() == 0 ? 0 : stack.peek()) + path.length() - level + 1;  // remove "/t", add "/"
+        	int index = path.lastIndexOf("\t");   // number of "\t", "\t" count as 1
+        	while (stack.size() > index + 1) stack.pop(); // find parent
+        	int len = (stack.size() == 0 ? 0 : stack.peek()) + path.length() - index;  // remove "\t", add "/"
         	stack.push(len);
         	if (path.contains(".")) res = Math.max(stack.pop() - 1, res);   // if it is file, compare with result
         }
-        return res;  
+        return res;   
 	}
 	
 	public static void main(String[] args) {
