@@ -30,13 +30,47 @@ import java.util.Stack;
  *
  */
 public class ReconstructItinerary {
+	
+	/**
+	 * Approach2: DFS Recursion + minHeap
+	 * @param String[][] tickets
+	 * @return List<String>
+	 * Time: O(Elog(E))
+	 * Space: O(1)
+	 * Stack space: O(E)
+	 */
+	public List<String> reconstructItineraryI(String[][] tickets) {
+        List<String> res = new ArrayList<>();
+        if (tickets == null || tickets.length == 0) return res;
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        buildGraph(tickets, graph);
+        walkGraph("JFK", graph, res);
+        return res;
+    }
+    
+    private void buildGraph(String[][] tickets, Map<String, PriorityQueue<String>> graph) {
+        for (String[] t: tickets) {
+            if (!graph.containsKey(t[0])) graph.put(t[0], new PriorityQueue<String>());
+            graph.get(t[0]).offer(t[1]);
+        }
+    }
+    
+    private void walkGraph(String u, Map<String, PriorityQueue<String>> graph, List<String> res) {
+        while (graph.containsKey(u) && !graph.get(u).isEmpty()) {
+            String v = graph.get(u).poll();
+            walkGraph(v, graph, res);
+        }
+        res.add(0, u);		
+	}
+    
 
 	/**
+	 * Approach1: DFS Iteration + stack + minHeap
 	 * Just Eulerian path. Greedy DFS, building the route backwards when retreating.
 	 * @param String[][] tickets
 	 * @return List<String>
-	 * Time: O(n)
-	 * Space: O(n)
+	 * Time: O(Elog(E))
+	 * Space: O(E)
 	 */
 	public List<String> reconstructItinerary(String[][] tickets) {
 		List<String> result = new ArrayList<>();
@@ -64,8 +98,10 @@ public class ReconstructItinerary {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ReconstructItinerary result = new ReconstructItinerary();
-		String[][] tickets = {{"JFK","A"}, {"A","C"}, {"A","E"}, {"C","B"}, {"E","D"}, {"D", "A"}};
-		System.out.println(result.reconstructItinerary(tickets));
+		System.out.println(result.reconstructItinerary(new String[][] {{"JFK","A"}, {"A","C"}, {"A","E"}, {"C","B"}, {"E","D"}, {"D", "A"}}));
+		System.out.println(result.reconstructItinerary(new String[][] {{"JFK", "KUL"}, {"JFK", "NRT"}, {"MRT", "JFK"}}));
+		System.out.println(result.reconstructItineraryI(new String[][] {{"JFK","A"}, {"A","C"}, {"A","E"}, {"C","B"}, {"E","D"}, {"D", "A"}}));
+		System.out.println(result.reconstructItineraryI(new String[][] {{"JFK", "KUL"}, {"JFK", "NRT"}, {"MRT", "JFK"}}));
 	}
 
 }
