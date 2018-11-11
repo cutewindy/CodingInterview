@@ -87,7 +87,7 @@ public class IntersectionofTwoArraysII {
 	}
 	
 	/**
-	 * Method2: Array sort:
+	 * Method2: two pointers + Array sort:
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
 	 * Time: O(nlog(n))

@@ -47,23 +47,23 @@ public class IntersectionofTwoArrays {
 		return res;
 	}
 	
-	private boolean binarySearch(int[] sortedArray, int num) {
-		if (sortedArray == null || sortedArray.length == 0) return false;
+	private boolean binarySearch(int[] nums, int target) {
+		if (nums == null || nums.length == 0) return false;
 		int start = 0;
-		int end = sortedArray.length - 1;
+		int end = nums.length - 1;
 		while (start + 1 < end) {
 			int mid = start + (end - start) / 2;
-			if (sortedArray[mid] == num) return true;
-			else if (sortedArray[mid] < num) start = mid;
+			if (nums[mid] == target) return true;
+			else if (nums[mid] < target) start = mid;
 			else end = mid;
 		}
-		return sortedArray[start] == num || sortedArray[end] == num;
+		return nums[start] == target || nums[end] == target;
 	}
 	
 	/**
-	 * (6 ms)Method2: Two sets: one set to save nums1, the other set to save the result.
+	 * (6 ms)Method2: set
 	 * 1 save elements of nums1 into set num.
-	 * 2 if set num contains element from nums2, add it into result set.
+	 * 2 if set contains element of nums2, add it into result, and remove it from set.
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
 	 * Time: O(m+n)
@@ -71,32 +71,34 @@ public class IntersectionofTwoArrays {
 	 */
 	public int[] intersectionofTwoArraysI(int[] nums1, int[] nums2) {
 		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];
-		Set<Integer> num = new HashSet<>();
-		Set<Integer> result = new HashSet<>();
-		// 1 save elements of nums1 into set num.
+		Set<Integer> set = new HashSet<>();
+		List<Integer> res = new ArrayList<>();
+		// 1 save elements of nums1 into set.
 		for (int num1: nums1) {
-			num.add(num1);
+			set.add(num1);
 		}
 		// 2 if set num contains element from nums2, it's intersection element.
 		for (int num2: nums2) {
-			if (num.contains(num2)) result.add(num2);
+			if (set.contains(num2)) {
+				res.add(num2);
+				set.remove(num2);
+			}
 		}
-		int [] res = new int[result.size()];
+		int [] array = new int[res.size()];
 		int i = 0;
-		for (Integer n: result) {
-			res[i++] = n;
+		for (Integer n: res) {
+			array[i++] = n;
 		}
-		return res;
-		}
+		return array;
+	}
 	
 	
 	/**
-	 * (8 ms)Method1: Two Pointers + one set: Sort two arrays first, then find the intersection elements 
-	 * using two pointers, save them into set to skip duplicate.
+	 * (8 ms)Method1: Two Pointers, Sort two arrays first, then find the intersection elements
 	 * @param int[] nums1, int[] nums2
 	 * @return int[]
 	 * Time: O(nlog(n) + mlog(m) + m+n)
-	 * Space: O(n)
+	 * Space: O(1)
 	 */
 	public int[] intersectionofTwoArrays(int[] nums1, int[] nums2) {
 		if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0) return new int[0];

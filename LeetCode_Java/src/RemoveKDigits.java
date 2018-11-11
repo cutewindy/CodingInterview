@@ -33,7 +33,7 @@ public class RemoveKDigits {
 	 */
     public String removeKDigits(String num, int k) {
         if (num == null || num.length() == 0) return "";
-        if (k == num.length()) return "0";
+        if (k >= num.length()) return "0";
         
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < num.length(); i++) {
