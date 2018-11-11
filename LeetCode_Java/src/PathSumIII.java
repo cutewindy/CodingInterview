@@ -57,6 +57,7 @@ public class PathSumIII {
 		dfs(root.left, target, currSum, map, res);
 		dfs(root.right, target, currSum, map, res);
         map.put(currSum, map.get(currSum) - 1);  // take care, don't forget
+        if (map.get(currSum) == 0) map.remove(currSum);
 	}
 
 	
