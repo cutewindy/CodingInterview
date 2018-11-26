@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.TreeMap;
+
 /**
  * Median is the middle value in an ordered integer list. If the size of the list is even, there is 
  * no middle value. So the median is the mean of the two middle value.
@@ -36,10 +39,47 @@ public class SlidingWindowMedian {
 	 * Space: O()
 	 */
 	public double[] slidingWindowMedian(int[] nums, int k) {
+		if (nums == null || nums.length == 0 || k == 0) return new double[0];
 		int n = nums.length;
 		double[] res = new double[n - k + 1];
+		TreeMap<Integer, Integer> maxTreeMap = new TreeMap<>(Collections.reverseOrder());  // [key, value] = [num, frequency], left half
+		TreeMap<Integer, Integer> minTreeMap = new TreeMap<>();  // [key, value] = [num, frequency], right half
+		int maxSize = k / 2;
+		int minSize = k - k / 2;  // left half size <= right half size
+		for (int i = 0; i < k - 1; i++) {
+			addToTreeMap(maxTreeMap, minTreeMap, maxSize, minSize, nums[i]);
+		}
+		
+		for (int i = k - 1; i < n; i++) {
+			addToTreeMap(maxTreeMap, minTreeMap, maxSize, minSize, nums[i]);
+			res[i - k + 1] = getMedian(maxTreeMap, minTreeMap, maxSize, minSize);
+			removeFromTreeMap(maxTreeMap, minTreeMap, maxSize, minSize, nums[i - k + 1]);
+		}
+		
+		return res;
+	}
+	
+	private void addToTreeMap(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int maxSize, int minSize, int num) {
+		if (!minTreeMap.containsKey(num)) minTreeMap.put(num, 0);
+		minTreeMap.put(num, minTreeMap.get(num) + 1);
+		int curr = minTreeMap.keySet().iterator().next();
+		minTreeMap.put(curr, minTreeMap.get(curr) - 1);
+		if (minTreeMap.get(curr) == 0) minTreeMap.remove(curr);
+		if (!maxTreeMap.containsKey(curr)) maxTreeMap.put(curr, 0);
+		maxTreeMap.put(curr, maxTreeMap.get(curr) + 1);
 		
 		
+	}
+	
+	private void removeFromTreeMap(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int maxSize, int minSize, int num) {
+		
+	}
+	
+	private double getMedian(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int maxSize, int minSize) {
+		if (minSize > maxSize) return (double) minTreeMap.keySet().iterator().next();
+		double left = (double) maxTreeMap.keySet().iterator().next();
+		double right = (double) minTreeMap.keySet().iterator().next();
+		return (left + right) / 2;
 	}
 
 	public static void main(String[] args) {
