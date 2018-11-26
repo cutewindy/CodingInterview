@@ -127,13 +127,15 @@ public class NumberofDistinctIslands {
     		grid[i][j] = 0;
     		sb.append(dir[k]);
     		dfs(grid, i, j, sb);
-            sb.append("b");  // take care: [[1,1,0,0],[1,0,1,1],[0,0,0,1]]
+            
     	}
+    	sb.append("b");  // take care: [[1,1,0,0],[1,0,1,1],[0,0,0,1]]
     }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NumberofDistinctIslands result = new NumberofDistinctIslands();
+		System.out.println(result.numberofDistinctIslands(new int[][] {{1,1,0,0},{1,0,1,1},{0,0,0,1}}));
 		System.out.println(result.numberofDistinctIslands(new int[][] {{1,1,0,1,1}, {1,0,0,0,0}, {0,0,0,0,1}, {1,1,0,1,1}}));
 		System.out.println(result.numberofDistinctIslandsI(new int[][] {{1,1,0,1,1}, {1,0,0,0,0}, {0,0,0,0,1}, {1,1,0,1,1}}));
 	}
