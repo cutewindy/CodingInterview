@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.TreeMap;
 
@@ -35,8 +36,8 @@ public class SlidingWindowMedian {
 	 * Two treeMap
 	 * @param int[] nums, int k
 	 * @return double[]
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(nlog(k)), add: O(log(k)), keepBalance: O(log(k)), getMedian: O(1), remove: O(log(k))
+	 * Space: O(k)
 	 */
 	public double[] slidingWindowMedian(int[] nums, int k) {
 		if (nums == null || nums.length == 0 || k == 0) return new double[0];
@@ -44,22 +45,24 @@ public class SlidingWindowMedian {
 		double[] res = new double[n - k + 1];
 		TreeMap<Integer, Integer> maxTreeMap = new TreeMap<>(Collections.reverseOrder());  // [key, value] = [num, frequency], left half
 		TreeMap<Integer, Integer> minTreeMap = new TreeMap<>();  // [key, value] = [num, frequency], right half
-		int maxSize = k / 2;
-		int minSize = k - k / 2;  // left half size <= right half size
+		int totalMaxSize = k / 2; // left half size <= right half size
+		int[] maxSize = new int[1];
 		for (int i = 0; i < k - 1; i++) {
-			addToTreeMap(maxTreeMap, minTreeMap, maxSize, minSize, nums[i]);
+			addToTreeMap(maxTreeMap, minTreeMap, maxSize, nums[i]);
+			keepBalance(maxTreeMap, minTreeMap, maxSize, totalMaxSize);
 		}
 		
 		for (int i = k - 1; i < n; i++) {
-			addToTreeMap(maxTreeMap, minTreeMap, maxSize, minSize, nums[i]);
-			res[i - k + 1] = getMedian(maxTreeMap, minTreeMap, maxSize, minSize);
-			removeFromTreeMap(maxTreeMap, minTreeMap, maxSize, minSize, nums[i - k + 1]);
+			addToTreeMap(maxTreeMap, minTreeMap, maxSize, nums[i]);
+			keepBalance(maxTreeMap, minTreeMap, maxSize, totalMaxSize);
+			res[i - k + 1] = getMedian(maxTreeMap, minTreeMap, k);
+			removeFromTreeMap(maxTreeMap, minTreeMap, maxSize, nums[i - k + 1]);
 		}
 		
 		return res;
 	}
 	
-	private void addToTreeMap(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int maxSize, int minSize, int num) {
+	private void addToTreeMap(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int[] maxSize, int num) {
 		if (!minTreeMap.containsKey(num)) minTreeMap.put(num, 0);
 		minTreeMap.put(num, minTreeMap.get(num) + 1);
 		int curr = minTreeMap.keySet().iterator().next();
@@ -67,16 +70,33 @@ public class SlidingWindowMedian {
 		if (minTreeMap.get(curr) == 0) minTreeMap.remove(curr);
 		if (!maxTreeMap.containsKey(curr)) maxTreeMap.put(curr, 0);
 		maxTreeMap.put(curr, maxTreeMap.get(curr) + 1);
-		
-		
+		maxSize[0]++;
 	}
 	
-	private void removeFromTreeMap(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int maxSize, int minSize, int num) {
-		
+	private void removeFromTreeMap(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int[] maxSize, int num) {
+		if (maxTreeMap.containsKey(num)) {
+			maxTreeMap.put(num, maxTreeMap.get(num) - 1);
+			if (maxTreeMap.get(num) == 0) maxTreeMap.remove(num);
+			maxSize[0]--;
+		}
+		else {
+			minTreeMap.put(num, minTreeMap.get(num) - 1);
+			if (minTreeMap.get(num) == 0) minTreeMap.remove(num);
+		}
 	}
 	
-	private double getMedian(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int maxSize, int minSize) {
-		if (minSize > maxSize) return (double) minTreeMap.keySet().iterator().next();
+	private void keepBalance(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int[] maxSize, int totalMaxSize) {
+		if (maxSize[0] <= totalMaxSize) return;
+		int curr = maxTreeMap.keySet().iterator().next();
+		maxTreeMap.put(curr, maxTreeMap.get(curr) - 1);
+		if (maxTreeMap.get(curr) == 0) maxTreeMap.remove(curr);
+		if (!minTreeMap.containsKey(curr)) minTreeMap.put(curr, 0);
+		minTreeMap.put(curr, minTreeMap.get(curr) + 1);
+		maxSize[0]--;
+	}
+	
+	private double getMedian(TreeMap<Integer, Integer> maxTreeMap, TreeMap<Integer, Integer> minTreeMap, int k) {
+		if (k % 2 == 1) return (double) minTreeMap.keySet().iterator().next();
 		double left = (double) maxTreeMap.keySet().iterator().next();
 		double right = (double) minTreeMap.keySet().iterator().next();
 		return (left + right) / 2;
@@ -85,7 +105,7 @@ public class SlidingWindowMedian {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		SlidingWindowMedian result = new SlidingWindowMedian();
-		System.out.println(result.slidingWindowMedian(new int[] {1,3,-1,-3,5,3,6,7}, 3));
+		System.out.println(Arrays.toString(result.slidingWindowMedian(new int[] {1,3,-1,-3,5,3,6,7}, 3)));
 	}	
 
 }
