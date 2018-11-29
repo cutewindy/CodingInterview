@@ -46,7 +46,7 @@ public class TheSkylineProblem {
 	 *    height changes in maxHeap. If true, add point to result.
 	 * @param int[][] building
 	 * @return List<int[]>
-	 * Time: O(n^2)
+	 * Time: O(nlog(n))
 	 * Space: O(n)
 	 */
 	public List<int[]> theSkylineProblem(int[][] buildings) {
