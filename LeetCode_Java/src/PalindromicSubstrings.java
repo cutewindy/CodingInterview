@@ -16,6 +16,34 @@
  *
  */
 public class PalindromicSubstrings {
+	
+
+	/**
+	 * Method3: 
+	 * @param String s
+	 * @return int
+	 * Time: O(n^2)
+	 * Space: O(1)
+	 */
+	public int palindromicSubstringsII(String s) {	
+		if (s == null || s.length() == 0) return 0;
+		int res = 0;	
+		for (int mid = 0; mid < s.length(); mid++) {
+			res += countPalindrome(s, mid, mid);
+			res += countPalindrome(s, mid, mid + 1);
+		}
+		return res;
+	}
+	
+	private int countPalindrome(String s, int left, int right) {
+		int res = 0;
+		while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+			res++;
+			left--;
+			right++;
+		}
+		return res;
+	}
 
 	
 	/**
@@ -23,7 +51,7 @@ public class PalindromicSubstrings {
 	 * @param String s
 	 * @return int
 	 * Time: O(n^2)
-	 * Space: O(1)
+	 * Space: O(n^2)
 	 */
 	public int palindromicSubstringsI(String s) {	
 		if (s == null || s.length() == 0) return 0;
@@ -88,6 +116,7 @@ public class PalindromicSubstrings {
 		PalindromicSubstrings result = new PalindromicSubstrings();
 		System.out.println(result.palindromicSubstrings("aaa"));
 		System.out.println(result.palindromicSubstringsI("aaaaa"));
+		System.out.println(result.palindromicSubstringsII("aaaaa"));
 	}
 
 }

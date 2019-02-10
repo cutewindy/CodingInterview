@@ -68,7 +68,7 @@ public class SegmentTree {
 		return query(root, start, end);
 	}
 	
-	public int query(SegmentTreeNode root, int start, int end) {
+	private int query(SegmentTreeNode root, int start, int end) {
 		if (root.start == start && root.end == end) return root.max;
 		int mid = root.start + (root.end - root.start) / 2;
 		if (end <= mid) return query(root.left, start, end);
@@ -85,7 +85,7 @@ public class SegmentTree {
 		modify(root, index, value);
 	}
 	
-	public void modify(SegmentTreeNode root, int index, int value) {
+	private void modify(SegmentTreeNode root, int index, int value) {
 		if (root.start == index && root.end == index) {
 			root.max = value;
 			return;

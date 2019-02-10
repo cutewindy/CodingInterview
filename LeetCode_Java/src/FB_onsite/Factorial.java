@@ -1,4 +1,5 @@
 package FB_onsite;
+
 /**
  * 输出一个数的factorial结果
  * @author wendi
