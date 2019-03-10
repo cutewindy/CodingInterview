@@ -26,54 +26,43 @@ public class GameofLife {
 	
 	/**
 	 * Using 2-bit to store the new state.
-	 * [2nd bit, 1st bit] = [next state, current state]
-	 * - 00  dead (next) <- dead (current)
-	 * - 01  dead (next) <- live (current)  
-	 * - 10  live (next) <- dead (current)  
-	 * - 11  live (next) <- live (current) 
-	 * In the beginning, every 2nd bit is 0,So we only need to care about when the 2nd bit will become 1.
-	 * Transition 01 -> 11: when board == 1 and lives >= 2 && lives <= 3.
-	 * Transition 00 -> 10: when board == 0 and lives == 3.
+	 * [1st bit, 2th bit] = [last state, current state]
+	 * - 0: 00  dead (last) -> dead (current)
+	 * - 1: 11  live (last) -> live (current)  
+	 * - 2: 10  live (last) -> dead (current)  
+	 * - 3: 01  dead (last) -> live (current) 
+	 * Transition 0 -> 3: when board == 0 and live == 3.
+	 * Transition 1 -> 2: when board == 1 and live != 2 && live != 3.
 	 * Then get the 2nd state.
 	 * @param int[][] board
 	 * Time: O(mn)
 	 * Space: O(1)
 	 */
 	public void gameofLife(int[][] board) {
-		if (board == null || board.length == 0 || board[0].length == 0) {
-			return;
-		}
-		int m = board.length;
-		int n = board[0].length;
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				int lives = liveNeighbors(board, i, j);
-				if (board[i][j] == 1 && lives >= 2 && lives <= 3) {
-					board[i][j] = 3;
-				}
-				if (board[i][j] == 0 && lives == 3) {
-					board[i][j] = 2;
-				}
-			}
-		}
-		for (int i = 0; i < m; i++) {
-			for (int j = 0; j < n; j++) {
-				board[i][j] >>= 1;
-			}
-		}
-	}
-	
-	private int liveNeighbors(int[][] board, int row, int col) {
-		int m = board.length;
-		int n = board[0].length;
-		int lives = 0;
-		for (int i = Math.max(row - 1, 0); i <= Math.min(row + 1, m - 1); i++) {
-			for (int j = Math.max(col - 1, 0); j <= Math.min(col + 1, n - 1); j++) {
-				lives += board[i][j] & 1;
-			}
-		}
-		lives -= board[row][col] & 1;  // don't forget
-		return lives;
+        if (board == null || board.length == 0 || board[0].length == 0) return;
+        int[][] dir = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        int m = board.length;
+        int n = board[0].length;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int live = 0;
+                for (int k = 0; k < 8; k++) {
+                    int row = i + dir[k][0];
+                    int col = j + dir[k][1];
+                    if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) continue;
+                    if (board[row][col] == 1 || board[row][col] == 2) live++;
+                }
+                if (board[i][j] == 0 && live == 3) board[i][j] = 3;
+                if (board[i][j] == 1 && live != 2 && live != 3) board[i][j] = 2;
+            }
+        }
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] %= 2;
+            }
+        }
 	}
 	
 	public static void main(String[] args) { 
