@@ -66,8 +66,8 @@ public class FindDuplicateFileinSystem {
 				map.get(content[1]).add(filePath);
 			}
 		}
-		for (String content: map.keySet()) {
-			if (map.get(content).size() > 1) res.add(map.get(content));
+		for (List<String> list: map.values()) {
+			if (list.size() > 1) res.add(list);
 		}
 		return res;
 	}
