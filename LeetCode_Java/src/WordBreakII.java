@@ -41,6 +41,7 @@ public class WordBreakII {
         List<String> res = new ArrayList<>();
         for (int i = start; i < s.length(); i++) {
             String word = s.substring(start, i + 1);
+            System.out.println(word);
             if (words.contains(word)) {
                 List<String> path = dfs(s, i + 1, words, visited);
                 if (path == null) {
@@ -52,6 +53,7 @@ public class WordBreakII {
                 }
             }
         }
+        System.out.println("start: " + start + ", res: " + res);
         visited.put(start, res);
         return res;
 	}
@@ -60,7 +62,8 @@ public class WordBreakII {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		WordBreakII result = new WordBreakII();
-		System.out.println(result.wordBreakII("catsanddog", new ArrayList<>(Arrays.asList("cat", "cats", "and", "sand", "dog"))));
+//		System.out.println(result.wordBreakII("catsanddog", new ArrayList<>(Arrays.asList("cat", "cats", "and", "sand", "dog"))));
+		System.out.println(result.wordBreakII("catsan", new ArrayList<>(Arrays.asList("cat", "cats", "and", "sand", "dog"))));
 	}
 
 }

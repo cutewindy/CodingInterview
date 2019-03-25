@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,39 +19,44 @@ import java.util.Map;
 public class LetterCombinationsofaPhoneNumber {
 
 	/**
-	 * DFS
+	 * backtracking + momerization
 	 * @param String digits
 	 * @return List<String>
-	 * Time:O(k^n), k is the average length of digit's letter list
+	 * Time:O(k^n), k is the average length of digit's letter list, k=3
 	 * Space:O(n), n level depth stack space, not included result(O(k^n))
 	 */
 	public List<String> letterCombinationofaPhoneNumber(String digits) {
         List<String> res = new ArrayList<>();
         if (digits == null || digits.length() == 0) return res;
-        Map<Character, List<Character>> map = new HashMap<>();
-        map.put('2', new ArrayList<>(Arrays.asList('a', 'b', 'c')));
-        map.put('3', new ArrayList<>(Arrays.asList('d', 'e', 'f')));
-        map.put('4', new ArrayList<>(Arrays.asList('g', 'h', 'i')));
-        map.put('5', new ArrayList<>(Arrays.asList('j', 'k', 'l')));
-        map.put('6', new ArrayList<>(Arrays.asList('m', 'n', 'o')));
-        map.put('7', new ArrayList<>(Arrays.asList('p', 'q', 'r', 's')));
-        map.put('8', new ArrayList<>(Arrays.asList('t', 'u', 'v')));
-        map.put('9', new ArrayList<>(Arrays.asList('w', 'x', 'y', 'z')));
-        dfs(digits, 0, map, new StringBuilder(), res);
-        return res;
+        Map<Integer, String> map = new HashMap<>();
+        map.put(2, "abc");
+        map.put(3, "def");
+        map.put(4, "ghi");
+        map.put(5, "jkl");
+        map.put(6, "mno");
+        map.put(7, "pqrs");
+        map.put(8, "tuv");
+        map.put(9, "wxyz");
+        return dfs(digits, 0, map, new HashMap<Integer, List<String>>());
     }
     
-    private void dfs(String digits, int index, Map<Character, List<Character>> map, StringBuilder sb, List<String> res) {
-        if (index == digits.length()) {
-            res.add(sb.toString());
-            return;
+    private List<String> dfs(String digits, int pos, Map<Integer, String> map, Map<Integer, List<String>> visited) {
+        if (pos == digits.length()) return null;
+        if (visited.containsKey(pos)) return visited.get(pos);
+        List<String> res = new ArrayList<>();
+        for (char c: map.get(digits.charAt(pos) - '0').toCharArray()) {
+            List<String> list = dfs(digits, pos + 1, map, visited);
+            if (list == null) {
+                res.add(c + "");
+                continue;
+            }
+            for (String next: list) {
+                res.add(c + next);
+            }
         }
-        for (Character c: map.get(digits.charAt(index))) {
-            sb.append(c);
-            dfs(digits, index + 1, map, sb, res);
-            sb.setLength(sb.length() - 1);
-        }
-	}
+        visited.put(pos, res);
+        return res;
+    }
 
 
 	public static void main(String[] args) {
