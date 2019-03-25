@@ -1,3 +1,4 @@
+import java.util.BitSet;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -34,41 +35,79 @@ import java.util.Set;
  */
 public class DesignPhoneDirectory {
 	
-	private Set<Integer> set = new HashSet<>();  // use to save the number that has been used (or can be use)
-	private Queue<Integer> queue = new LinkedList<>(); // use to save the number that can be use
+	/**
+	 * Approach2: bitset
+	 * Space: O(n)
+	 */
+	    BitSet bitset;
+    int max;
+    public DesignPhoneDirectory(int maxNumbers) {
+        bitset = new BitSet(maxNumbers);
+        max = maxNumbers;
+    }
     
-	/** Initialize your data structure here
-    @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
-	public DesignPhoneDirectory(int maxNumbers) {
-		for (int i = 0; i < maxNumbers; i++) {
-			queue.offer(i);
-		}
-	}
-	
     /** Provide a number which is not assigned to anyone.
-    @return - Return an available number. Return -1 if none is available. */
-	// Time: O(1)
-	public int get() {
-	    if (queue.isEmpty()) return -1;  // take care
-	    int number = queue.poll();
-	    set.add(number);
-		return number;
-	}
+        @return - Return an available number. Return -1 if none is available. */
+    // Time: O(log(n))
+    public int get() {
+        int res = bitset.nextClearBit(0);
+        if (res >= max) return -1;
+        bitset.set(res, true);
+        return res;
+        
+    }
+    
+    /** Check if a number is available or not. */
+    // Time: O(1)
+    public boolean check(int number) {
+        return bitset.get(number) == false;
+    }
+    
+    /** Recycle or release a number. */
+    // Time: O(1)
+    public void release(int number) {
+        bitset.set(number, false);
+    }
 	
-	/** Check if a number is available or not. */
-	// Time: O(1)
-	public boolean check(int number) {
-	    return !set.contains(number);
-	}
-	
-	/** Recycle or release a number. */
-	// Time: O(1)
-	public void release(int number) {
-//	    if (queue.contains(number)) return; // time limited exception 
-		if (!set.contains(number)) return;  // take care
-	    queue.offer(number);
-	    set.remove(number);
-	}
+    
+    /**
+     * Approach1: queue + set
+     */
+//	private Set<Integer> set = new HashSet<>();  // use to save the number that has been used (or can be use)
+//	private Queue<Integer> queue = new LinkedList<>(); // use to save the number that can be use
+//    
+//	/** Initialize your data structure here
+//    @param maxNumbers - The maximum numbers that can be stored in the phone directory. */
+//	public DesignPhoneDirectory(int maxNumbers) {
+//		for (int i = 0; i < maxNumbers; i++) {
+//			queue.offer(i);
+//		}
+//	}
+//	
+//    /** Provide a number which is not assigned to anyone.
+//    @return - Return an available number. Return -1 if none is available. */
+//	// Time: O(1)
+//	public int get() {
+//	    if (queue.isEmpty()) return -1;  // take care
+//	    int number = queue.poll();
+//	    set.add(number);
+//		return number;
+//	}
+//	
+//	/** Check if a number is available or not. */
+//	// Time: O(1)
+//	public boolean check(int number) {
+//	    return !set.contains(number);
+//	}
+//	
+//	/** Recycle or release a number. */
+//	// Time: O(1)
+//	public void release(int number) {
+////	    if (queue.contains(number)) return; // time limited exception 
+//		if (!set.contains(number)) return;  // take care
+//	    queue.offer(number);
+//	    set.remove(number);
+//	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
