@@ -15,6 +15,18 @@ package dropbox;
 问：提示，RollingHash，介绍了一下add，remove操作，然后说不熟悉没关系，能否自己设计一个RollingHash？（不用在意会不会collide）
 答：确实不知道，乱写了一个hash(bytes[n,n+k]) = hash(bytes[n-1, n+k-1]) - hash(bytes[n-1]) + hash(bytes[n+k])
 以上
+
+给一个文件和一个byte数组，判断这个byte数组是否在文件里出现过？本质是字符串匹配，然而不同的是文件可能很大，不能一次性读进内存。
+我是假设了一个常量表示了内存分配给我（要解释为什么需要这个常量），创建一段buffer，一开始将它填满，然后匹配buffer和byte数组
+（过程就和字符串匹配一样，我是用最蠢的办法），配不上的话，将最后的（byte数组长度-1）个byte移到buffer前端，然后继续读文件更
+新buffer剩下的部分，再次匹配，重复这个过程知道文件到尾或者匹配成功。写完后出了两个bug，在面试官提示下修复了，不是自己找出来的= = 
+然后是followup，提高时间效率，我说用KMP？他说我不期望你用KMP，那是有点research的方法。我又想了一下，他给我hint说你知道
+rollinghash吗？我说不知道= =他就跟我简单解释了一下，就是一个byte数组有一个hash值，然后当删除一个前端的byte或者添加一个新
+的byte在末尾的时候，可以通过运算在O(1)时间内算出新的hash值。然后就给我一个class rollinghash，三个方法addbyte,
+removebyte,hash，叫我根据这个改代码。改完之后（这一次应该没有bug了= =），他问我有什么好方法可以实现这个hash函数吗
+（要求当然就是rollinghash这个类里的三个方法都是常数复杂度），不要求unique，但尽量要求不同？我说XOR每个byte？每个byte相加？
+他说可以，然后他说了一个他们在用的办法：设一个常数a，假设byte数组是bytes[0:n-1]，那么hash值为
+a^(n-1)*byte[n-1]+a^(n-2)*byte[n-2]+...+a^0*byte[0]
  * @author wendi
  *
  */
@@ -33,10 +45,10 @@ public class FileContains {
 		}
 		long fileSize = getFileSize(filePath);
 		int chunkSize = 1 << 30;   // assume 1GB memory can be used
+		long HASH_SIZE = (long) Math.pow(31, n);
 		for (long start = 0; start < fileSize; start = start + chunkSize - n) {  // overlapping
 			byte[] content = read(filePath, start, chunkSize);
 			long h = 0;
-			long HASH_SIZE = (long) Math.pow(31, n);
 			for (int i = 0; i < n - 1; i++) {
 				h = h * 31 + content[i];
 			}
