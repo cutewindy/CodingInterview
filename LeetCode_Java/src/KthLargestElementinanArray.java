@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -60,17 +59,12 @@ public class KthLargestElementinanArray {
 	 */
 	public int kthLargestElementinanArrayII(int[] nums, int k) {
 		if (nums == null || nums.length == 0 || k < 1 || k > nums.length) return -1;
-		PriorityQueue<Integer> minHeap = new PriorityQueue<>(k + 1, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer a, Integer b) {
-				return a - b;
-			}
-		});
-		for (int num: nums) {
-			minHeap.add(num);
-			if (minHeap.size() > k) minHeap.poll();
-		}
-		return minHeap.poll();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for (int num: nums) {
+            minHeap.offer(num);
+            if (minHeap.size() > k) minHeap.poll();
+        }
+        return minHeap.poll();
 	}	
 	
 	
