@@ -59,18 +59,23 @@ public class MissingNumber {
 	
 	
 	/**
-	 * Approach1: array sort
+	 * Approach1: array sort + binary search
 	 * @param int[] nums
 	 * @return int
-	 * Time: O(nlog(n))
+	 * Time: O(nlog(n) + log(n))
 	 * Space: O(1)
 	 */
 	public int missingNumber(int[] nums) {
 		Arrays.sort(nums);
-		for (int i = 0; i < nums.length; i++) {
-			if (nums[i] != i + 1) return i + 1;
-		}
-		return -1;
+		int start = 0;
+		int end = nums.length - 1;
+		while (start + 1 < end) {
+			int mid = start + (end - start) / 2;
+			if (nums[mid] == mid + 1) start = mid;
+			else end = mid;
+ 		}
+		if (nums[start] != start + 1) return start + 1;
+		return end + 1;
 	}
 
 	public static void main(String[] args) {
