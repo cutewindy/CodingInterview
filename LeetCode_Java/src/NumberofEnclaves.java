@@ -28,6 +28,127 @@ import java.util.Queue;
  */
 public class NumberofEnclaves {
 	
+	
+	/**
+	 * Approach3: Union Find
+	 * @param int[][] A
+	 * @return int
+	 * Time: O(m*n)
+	 * Space: O(m*n)
+	 */
+	public int numberofEnclavesII(int[][] A) {
+        if (A == null || A.length == 0 || A[0].length == 0) return 0;
+        int m = A.length;
+        int n = A[0].length;
+        UnionFindSet ufs = new UnionFindSet(m * n + 1);
+        int[][] dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if ((i == 0 || i == m - 1 || j == 0 || j == n - 1) && A[i][j] == 1) {
+                    Queue<Integer> queue = new LinkedList<>();
+                    queue.offer(i * n + j);
+                    ufs.union(i * n + j, m * n);
+                    A[i][j] = 0;
+                    while (!queue.isEmpty()) {
+                        int curr = queue.poll();
+                        for (int k = 0; k < 4; k++) {
+                            int row =  curr / n + dir[k][0];
+                            int col = curr % n + dir[k][1];
+                            if (row < 0 || row >= m || col < 0 || col >= n || A[row][col] == 0) continue;
+                            queue.offer(row * n + col);
+                            ufs.union(row * n + col, m * n);
+                            A[row][col] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        
+        int res = 0;
+        for (int i = 1; i < m - 1; i++) {
+            for (int j = 1; j < n - 1; j++) {
+                if (A[i][j] == 1 && ufs.find(i * n + j) != ufs.find(m * n)) {
+                    res++;
+                }
+            }
+        }
+        
+        return res;		
+	}
+	
+	class UnionFindSet {
+	    int[] parents;
+	    
+	    public UnionFindSet(int n) {
+	        parents = new int[n];
+	        for (int i = 0; i < n; i++) parents[i] = i;
+	    }
+	    
+	    public int find(int x) {
+	        while (parents[x] != x) {
+	            x = parents[x];
+	        }
+	        return x;
+	    }
+	    
+	    public boolean union(int a, int b) {
+	        int pa = find(a);
+	        int pb = find(b);
+	        if (pa != pb) {
+	            parents[pa] = pb;
+	            return true;
+	        }
+	        return false;
+	    }
+	}
+	
+	
+	
+	/**
+	 * Approach2: DFS
+	 * @param int[][] A
+	 * @return int
+	 * Time: O(m*n)
+	 * Space: O(1)
+	 * Stack space: O(m*n)
+	 */
+	public int numberofEnclavesI(int[][] A) {
+        if (A == null || A.length == 0 || A[0].length == 0) return 0;
+        int m = A.length;
+        int n = A[0].length;
+        for (int i = 0; i < m; i++) {
+            if (A[i][0] == 1) dfs(A, i, 0);
+            if (A[i][n - 1] == 1) dfs(A, i, n - 1);
+        }
+        for (int j = 0; j < n; j++) {
+            if (A[0][j] == 1) dfs(A, 0, j);
+            if (A[m - 1][j] == 1) dfs(A, m - 1, j);
+        }
+        
+        int res = 0;
+        for (int i = 1; i < m - 1; i++) {
+            for (int j = 1; j < n - 1; j++) {
+                if (A[i][j] == 1) res++;
+            }
+        }
+        
+        return res;
+    }
+    
+    private void dfs(int[][] A, int row, int col) {
+        A[row][col] = 0;
+        int[][] dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+        for (int k = 0; k < 4; k++) {
+            int i = row + dir[k][0];
+            int j = col + dir[k][1];
+            if (i < 0 || i >= A.length || j < 0 || j >= A[0].length || A[i][j] == 0) continue;
+            dfs(A, i, j);
+        }	
+	}
+	
+	
+	
 	/**
 	 * Approach1: BFS
 	 * @param int[][] A
@@ -84,6 +205,8 @@ public class NumberofEnclaves {
 		// TODO Auto-generated method stub
 		NumberofEnclaves result = new NumberofEnclaves();
 		System.out.println(result.numberofEnclaves(new int[][] {{0,0,0,0},{1,0,1,0},{0,1,1,0},{0,0,0,0}}));
+		System.out.println(result.numberofEnclavesI(new int[][] {{0,0,0,0},{1,0,1,0},{0,1,1,0},{0,0,0,0}}));
+		System.out.println(result.numberofEnclavesII(new int[][] {{0,0,0,0},{1,0,1,0},{0,1,1,0},{0,0,0,0}}));
 	}
 
 }
