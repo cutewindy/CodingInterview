@@ -25,6 +25,39 @@ public class RegularExpressionMatching {
 	
 	
 	/**
+	 * Recursion
+	 * @param String s, String p
+	 * @return boolean
+	 * Time: O(1)
+	 * Space: O(m * n)
+	 * Stack space: O(m * n)
+	 */	
+    public boolean regularExpressionMatchingI(String s, String p) {
+        if (s == null && p == null) return true;
+        if (s == null || p == null) return false;
+        Boolean[][] dp = new Boolean[s.length()][p.length()];
+        return dfs(s, p, s.length() - 1, p.length() - 1, dp);
+    }
+
+    private boolean dfs(String s, String p, int i, int j, Boolean[][] dp) {
+        if (i == -1 && j == -1) return true;
+        if (j == -1) return false;
+        if (i == -1) return p.charAt(j) == '*' && (j - 1) >= 0 && dfs(s, p, i, j - 2, dp);
+
+        if (dp[i][j] != null) return dp[i][j];
+        dp[i][j] = false;
+        if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
+            dp[i][j] = dfs(s, p, i - 1, j - 1, dp);
+        }
+        if (p.charAt(j) == '*') {
+            dp[i][j] = dfs(s, p, i, j - 2, dp) ||
+                       (s.charAt(i) == p.charAt(j - 1) || p.charAt(j - 1) == '.') && dfs(s, p, i - 1, j, dp);
+        }
+        return dp[i][j];
+    }
+	
+	
+	/**
 	 * DP: 
 	 * dp[i][j]: whether s[0..i-1] is matching p[0..j-1]. 
 	 * 1 If p[j-1] == s[i-1]: dp[i][j] = dp[i-1][j-1];
