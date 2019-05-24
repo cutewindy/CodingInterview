@@ -12,7 +12,7 @@
 public class CountCompleteTreeNodes {
 
 	/**
-	 * Method3: BinarySearch: find which part is perfect tree.
+	 * Method5: BinarySearch: find which part is perfect tree.
 	 * If(height(root.right)==h-1), left part is a final complete tree with heigth h-1, move to right.
 	 * Otherwise, right part is a final complete tree with height h-2, move to left find next one.
 	 * @param TreeNode root
@@ -20,7 +20,7 @@ public class CountCompleteTreeNodes {
 	 * Time: O(log(n)^2)
 	 * Space: O(1)
 	 */
-	public int countCompleteTreeNodesII(TreeNode root) {
+	public int countCompleteTreeNodesIIIV(TreeNode root) {
 		if (root == null) {
 			return 0;
 		}
@@ -46,6 +46,78 @@ public class CountCompleteTreeNodes {
 		}
 		return height(root.left) + 1;
 	}
+	
+	
+	/**
+	 * Method4: DFS(Iteration) : Same like method3
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(log(n)^2)
+	 * Space: O(1)
+	 */
+    public int countCompleteTreeNodesIII(TreeNode root) {
+        if (root == null) return 0;
+        int res = 0;
+        while (root != null) {
+            int leftH = leftHeightI(root.left);
+            int rightH = leftHeightI(root.right);
+            if (leftH == rightH) {
+                res += (1 << leftH);
+                root = root.right;
+            }
+            else {
+                res += (1 << rightH);
+                root = root.left;
+            }
+        }
+        return res;
+    }
+
+    private int leftHeightI(TreeNode root) {
+        int h = 0;
+        while (root != null) {
+            h++;
+            root = root.left;
+        }
+        return h;
+    }
+
+	
+	
+	/**
+	 * Method3: DFS(Recursion) : Same like method2
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(log(n)^2)
+	 * Space: O(1)
+	 * Stack space: O(log(n))
+	 */
+	public int countCompleteTreeNodesII(TreeNode root) {
+        if (root == null) return 0;
+        int res = 0;
+        while (root != null) {
+            int leftH = leftHeight(root.left);
+            int rightH = leftHeight(root.right);
+            if (leftH == rightH) {
+                res += (1 << leftH);
+                root = root.right;
+            }
+            else {
+                res += (1 << rightH);
+                root = root.left;
+            }
+        }
+        return res;
+    }
+
+    private int leftHeight(TreeNode root) {
+        int h = 0;
+        while (root != null) {
+            h++;
+            root = root.left;
+        }
+        return h;
+    }
 	
 	
 	/**
