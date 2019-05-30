@@ -24,6 +24,7 @@
  * [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[110,0,0,0,114],[210,0,0,0,214],[310,0,0,113,314],
  * [410,0,0,213,414],[610,211,112,313,614],[710,311,412,613,714],[810,411,512,713,1014]]
  * Explanation: 
+ * 
  * Note:
  * 1. The length of board will be in the range [3, 50].
  * 2. The length of board[i] will be in the range [3, 50].
@@ -35,17 +36,84 @@ public class CandyCrush {
 	
 	
 	/**
-	 * 
+	 * Brute force:
+	 * The idea is to traverse the entire matrix again and again to remove crush until no crush can 
+	 * be found.
+	 * For each traversal of the matrix, we only check two directions, rightward and downward. 
+	 * For each cell, if there are at least three candies of the same type rightward or downward, 
+	 * set them all to its negative value to mark them.
+	 * After each traversal, we need to remove all those negative values by setting them to 0, then 
+	 * let the rest drop down to their correct position. A easy way is to iterate through each 
+	 * column, for each column, use two pointers to move positive values to the bottom then set the 
+	 * rest to 0.
 	 * @param int[][] board
 	 * @return int[][]
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(m * n)
+	 * Space: O(1)
 	 */
-	public int[][] candyCrush(int[][] board) {
-		
-		
-		return board;
-	}
+    public int[][] candyCrush(int[][] board) {
+        while (true) {
+            boolean foundRow = rowCrush(board);
+            boolean foundCol = colCrush(board);
+            if (!foundRow && !foundCol) break;
+            drop(board);
+        }
+        return board;
+    }
+
+    private void drop(int[][] board) {
+        for (int j = 0; j < board[0].length; j++) {
+            int start = board.length - 1;
+            int end = board.length - 1;
+            while (start >= 0 && end >= 0) {
+                while (end >= 0 && board[end][j] < 0) end--;
+                if (end < 0) break;
+                board[start--][j] = board[end--][j];
+            }
+            while (start >= 0) {
+                board[start--][j] = 0;
+            }
+        }
+    }
+
+    private boolean rowCrush(int[][] board) {
+        boolean found = false;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length - 2;) {
+                if (board[i][j] == 0 || board[i][j] != board[i][j + 1] || board[i][j] != board[i][j + 2]) {
+                    j++;
+                    continue;
+                }
+                found = true;
+                int mark = board[i][j];
+                for (; j < board[0].length; j++) {
+                    if (board[i][j] != mark) break;
+                    board[i][j] = -mark;
+                }
+            }
+        }
+        return found;
+    }
+    
+    private boolean colCrush(int[][] board) {
+        boolean found = false;
+        for (int j = 0; j < board[0].length; j++) {
+            for (int i = board.length - 1; i >= 2;) {
+            	if (board[i][j] == 0) break;
+                if (Math.abs(board[i][j]) != Math.abs(board[i - 1][j]) || Math.abs(board[i][j]) != Math.abs(board[i - 2][j])) {
+                    i--;
+                    continue;
+                }
+                found = true;
+                int mark = Math.abs(board[i][j]);
+                for (; i >= 0; i--) {
+                    if (Math.abs(board[i][j]) != mark) break;
+                    board[i][j] = -mark;
+                }
+            }
+        }
+        return found;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
