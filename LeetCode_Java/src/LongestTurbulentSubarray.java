@@ -59,6 +59,7 @@ public class LongestTurbulentSubarray {
 	}
 
 	public static void main(String[] args) {
+		HashMap
 		// TODO Auto-generated method stub
 		LongestTurbulentSubarray result = new LongestTurbulentSubarray();
 		System.out.println(result.longestTurbulentSubarray(new int[] {9,4,2,10,7,8,8,1,9}));
