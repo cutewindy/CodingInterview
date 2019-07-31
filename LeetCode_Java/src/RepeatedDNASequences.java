@@ -33,36 +33,27 @@ public class RepeatedDNASequences {
 	 * Space: O(n)
 	 */
 	public List<String> repeatedDNASequencesII(String s) {
-		List<String> result = new ArrayList<>();
-		if (s == null || s.length() < 10) {
-			return result;
-		}
-		Map<Character, Integer> mapping = new HashMap<>();
-		mapping.put('A', 0);
-		mapping.put('C', 1);
-		mapping.put('G', 2);
-		mapping.put('T', 3);
-		Map<Integer, Integer> hash = new HashMap<>();
-		for (int i = 0; i <= s.length() - 10; i++) {
-			int key = 0;
-			for (int j = i; j < i + 10; j++) {
-				key = (key << 2) + mapping.get(s.charAt(j)); // calculate the key of hash
-				// or use
-//				key <<= 2;
-//				key |= mapping.get(s.charAt(j));
-			}
-			if (!hash.containsKey(key)) {
-				hash.put(key, 1);
-			}
-			else {
-				hash.put(key, hash.get(key) + 1);
-			}
-			if (hash.get(key) == 2) {
-				result.add(s.substring(i, i + 10));
-			}
-		}
-		return result;
+        List<String> res = new ArrayList<>();
+        if (s == null || s.length() <= 10) return res;
+        Map<Integer, Integer> counts = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('A', 0);
+        map.put('C', 1);
+        map.put('G', 2);
+        map.put('T', 3);
+        Integer key = 0;
+        int mod = 1 << 20;
+        for (int i = 0; i < 9; i++) {
+            key = (key << 2) + map.get(s.charAt(i));
+        }
+        for (int i = 9; i < s.length(); i++) {
+            key = (key << 2) % mod + map.get(s.charAt(i));
+            counts.put(key, counts.getOrDefault(key, 0) + 1);
+            if (counts.get(key) == 2) res.add(s.substring(i - 9, i + 1));
+        }
+        return res;
 	}
+	
 	
 	/**
 	 * Method2: HashSet: Use one set to record the appeared substring, another set to remove duplicate.
