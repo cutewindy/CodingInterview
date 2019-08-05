@@ -20,30 +20,35 @@ import java.util.Arrays;
 public class CoinChange {
 	
 	/**
-	 * DP: 
-	 * dp[i]: min number of coins that need to make up i. (0 <= i <= amount)
-	 * dp[i] = min(dp[i - coins[j]] + 1, dp[i]);
+	 * dp, backpack: 
+	 * dp[i][j]: min number of coins that need to make up j with first ith coins. (0 <= j <= amount)
+	 * dp[i][j] = min(dp[i][j - coins[i]] + 1, dp[i-1][j]);
+	 * ans = dp[m-1][amount]
 	 * @param int[] coins, int amount
 	 * @return int
-	 * Time: O(n*amount)
+	 * Time: O(m*amount) m=coins.length
 	 * Space: O(amount)
 	 */
 	public int coinChange(int[] coins, int amount) {
 		if (amount == 0) return 0;
 		if (coins == null || coins.length == 0) return -1;
 		Arrays.sort(coins);
-		int[] dp = new int[amount + 1];
-		Arrays.fill(dp, -1);
-		dp[0] = 0;
-		for (int i = 1; i <= amount; i++) {
-			for (int coin: coins) {
-				if (i - coin < 0) break;
-				else if (dp[i - coin] != -1 && (dp[i] == -1 || dp[i - coin] + 1 < dp[i])) {
-					dp[i] = dp[i - coin] + 1;
+		int m = coins.length;
+		int[][] dp = new int[2][amount + 1];
+		Arrays.fill(dp[0], -1);
+		dp[0][0] = 0;
+		
+		for (int i = 1; i <= m; i++) {
+			for (int j = 1; j <= amount; j++) {
+				dp[i % 2][j] = dp[(i - 1) % 2][j];
+				if (j - coins[i - 1] >= 0 && dp[i % 2][j - coins[i - 1]] != -1 && (
+					dp[i % 2][j] == -1 || dp[i % 2][j] > dp[i % 2][j - coins[i - 1]] + 1)) {
+					dp[i % 2][j] = dp[i % 2][j - coins[i - 1]] + 1;
 				}
 			}
 		}
-		return dp[amount];
+		
+		return dp[m % 2][amount];
 	}
  
 	public static void main(String[] args) {
