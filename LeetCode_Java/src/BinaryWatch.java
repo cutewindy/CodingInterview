@@ -56,48 +56,36 @@ public class BinaryWatch {
 	 * Space: O()
 	 * Stack space: O()
 	 */
-	public List<String> binaryWatch(int num) {
-		List<String> result = new ArrayList<>();
-		List<Integer> hours = new ArrayList<>();
-		List<Integer> minutes = new ArrayList<>();
-		for (int i = 0; i <= num; i++) {
-			if (i > 4 || num - i > 6) continue;   // Don't forget
-			hours(i, 0, 0, hours);
-			minutes(num - i, 0, 0, minutes);
-			for (Integer hour: hours) {
-				if (hour >= 12) continue;   // Don't forget
-				for (Integer minute: minutes) {
-					if (minute >= 60) continue;    // Don't forget
-					result.add(hour + ":" + (minute < 10 ? "0" + minute : minute));
-				}
-			}
-			hours.clear();
-			minutes.clear();
-		}
-		return result;
-	}
-	
-	private void hours(int n, int pos, int sum, List<Integer> hours) {
-		if (n == 0) {
-			hours.add(sum);
-			return;
-		}
-		for (int i = pos; i < 4; i++) {
-			hours(n - 1, i + 1, sum + (int)Math.pow(2, i), hours);
-		}
-		return;
-	}
-	
-	private void minutes(int n, int pos, int sum, List<Integer> minutes) {
-		if (n == 0) {
-			minutes.add(sum);
-			return;
-		}
-		for (int i = pos; i < 6; i++) {
-			minutes(n - 1, i + 1, sum + (int)Math.pow(2, i), minutes);
-		}
-		return;
-	}
+    public List<String> binaryWatch(int num) {
+        List<String> res = new ArrayList<>();
+        int[] hours = {8, 4, 2, 1};
+        int[] minutes = {32, 16, 8, 4, 2, 1};
+        for (int i = 0; i <= num; i++) {
+            if (i > 4 || num - i > 6) continue;    // Don't forget
+            List<Integer> hourList = new ArrayList<>();
+            List<Integer> minuteList = new ArrayList<>();
+            getDigit(hours, 0, 0, i, hourList);
+            getDigit(minutes, 0, 0, num - i, minuteList);
+            for (Integer hour: hourList) {
+                if (hour >= 12) continue;        // Don't forget
+                for (Integer minute: minuteList) {
+                    if (minute >= 60) continue;  // Don't forget
+                    res.add(hour + ":" + (minute >= 10 ? minute : "0" + minute));
+                }
+            }
+        }
+        return res;
+    }
+    
+    private void getDigit(int[] nums, int pos, int sum, int totalNum, List<Integer> res) {
+        if (totalNum == 0) {
+            res.add(sum);
+            return;
+        }
+        for (int i = pos; i < nums.length; i++) {
+            getDigit(nums, i + 1, sum + nums[i], totalNum - 1, res);
+        }
+    }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
