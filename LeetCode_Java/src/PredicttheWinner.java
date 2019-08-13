@@ -88,13 +88,12 @@ public class PredicttheWinner {
 	 */
     public boolean predicttheWinnerI(int[] nums) {
     	int[][] dp = new int[nums.length][nums.length];
-    	for (int[] d: dp) Arrays.fill(d, -1);
     	return getDifferenceScore(nums, 0, nums.length - 1, dp) >= 0;
     }
     
     private int getDifferenceScore(int[] nums, int start, int end, int[][] dp) {
     	if (start > end) return 0;
-    	if (dp[start][end] != -1) return dp[start][end];
+    	if (dp[start][end] != 0) return dp[start][end];
     	dp[start][end] = Math.max(nums[start] - getDifferenceScore(nums, start + 1, end, dp), 
     			nums[end] - getDifferenceScore(nums, start, end - 1, dp));
     	return dp[start][end];
