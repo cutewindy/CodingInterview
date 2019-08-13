@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * You have d dice, and each die has f faces numbered 1, 2, ..., f.
  * Return the number of possible ways (out of fd total ways) modulo 10^9 + 7 to roll the dice so the 
@@ -44,21 +46,22 @@ public class NumberofDiceRollsWithTargetSum {
 	 * @param int d, int f, int target
 	 * @return int
 	 * Time: O(d * target * f)
-	 * Space: O(d * target)
+	 * Space: O(d * target)  rolling array to save space
 	 */
 	public int numberofDiceRollsWithTargetSumI(int d, int f, int target) {
-		int[][] dp = new int[d + 1][target + 1];
+		int[][] dp = new int[2][target + 1];
 		dp[0][0] = 1;
 		int mod = 1000000007;
 		for (int i = 1; i <= d; i++) {
+			Arrays.fill(dp[i % 2], 0);
 			for (int j = 1; j <= target; j++) {
 				if (j > i * f) break;  // speed up
 				for (int k = 1; k <= f && k <= j; k++) {
-					dp[i][j] = (dp[i - 1][j - k] + dp[i][j]) % mod;
+					dp[i % 2][j] = (dp[(i - 1) % 2][j - k] + dp[i % 2][j]) % mod;
 				}
 			}
 		}
-		return dp[d][target];
+		return dp[d % 2][target];
 	}
 	
 	
