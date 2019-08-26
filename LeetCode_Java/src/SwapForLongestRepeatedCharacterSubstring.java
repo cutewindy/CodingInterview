@@ -1,5 +1,6 @@
 /**
- * Given a string text, we are allowed to swap two of the characters in the string. Find the length of the longest substring with repeated characters.
+ * Given a string text, we are allowed to swap two of the characters in the string. Find the length 
+ * of the longest substring with repeated characters.
  * Example 1:
  * Input: text = "ababa"
  * Output: 3
@@ -52,7 +53,7 @@ public class SwapForLongestRepeatedCharacterSubstring {
         	int count = 0;
         	boolean isSwap = false;
         	char c = text.charAt(start);
-        	while (end < n && (text.charAt(end) == c || !isSwap && counts[c - 'a'] > count)) {
+        	while (end < n && (text.charAt(end) == c || !isSwap)) {
         		if (text.charAt(end) != c) {
         			isSwap = true;
         			start = end;
