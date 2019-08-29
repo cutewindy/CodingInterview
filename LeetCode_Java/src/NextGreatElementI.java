@@ -41,22 +41,41 @@ public class NextGreatElementI {
 	 * Space: O(2n) stack and maps
 	 */
 	public int[] nextGreatElementI(int[] nums1, int[] nums2) {
-		int[] result = new int[nums1.length];
-		Map<Integer, Integer> map = new HashMap<>();
-		Stack<Integer> stack = new Stack<>();
-		for (int num2: nums2) {
-			while (!stack.isEmpty() && stack.peek() < num2) {
-				map.put(stack.pop(), num2);
-			}
-			stack.push(num2);
-		}
-		while (!stack.isEmpty()) {
-			map.put(stack.pop(), -1);
-		}
-		for (int i = 0; i < nums1.length; i++) {
-			result[i] = map.get(nums1[i]);
-		}
-		return result;
+        if (nums1 == null || nums1.length == 0) return new int[0];
+        int[] res = new int[nums1.length];
+        Arrays.fill(res, -1);
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i  = 0; i < nums1.length; i++) {
+            map.put(nums1[i], i);
+        }
+        Stack<Integer> stack = new Stack<>();
+        for (int num: nums2) {
+            while (!stack.isEmpty() && stack.peek() < num) {
+                int curr = stack.pop();
+                if (map.containsKey(curr)) {
+                    res[map.get(curr)] = num;
+                }
+            }
+            stack.push(num);
+        }
+        return res;
+        
+//		int[] result = new int[nums1.length];
+//		Map<Integer, Integer> map = new HashMap<>();
+//		Stack<Integer> stack = new Stack<>();
+//		for (int num2: nums2) {
+//			while (!stack.isEmpty() && stack.peek() < num2) {
+//				map.put(stack.pop(), num2);
+//			}
+//			stack.push(num2);
+//		}
+//		while (!stack.isEmpty()) {
+//			map.put(stack.pop(), -1);
+//		}
+//		for (int i = 0; i < nums1.length; i++) {
+//			result[i] = map.get(nums1[i]);
+//		}
+//		return result;
 	}
 	
 	/**
