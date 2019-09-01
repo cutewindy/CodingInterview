@@ -48,6 +48,7 @@ public class DecodeWays {
 		DecodeWays result = new DecodeWays();
 		System.out.println(result.decodeWays("22420"));
 		System.out.println(result.decodeWays("22430"));
+		System.out.println(result.decodeWays("12"));
 	}
 
 }
