@@ -33,7 +33,7 @@ public class NQueens {
 	 * j-col!=-(i-row).
 	 * @param int n
 	 * @return List<List<String>>
-	 * Time: 
+	 * Time: O(n^n)
 	 * Space: O(n)
 	 */
 	public List<List<String>> nQueens(int n) {

@@ -59,7 +59,7 @@ public class NQueensII {
 	 * then can save new position into queen, until row == n, done.
 	 * @param int n
 	 * @return int 
-	 * Time: O(n^2)
+	 * Time: O(n^n)
 	 * Space: O(n)
 	 * Stack space: O(n)
 	 */
