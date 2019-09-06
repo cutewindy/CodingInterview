@@ -50,13 +50,16 @@ public class NumberofIslandsII {
 		int count = 0;
 		int[][] grid = new int[m][n];
 		UnionFindSet ufs = new UnionFindSet(m * n);
+		int[][] dir = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
 		for (int[] p: positions) {
+			if (grid[p[0]][p[1]] == 1) {
+				res.add(count);
+				continue;
+			}
 			count++;
-			int[] dx = {-1, 0, 1, 0};
-			int[] dy = {0, 1, 0, -1};
 			for (int k = 0; k < 4; k++) {
-				int i = p[0] + dx[k];
-				int j = p[1] + dy[k];
+				int i = p[0] + dir[k][0];
+				int j = p[1] + dir[k][1];
 				if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) continue;
 				if (ufs.union(p[0] * n + p[1], i * n + j)) count--;
 			}
