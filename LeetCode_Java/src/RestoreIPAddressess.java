@@ -23,36 +23,25 @@ public class RestoreIPAddressess {
 	public List<String> restoreIPAddresses(String s) {
 		List<String> result = new ArrayList<String>();
 		if (s == null || s.length() < 4 || s.length() > 12) return result;
-		helper(s, 0, new ArrayList<String>(), result);	
+		helper(s, 0, new ArrayList<Integer>(), result);	
 		return result;
 	}
 	
-	private void helper(String s, int start, List<String> currIPAddr, List<String> result) {
+	private void helper(String s, int start, List<Integer> currIPAddr, List<String> result) {
 		if (currIPAddr.size() == 4 && start == s.length()) {
 			result.add(processIPAddr(currIPAddr));
 			return;
 		}
 		if (currIPAddr.size() == 4 || start == s.length()) return;
 		for (int i = start; i < s.length() && i < start + 3; i++) {
-			String temp = s.substring(start, i + 1);
-			if (isValid(temp)) {
-				currIPAddr.add(temp);
-				helper(s, i + 1, currIPAddr, result);
-				currIPAddr.remove(currIPAddr.size() - 1);
-			}
+			if (s.charAt(start) == '0' && i != start) break; // take care
+			int num = Integer.parseInt(s.substring(start, i + 1));
+			if (num > 255) break;
+			currIPAddr.add(num);
+			helper(s, i + 1, currIPAddr, result);
+			currIPAddr.remove(currIPAddr.size() - 1);
+			
 		}
-	}
-	
-	/**
-	 * check out whether the subIp is between 0 - 255
-	 * @param str
-	 * @return
-	 */
-	private boolean isValid(String str) {
-		if (str.charAt(0) == '0') {  // check 00, 01, .. case
-			return str.length() == 1;
-		}
-		return (Integer.valueOf(str) >= 0 && Integer.valueOf(str) <= 255);
 	}
 	
 	/**
@@ -60,9 +49,9 @@ public class RestoreIPAddressess {
 	 * @param currIPAddr
 	 * @return
 	 */
-	private String processIPAddr(List<String> currIPAddr) {
+	private String processIPAddr(List<Integer> currIPAddr) {
 		StringBuilder IPAddr = new StringBuilder();
-		for (String IP: currIPAddr) {
+		for (Integer IP: currIPAddr) {
 			IPAddr.append(IP).append(".");
 		}
 		return IPAddr.substring(0, IPAddr.length() - 1).toString();
