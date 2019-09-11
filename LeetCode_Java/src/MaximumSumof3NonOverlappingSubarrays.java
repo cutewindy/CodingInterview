@@ -29,38 +29,38 @@ public class MaximumSumof3NonOverlappingSubarrays {
 	public int[] maximumSumof3NonOverlappingSubarrays(int[] nums, int k) {
 		if (nums == null || nums.length < 3 * k) return new int[0];
 		int n = nums.length;
-		int[] sum = new int[n];  // an array of sums of windows with length of k
+		int m = n - k + 1;
+		int[] sum = new int[m];  // an array of sums of windows with length of k
 		int currSum = 0;
 		for (int i = 0; i < k - 1; i++) currSum += nums[i];
-		for (int i = 0; i <= n - k; i++) {
+		for (int i = 0; i < m; i++) {
 			currSum += nums[i + k - 1];
 			sum[i] = currSum;
 			currSum -= nums[i];
 		}
 		
 		// leftIdx[i]: start index that can get max k subarray sum in nums[0,..,i]
-		int[] leftIdx = new int[n];
-		for (int i = 0, maxSum = 0; i <= n - k; i++) {
-			if (i == 0 || sum[i] > maxSum) {
-				leftIdx[i] = i;
-				maxSum = sum[i];
+		int[] leftIdx = new int[m];
+		for (int i = 0, maxIndex = 0; i < m; i++) {
+			if (sum[i] > sum[maxIndex]) {
+				maxIndex = i;
 			}
-			else leftIdx[i] = leftIdx[i - 1];
+			leftIdx[i] = maxIndex;
 		}
 		
 		// rightIdx[i]: start index that can get max k subarray sum in nums[i,..,n-1]
-		int[] rightIdx = new int[n];
-		for (int i = n - k, maxSum = 0; i >= 0; i--) {
-			if (i == n - k || sum[i] > maxSum) {
-				rightIdx[i] = i;
-				maxSum = sum[i];
+		int[] rightIdx = new int[m];
+		for (int i = m - 1, maxIndex = m - 1; i >= 0; i--) {
+			if (sum[i] >= sum[maxIndex]) {
+				maxIndex = i;
 			}
-			else rightIdx[i] = rightIdx[i + 1];
+			rightIdx[i] = maxIndex;
 		}
 		
 		// maxSum = sum[left] + sum[i] + sum[right]
 		int[] res = new int[] {-1, -1, -1};
-		for (int i = k, maxSum = 0; i <= n - 2 * k; i++) {
+		int maxSum = Integer.MIN_VALUE;
+		for (int i = k; i < m - k; i++) {
 			int left = leftIdx[i - k];
 			int right = rightIdx[i + k];
 			currSum = sum[left] + sum[i] + sum[right];
