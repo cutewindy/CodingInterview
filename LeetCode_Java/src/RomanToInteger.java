@@ -55,7 +55,6 @@ public class RomanToInteger {
 		if (s == null || s.length() == 0) {
 			return 0;
 		}
-		int result = 0;
 		HashMap<Character, Integer> symbols = new HashMap<Character, Integer>();
 		symbols.put('I', 1);
 		symbols.put('V', 5);
@@ -65,16 +64,15 @@ public class RomanToInteger {
 		symbols.put('D', 500);
 		symbols.put('M', 1000);
 
-		result = symbols.get(s.charAt(s.length() - 1));
-		for (int i = s.length() - 2; i >= 0; i--) {
-			if (symbols.get(s.charAt(i)) >= symbols.get(s.charAt(i + 1))) {
-				result += symbols.get(s.charAt(i));
-			}
-			else {
-				result -= symbols.get(s.charAt(i));
-			}
-		}		
-		return result;
+		int res = 0;
+		int prev = -1;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            int curr = symbols.get(s.charAt(i));
+            if (curr < prev) res -= curr;
+            else res += curr;
+            prev = curr;
+        }
+        return res;	
 	}
 
 	public static void main(String[] args) {
