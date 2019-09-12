@@ -26,9 +26,8 @@ public class Candy {
 	 * Space: O(n)
 	 */
 	public int candy(int[] ratings) {
-		if (ratings == null || ratings.length == 0) {
-			return 0;
-		}
+		if (ratings == null || ratings.length == 0) return 0;
+		
 		int[] candy = new int[ratings.length];
 		Arrays.fill(candy, 1);
 		// go from left
@@ -39,10 +38,7 @@ public class Candy {
 		}
 		// go from right and combine with left result
 		for (int i = candy.length - 2; i >= 0; i--) {
-			if (i == candy.length - 1) {
-				candy[i] = Math.max(ratings[i], candy[i]);
-			}
-			else if (ratings[i] > ratings[i + 1]) {
+			if (ratings[i] > ratings[i + 1]) {
 				candy[i] = Math.max(candy[i + 1] + 1, candy[i]);
 			}
 		}

@@ -55,12 +55,10 @@ public class DivideTwoIntegers {
             }
             res += shift;
             a -= multiB;
+            if (sign * res < Integer.MIN_VALUE || sign * res >= Integer.MAX_VALUE) return Integer.MAX_VALUE;
         }
         
-        res *= sign;
-        if (res < Integer.MIN_VALUE || res > Integer.MAX_VALUE) return Integer.MAX_VALUE;
-        
-        return (int)res;        
+        return (int) (sign * res);        
     }
 
 	public static void main(String[] args) {
