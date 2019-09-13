@@ -23,38 +23,29 @@ public class MultiplyStrings {
 	 * Space: O(m + n)
 	 */
 	public String multiplyStrings(String num1, String num2) {
-		if (num1 == null || num2 == null || num1.length() == 0 || num2.length() == 0) {
-			return "0";
-		}
-		int[] prod = new int[num1.length() + num2.length()];
-		Arrays.fill(prod, 0);
-		for (int i1 = num1.length() - 1; i1 >= 0; i1--) {
-			int pos = 0;
-			int carry = 0;
-			for (int i2 = num2.length() - 1; i2 >= 0; i2--) {
-				int n1 = (int) (num1.charAt(i1) - '0');
-				int n2 = (int) (num2.charAt(i2) - '0');
-				pos = i1 + i2 + 1;
-//				System.out.println("n1: " + n1 + ", n2: " + n2);
-				int value = prod[pos] + carry + n1 * n2;
-//				System.out.println("value: " + value);
-				prod[pos] = value % 10;
-				carry = value / 10;
-//				System.out.println("carry: " + carry);
-//				System.out.println(prod[pos] + "     " + carry);
-			}
-			if (carry != 0) {
-				prod[pos - 1] = carry;
-			}
-		}
-		String result = new String();
-		for (int p: prod) {
-			result += String.valueOf(p);
-		}
-		while (result.charAt(0) == '0' && result.length() > 1) {
-			result = result.substring(1);
-		}
-		return result;
+        if (num1 == null || num2 == null || num1.length() == 0 || num2.length() == 0) return "0";
+        int m = num1.length();
+        int n = num2.length();
+        int[] res = new int[m + n];
+        for (int i = m - 1; i >= 0; i--) {
+            int a = num1.charAt(i) - '0';
+            for (int j = n - 1; j >= 0; j--) {
+                int b = num2.charAt(j) - '0';
+                res[i + j + 1] += a * b;
+                if (res[i + j + 1] >= 10) {
+                    res[i + j] += res[i + j + 1] / 10;
+                    res[i + j + 1] %= 10; 
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m + n; i++) {
+            sb.append(res[i]);
+        }
+        for (int i = 0; i < sb.length(); i++) {    //  case: "9133" "0"
+            if (sb.charAt(i) != '0') return sb.toString().substring(i);
+        }
+        return "0";
 	}
 
 	public static void main(String[] args) {
