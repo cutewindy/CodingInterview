@@ -25,31 +25,22 @@ public class PartitionEqualSubsetSum {
 	 * @param int[] nums
 	 * @return boolean
 	 * Time: O(n*sum)
-	 * Space: O(sum) can improve to use only one dp by check j from end to start
+	 * Space: O(sum) rolling array
 	 */
     public boolean partitionEqualSubsetSum(int[] nums) {
         if (nums == null || nums.length == 0) return false;
         int sum = 0;
         for (int num: nums) sum += num;
         if (sum % 2 != 0) return false;
-        boolean[] dp = new boolean[sum + 1];
-        
-        // init
-        dp[nums[0]] = true;
-        
-        // update
-        for (int i = 1; i < nums.length; i++) {
-            boolean[] newDp = new boolean[sum + 1];
-            for (int j = 1; j <= sum; j++) {
-                if (!dp[j]) continue;
-                newDp[j] = true;
-                newDp[j + nums[i]] = true;
-                if (newDp[sum / 2]) return true;
+        boolean[][] dp = new boolean[2][sum / 2 + 1];
+        dp[0][0] = true;
+        for (int i = 1; i <= nums.length; i++) {
+            for (int j = 1; j <= sum / 2; j++) {
+                dp[i % 2][j] = dp[(i - 1) % 2][j];
+                if (j - nums[i - 1] >= 0 && dp[(i - 1) % 2][j - nums[i - 1]]) dp[i % 2][j] = true;
             }
-            dp = newDp;
         }
-        
-        return false;
+        return dp[nums.length % 2][sum / 2];
     }	
 
 	public static void main(String[] args) {
