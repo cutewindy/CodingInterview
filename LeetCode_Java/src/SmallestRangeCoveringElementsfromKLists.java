@@ -24,7 +24,7 @@ import java.util.PriorityQueue;
  * @author wendi
  *
  */
-public class SmallestRange {
+public class SmallestRangeCoveringElementsfromKLists {
 	
 	/**
 	 * MinHeap
@@ -33,7 +33,7 @@ public class SmallestRange {
 	 * have the smallest range.
 	 * @param List<List<Integer>> nums
 	 * @return int[]
-	 * Time: O(n*m) n=nums.size(), m=nums[i].size()
+	 * Time: O(n*m*log(m)) n=nums.size(), m=nums[i].size()
 	 * Space: O(n)
 	 */
 	public int[] smallestRange(List<List<Integer>> nums) {
@@ -74,7 +74,7 @@ public class SmallestRange {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SmallestRange result = new SmallestRange();
+		SmallestRangeCoveringElementsfromKLists result = new SmallestRangeCoveringElementsfromKLists();
 		List<Integer> l1 = new ArrayList<>(Arrays.asList(4, 10, 15, 24,26));
 		List<Integer> l2 = new ArrayList<>(Arrays.asList(0, 9, 12, 20));
 		List<Integer> l3 = new ArrayList<>(Arrays.asList(5, 18, 22, 30));
