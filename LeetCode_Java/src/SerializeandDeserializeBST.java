@@ -56,19 +56,18 @@ public class SerializeandDeserializeBST {
     public TreeNode deserialize(String data) {
         if (data == null || data.length() == 0) return null;
         String[] dataArray = data.split(",");
-        return helper(dataArray, new int[1], null, null);
+        return helper(dataArray, new int[1], null);
     }
     
-    public TreeNode helper(String[] dataArray, int[] pos, TreeNode min, TreeNode max) {
+    public TreeNode helper(String[] dataArray, int[] pos, TreeNode max) {
     	if (pos[0] > dataArray.length - 1 
-    	 || min != null && Integer.parseInt(dataArray[pos[0]]) <= min.val 
     	 || max != null && Integer.parseInt(dataArray[pos[0]]) >= max.val) {
     		return null;
     	}
     	TreeNode root = new TreeNode(Integer.parseInt(dataArray[pos[0]]));
     	pos[0] += 1;
-    	root.left = helper(dataArray, pos, min, root);
-    	root.right = helper(dataArray, pos, root, max);
+    	root.left = helper(dataArray, pos, root);
+    	root.right = helper(dataArray, pos, max);
     	return root;	
     }
 	
