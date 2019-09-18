@@ -18,17 +18,43 @@ public class StrobogrammaticNumberIII {
 
 	/**
 	 * Method2: 
+	 * 基于第二道的基础上，不保存所有的结果，而是在递归中直接计数，根据之前的分析，需要初始化 n=0 和 n=1 的情况，然后在其
+	 * 基础上进行递归，递归的长度 len 从 low 到 high 之间遍历，然后看当前单词长度有没有达到 len，如果达到了，首先要去掉
+	 * 开头是0的多位数，然后去掉长度和 low 相同但小于 low 的数，和长度和 high 相同但大于 high 的数，然后结果自增1，然后
+	 * 分别给当前单词左右加上那五对对称数，继续递归调用
 	 * @param String low, String high
 	 * @return int 
-	 * Time: O()
-	 * Space: O()
+	 * Time: O((high - low)^2)
+	 * Space: O(1)
 	 */
 	public int strobogrammaticNumberIIII(String low, String high) {
 		if (low == null || low.length() == 0 || high == null || high.length() == 0 || low.length() > high.length()) {
 			return 0;
 		}
-		return 0;
+		int[] res = new int[1];
+		for (int i = low.length(); i <= high.length(); i++) {
+			dfs(i, low, high, "", res);
+			dfs(i, low, high, "0", res);
+			dfs(i, low, high, "1", res);
+			dfs(i, low, high, "8", res);
+		}
+		return res[0];
 	}	
+	
+	private void dfs(int len, String low, String high, String curr, int[] res) {
+		if (curr.length() > len) return;
+		if (curr.length() == len) {
+			if (curr.length() != 1 && curr.charAt(0) == '0') return;
+			if (len == low.length() && curr.compareTo(low) < 0 ||
+				len == high.length() && curr.compareTo(high) > 0) return;
+			res[0]++;
+		}
+		dfs(len, low, high, "0" + curr + "0", res);
+		dfs(len, low, high, "1" + curr + "1", res);
+		dfs(len, low, high, "6" + curr + "9", res);
+		dfs(len, low, high, "8" + curr + "8", res);
+		dfs(len, low, high, "9" + curr + "6", res);
+	}
 	
 	/**
 	 * Method1:(Time Limit Exceeded) Using stronbogrammaticNumberII, and then count satisfied 
