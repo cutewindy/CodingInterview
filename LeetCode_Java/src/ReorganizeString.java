@@ -47,19 +47,17 @@ public class ReorganizeString {
 		
 		// Build the result.
 		StringBuilder sb = new StringBuilder();
-		while (!maxHeap.isEmpty()) {
-			int[] first = maxHeap.poll();
-			if (sb.length() == 0 || sb.charAt(sb.length() - 1) != (char) (first[0] + 'a')) {
-				sb.append((char) (first[0] + 'a'));
-				if (--first[1] > 0) maxHeap.offer(first);
-			}
-			else {
-				int[] second = maxHeap.poll();
-				sb.append((char) (second[0] + 'a'));
-				if (--second[1] > 0) maxHeap.offer(second);
-				maxHeap.offer(first);
-			}
-		}
+        int[] queue = null;
+        while (!maxHeap.isEmpty()) {
+            int[] curr = maxHeap.poll();
+            sb.append((char) (curr[0] + 'a'));
+            curr[1]--;
+            if (queue != null) {
+                maxHeap.offer(queue);
+                queue = null;
+            }
+            if (curr[1] > 0) queue = curr;
+        }
 		
 		return sb.toString();
 	}

@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given preorder and inorder traversal of a tree, construct the binary tree.
  * Note:
@@ -18,7 +21,7 @@ public class ConstructBinaryTreefromPreorderandInorderTraversal {
 	 * inIndex - inStart + 1 is the number of left nodes 
 	 * @param int[] preorder, int[] inorder
 	 * @return TreeNode
-	 * Time: O(n^2)   // can use a hashmap save inorder [value, index] pair to improve T to O(n)
+	 * Time: O(n)   // use a hashmap save inorder [value, index] pair to improve T to O(n)
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
@@ -27,25 +30,20 @@ public class ConstructBinaryTreefromPreorderandInorderTraversal {
 				preorder.length != inorder.length) { 
 			return null;
 		}
-		return helper(preorder, inorder, 0, 0, inorder.length - 1);
-	}
-	
-	private TreeNode helper(int[] preorder, int[] inorder, int preIndex, int inStart, int inEnd) {
-		if (preIndex > preorder.length - 1 || inStart > inEnd) {
-			return null;
-		}
-		// get the root index in inorder
-		int inIndex = 0;
-		for (int i = inStart; i <= inEnd; i++) {
-			if (inorder[i] == preorder[preIndex]) {
-				inIndex = i;
-				break;
-			}
-		}
-		TreeNode root = new TreeNode(inorder[inIndex]);
-		root.left = helper(preorder, inorder, preIndex + 1, inStart, inIndex - 1);
-		root.right = helper(preorder, inorder, preIndex + inIndex - inStart + 1, inIndex + 1, inEnd);
-		return root;
+        Map<Integer, Integer> map = new HashMap<>(); // [val, index in inorder]
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return dfs(preorder, new int[1], inorder, 0, inorder.length - 1, map);
+    }
+    
+    private TreeNode dfs(int[] preorder, int[] index, int[] inorder, int s, int e, Map<Integer, Integer> map) {
+        if (index[0] == preorder.length || s > e) return null;
+        TreeNode root = new TreeNode(preorder[index[0]++]);
+        int pos = map.get(root.val);
+        root.left = dfs(preorder, index, inorder, s, pos - 1, map);
+        root.right = dfs(preorder, index, inorder, pos + 1, e, map);
+        return root;
 	}
 	
 	public static void main(String[] args) {
