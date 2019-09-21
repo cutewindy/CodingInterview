@@ -67,20 +67,36 @@ public class PopulatingNextRightPointersinEachNode {
 	 * Space: O(1)
 	 */ 
 	public void populatingNextRightPointersinEachNode(TreeLinkNode root) {
-		if (root == null) {
-			return;
-		}
-		TreeLinkNode nextRoot = null;
-		while (root.left != null) {
-			nextRoot = root.left;
-			while (root != null) {
-				root.left.next = root.right;
-				root.right.next = root.next != null? root.next.left : null;
-				root = root.next;
-			}
-			root = nextRoot;
-		}
-		return;
+        if (root == null) return;
+        TreeLinkNode dummy = new TreeLinkNode(0);
+        TreeLinkNode prev = dummy;
+        while (root != null && root.left != null) { // same like "populatingNextRightPointersinEachNode II"
+            while (root != null) {
+                prev.next = root.left;
+                prev = prev.next;
+                prev.next = root.right;
+                prev = prev.next;
+                root = root.next;
+            }
+            root = dummy.next;
+            dummy.next = null;
+            prev = dummy;
+        }
+		
+//		if (root == null) {
+//			return;
+//		}
+//		TreeLinkNode nextRoot = null;
+//		while (root.left != null) {
+//			nextRoot = root.left;
+//			while (root != null) {
+//				root.left.next = root.right;
+//				root.right.next = root.next != null? root.next.left : null;
+//				root = root.next;
+//			}
+//			root = nextRoot;
+//		}
+//		return;
 	}
 	
 	public static void main(String[] args) {
