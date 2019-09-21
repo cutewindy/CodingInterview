@@ -64,38 +64,46 @@ public class BestMeetingPoint {
 	
 	
 	/**
-	 * Method1: Median and res += abs(list - median)
+	 * Method1: res += (end - start)
+	 * 我们先从一维的情况来分析，那么我们先看一维时有两个点A和B的情况,
+	 * ______A_____P_______B_______
+	 * 那么我们可以发现，只要开会为位置P在 [A, B] 区间内，不管在哪，距离之和都是A和B之间的距离，如果P不在 [A, B] 之间，
+	 * 那么距离之和就会大于A和B之间的距离，那么我们现在再加两个点C和D：
+	 * ______C_____A_____P_______B______D______
+	 * 我们通过分析可以得出，P点的最佳位置就是在 [A, B] 区间内，这样和四个点的距离之和为AB距离加上 CD 距离，在其他任意一
+	 * 点的距离都会大于这个距离，那么分析出来了上述规律，这题就变得很容易了，我们只要给位置排好序，然后用最后一个坐标减去第一
+	 * 个坐标，即 CD 距离，倒数第二个坐标减去第二个坐标，即 AB 距离，以此类推，直到最中间停止，那么一维的情况分析出来了，
+	 * 二维的情况就是两个一维相加即可
 	 * @param int[][] grid
 	 * @return int
 	 * Time: O(mn + mlog(m) + nlog(n))
 	 * Space: O(m + n)
 	 */
 	public int bestMeetingPoint(int[][] grid) {
-		if (grid == null || grid.length == 0 || grid[0].length == 0) {
-			return 0;
-		}
-		List<Integer> I = new ArrayList<>();
-		List<Integer> J = new ArrayList<>();
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[0].length; j++) {
-				if (grid[i][j] == 1) {
-					I.add(i);
-					J.add(j);
-				}
-			}
-		}
-		return getMin(I) + getMin(J);
-	}
-	
-	private int getMin(List<Integer> list) {
-		int result = 0;
-		Collections.sort(list);
-		int median = list.get((list.size() - 1) / 2);
-		for (Integer x: list) {
-			result += Math.abs(x - median);
-		}
-		return result;
-	}
+        if (grid == null || grid.length == 0 || grid[0].length == 0) return 0;
+        List<Integer> rows = new ArrayList<>();
+        List<Integer> cols = new ArrayList<>();
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 0) continue;
+                rows.add(i);
+                cols.add(j);
+            }
+        }
+        return getDistance(rows) + getDistance(cols);
+    }
+    
+    private int getDistance(List<Integer> list) {
+        if (list == null || list.size() == 0) return 0;
+        int res = 0;
+        int l = 0;
+        int r = list.size() - 1;
+        Collections.sort(list);
+        while (l < r) {
+            res += list.get(r--) - list.get(l++);
+        }
+        return res;
+    }
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
