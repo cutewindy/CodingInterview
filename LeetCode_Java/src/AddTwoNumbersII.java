@@ -74,50 +74,29 @@ public class AddTwoNumbersII {
 		// 1. Use stacks to save value of lists.
 		Stack<Integer> stack1 = new Stack<>();
 		Stack<Integer> stack2 = new Stack<>();
-		ListNode node = l1;
-		while (node != null) {
-			stack1.push(node.val);
-			node = node.next;
+		while (l1 != null) {
+			stack1.push(l1.val);
+			l1 = l1.next;
 		}
-		node = l2;
-		while (node != null) {
-			stack2.push(node.val);
-			node = node.next;
+		while (l2 != null) {
+			stack2.push(l2.val);
+			l2 = l2.next;
 		}
 		// 2. Calculate sum by popping value from stacks, then add them to the head of result list.
 		ListNode dummy = new ListNode(0);
 		ListNode head = dummy.next;
 		int carry = 0;
-		while (!stack1.isEmpty() && !stack2.isEmpty()) {
-			int sum = stack1.pop() + stack2.pop() + carry;
-			ListNode curr = new ListNode(sum % 10);
-			carry = sum / 10;
-			dummy.next = curr;
-			curr.next = head;
-			head = curr;
-		}
-		while (!stack1.isEmpty()) {
-			int sum = stack1.pop() + carry;
-			ListNode curr = new ListNode(sum % 10);
-			carry = sum / 10;
-			dummy.next = curr;
-			curr.next = head;
-			head = curr;
-		}
-		while (!stack2.isEmpty()) {
-			int sum = stack2.pop() + carry;
-			ListNode curr = new ListNode(sum % 10);
-			carry = sum / 10;
-			dummy.next = curr;
-			curr.next = head;
-			head = curr;
-		}
-		if (carry == 1) {
-			ListNode curr = new ListNode(1);
-			dummy.next = curr;
-			curr.next = head;
-		}
-		return dummy.next;
+        while (!stack1.isEmpty() || !stack2.isEmpty() || carry != 0) {
+            int num1 = stack1.isEmpty() ? 0 : stack1.pop();
+            int num2 = stack2.isEmpty() ? 0 : stack2.pop();
+            int sum = num1 + num2 + carry;
+            ListNode curr = new ListNode(sum % 10);
+            carry = sum / 10;
+            dummy.next = curr;
+            curr.next = head;
+            head = curr;
+        }
+        return head;
 	}
 
 	public static void main(String[] args) {

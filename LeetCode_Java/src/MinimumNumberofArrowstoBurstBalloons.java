@@ -49,6 +49,7 @@ public class MinimumNumberofArrowstoBurstBalloons {
         int arrowPos = points[0][1];
         int res = 1;
         for (int i = 1; i < points.length; i++) {
+        	System.out.println("p: " + points[i][0] + " : " + points[i][1] + " arrow: " + arrowPos);
             if (points[i][0] <= arrowPos) continue;
             arrowPos = points[i][1];
             res++;
@@ -61,7 +62,7 @@ public class MinimumNumberofArrowstoBurstBalloons {
 		// TODO Auto-generated method stub
 		MinimumNumberofArrowstoBurstBalloons result = new MinimumNumberofArrowstoBurstBalloons();
 		System.out.println(result.minimumNumberofArrowstoBurstBalloons(new int[][] {{10,16}, {2,8}, {1,6}, {7,12}}));
-		System.out.println(result.minimumNumberofArrowstoBurstBalloons(new int[][] {{2,4}, {1,4}, {1,5}, {3,6}, {7,10}}));
+//		System.out.println(result.minimumNumberofArrowstoBurstBalloons(new int[][] {{2,4}, {1,4}, {1,5}, {3,6}, {7,10}}));
 	}
 
 }

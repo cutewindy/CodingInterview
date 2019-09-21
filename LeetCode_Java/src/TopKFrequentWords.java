@@ -31,7 +31,41 @@ import java.util.PriorityQueue;
 public class TopKFrequentWords {
 	
 	/**
-	 * minHeap
+	 * Approach1: bucket sort
+	 * @param String[] words, int k
+	 * @return List<String>
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public List<String> topKFrequentWordsI(String[] words, int k) {
+        List<String> res = new ArrayList<>();
+        if (words == null || words.length == 0 || k == 0) return res;
+        Map<String, Integer> map = new HashMap<>();
+        int max = 0;
+        for (String word: words) {
+            map.put(word, map.getOrDefault(word, 0) + 1);
+            max = Math.max(map.get(word), max);
+        }
+        List<String>[] bucket = new List[max + 1];
+        for (String word: map.keySet()) {
+            int cnt = map.get(word);
+            if (bucket[cnt] == null) bucket[cnt] = new ArrayList<>();
+            bucket[cnt].add(word);
+        }
+        for (int i = max; i >= 0 && k > 0; i--) {
+            if (bucket[i] == null) continue;
+            Collections.sort(bucket[i]);
+            for (int j = 0; j < bucket[i].size() && k > 0; j++) {
+                res.add(bucket[i].get(j));
+                k--;
+            }
+        }
+        return res;		
+	}
+	
+	
+	/**
+	 * Approach1: minHeap
 	 * Count the frequency of each word, then add it to min heap that stores the top frequent k 
 	 * candidates. At the end, we pop off the heap up to k times and reverse the result.
 	 * @param String[] words, int k
@@ -70,6 +104,8 @@ public class TopKFrequentWords {
 		// TODO Auto-generated method stub
 		TopKFrequentWords result = new TopKFrequentWords();
 		System.out.println(result.topKFrequentWords(new String[] {"i", "love", "leetcode", "i", "love", "coding"}, 2));
+		System.out.println(result.topKFrequentWordsI(new String[] {"i", "love", "leetcode", "i", "love", "coding"}, 2));
+
 	}
 
 }
