@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Given a singly linked list, return a random node's value from the linked list. Each node must 
  * have the same probability of being chosen.
@@ -28,19 +30,23 @@ public class LinkedListRandomNode {
 	}
 
 	/**
+	 * Reservoir Sampling
+	 * like "398. Random Pick Index"
 	 * @return int
 	 * Time: O(n)
 	 * Space: O(1)
 	 */
 	public int getRandom() {
-		int result = head.val;
-		int count = 1;
-		ListNode node = head.next;
-		while (node != null) {
-			result = Math.random() < (double) 1 / ++count ? node.val : result;
-			node = node.next;
-		}
-		return result;
+        Random r = new Random();
+        int cnt = 0;
+        int res = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            cnt++;
+            if (r.nextInt(cnt) == 0) res = curr.val;
+            curr = curr.next;
+        }
+        return res;
 	}
 	
 	public static void main(String[] args) {

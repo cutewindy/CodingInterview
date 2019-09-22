@@ -45,8 +45,44 @@ import java.util.Queue;
  */
 public class TheMaze {
 	
+
 	/**
-	 * BFS
+	 * Approach2: DFS
+	 * @param int[][] maze, int[] start, int[] destination
+	 * @return boolean
+	 * Time: O(m*n)
+	 * Space: O(m*n)
+	 */
+    public boolean theMazeI(int[][] maze, int[] start, int[] destination) {
+        if (start[0] == destination[0] && start[1] == destination[1]) return true;
+        boolean[][] visited = new boolean[maze.length][maze[0].length];
+        visited[start[0]][start[1]] = true;
+        return dfs(maze, start, destination, visited);
+    }
+    
+    
+    private boolean dfs(int[][] maze, int[] start, int[] destination, boolean[][] visited) {
+    	int[][] dir = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+        for (int k = 0; k < 4; k++) {
+            int i = start[0];
+            int j = start[1];
+            while (i + dir[k][0] >= 0 && i + dir[k][0] < maze.length && 
+            	   j + dir[k][1] >= 0 && j + dir[k][1] < maze[0].length &&
+                   maze[i + dir[k][0]][j + dir[k][1]] == 0) {
+                i += dir[k][0];
+                j += dir[k][1];
+            }
+            if (visited[i][j]) continue;
+            visited[i][j] = true;
+            if (i == destination[0] && j == destination[1]) return true;
+            if (dfs(maze, new int[] {i, j}, destination, visited)) return true;
+        }
+        return false;
+    }
+    
+	
+	/**
+	 * Approach1: BFS
 	 * Use boolean[][] visited to mark whether maze[i][j] can stop the boll.
 	 * @param int[][] maze, int[] start, int[] destination
 	 * @return boolean
@@ -82,6 +118,9 @@ public class TheMaze {
 		}
 		return false;
 	}
+	
+
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -92,6 +131,12 @@ public class TheMaze {
 													   {1, 1, 0, 1, 1},
 													   {0, 0, 0, 0, 0}}, 
 								          new int[] {0, 4}, new int[] {4, 4}));
+		System.out.println(result.theMazeI(new int[][] {{0, 0, 1, 0, 0},
+													   {0, 0, 0, 0, 0},
+													   {0, 0, 0, 1, 0},
+													   {1, 1, 0, 1, 1},
+													   {0, 0, 0, 0, 0}}, 
+									   new int[] {0, 4}, new int[] {4, 4}));
 	}
 
 }
