@@ -16,9 +16,18 @@
  * Explanation:
  * The diagonal "[1, 2]" has different elements.
  * Note:
- * matrix will be a 2D array of integers.
- * matrix will have a number of rows and columns in range [1, 20].
- * matrix[i][j] will be integers in range [0, 99].
+ * 1. matrix will be a 2D array of integers.
+ * 2. matrix will have a number of rows and columns in range [1, 20].
+ * 3. matrix[i][j] will be integers in range [0, 99].
+ * 
+ * Follow up:
+ * 1. What if the matrix is stored on disk, and the memory is limited such that you can only load at 
+ * most one row of the matrix into the memory at once?
+ * 	Compare half of 1 row with half of the next/previous row.
+ * 
+ * 2. What if the matrix is so large that you can only load up a partial row into the memory at once?
+ *  Hash 2 rows (so only 1 element needs to be loaded at a time) and compare the results, excluding 
+ *  the appropriate beginning or ending element.
  * 
  * @author wendi
  *
