@@ -42,38 +42,35 @@ public class WordSearchII {
 	 */
     public List<String> wordSearchII(char[][] board, String[] words) {
         List<String> res = new ArrayList<>();
+        if (words == null || words.length == 0) return res;
         Trie trie = new Trie();
-        for (String w: words) trie.insert(w);
-        int m = board.length;
-        int n = board[0].length;
-        boolean[][] visited = new boolean[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                dfs(board, i, j, trie.root, visited, new String(), res);
+        for (String word: words) trie.addWord(word);
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (trie.root.children[board[i][j] - 'a'] == null) continue;
+                boolean[][] visited = new boolean[board.length][board[0].length];
+                visited[i][j] = true;
+                dfs(board, i, j, trie.root.children[board[i][j] - 'a'], visited, board[i][j] + "", res);
             }
         }
         return res;
     }
     
-    public int[] dx = {-1, 0, 1, 0};
-    public int[] dy = {0, 1, 0, -1};
-    private void dfs(char[][] board, int row, int col, TrieNode root, boolean[][] visited, 
-    		         String word, List<String> res) {
-        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col] ||
-            root.children[board[row][col] - 'a'] == null) return;
-        TrieNode curr = root.children[board[row][col] - 'a'];
-        word += curr.c;
-        if (curr.isWord) {
+    int[][] dir = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
+    private void dfs(char[][] board, int row, int col, TrieNode root, boolean[][] visited, String word, List<String> res) {
+        if (root.isWord) {
             res.add(word);
-            curr.isWord = false; // take care and cannot return here
+            root.isWord = false;  // don't forget and cannot return here
         }
-        visited[row][col] = true;
         for (int k = 0; k < 4; k++) {
-            int i = dx[k] + row;
-            int j = dy[k] + col;
-            dfs(board, i, j, curr, visited, word, res);
+            int i = dir[k][0] + row;
+            int j = dir[k][1] + col;
+            if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || 
+                visited[i][j] || root.children[board[i][j] - 'a'] == null) continue;
+            visited[i][j] = true;
+            dfs(board, i, j, root.children[board[i][j] - 'a'], visited, word + board[i][j], res);
+            visited[i][j] = false;
         }
-        visited[row][col] = false;
     }
     
     class Trie {
@@ -83,7 +80,7 @@ public class WordSearchII {
             this.root = new TrieNode('/');
         }
         
-        public void insert(String s) {
+        public void addWord(String s) {
             if (s == null || s.length() == 0) return;
             TrieNode curr = root;
             for (char c: s.toCharArray()) {
