@@ -14,6 +14,39 @@ import java.util.Set;
  */
 public class ValidSudoku {
 	
+	/**
+	 * Method3: like method2
+	 * @param char[][] board
+	 * @return boolean
+	 * Time: O((9+9+9)*9)
+	 * Space: O(9)
+	 */	
+    public boolean validSudokuII(char[][] board) {
+        Set<Integer>[] rows = new Set[9];
+        Set<Integer>[] cols = new Set[9];
+        Set<Integer>[] cubes = new Set[9];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                rows[i] = new HashSet<>();
+                cols[j] = new HashSet<>();
+                cubes[i / 3 * 3 + j / 3] = new HashSet<>();
+            }
+        }
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == '.') continue;
+                int num = board[i][j] - '0';
+                if (rows[i].contains(num) || cols[j].contains(num) || 
+                		cubes[i / 3 * 3 + j / 3].contains(num)) return false;
+                rows[i].add(num);
+                cols[j].add(num);
+                cubes[i / 3 * 3 + j / 3].add(num);
+            }
+        }
+        return true;   
+    }
+	
+	
 
 	/**
 	 * Method2: using set to store each row, column and cube
