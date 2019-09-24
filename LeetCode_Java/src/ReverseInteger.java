@@ -28,18 +28,16 @@ public class ReverseInteger {
 	 * Space: O(1)
 	 */
 	public int reverseInteger(int x) {
-		if (x == 0) {
-			return 0;
-		}
-		long result = 0;
-		while (x != 0) {
-			result = result * 10 + x % 10;
-			x /= 10;
-			if (result < Integer.MIN_VALUE || result > Integer.MAX_VALUE) {
-				return 0;
-			}
-		}
-		return (int)result;
+        if (x == 0) return 0;
+        int sign = x < 0 ? -1 : 1;
+        long X = Math.abs(x);
+        long res = 0;
+        while (X != 0) {
+            res = res * 10 + X % 10;
+            X /= 10;
+            if (sign * res < Integer.MIN_VALUE || sign * res > Integer.MAX_VALUE) return 0;
+        }
+        return sign * (int) res;
 	}
 	
 	public static void main(String[] args) {

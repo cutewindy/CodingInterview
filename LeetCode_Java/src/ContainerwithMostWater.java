@@ -16,7 +16,7 @@ public class ContainerwithMostWater {
 	 * @param int[] height
 	 * @return int
 	 * Time: O(2n)
-	 * Space: O(n)
+	 * Space: O(1)
 	 */
 	public int containerwithMostWater(int[] height) {
 		if (height == null || height.length == 0) return 0;

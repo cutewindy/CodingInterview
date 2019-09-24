@@ -14,23 +14,21 @@ public class ReverseString {
 	 * Time: O(n)
 	 * Space: O(n)
 	 */
-	public String reverseStringI(String s) {
-        if (s == null || s.length() == 0) {
-            return s;
+	public void reverseStringI(char[] s) {
+        if (s == null || s.length == 0) return;
+        int l = 0;
+        int r = s.length - 1;
+        while (l < r) {
+            swap(s, l++, r--);
         }
-        int start = 0;
-        int end = s.length() - 1;;
-        char[] S = s.toCharArray();
-        while (start < end) {
-            char temp = S[start];
-            S[start] = S[end];
-            S[end] = temp;
-            start++;
-            end--;
-        }
-//        return String.valueOf(S);
-        return new String(S);
-	}
+    }
+    
+    private void swap(char[] s, int l, int r) {
+        char temp = s[l];
+        s[l] = s[r];
+        s[r] = temp;
+    }
+    
 	
 	/**
 	 * Method1: use the reverse() function of StringBuilder()
@@ -51,7 +49,7 @@ public class ReverseString {
 		// TODO Auto-generated method stub
  		ReverseString result = new ReverseString();
  		System.out.println(result.reverseString("hello"));
- 		System.out.println(result.reverseStringI("hello"));
+ 		result.reverseStringI(new char[] {'h', 'e', 'l', 'l', 'o'});
 	}
 
 }

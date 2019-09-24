@@ -10,6 +10,31 @@
  *
  */
 public class CountCompleteTreeNodes {
+	
+	/**
+	 * Method6: dfs recursion
+	 * use -1 to stand for not a complete tree, otherwise add the the nodes to res
+	 * @param TreeNode root
+	 * @return int
+	 * Time: O(log(n))
+	 * Space: O(1)
+	 */
+    public int CountCompleteTreeNodesV(TreeNode root) {
+        if (root == null) return 0;
+        int[] res = new int[1];
+        dfs(root, res);
+        return res[0];
+    }
+    
+    private int dfs(TreeNode root, int[] res) { // return depth
+        if (root == null) return 0;
+        int left = dfs(root.left, res);
+        int right = dfs(root.right, res);
+        if (left == -1 || right == -1 || left != right) return -1;
+        res[0] += 2 * (left + 1) - 1;
+        return left + 1;
+    }
+    
 
 	/**
 	 * Method5: BinarySearch: find which part is perfect tree.

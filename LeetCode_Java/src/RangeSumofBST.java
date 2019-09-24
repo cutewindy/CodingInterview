@@ -19,7 +19,24 @@ Note:
 public class RangeSumofBST {
 	
 	/**
-	 * dfs iteration + stack
+	 * Approach2: dfs recursion
+	 * @param TreeNode root, int L, int R
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 * Stack Space: O(log(n))
+	 */
+    public int rangeSumofBSTI(TreeNode root, int L, int R) {
+        if (root == null) return 0;
+        if (root.val > R) return rangeSumofBSTI(root.left, L, R);
+        if (root.val < L) return rangeSumofBSTI(root.right, L, R);
+        return rangeSumofBSTI(root.left, L, R) + root.val + rangeSumofBSTI(root.right, L, R);    	
+    }
+	
+	
+	
+	/**
+	 * Approach1: dfs iteration + stack
 	 * @param TreeNode root, int L, int R
 	 * @return int
 	 * Time: O(n)
@@ -59,6 +76,7 @@ public class RangeSumofBST {
 		TreeNode root = TreeNode.generateCBT(new int[] {10, 5, 15, 3, 7, 0, 18});
 		TreeNode.printCBT(root);
 		System.out.println(result.rangeSumofBST(root, 7, 15));
+		System.out.println(result.rangeSumofBSTI(root, 7, 15));
 	}
 
 }
