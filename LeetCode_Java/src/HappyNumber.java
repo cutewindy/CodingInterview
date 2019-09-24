@@ -30,28 +30,24 @@ public class HappyNumber {
 	 * Space: O(1)
 	 */
 	public boolean happyNumberI(int n) {
-		if (n <= 0) {
-			return false;
-		}
-		int slow = n;
-		int fast = n;
-		do {
-			slow = digitSquareSum(slow);
-			fast = digitSquareSum(digitSquareSum(fast));	
-			if (fast == 1) {
-				return true;
-			}
-		} while (slow != fast);
-		return false;
-	}
-		
-	private int digitSquareSum(int n) {
-		int sum = 0;
-		while (n != 0) {
-			sum += Math.pow(n % 10, 2);
-			n /= 10;
-		}
-		return sum;
+        int slow = getDigitSquareSum(n);
+        int fast = getDigitSquareSum(getDigitSquareSum(n));
+        while (fast != 1) {
+            slow = getDigitSquareSum(slow);
+            fast = getDigitSquareSum(getDigitSquareSum(fast));
+            if (slow == fast) return false;
+        }
+        return true;
+    }
+    
+    private int getDigitSquareSum(int n) {
+        int res = 0;
+        while (n != 0) {
+            int digit = n % 10;
+            res += digit * digit;
+            n /= 10;
+        }
+        return res;
 	}
 	
 	
