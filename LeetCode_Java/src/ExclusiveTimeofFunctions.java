@@ -57,13 +57,13 @@ public class ExclusiveTimeofFunctions {
 			int func = Integer.valueOf(S[0]);
 			int time = Integer.valueOf(S[2]);
 			if (S[1].equals("start")) {
-				result[func] -= time;
 				if (!stack.isEmpty()) result[stack.peek()] += time;
+				result[func] -= time;
 				stack.push(func);
 			}
 			else {
-				result[func] += time + 1;
 				stack.pop();
+				result[func] += time + 1;
 				if (!stack.isEmpty()) result[stack.peek()] -= (time + 1);
 			}
 		}
