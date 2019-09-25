@@ -23,18 +23,17 @@ public class OneEditDistance {
 	 * Space: O(1)
 	 */
 	public boolean oneEditDistance(String s, String t) {
+        if (s == null && t == null || s.length() == 0 && t.length() == 0) return false;
         if (s == null || t == null || Math.abs(s.length() - t.length()) > 1) return false;
-		for (int i = 0; i < s.length() && i < t.length(); i++) {
-			if (s.charAt(i) != t.charAt(i)) {
-				if (s.length() == t.length()) {      // case1: replace
-					return s.substring(i + 1).equals(t.substring(i + 1));
-				}
-				else {                   // case2: delete char from s  case3: delete char from t
-					return s.substring(i + 1).equals(t.substring(i)) || s.substring(i).equals(t.substring(i + 1));
-				}
-			}
-		}
-		return Math.abs(s.length() - t.length()) == 1;   
+        for (int i = 0; i < s.length() && i < t.length(); i++) {
+            if (s.charAt(i) == t.charAt(i)) continue;
+            return isEquals(s, i + 1, t, i + 1) || isEquals(s, i + 1, t, i) || isEquals(s, i, t, i + 1);
+        }
+        return Math.abs(s.length() - t.length()) == 1;
+    }
+    
+    private boolean isEquals(String s, int i, String t, int j) {
+        return s.substring(i).equals(t.substring(j)); 
 	}
 
 	public static void main(String[] args) {
