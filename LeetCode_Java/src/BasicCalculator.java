@@ -16,6 +16,53 @@ import java.util.Stack;
  *
  */
 public class BasicCalculator {
+	
+	
+	/** 
+	 * Update on 9/25/2019
+	 * @param s
+	 * @return
+	 */
+    public int calculate(String s) {
+        int res = 0;
+        int num = 0;
+        int sign = 1;
+        Stack<Integer> stackNum = new Stack<>();
+        Stack<Integer> stackSign = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') continue;
+            if (Character.isDigit(s.charAt(i))) {
+                num = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + s.charAt(i) - '0';
+                    i++;
+                }
+                res += sign * num;
+            }
+            if (i >= s.length()) break;
+            if (s.charAt(i) == '+') {
+                sign = 1;
+            }
+            else if (s.charAt(i) == '-') {
+                sign = -1;
+            }
+            else if (s.charAt(i) == '(') {
+                stackNum.push(res);
+                stackSign.push(sign);
+                res = 0;
+                sign = 1;
+            }
+            else if (s.charAt(i) == ')') {
+                res = stackNum.pop() + stackSign.pop() * res;
+            }
+        }
+        return res;
+    }	
+	
+	
+	
+	
+	
 	class Pair{
 		int result;
 		int sign;

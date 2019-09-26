@@ -31,18 +31,14 @@ public class MultiplyStrings {
             int a = num1.charAt(i) - '0';
             for (int j = n - 1; j >= 0; j--) {
                 int b = num2.charAt(j) - '0';
-                res[i + j + 1] += a * b;
-                if (res[i + j + 1] >= 10) {
-                    res[i + j] += res[i + j + 1] / 10;
-                    res[i + j + 1] %= 10; 
-                }
+                int sum = res[i + j + 1] + a * b;
+                res[i + j + 1] = sum %10;;
+                res[i + j] += sum / 10;
             }
         }
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < m + n; i++) {
-            sb.append(res[i]);
-        }
-        for (int i = 0; i < sb.length(); i++) {    //  case: "9133" "0"
+        for (int digit: res) sb.append(digit);
+        for (int i = 0; i < sb.length(); i++) {    //  case: "9133" * "0"
             if (sb.charAt(i) != '0') return sb.toString().substring(i);
         }
         return "0";
