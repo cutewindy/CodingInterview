@@ -1,6 +1,8 @@
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.PriorityQueue;
 import java.util.TreeMap;
+import java.util.Comparator;
 
 /**
  * Median is the middle value in an ordered integer list. If the size of the list is even, there is 
@@ -30,6 +32,55 @@ import java.util.TreeMap;
  *
  */
 public class SlidingWindowMedian {
+	
+	
+	/**
+	 * Two Heap
+	 * @param int[] nums, int k
+	 * @return double[]
+	 * Time: O(nlog(k))
+	 * Space: O(k)
+	 */
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        int windowCnts = n - k + 1;
+        double[] res = new double[windowCnts];
+        // use double in heap, take care out of range
+        PriorityQueue<Double> maxHeap = new PriorityQueue<>(new Comparator<Double>() {  // left side maxheap
+            @Override
+            public int compare(Double a, Double b) {
+                return b - a < 0 ? -1 : 1;
+            }
+        }); 
+        PriorityQueue<Double> minHeap = new PriorityQueue<>(); // right side minHeap
+        for (int i = 0; i < k - 1; i++) {
+            addNum((double)nums[i], maxHeap, minHeap);
+        }
+        for (int i = k - 1; i < n; i++) {
+            addNum((double)nums[i], maxHeap, minHeap);
+            res[i - k + 1] = getMedian(maxHeap, minHeap);
+            removeNum((double)nums[i - k + 1], maxHeap, minHeap);
+        }
+        return res;
+    }
+    
+    private void addNum(double num, PriorityQueue<Double> maxHeap, PriorityQueue<Double> minHeap) {
+        maxHeap.offer(num);
+        minHeap.offer(maxHeap.poll());
+        if (minHeap.size() > maxHeap.size()) maxHeap.offer(minHeap.poll());
+        
+    }
+    
+    private void removeNum(double num, PriorityQueue<Double> maxHeap, PriorityQueue<Double> minHeap) {
+        if (maxHeap.peek() >= num) maxHeap.remove(num);
+        else minHeap.remove(num);
+        if (minHeap.size() > maxHeap.size()) maxHeap.offer(minHeap.poll());
+    }
+    
+    private double getMedian(PriorityQueue<Double> maxHeap, PriorityQueue<Double> minHeap) {
+        if (maxHeap.size() > minHeap.size()) return maxHeap.peek();
+        return (maxHeap.peek() + minHeap.peek()) / 2;
+    }	
 	
 	
 	/**

@@ -21,10 +21,9 @@ import java.util.List;
  *
  */
 public class Flatten2DVector implements Iterator<Integer> {
-	
 
 	/**
-	 * Iterator
+	 * Approach2: Iterator
 	 * Time: O(1)
 	 * Space:O(1)
 	 */
@@ -55,6 +54,54 @@ public class Flatten2DVector implements Iterator<Integer> {
         }
         return true;
     }
+    
+    
+    
+    /**
+     * Approach1: Two pointer
+	 * Time: O(1)
+	 * Space:O(1)
+     */
+//    int[][] v;
+//    int i, j;
+//    int m, n;
+//    Integer nextInt;
+//    public Vector2D(int[][] v) {
+//        this.v = v;
+//        this.i = 0;
+//        this.j = 0;
+//        this.m = v.length;
+//        this.n = i < m ? v[i].length : 0;
+//        this.nextInt = null;
+//        getNextInt();
+//    }
+//
+//    public int next() {
+//        if (nextInt == null) return -1;
+//        int res = (int)nextInt;
+//        getNextInt();
+//        return res;
+//    }
+//
+//    public boolean hasNext() {
+//        return nextInt != null;
+//    }
+//    
+//    // check curr v[i][j] is valid, otherwise find the next valid v[i][j]
+//    private void getNextInt() {  
+//        nextInt = null;
+//        while (i < m) {
+//            if (j < n) {
+//                nextInt = v[i][j];
+//                j++;
+//                break;
+//            }
+//            i++;
+//            if (i >= m) break;
+//            j = 0;
+//            n = v[i].length;
+//        }
+//    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
