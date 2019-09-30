@@ -52,7 +52,7 @@ public class NumberofIslandsII {
 		UnionFindSet ufs = new UnionFindSet(m * n);
 		int[][] dir = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
 		for (int[] p: positions) {
-			if (grid[p[0]][p[1]] == 1) {
+			if (grid[p[0]][p[1]] == 1) { // take care
 				res.add(count);
 				continue;
 			}

@@ -31,7 +31,9 @@ public class FindDuplicateSubtrees {
 
 	
 	/**
-	 * Approach2: Postorder traversal
+	 * Approach2: Postorder traversal + serialize
+	 * 后序遍历，还有数组序列化，并且建立序列化跟其出现次数的映射，这样如果我们得到某个结点的序列化字符串，而该字符串正好出现
+	 * 的次数为1，说明之前已经有一个重复树了，我们将当前结点存入结果res，这样保证了多个重复树只会存入一个结点
 	 * @param TreeNode root
 	 * @return List<TreeNode>
 	 * Time: O(n)
@@ -46,11 +48,12 @@ public class FindDuplicateSubtrees {
     
     private String dfs(TreeNode root, Map<String, Integer> map, List<TreeNode> res) {
         if (root == null) return "";
-        String str = root.val + "," + dfs(root.left, map, res) + "," + dfs(root.right, map, res); // can't be left+root+right
-        if (!map.containsKey(str)) map.put(str, 0);
-        map.put(str, map.get(str) + 1);
-        if (map.get(str) == 2) res.add(root);
-        return str;
+        String left = dfs(root.left, map, res);
+        String right = dfs(root.right, map, res);
+        String curr = root.val + "," + left + "," + right; // can't be left + root + right
+        if (map.containsKey(curr) && map.get(curr) == 1) res.add(root);
+        map.put(curr, map.getOrDefault(curr, 0) + 1);
+        return curr;
     }
     
 	/**

@@ -72,9 +72,14 @@ public class SlidingWindowMedian {
     }
     
     private void removeNum(double num, PriorityQueue<Double> maxHeap, PriorityQueue<Double> minHeap) {
-        if (maxHeap.peek() >= num) maxHeap.remove(num);
-        else minHeap.remove(num);
-        if (minHeap.size() > maxHeap.size()) maxHeap.offer(minHeap.poll());
+        if (maxHeap.peek() >= num) {
+        	maxHeap.remove(num);
+        	if (minHeap.size() > maxHeap.size()) maxHeap.offer(minHeap.poll());
+        }
+        else {
+        	minHeap.remove(num);
+        	if (maxHeap.size() - minHeap.size() > 1) minHeap.offer(maxHeap.poll());
+        }
     }
     
     private double getMedian(PriorityQueue<Double> maxHeap, PriorityQueue<Double> minHeap) {

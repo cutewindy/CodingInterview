@@ -20,10 +20,11 @@ public class ReverseWordsinaString {
 	 */
 	public String reverseWordsinaStringII(String s) {	
         if (s == null || s.length() == 0) return s;
-        char[] S = s.toCharArray();
-        reverse(S, 0, S.length - 1);
-        for (int start = 0, end = 0; end < S.length;) {
-            while (end < S.length && S[end] != ' ') {
+        char[] S = s.trim().toCharArray();
+        int n = S.length;
+        reverse(S, 0, n - 1);
+        for (int start = 0, end = 0; end < n;) {
+            while (end < n && S[end] != ' ') {
                 end++;
             }
             reverse(S, start, end - 1);
@@ -34,14 +35,12 @@ public class ReverseWordsinaString {
     }
     
     private String cleanSpace(char[] S) {
-        int start = 0;
-        int end = 0;
-        while (end < S.length) {
+    	int start = 0;
+        for (int end = 0; end < S.length; end++) {
             if (S[end] != ' ' || start == 0 || S[start - 1] != ' ') {
                 S[start] = S[end];
                 start++;
             }
-            end++;
         }
         return String.valueOf(S).substring(0, start).trim(); // take care: eg: " "
     }
