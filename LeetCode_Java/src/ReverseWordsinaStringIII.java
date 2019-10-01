@@ -19,29 +19,29 @@ public class ReverseWordsinaStringIII {
 	 * Space: O(n)
 	 */
 	public String reverseWordsinaStringIII(String s) {
-		if (s == null || s.length() == 0) {return s;}
-		StringBuilder result = new StringBuilder();
-		String[] str = s.split(" ");
-		for (String word: str) {
-			result.append(reverseWord(word)).append(" ");
-		}
-		return result.toString().trim();
-	}
-	
-	public String reverseWord(String word) {
-		if (word == null || word.length() == 0) {return word;}
-		char[] array = word.toCharArray();
-		int left = 0;
-		int right = word.length() - 1;
-		while (left < right) {
-			char c = array[left];;
-			array[left] = array[right];
-			array[right] = c;
-			left++;
-			right--;
-		}
-		return new String(array);
-	}
+        if (s == null || s.length() == 0) return "";
+        char[] S = s.toCharArray();
+        for (int l = 0, r = 0; l < s.length();) {
+            while (r < s.length() && s.charAt(r) != ' ') r++;
+            reverse(S, l, r - 1);
+            l = r + 1;
+            r++;
+        }
+        return String.valueOf(S);
+    }
+    
+    private void reverse(char[] S, int i, int j) {
+        if (i == j) return;
+        while (i < j) {
+            swap(S, i++, j--);
+        }
+    }
+    
+    private void swap(char[] S, int i, int j) {
+        char temp = S[i];
+        S[i] = S[j];
+        S[j] = temp;
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
