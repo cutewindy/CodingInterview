@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +32,17 @@ import java.util.Map;
  */
 public class DesignLogStorageSystem {
 	
-	Map<Integer, String> timestamps;
-	List<String> units;
-	int[] indices;
+    Map<Integer, String> timestamps; // [id, timestamp]
+    Map<String, Integer> endIndexes; // [granularity, end index in timestamp]
     public DesignLogStorageSystem() {
         this.timestamps = new HashMap<>();
-        this.units = new ArrayList<>(Arrays.asList("Year", "Month", "Day", "Hour", "Minute", "Second"));
-        this.indices = new int[] {4, 7, 10, 13, 16, 19};
+        this.endIndexes = new HashMap<>();
+        endIndexes.put("Year", 4);
+        endIndexes.put("Month", 7);
+        endIndexes.put("Day", 10);
+        endIndexes.put("Hour", 13);
+        endIndexes.put("Minute", 16);
+        endIndexes.put("Second", 19);
     }
     
     /**
@@ -58,12 +61,12 @@ public class DesignLogStorageSystem {
      */
     public List<Integer> retrieve(String s, String e, String gra) {
         List<Integer> res = new ArrayList<>();
-        int end = indices[units.indexOf(gra)];
-        String sStr = s.substring(0, end);
-        String eStr = e.substring(0, end);
+        int endIndex = endIndexes.get(gra);
+        s = s.substring(0, endIndex);
+        e = e.substring(0, endIndex);
         for (Integer id: timestamps.keySet()) {
-        	String str = timestamps.get(id).substring(0, end);
-        	if (str.compareTo(sStr) >= 0 && str.compareTo(eStr) <= 0) res.add(id);
+            String timestamp = timestamps.get(id).substring(0, endIndex);
+            if (timestamp.compareTo(s) >= 0 && timestamp.compareTo(e) <= 0) res.add(id);
         }
         return res;
     }
