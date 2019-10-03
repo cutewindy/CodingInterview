@@ -47,10 +47,10 @@ public class FindDuplicateSubtrees {
     }
     
     private String dfs(TreeNode root, Map<String, Integer> map, List<TreeNode> res) {
-        if (root == null) return "";
+        if (root == null) return "#,";
         String left = dfs(root.left, map, res);
         String right = dfs(root.right, map, res);
-        String curr = root.val + "," + left + "," + right; // can't be left + root + right
+        String curr = root.val + "," + left + right;
         if (map.containsKey(curr) && map.get(curr) == 1) res.add(root);
         map.put(curr, map.getOrDefault(curr, 0) + 1);
         return curr;
