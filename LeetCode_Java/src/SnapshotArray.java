@@ -35,7 +35,7 @@ public class SnapshotArray {
 	 * we will record the history of each cell.
 	 * And this is the minimum space that we need to record all information.
 	 */
-	TreeMap<Integer, Integer>[] array;
+	TreeMap<Integer, Integer>[] array;  // [{snapshot, val}]
 	int snapshot;
     public SnapshotArray(int length) {
         array = new TreeMap[length];

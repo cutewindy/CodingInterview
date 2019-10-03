@@ -47,8 +47,9 @@ public class _24Game {
 			for (int j = i + 1; j < list.size(); j++) {
 				double b = list.get(j);
 				List<Double> pairRes = new ArrayList<>();
-				pairRes.addAll(Arrays.asList(a + b, a - b, b - a, a * b, a / b, b / a));
-				
+				pairRes.addAll(Arrays.asList(a + b, a - b, b - a, a * b));
+				if (b != 0) pairRes.add(a / b);
+                if (a != 0) pairRes.add(b / a);
 				list.remove(j);  // NOTE: remove larger index first
 				list.remove(i);
 				for (double r: pairRes) {
