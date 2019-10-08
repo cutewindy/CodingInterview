@@ -101,56 +101,54 @@ public class SurroundedRegions {
 	 * Use BFS starting from 'O's on the boundary and mark them as 'Y', then iterate over the 
 	 * whole board and mark 'O' as 'X' and 'Y' as 'O'.
 	 * @param char[][] board
-	 * Time: O(n^2)
-	 * Space: O(n)
+	 * Time: O(m*n)
+	 * Space: O(m*n)
 	 */
 	public void surroundedRegions(char[][] board) {
-		if (board == null || board.length == 0 || board[0].length == 0) {
-			return;
-		}
-		int m = board.length;
-		int n = board[0].length;
-		Queue<int[]> queue = new LinkedList<>();
-		// do the init, where board[i][j] = 'O' at edge
-		for (int col = 0; col < n; col++) {
-			if (board[0][col] == 'O') {               // 1 top line
-				queue.offer(new int[] {0, col});
-			}
-			if (board[m - 1][col] == 'O') {
-				queue.offer(new int[] {m - 1, col});  // 2 down line
-			}
-		}
-		for (int row = 0; row < m; row++) {
-			if (board[row][0] == 'O') {
-				queue.offer(new int[] {row, 0});      // 3 left line
-			}
-			if (board[row][n - 1] == 'O') {
-				queue.offer(new int[] {row, n - 1});  // 4 right line
-			}
-		}
-		// BFS to find the union 'O' of edge, if it's union of edge, set 'Y'
-		while (!queue.isEmpty()) {
-			int[] point = queue.poll();
-			int row = point[0];
-			int col = point[1];
-			if (board[row][col] == 'Y') continue; // already change to 'X'
-			board[row][col] = 'Y';
-			if (row > 0 && board[row - 1][col] == 'O') queue.offer(new int[] {row - 1, col});      // check top
-			if (row < m - 1 && board[row + 1][ col] == 'O') queue.offer(new int[] {row + 1, col}); // check down
-			if (col > 0 && board[row][col - 1] == 'O') queue.offer(new int[] {row, col - 1});      // check left
-			if (col < n - 1 && board[row][col + 1] == 'O') queue.offer(new int[] {row, col + 1});  // check right
-		}
-		// convert 'Y' to 'O', 'O' to 'X'
-		for (int row = 0; row < m; row++) {
-			for (int col = 0; col < n; col++) {
-				if (board[row][col] == 'O') {
-					board[row][col] = 'X';
-				}
-				if (board[row][col] == 'Y') {
-					board[row][col] = 'O';
-				}
-			}
-		}
+        if (board == null || board.length == 0 || board[0].length == 0) return;
+        int m = board.length;
+        int n = board[0].length;
+        Queue<Integer> queue = new LinkedList<>();
+        // do the init, where board[i][j] = 'O' at edge
+        for (int i = 0; i < m; i++) {
+            if (board[i][0] == 'O') {
+                board[i][0] = 'Y';
+                queue.offer(i * n);
+            }
+            if (board[i][n - 1] == 'O') {
+                board[i][n - 1] = 'Y';
+                queue.offer(i * n + n - 1);
+            }
+        }
+        for (int j = 0; j < n; j++) {
+            if (board[0][j] == 'O') {
+                board[0][j] = 'Y';
+                queue.offer(j);
+            }
+            if (board[m - 1][j] == 'O') {
+                board[m - 1][j] = 'Y';
+                queue.offer((m - 1) * n + j);
+            }
+        }
+        int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        // BFS to find the union 'O' of edge, if it's union of edge, set 'Y'
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            for (int k = 0; k < 4; k++) {
+                int i = curr / n + dir[k][0];
+                int j = curr % n + dir[k][1];
+                if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] != 'O') continue;
+                board[i][j] = 'Y';
+                queue.offer(i * n + j);
+            }
+        }
+        // convert 'Y' to 'O', 'O' to 'X'
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') board[i][j] = 'X';
+                else if (board[i][j] == 'Y') board[i][j] = 'O';
+            }
+        }
 	}
 	
 	public static void main(String[] args) {
