@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Given a positive integer n and you can do operations as follow:
  * If n is even, replace n with n/2.
@@ -47,6 +50,36 @@ public class IntegerReplacement {
 		}
 		return count;
 	}
+	
+	
+	/**
+	 * dfs + memorization
+	 * @param int n
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(n)
+	 * Stack space: O(n)
+	 */
+    public int integerReplacementI(int n) {
+        // Write your code here
+        if (n == 1) return 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        return dfs(n, map);
+    }
+    
+    private int dfs(int n, Map<Integer, Integer> map) {
+        if (n == 1) return 0;
+        if (map.containsKey(n)) return map.get(n);
+        int res = Integer.MAX_VALUE;
+        if (n % 2 == 0) {
+            res = dfs(n / 2, map) + 1;
+        }
+        else {
+            res = Math.min(dfs(n + 1, map), dfs(n - 1, map)) + 1;
+        }
+        map.put(n, res);
+        return res;
+    }
 	 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
