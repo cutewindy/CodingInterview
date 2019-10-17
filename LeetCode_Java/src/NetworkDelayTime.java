@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
@@ -32,18 +33,42 @@ public class NetworkDelayTime {
 	 * If any single node takes null time, then return -1, as not all nodes can be reached
 	 * @param int[][] times, int N, int K
 	 * @return int
-	 * Time: O(e+v)
+	 * Time: O(e+v) nlog(n)
 	 * Space: O(v)
 	 */
-	public int networkDelayTimeI(int[][] times, int N, int K) {
-		Map<Integer, List<int[]>> map = new HashMap<>();
-		for (int[] t: times) {
-			if (!map.containsKey(t[0])) map.put(t[0], new ArrayList<int[]>());
-			map.get(t[0]).add(t);
-		}
-		
-		return 0;
-	}
+    public int networkDelayTimeI(int[][] times, int N, int K) {
+        Map<Integer, List<int[]>> graph = new HashMap<>();  // [u, {[v, time from u to v]}]
+        buildGraph(times, graph);
+        Map<Integer, Integer> delayTimes = new HashMap<>(); // [node, time from k to node]
+        walkGraph(graph, delayTimes, K);
+        if (delayTimes.size() < N) return -1;
+        int res = 0;
+        for (Integer time: delayTimes.values()) res = Math.max(res, time);
+        return res;
+    }
+    
+    private void buildGraph(int[][] times, Map<Integer, List<int[]>> graph) {
+        for (int[] time: times) {
+            graph.putIfAbsent(time[0], new ArrayList<int[]>());
+            graph.get(time[0]).add(new int[] {time[1], time[2]});
+        }
+    }
+    
+    private void walkGraph(Map<Integer, List<int[]>> graph, Map<Integer, Integer> delayTimes, int K) {
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> (a[1] - b[1])); // [node, time from k to node]
+        minHeap.offer(new int[] {K, 0});
+        while (!minHeap.isEmpty()) {
+            int[] u = minHeap.poll();
+            if (delayTimes.containsKey(u[0])) continue;
+            delayTimes.put(u[0], u[1]);
+            if (!graph.containsKey(u[0])) continue;
+            for (int[] v: graph.get(u[0])) {
+                if (delayTimes.containsKey(v[0])) continue;
+                minHeap.offer(new int[] {v[0], u[1] + v[1]});
+            }
+            
+        }
+    }
 	
 	
 	/**
@@ -56,7 +81,7 @@ public class NetworkDelayTime {
 	 * If any single node takes null time, then return -1, as not all nodes can be reached
 	 * @param int[][] times, int N, int K
 	 * @return int
-	 * Time: O(e+v)
+	 * Time: O(e+v) n^2
 	 * Space: O(v)
 	 */
 	public int networkDelayTime(int[][] times, int N, int K) {

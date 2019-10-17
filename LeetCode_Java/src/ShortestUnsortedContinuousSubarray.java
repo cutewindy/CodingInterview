@@ -19,6 +19,29 @@ import java.util.Stack;
 public class ShortestUnsortedContinuousSubarray {
 	
 	/**
+	 * Method3: two pointers
+	 * @param int[] nums
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int shortestUnsortedContinuousSubarrayII(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int i = 0;
+        int j = -1;
+        for (int s = 0, e = nums.length - 1; s < nums.length; s++, e--) {
+            max = Math.max(nums[s], max);
+            if (nums[s] != max) j = s;
+            min = Math.min(nums[e], min);
+            if (nums[e] != min) i = e;
+        }
+        return j - i + 1;
+	}
+	
+	
+	/**
 	 * Method2: stack
 	 * @param int[] nums
 	 * @return int

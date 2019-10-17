@@ -28,21 +28,19 @@ public class SuperPow {
 		if (b == null || b.length == 0) {
 			return a % base;
 		}
-		return helper(a, b, b.length - 1);
+		a %= base;
+		int res = 1;
+		for (int i = 0; i < b.length; i++) {
+			res = pow(res, 10) * pow(a, b[i]) % base;
+		}
+		return res;
 	}
 	
-	private int helper(int a, int[] b, int pos) {
-		if (pos == -1) {
-			return 1;
-		}
-		return (mode(helper(a, b, pos - 1), 10) * mode(a, b[pos])) % base;
-	}
-	
-	private int mode(int a, int b) {
-		if (b == 0) {
-			return 1;
-		}
-		return (mode(a, b - 1) * (a % base)) % base;
+	private int pow(int a, int b) {
+		if (b == 0) return 1;
+		if (b == 1) return a;
+		if (b % 2 == 0) return pow(a * a % base, b / 2) % base;
+		return a * pow(a * a % base, b / 2) % base;
 	}
 
 	public static void main(String[] args) {

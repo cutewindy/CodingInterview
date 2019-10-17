@@ -1,3 +1,6 @@
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Given a robot cleaner in a room modeled as a grid.
  * Each cell in the grid can be empty or blocked.
@@ -66,7 +69,44 @@ public class RobotRoomCleaner {
 	 */
 	
     public void cleanRoom(Robot robot) {
-        
+        Set<String> visited = new HashSet<>();
+        visited.add(0 + "-" + 0);
+        dfs(robot, 0, 0, 0, visited);
+    }
+    
+    int[][] dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; // up, right, down, left
+    private void dfs(Robot robot, int row, int col, int currDir, Set<String> visited) {
+    	// Clean current cell.
+        robot.clean();
+        for (int k = 0; k < 4; k++) {
+            int nextDir = (currDir + k) % 4;
+            int i = dir[nextDir][0] + row; // [i, j] is the relative position from the initial point
+            int j = dir[nextDir][1] + col;
+            if (!visited.contains(i + "-" + j) && robot.move()) {
+                visited.add(i + "-" + j);
+                dfs(robot, i, j, nextDir, visited);
+            }
+            robot.turnRight();
+        }
+        // Move backward one step while maintaining the orientation.
+        backtrack(robot);
+    }
+    
+    private void backtrack(Robot robot) {
+        robot.turnRight();
+        robot.turnRight();
+        robot.move();
+        robot.turnRight();
+        robot.turnRight();
+    }
+    
+    class Robot{
+    	public void clean() {}
+    	
+    	public boolean move() {return true;}
+    	
+    	public void turnRight() {}
+    	public void turnLeft() {}
     }
 
 	public static void main(String[] args) {
