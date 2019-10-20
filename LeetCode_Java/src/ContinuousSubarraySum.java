@@ -27,6 +27,12 @@ public class ContinuousSubarraySum {
 	 * elements in the process. If we find that a running sum value at index j has been previously 
 	 * seen before in some earlier index i in the array, then we know that the sub-array (i,j] 
 	 * contains a desired sum.
+	 * 
+	 * Proof:
+	 * sumX - sumY = z * k  
+	 * => sumX % k - sumY % k = z * k % k = 0
+	 * => sumX % k = sumY % k
+	 * 
 	 * @param int[] nums, int k
 	 * @return boolean
 	 * Time: O(n)
