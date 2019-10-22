@@ -27,35 +27,36 @@ public class DecodeString {
 	 * Space: O(n)
 	 */
 	public String decodeStringI(String s) {
-		if (s == null || s.length() == 0) return "";
-		int num = 0;
-		String str = "";
-		Stack<Integer> nums = new Stack<>();
-		Stack<String> strs = new Stack<>();
-		for (char c: s.toCharArray()) {
-			// four different cases
-			if (Character.isDigit(c)) {
-				num = num * 10 + c - '0';
-			}
-			else if (c == '[') {
-				nums.push(num);
-				strs.push(str);
-				num = 0;
-				str = "";
-			}
-			else if (c == ']') {
-				String newStr = "";
-				int times = nums.pop();
-				for (int j = 0; j < times; j++) {
-					newStr += str;
-				}
-				str = strs.pop() + newStr;
-			}
-			else {
-				str += c;
-			}
-		}
-		return str;
+        if (s == null || s.length() == 0) return "";
+        Stack<Integer> cntStack = new Stack<>();
+        Stack<String> strStack = new Stack<>();
+        String res = "";
+        int num = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                num = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    num = num * 10 + s.charAt(i) - '0';
+                    i++;
+                }
+            }
+            if (s.charAt(i) == '[') {
+                cntStack.push(num);
+                strStack.push(res);
+                num = 0;
+                res = "";
+            }
+            else if (s.charAt(i) == ']') {
+                int cnt = cntStack.pop();
+                StringBuilder sb = new StringBuilder();
+                while (cnt-- > 0) {
+                    sb.append(res);
+                }
+                res = strStack.pop() + sb.toString();
+            }
+            else res += s.charAt(i);
+        }
+        return res;
 	}
 	
 	

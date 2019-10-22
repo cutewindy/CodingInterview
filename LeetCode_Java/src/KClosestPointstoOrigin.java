@@ -83,25 +83,16 @@ public class KClosestPointstoOrigin {
 	 * Space: O(K)
 	 */
     public int[][] kClosestPointstoOrigin(int[][] points, int K) {
-        int[][] res = new int[K][2];
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] a, int[] b) {
-                return b[2] - a[2];
-            }
-        });
+        if (K == 0) return new int[0][2];
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a, b) -> (b[0] * b[0] + b[1] * b[1]) - (a[0] * a[0] + a[1] * a[1]));
         for (int[] p: points) {
-            int dist = p[0] * p[0] + p[1] * p[1];
-            int[] newP = new int[] {p[0], p[1], dist};
-            minHeap.offer(newP);
-            if (minHeap.size() > K) minHeap.poll();
+            maxHeap.offer(p);
+            if (maxHeap.size() > K) maxHeap.poll();
         }
-        int i = K - 1;
-        while (!minHeap.isEmpty()) {
-            int[] currP = minHeap.poll();
-            res[i][0] = currP[0];
-            res[i][1] = currP[1];
-            i--;
+        int[][] res = new int[K][2];
+        int i = 0;
+        while (!maxHeap.isEmpty()) {
+            res[i++] = maxHeap.poll();
         }
         return res;
     }

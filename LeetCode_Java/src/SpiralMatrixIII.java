@@ -43,23 +43,24 @@ public class SpiralMatrixIII {
 	 * Space: O(1)
 	 */
 	public int[][] spiralMatrixIII(int R, int C, int r0, int c0) {
-		int[][] res = new int[R * C][2];
-		res[0] = new int[] {r0, c0};
-		int[][] dir = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // east, south, west, north
-		int d = 0;
-		int len = 0;       // move <len> steps in the <d> direction
-		int index = 1;
-		while (index < R * C) {
-			if (d == 0 || d == 2) len++; // when move east or west, the length of path need plus 1
-			for (int i = 0; i < len; i++) {
-				r0 += dir[d][0];
-				c0 += dir[d][1];
-				if (r0 < 0 || r0 >= R || c0 < 0 || c0 >= C) continue; // check valid
-				res[index++] = new int[] {r0, c0};
-			}
-			d = (d + 1) % 4; // turn to next direction
-		}
-		return res;
+        int[][] res = new int[R * C][2];
+        res[0][0] = r0;
+        res[0][1] = c0;
+        int index = 1;
+        int[][] dir = {{0,  1}, {1, 0}, {0, -1}, {-1, 0}}; // right, down, left, up
+        int step = 0;
+        while (index < R * C) {
+            for (int k = 0; k < 4; k++) {
+                if (k % 2 == 0) step++; // when move right or left, the step of path need plus 1
+                for (int i = 0; i < step; i++) {
+                    r0 += dir[k][0];
+                    c0 += dir[k][1];
+                    if (r0 < 0 || r0 >= R || c0 < 0 || c0 >= C) continue;
+                    res[index++] = new int[] {r0, c0};
+                }
+            }
+        }
+        return res;
 	}
 
 	public static void main(String[] args) {

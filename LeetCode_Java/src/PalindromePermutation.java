@@ -14,6 +14,29 @@ import java.util.Set;
  */
 public class PalindromePermutation {
 	
+	
+	/**
+	 * Method3: int array
+	 * @param String s
+	 * @return boolean
+	 * Time: O(n)
+	 * Space: O(n)
+	 */
+	public boolean palindromePermutationII(String s) {	
+        if (s == null || s.length() == 0) return false;
+        int[] cnts = new int[256];
+        for (char c: s.toCharArray()) {
+            cnts[c]++;
+        }
+        int single = 0;
+        for (int cnt: cnts) {
+            if (cnt % 2 != 0) single++;
+            if (single > 1) return false;
+        }
+        return true;
+	}
+	
+	
 	/**
 	 * Method2: Set, one pass
 	 * The idea is to iterate over string, adding current character to set if set doesn't contain 

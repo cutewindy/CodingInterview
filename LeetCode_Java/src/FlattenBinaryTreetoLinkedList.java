@@ -33,7 +33,8 @@ import java.util.Stack;
 public class FlattenBinaryTreetoLinkedList {
 
 	/**
-	 * Method3: DFS(Iteration) If root has left, then the result should be that the most right.right 
+	 * Method3: Brute force:
+	 * DFS(Iteration) If root has left, then the result should be that the most right.right 
 	 * of root.left is the root of root.right. Then set root.right = root.left, root.left = null. 
 	 * @param TreeNode root
 	 * Time: O(n)
@@ -61,38 +62,29 @@ public class FlattenBinaryTreetoLinkedList {
 	}
 	
 	/**
-	 * Method2: Backtracking: Flatten left and right first. 
-	 * Set root.left = null, root.right = left, and then go down the end node of right, set 
-	 * root.right = right.
+	 * Method2: post order traversal
 	 * @param TreeNode root
 	 * Time: O(n)
 	 * Space: O(1)
 	 * Stack space: O(log(n))
 	 */
 	public void flattenBinaryTreetoLinkedListI(TreeNode root) {
-		if (root == null) {
-			return;
-		}
-		helper(root);
+		if (root == null) return;
+		TreeNode[] prev = new TreeNode[1];
+		prev[0] = null;
+		dfs(root, prev);
 		return;
 	}
 	
-	private void helper(TreeNode root) {
-		if (root == null) {
-			return;
-		}
+	private void dfs(TreeNode root, TreeNode[] prev) {
+		if (root == null) return;
 		// flatten children
-		TreeNode left = root.left;
-		TreeNode right = root.right;		
-		helper(left);
-		helper(right);
+		dfs(root.right, prev);
+		dfs(root.left, prev);
 		// flatten curr root
+		root.right = prev[0];
 		root.left = null;
-		root.right = left;
-		while (root.right != null) {
-			root = root.right;
-		}
-		root.right = right;
+		prev[0] = root;
 	}
 	
 	/**
