@@ -36,6 +36,8 @@ public class BackspaceStringCompare {
 	 * Space: O(1)
 	 */
 	public boolean backspaceStringCompareII(String S, String T) {
+        if (S == null && T == null || S.length() == 0 && T.length() == 0) return true;
+        if (S == null || T == null) return false;
 		int i = S.length() - 1;
 		int j = T.length() - 1;
 		int skipS = 0;
@@ -51,10 +53,10 @@ public class BackspaceStringCompare {
 				else skipT--;
 				j--;
 			}
-			if (i < 0 || j < 0) return i == j;
+			if (i < 0 || j < 0) break;
 			if (S.charAt(i--) != T.charAt(j--)) return false;
 		}
-		return i == j;
+		return i < 0 && j < 0;
 	}
 	
 	/**

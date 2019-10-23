@@ -71,19 +71,20 @@ public class RobotRoomCleaner {
     public void cleanRoom(Robot robot) {
         Set<String> visited = new HashSet<>();
         visited.add(0 + "-" + 0);
+        robot.clean();
         dfs(robot, 0, 0, 0, visited);
     }
     
     int[][] dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; // up, right, down, left
     private void dfs(Robot robot, int row, int col, int currDir, Set<String> visited) {
     	// Clean current cell.
-        robot.clean();
         for (int k = 0; k < 4; k++) {
             int nextDir = (currDir + k) % 4;
             int i = dir[nextDir][0] + row; // [i, j] is the relative position from the initial point
             int j = dir[nextDir][1] + col;
             if (!visited.contains(i + "-" + j) && robot.move()) {
                 visited.add(i + "-" + j);
+                robot.clean();
                 dfs(robot, i, j, nextDir, visited);
             }
             robot.turnRight();

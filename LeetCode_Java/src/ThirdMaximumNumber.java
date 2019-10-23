@@ -22,6 +22,40 @@
 public class ThirdMaximumNumber {
 	
 	/**
+	 * Approach2: like approach 1, using long instead of int
+	 * @param int[] nums
+	 * @return int
+	 * Time: O(n)
+	 * Space: O(1)
+	 */
+	public int thirdMaximumNumberI(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        if (nums.length == 1) return nums[0];
+        if (nums.length == 2) return Math.max(nums[0], nums[1]);
+        long max1 = Long.MIN_VALUE;
+        long max2 = Long.MIN_VALUE;
+        long max3 = Long.MIN_VALUE;
+        for (int num: nums) {
+            if (num == max1 || num == max2 || num == max3) continue;
+            if (num > max1) {
+                max3 = max2;
+                max2 = max1;
+                max1 = (long) num;
+            }
+            else if (num > max2) {
+                max3 = max2;
+                max2 = (long) num;
+            }
+            else if (num > max3) {
+                max3 = (long) num;
+            }
+        }
+        if (max3 == Long.MIN_VALUE) return (int) max1;
+        return (int) max3;
+	}
+	
+	
+	/**
 	 * Brute Force: using three variables max1, max2, max3 as max number, second max number and 
 	 * third max number. Iterate nums to find the third one.
 	 * @param int[] nums
