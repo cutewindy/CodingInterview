@@ -34,15 +34,15 @@ public class ConstructBinaryTreefromPreorderandInorderTraversal {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return dfs(preorder, new int[1], inorder, 0, inorder.length - 1, map);
+        return dfs(preorder, new int[1], 0, inorder.length - 1, map);
     }
     
-    private TreeNode dfs(int[] preorder, int[] index, int[] inorder, int s, int e, Map<Integer, Integer> map) {
+    private TreeNode dfs(int[] preorder, int[] index, int s, int e, Map<Integer, Integer> map) {
         if (index[0] == preorder.length || s > e) return null;
         TreeNode root = new TreeNode(preorder[index[0]++]);
         int pos = map.get(root.val);
-        root.left = dfs(preorder, index, inorder, s, pos - 1, map);
-        root.right = dfs(preorder, index, inorder, pos + 1, e, map);
+        root.left = dfs(preorder, index, s, pos - 1, map);
+        root.right = dfs(preorder, index, pos + 1, e, map);
         return root;
 	}
 	

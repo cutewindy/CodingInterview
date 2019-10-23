@@ -1,4 +1,6 @@
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -62,40 +64,38 @@ public class ReorganizeString {
 		return sb.toString();
 	}
 	
-//    public String reorganizeString(String S) {
-//        if (S == null || S.length() == 0) return "";
-//        Map<Character, Integer> count = new HashMap<>();
-//        for (char c: S.toCharArray()) {
-//            if (!count.containsKey(c)) count.put(c, 0);
-//            count.put(c, count.get(c) + 1);
-//            if (count.get(c) > (S.length() + 1) / 2) return "";
-//        }
-//        PriorityQueue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<>(
-//            new Comparator<Map.Entry<Character, Integer>>() {
-//                @Override
-//                public int compare(Map.Entry<Character, Integer> e1, Map.Entry<Character, Integer> e2) {
-//                    return e2.getValue() - e1.getValue();
-//                }
-//            });
-//        maxHeap.addAll(count.entrySet());
-//        StringBuilder sb = new StringBuilder();
-//        while (!maxHeap.isEmpty()) {
-//            Map.Entry<Character, Integer> first = maxHeap.poll();
-//            if (sb.length() == 0 || sb.charAt(sb.length() - 1) != first.getKey()) {
-//                sb.append(first.getKey());
-//                first.setValue(first.getValue() - 1);
-//                if (first.getValue() != 0) maxHeap.offer(first);
-//            }
-//            else {
-//                Map.Entry<Character, Integer> second = maxHeap.poll();
-//                sb.append(second.getKey());
-//                second.setValue(second.getValue() - 1);
-//                if (second.getValue() != 0) maxHeap.offer(second);
-//                maxHeap.offer(first);
-//            }
-//        }
-//        return sb.length() == S.length() ? sb.toString() : "";
-//    }
+	
+	/**
+	 * Greedy: PriorityQueue
+	 * Greedy: fetch char of max count as next char in the result.
+     * Use PriorityQueue to store pairs of (char, count) and sort by count DESC.
+	 * @param String s
+	 * @return String
+	 * Time: O(nlog(n))
+	 * Space: O(n)
+	*/
+    public String reorganizeStringI(String S) {
+        if (S == null || S.length() == 0) return "";
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c: S.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        PriorityQueue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<>((a, b) -> (b.getValue() - a.getValue()));
+        maxHeap.addAll(map.entrySet());
+        Map.Entry<Character, Integer> prev = null;
+        StringBuilder sb = new StringBuilder();
+        while (!maxHeap.isEmpty()) {
+            Map.Entry<Character, Integer> curr = maxHeap.poll();
+            sb.append(curr.getKey());
+            curr.setValue(curr.getValue() - 1);
+            if (prev != null) maxHeap.offer(prev);
+            if (curr.getValue() != 0) prev = curr;
+            else prev = null;
+        }
+        if (sb.length() < S.length()) return "";
+        return sb.toString();
+    }
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

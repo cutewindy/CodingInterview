@@ -62,44 +62,43 @@ public class Flatten2DVector implements Iterator<Integer> {
 	 * Time: O(1)
 	 * Space:O(1)
      */
+
 //    int[][] v;
-//    int i, j;
-//    int m, n;
-//    Integer nextInt;
+//    int i;
+//    int j;
+//    Integer next;
 //    public Vector2D(int[][] v) {
+//        if (v == null) return;
 //        this.v = v;
 //        this.i = 0;
 //        this.j = 0;
-//        this.m = v.length;
-//        this.n = i < m ? v[i].length : 0;
-//        this.nextInt = null;
-//        getNextInt();
-//    }
-//
-//    public int next() {
-//        if (nextInt == null) return -1;
-//        int res = (int)nextInt;
-//        getNextInt();
-//        return res;
-//    }
-//
-//    public boolean hasNext() {
-//        return nextInt != null;
+//        this.next = null;
+//        getNext();
 //    }
 //    
-//    // check curr v[i][j] is valid, otherwise find the next valid v[i][j]
-//    private void getNextInt() {  
-//        nextInt = null;
-//        while (i < m) {
-//            if (j < n) {
-//                nextInt = v[i][j];
+//    public int next() {
+//        if (!hasNext()) return -1;
+//        int res = next;
+//        getNext();
+//        return res;
+//    }
+//    
+//    public boolean hasNext() {
+//        return next != null;
+//    }
+//    
+//    private void getNext() {
+//        next = null;
+//        while (i < v.length) {
+//            if (j == v[i].length) {
+//                i++;
+//                j = 0;
+//            }
+//            else {
+//                next = v[i][j];
 //                j++;
 //                break;
 //            }
-//            i++;
-//            if (i >= m) break;
-//            j = 0;
-//            n = v[i].length;
 //        }
 //    }
 
