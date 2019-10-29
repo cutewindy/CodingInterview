@@ -35,13 +35,13 @@ public class MonotonicArray {
 	 */
 	public boolean monotonicArrayI(int[] A) {
         if (A == null || A.length <= 1) return true;
-        boolean inc = true;
-        boolean dec = true;
-        for (int i = 0; i < A.length - 1; i++) {
-        	inc &= A[i] <= A[i + 1];
-        	dec &= A[i] >= A[i + 1];
+        boolean in = true;
+        boolean de = true;
+        for (int i = 1; i < A.length; i++) {
+            in = in && A[i] >= A[i - 1];
+            de = de && A[i] <= A[i - 1];
         }
-        return inc || dec;
+        return in || de;
 	}
 	
 	/**
