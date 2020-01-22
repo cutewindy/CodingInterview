@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -79,7 +80,9 @@ public class AlienDictionary {
 		}
 		
 		// find root, which indegree is 0
-		Queue<Character> queue = new LinkedList<>();
+		// as we should return the topo order with lexicographical order
+        // we should use PriorityQueue instead of a FIFO Queue
+		Queue<Character> queue = new PriorityQueue<>();
 		for (Character c: indegree.keySet()) {
 			if (indegree.get(c) == 0) queue.offer(c);
 		}
