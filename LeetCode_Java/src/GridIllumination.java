@@ -51,52 +51,52 @@ public class GridIllumination {
 	 * HashMap
 	 * @param int N, int[][] lamps, int[][] queries
 	 * @return int[] 
-	 * Time: O()
-	 * Space: O()
+	 * Time: O(N*N)
+	 * Space: O(lamps.length + queries.length)
 	 */
 	public int[] gridIllumination(int N, int[][] lamps, int[][] queries) {
         int[] res = new int[queries.length];
-        if (queries == null || queries.length == 0) return res;
-        Map<Integer, Integer> rowMap = new HashMap<>();
-        Map<Integer, Integer> colMap = new HashMap<>();
-        Map<Integer, Integer> diaMap = new HashMap<>();
-        Map<Integer, Integer> disDiaMap = new HashMap<>();
-        Set<Integer> set = new HashSet<>();
-        for (int[] lamp: lamps) {
-            int row = lamp[0];
-            int col = lamp[1];
-            rowMap.put(row, rowMap.getOrDefault(row, 0) + 1);
-            colMap.put(col, colMap.getOrDefault(col, 0) + 1);
-            diaMap.put(row + col, diaMap.getOrDefault(row + col, 0) + 1);
-            disDiaMap.put(row - col, disDiaMap.getOrDefault(row - col, 0) + 1);
-            set.add(row * N + col);
+        Map<Integer, Long> rows = new HashMap<>();
+        Map<Integer, Long> cols = new HashMap<>();
+        Map<Integer, Long> diags = new HashMap<>();
+        Map<Integer, Long> adiags = new HashMap<>();
+        Set<Long> visited = new HashSet<>();
+        for (int[] l: lamps) {
+            int row = l[0];
+            int col = l[1];
+            rows.put(row, rows.getOrDefault(row, (long)0) + 1);
+            cols.put(col, cols.getOrDefault(col, (long)0) + 1);
+            diags.put(row - col, diags.getOrDefault(row - col, (long)0) + 1);
+            adiags.put(row + col, adiags.getOrDefault(row + col, (long)0) + 1);
+            visited.add((long)row * N + col);
         }
-        
         for (int k = 0; k < queries.length; k++) {
             int row = queries[k][0];
             int col = queries[k][1];
-            if (rowMap.containsKey(row) || colMap.containsKey(col) || diaMap.containsKey(row + col) || disDiaMap.containsKey(row - col)) 
-            	res[k] = 1;
-            for (int i = row - 1; i < row + 2; i++) {
+            if (rows.containsKey(row) || cols.containsKey(col) ||
+               diags.containsKey(row - col) || adiags.containsKey(row + col)) {
+                res[k] = 1;
+            }
+            for (int i = row - 1; i <= row + 1; i++) {
                 if (i < 0 || i >= N) continue;
-                for (int j = col - 1; j < col + 2; j++) {
+                for (int j = col - 1; j <= col + 1; j++) {
                     if (j < 0 || j >= N) continue;
-                    if (set.contains(i * N + j)) {
-                        rowMap.put(i, rowMap.get(i) - 1);
-                        if (rowMap.get(i) == 0) rowMap.remove(i);
-                        colMap.put(j, colMap.get(j) - 1);
-                        if (colMap.get(j) == 0) colMap.remove(j);
-                        diaMap.put(i + j, diaMap.get(i + j) - 1);
-                        if (diaMap.get(i + j) == 0) diaMap.remove(i + j);
-                        disDiaMap.put(i - j, disDiaMap.get(i - j) - 1);
-                        if (disDiaMap.get(i - j) == 0) disDiaMap.remove(i - j);
-                        set.remove(i * N + j);
+                    if (visited.contains((long)i * N + j)) {
+                        rows.put(i, rows.get(i) - 1);
+                        if (rows.get(i) == 0) rows.remove(i);
+                        cols.put(j, cols.get(j) - 1);
+                        if (cols.get(j) == 0) cols.remove(j);
+                        diags.put(i - j, diags.get(i - j) - 1);
+                        if (diags.get(i - j) == 0) diags.remove(i - j);
+                        adiags.put(i + j, adiags.get(i + j) - 1);
+                        if (adiags.get(i + j) == 0) adiags.remove(i + j);
+                        visited.remove((long)i * N + j);
                     }
                 }
             }
+            
         }
-        
-        return res;		
+        return res;	
 	}
 
 	public static void main(String[] args) {
