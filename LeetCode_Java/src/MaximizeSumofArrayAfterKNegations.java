@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 /**
  * Given an array A of integers, we must modify the array in the following way: we choose an i and 
@@ -27,7 +28,31 @@ import java.util.Arrays;
 public class MaximizeSumofArrayAfterKNegations {
 	
 	/**
-	 * Arrays sort + Math
+	 * Approach1: PriorityQueue
+	 * @param int[] A, int k
+	 * @return int
+	 * Time: O(klog(n)) 
+	 * Space: O(1)
+	 */
+	public int maximizeSumofArrayAfterKNegationsI(int[] A, int K) {
+        if (A == null || A.length == 0) return 0;
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>((a, b) -> (a - b));
+        for (int a: A) minHeap.offer(a);
+        while (K-- > 0) {
+            int min = minHeap.poll();
+            minHeap.offer(-min);
+        }
+        int sum = 0;
+        while (!minHeap.isEmpty()) {
+            sum += minHeap.poll();
+        }
+        return sum;		
+	}
+	
+	
+	
+	/**
+	 * Approach2: Arrays sort + Math
 	 * @param int[] A, int k
 	 * @return int
 	 * Time: O(nlog(n)) can improve this to O(N) by quick selecting the Kth in the negative numbers.
@@ -52,6 +77,7 @@ public class MaximizeSumofArrayAfterKNegations {
 		// TODO Auto-generated method stub
 		MaximizeSumofArrayAfterKNegations result = new MaximizeSumofArrayAfterKNegations();
 		System.out.println(result.maximizeSumofArrayAfterKNegations(new int[] {2,-3,-1,5,-4}, 2));
+		System.out.println(result.maximizeSumofArrayAfterKNegationsI(new int[] {2,-3,-1,5,-4}, 2));
 	}
 
 }
