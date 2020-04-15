@@ -36,14 +36,14 @@ public class PartitionArrayIntoThreePartsWithEqualSum {
         if (sum % 3 != 0) return false;
         int part = 0;
         int curr = 0;
-        for (int i = 0; i < A.length && part < 2; i++) {
+        for (int i = 0; i < A.length && part < 3; i++) {
             curr += A[i];
             if (curr == sum / 3) {
                 curr = 0;
                 part++;
             }
         }
-        return part == 2;       
+        return part == 3;       
     }	
     
 

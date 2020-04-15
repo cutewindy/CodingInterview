@@ -38,7 +38,7 @@ public class ComplementofBase10Integer {
 	public int complementofBase10IntegerI(int N) {
 		int X = 1;
 		while (X < N) {
-			X = 2 * X + 1;
+			X = (X << 1) + 1;
 		}
 		return X - N;
 		// or return N ^ X;
@@ -57,8 +57,8 @@ public class ComplementofBase10Integer {
 		int res = 0;
 		int i = 0;
 		while (N != 0) {
-			int bit = N % 2;
-			res += (bit ^ 1) << i;
+			int bit = (N & 1) ^ 1;
+			res += bit << i;
 			i++;
 			N >>= 1;
 		}
