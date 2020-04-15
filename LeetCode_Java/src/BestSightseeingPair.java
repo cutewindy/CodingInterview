@@ -19,6 +19,8 @@ public class BestSightseeingPair {
 	
 	/**
 	 * DP
+	 * Divide the score into 2 parts - A[i]+i and A[j]-j. For each j value, we will check if the 
+	 * sum of maximum A[i]+i value found so far and current A[j]-j is greater than the res.
 	 * @param int[] A
 	 * @return int
 	 * Time: O(n)
